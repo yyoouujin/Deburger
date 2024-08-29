@@ -9,6 +9,5 @@ public class ShopController {
 	@GetMapping("shop")
 	public String shopMain() {
 		return "shop/main";
-	}
-	
+	}	
 }
