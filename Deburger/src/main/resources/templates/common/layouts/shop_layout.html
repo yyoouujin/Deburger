@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<th:block th:replace="~{common/configs/config :: ConfigFrag}"></th:block>
+<title>Insert title here</title>
+</head>
+<body>
+	<header th:replace="~{common/fragments/header :: HeaderFrag}"></header>
+	<aside th:replace="~{common/fragments/shop_sidebar :: SidebarFrag}"></aside>
+	<main>
+		<th:block layout:fragment="Content"></th:block>
+	</main>
+	<footer th:replace="~{common/fragments/footer :: FooterFrag}"></footer>
+</body>
+</html>
