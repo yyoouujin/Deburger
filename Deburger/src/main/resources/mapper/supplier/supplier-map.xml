@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.office.supplier.mapper.SupplierMapper">
+
+<!-- 전체조회 -->
+	<select id="selectSupplierAll" resultType="SupplierVO">
+		SELECT client_id
+		      , client_name
+		      , address
+		      , phone
+		      , contract_day
+		      , postal
+		      , addresssec
+		      , note
+		      , businessnum
+		      , businesstype
+		      , email
+		      , representative_name
+		      , contract_pdf
+		      , person_name
+		      , person_phone
+		      , person_email
+		FROM supplier
+		ORDER BY client_id
+	</select>
+	
+<!-- 단건조회 -->
+	<select id="selectSupplierInfo" resultType="SupplierVO">
+		SELECT client_id
+		      , client_name
+		      , address
+		      , phone
+		      , contract_day
+		      , postal
+		      , addresssec
+		      , note
+		      , businessnum
+		      , businesstype
+		      , email
+		      , representative_name
+		      , contract_pdf
+		      , person_name
+		      , person_phone
+		      , person_email
+		FROM supplier
+		WHERE client_id=#{clientId}
+	</select>
+
+
+<!-- 등록 -->
+	<insert id="insertSupplierInfo" parameterType="SupplierVO">
+		INSERT INTO supplier(client_id
+		                    , client_name
+		                    , address
+		                    , phone
+		                    , contract_day
+		                    , postal
+		                    , addresssec
+		                    , businessnum
+		                    , businesstype
+		                    , note
+		                    , email
+		                    , representative_name
+		                    , contract_pdf
+		                    , person_name
+		                    , person_email
+		                    , person_phone)
+		VALUES            ( 'SUP' || LPAD(SUP_SEQ.nextval, '7', '0')
+		                  , #{clientName}
+		                  , #{address}
+		                  , #{phone}
+		                  , #{contractDay}
+		                  , #{postal}
+		                  , #{addresssec}
+		                  , #{businessnum}
+		                  , #{businessType}
+		                  , #{note}
+		                  , #{email}
+		                  , #{representativeName}
+		                  , #{contractPdf}
+		                  , #{personName}
+		                  , #{personPhone}
+		                  , #{personEmail})
+	</insert>
+
+
+<!-- 수정 -->
+	<update id="updateSupplierInfo" parameterType="SupplierVO">
+		UPDATE supplier
+		SET		client_name = #{clientName}
+				, postal = #{postal}
+				, address = #{address}
+				, addresssec = #{addresssec}
+				, email = #{phone}
+				, businessnum = #{businessnum}
+				, representative_name = #{representativeName}
+				, businesstype = #{businessType}
+				, contract_day = #{contractDay}
+				, contract_pdf = #{contractPdf}
+				, note = #{note}
+				, person_name = #{personName}
+				, person_phone = #{personPhone}
+				, person_email = #{personEmail}
+		WHERE	client_id = #{clientId}
+	</update>
+	
+	
+<!-- 삭제 -->
+	<delete id="deleteSupplierInfo" parameterType="SupplierVO">
+		DELETE supplier
+		WHERE client_id=#{clientId}
+	</delete>
+
+</mapper>
