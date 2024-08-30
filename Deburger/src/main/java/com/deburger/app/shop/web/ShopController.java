@@ -9,5 +9,10 @@ public class ShopController {
 	@GetMapping("shop")
 	public String shopMain() {
 		return "shop/main";
-	}	
+	}
+	
+	@GetMapping("qsclist")
+	public String qsclist() {
+		return "shop/qsclist";
+	}
 }
