@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.office.material.mapper.MaterialMapper">
+	<select id="selectAllList" resultType="MaterialVO">
+		select
+	        material_number,
+	        material_name,
+	        unit,
+	        sale_unitprice,
+	        material_item,
+	        buy_unitprice,
+	        image,
+	        material_classification,
+	        logistics_safety_stock,
+	        cost        
+		from material
+	</select>
+	
+	<select id="selectMaterial" resultType="MaterialVO">
+		select
+	        material_number,
+	        material_name,
+	        unit,
+	        sale_unitprice,
+	        material_item,
+	        buy_unitprice,
+	        image,
+	        material_classification,
+	        logistics_safety_stock,
+	        cost        
+		from material
+		where material_number = #{materialNumber}
+	</select>
+	
+	<insert id="insertMaterial" parameterType="MaterialVO">
+		<selectKey keyProperty="materialNumber" resultType="MaterialVO" order="BEFORE">
+			select nvl(max(material_number),0)+1
+			from material
+		</selectKey>
+			insert into material(
+		            material_number,
+		            material_name,
+		            unit,
+		            sale_unitprice,
+		            material_item,
+		            buy_unitprice,
+		            image,
+		            material_classification,
+		            logistics_safety_stock,
+		            cost        
+				)values(
+				    #{materialNumber}
+				    #{materialName},
+				    #{unit},
+				    #{saleUnitprice},
+				    #{materialItem},
+				    #{buyUnitprice},
+				    #{image},
+				    #{materialClassification},
+				    #{logisticsSafetyStock},
+				    #{cost}
+				)
+	</insert>
+	
+	<update id="updateMaterial">
+		update material
+		set  	material_number = #{materialNumber},
+	            material_name = #{materialName},
+	            unit = #{unit},
+	            sale_unitprice = #{saleUnitprice},
+	            material_item = #{materialItem},
+	            buy_unitprice = #{buyUnitprice},
+	            image = #{image},
+	            material_classification = #{materialClassification},
+	            logistics_safety_stock = #{logisticsSafetyStock},
+	            cost = #{cost}
+		where   material_number = #{materialNumber}        
+	</update>
+	
+	<delete id="deleteMaterial" parameterType="int">
+		delete
+		from material
+		where material_number = #{materialNumber}
+	</delete>
+
+</mapper>
