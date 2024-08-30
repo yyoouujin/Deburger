@@ -5,13 +5,14 @@
 	layout:fragment="Content">
 <head>
 <meta charset="UTF-8" />
-<title>재고 리스트</title>
+<title>발주 관리</title>
 </head>
 
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>재고 상세 관리</h1>
+			<h1>발주 리스트</h1>
+			<h6><a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동 발주</a></h6>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -25,16 +26,17 @@
 							<table class="table ">
 								<thead>
 									<tr>
-										<th data-type="date" data-format="YYYY/DD/MM">발주 일자</th>
+										<th>발주 코드</th>
+										<th>품목 코드</th>
 										<th>품목 이름</th>
-										<th>거래처 이름</th>
+										<th>품목 구분</th>
+										<th>규격</th>
+										<th>단위</th>
 										<th>단가</th>
-										<th>주문 수량</th>
 										<th>현재 재고</th>
-										<th>합계</th>
-										<th data-type="date" data-format="YYYY/DD/MM">유통기한</th>
-										<th>수량 변경</th>
-										<th>폐기</th>
+										<th>적정 재고</th>
+										<th>발주 기준량</th>
+										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
