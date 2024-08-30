@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/layout}"
+	  layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>QSC 항목 관리</h1>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+              <button type="button" class="btn btn-primary">작성하기</button>
+
+					<div class="card">
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th><b>일련번호</b></th>
+										<th>검수일자</th>
+										<th>검수자</th>
+										<th>처리상태</th>
+										<th>품질</th>
+										<th>서비스</th>
+										<th>청결</th>
+										<th>총점</th>
+									</tr>
+								</thead>
+								<tbody>
+								    <tr>
+                                        <th>QAC-0001</th>
+                                        <th>2023-05-08 오후 04:30:30</th>
+                                        <th>김지수</th>
+                                        <th>검수중<th>
+                                        <th>80/100<th>
+                                        <th>80/100<th>
+                                        <th>80/100<th>
+                                        <th>240/300<th>
+                                    </th>
+								</tbody>
+							</table>
+							
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+	</main>
+
+</body>

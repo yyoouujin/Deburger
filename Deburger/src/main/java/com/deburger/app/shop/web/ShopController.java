@@ -12,6 +12,60 @@ public class ShopController {
 		return "shop/main";
 	}
 	
+	//QSC전체조회(희창)
+	@GetMapping("qscListShop")
+	public String qsclist() {
+		return "shop/qscListShop";
+	}
+	
+	//QSC상세조회(희창)
+	@GetMapping("qscListInfoShop")
+	public String qscListInfo() {
+		return "shop/qscListInfoShop";
+	}
+	
+	//QSC작성(희창)
+	@GetMapping("qscInsertShop")
+	public String qscInsert() {
+		return "shop/qscInsertShop";
+	}
+	
+	//공지사항 전체조회(지수)
+	@GetMapping("noticeListShop")
+	public String noticeList() {
+		return "shop/noticeListShop";
+	}
+	
+	//공지사항 상세조회(지수)
+	@GetMapping("noticeListInfoShop")
+	public String noticeListInfo() {
+		return "shop/noticeListInfoShop";
+	}	
+	
+	//QnA 전체조회(지수)
+	@GetMapping("qnaListShop")
+	public String qnaList() {
+		return "shop/qnaListShop";
+	}
+	
+	//QnA 상세조회(지수)
+	@GetMapping("qnaListInfoShop")
+	public String qnaListInfo() {
+		return "shop/qnaListInfoShop";
+	}	
+	
+	//QnA작성(지수)
+	@GetMapping("qnaInsertShop")
+	public String qnaInsert() {
+		return "shop/qnaInsertShop";
+	}
+	
+	//QnA수정(지수)
+	@GetMapping("qnaCorrectShop")
+	public String qnaCorrect() {
+		return "shop/qnaCorrectShop";
+	}	
+	
 	//가맹점 재고 관리
 	@GetMapping("stocklist")
 	public String shopstocklist() {
@@ -19,7 +73,7 @@ public class ShopController {
 	}
 	
 	//가맹점 재고 상세관리
-	@GetMapping("stocklistinfo")
+	@GetMapping("stocklistinfoShop")
 	public String shopstocklistinfo() {
 		return "shop/stocklistinfo";
 	}
