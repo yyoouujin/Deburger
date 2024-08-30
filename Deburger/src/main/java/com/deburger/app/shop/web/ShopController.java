@@ -6,13 +6,87 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShopController {
 
+	//메인페이지
 	@GetMapping("shop")
 	public String shopMain() {
 		return "shop/main";
 	}
 	
-	@GetMapping("qsclist")
+	//QSC전체조회(희창)
+	@GetMapping("qscListShop")
 	public String qsclist() {
-		return "shop/qsclist";
+		return "shop/qscListShop";
+	}
+	
+	//QSC상세조회(희창)
+	@GetMapping("qscListInfoShop")
+	public String qscListInfo() {
+		return "shop/qscListInfoShop";
+	}
+	
+	//QSC작성(희창)
+	@GetMapping("qscInsertShop")
+	public String qscInsert() {
+		return "shop/qscInsertShop";
+	}
+	
+	//공지사항 전체조회(지수)
+	@GetMapping("noticeListShop")
+	public String noticeList() {
+		return "shop/noticeListShop";
+	}
+	
+	//공지사항 상세조회(지수)
+	@GetMapping("noticeListInfoShop")
+	public String noticeListInfo() {
+		return "shop/noticeListInfoShop";
+	}	
+	
+	//QnA 전체조회(지수)
+	@GetMapping("qnaListShop")
+	public String qnaList() {
+		return "shop/qnaListShop";
+	}
+	
+	//QnA 상세조회(지수)
+	@GetMapping("qnaListInfoShop")
+	public String qnaListInfo() {
+		return "shop/qnaListInfoShop";
+	}	
+	
+	//QnA작성(지수)
+	@GetMapping("qnaInsertShop")
+	public String qnaInsert() {
+		return "shop/qnaInsertShop";
+	}
+	
+	//QnA수정(지수)
+	@GetMapping("qnaCorrectShop")
+	public String qnaCorrect() {
+		return "shop/qnaCorrectShop";
+	}	
+	
+	//가맹점 재고 관리
+	@GetMapping("stocklist")
+	public String shopstocklist() {
+		return "shop/stocklist";
+	}
+	
+	//가맹점 재고 상세관리
+	@GetMapping("stocklistinfoShop")
+	public String shopstocklistinfo() {
+		return "shop/stocklistinfo";
+	}
+	
+	//가맹점 수동 발주
+	@GetMapping("shopOrder")
+	public String shopOrder() {
+		return "shop/shopOrder";
+	}
+	
+	//가맹점 자동 발주
+	@GetMapping("shopOrderAuto")
+	public String shopOrderAuto() {
+		return "shop/shopOrderAuto";
 	}
 }
