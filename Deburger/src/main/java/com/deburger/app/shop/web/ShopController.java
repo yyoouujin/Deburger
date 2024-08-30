@@ -25,14 +25,45 @@ public class ShopController {
 	}
 	
 	//가맹점 수동 발주
-	@GetMapping("shopOrder")
+	@GetMapping("Order")
 	public String shopOrder() {
-		return "shop/shopOrder";
+		return "shop/Order";
 	}
 	
 	//가맹점 자동 발주
-	@GetMapping("shopOrderAuto")
+	@GetMapping("OrderAuto")
 	public String shopOrderAuto() {
-		return "shop/shopOrderAuto";
+		return "shop/OrderAuto";
+	}
+	
+	//구매 발주서
+	@GetMapping("purchaseorder")
+	public String purchaseorder() {
+		return "shop/purchaseorder";
+	}
+	
+	//입고 전체조회
+
+	@GetMapping("receivesList")
+	public String receivesList() {
+		return "shop/receivesList";
+	}
+	
+	//입고 상세조회
+	@GetMapping("receiveInfo")
+	public String receiveInfo() {
+		return "shop/receiveInfo";
+	}
+	
+	//제품 통계
+	@GetMapping("productss")
+	public String products() {
+		return "shop/products";
+	}
+	
+	//재료 통계
+	@GetMapping("materials")
+	public String materials() {
+		return "shop/materials";
 	}
 }

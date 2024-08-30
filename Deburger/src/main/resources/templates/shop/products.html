@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>제품 판매</title>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>제품 판매 통계</h1>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<table class="table ">
+								<thead>
+									<tr>
+										<th>제품 이름</th>
+										<th>수량</th>
+										<th>종류</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Vertical Bar Chart</h5>
+
+							<!-- Vertical Bar Chart -->
+							<div id="verticalBarChart" style="min-height: 400px;"
+								class="echart"></div>
+
+							<script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  echarts.init(document.querySelector("#verticalBarChart")).setOption({
+                    title: {
+                      text: 'World Population'
+                    },
+                    tooltip: {
+                      trigger: 'axis',
+                      axisPointer: {
+                        type: 'shadow'
+                      }
+                    },
+                    legend: {},
+                    grid: {
+                      left: '3%',
+                      right: '4%',
+                      bottom: '3%',
+                      containLabel: true
+                    },
+                    xAxis: {
+                      type: 'value',
+                      boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                      type: 'category',
+                      data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
+                    },
+                    series: [{
+                        name: '2011',
+                        type: 'bar',
+                        data: [18203, 23489, 29034, 104970, 131744, 630230]
+                      },
+                      {
+                        name: '2012',
+                        type: 'bar',
+                        data: [19325, 23438, 31000, 121594, 134141, 681807]
+                      }
+                    ]
+                  });
+                });
+              </script>
+							<!-- End Vertical Bar Chart -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+
+</html>
