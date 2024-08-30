@@ -35,6 +35,4 @@ public class ShopController {
 	public String shopOrderAuto() {
 		return "shop/shopOrderAuto";
 	}
-	
-	
 }
