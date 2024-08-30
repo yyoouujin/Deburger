@@ -67,56 +67,56 @@ public class ShopController {
 	}	
 	
 	//가맹점 재고 관리
-	@GetMapping("stocklist")
+	@GetMapping("shopstocklist")
 	public String shopstocklist() {
 		return "shop/stocklist";
 	}
 	
 	//가맹점 재고 상세관리
-	@GetMapping("stocklistinfoShop")
+	@GetMapping("shopstocklistinfo")
 	public String shopstocklistinfo() {
 		return "shop/stocklistinfo";
 	}
 	
 	//가맹점 수동 발주
-	@GetMapping("Order")
+	@GetMapping("shopOrder")
 	public String shopOrder() {
 		return "shop/Order";
 	}
 	
 	//가맹점 자동 발주
-	@GetMapping("OrderAuto")
+	@GetMapping("shopOrderAuto")
 	public String shopOrderAuto() {
 		return "shop/OrderAuto";
 	}
 	
 	//구매 발주서
-	@GetMapping("purchaseorder")
+	@GetMapping("shoppurchaseorder")
 	public String purchaseorder() {
 		return "shop/purchaseorder";
 	}
 	
 	//입고 전체조회
 
-	@GetMapping("receivesList")
+	@GetMapping("shopreceivesList")
 	public String receivesList() {
 		return "shop/receivesList";
 	}
 	
 	//입고 상세조회
-	@GetMapping("receiveInfo")
+	@GetMapping("shopreceiveInfo")
 	public String receiveInfo() {
 		return "shop/receiveInfo";
 	}
 	
 	//제품 통계
-	@GetMapping("productss")
+	@GetMapping("shopproducts")
 	public String products() {
 		return "shop/products";
 	}
 	
 	//재료 통계
-	@GetMapping("materials")
+	@GetMapping("shopmaterials")
 	public String materials() {
 		return "shop/materials";
 	}
