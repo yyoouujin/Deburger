@@ -8,15 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+    <main id="main" class="main">
     <div class="pagetitle">
       <h1>제품 페이지 입니당</h1>
     </div><!-- End Page Title -->
-
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
-
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"></h5>
@@ -33,14 +31,28 @@
                 </div>
             </div>
           </div>
-
-        </div>
-
-        
+        </div>        
       </div>
+	    <div>
+	    	<table>
+		    	<thead>
+		    		<tr>
+			    		<th>이름</th>			
+		    		</tr>
+		    	</thead>
+		    	<tbody>
+		    		<th:block th:each="lists:${products}">
+		    			<tr>
+		    				<td th:text="${lists.productName}"></td>
+		    			</tr>
+		    		</th:block>
+		    	</tbody>
+	    	</table>
+	    </div>
     </section>
-    
     </main>
-
 </body>
+<script>
+	
+</script>
 </html>

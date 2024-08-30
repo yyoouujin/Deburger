@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductVO {
-	
+
 	public String productNumber;
 	public String productName;
 	public int saleUnitprice;
@@ -14,10 +14,6 @@ public class ProductVO {
 	public String category;
 	public String kind;
 	public String registrationDay;
-	public String explanation;
-	public String itemCode;
-	public String itemName;
-	public String consumption;
-	public String unit;
-	
+	public String Note;
+
 }
