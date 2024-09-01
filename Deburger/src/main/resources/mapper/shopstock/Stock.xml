@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.deburger.app.shop.stock.mapper.StockMapper">
+	<select id="selectStock" parameterType="StockVO">
+		select
+		s.material_number
+		,m.material_name
+		,m.material_classification
+		,m.unit
+		,m.unit
+		,m.sale_unitprice
+		,s.stock_count
+		,s.safety_stock
+		from store_stock s join material m
+		on s.material_number = m.material_number
+		where s.store_number = 111
+		order
+		by m.material_number
+	</select>
+
+	<insert id="insertCart" parameterType="StockVO">
+		INSERT INTO
+		order_cart(cart_number
+				,Store_number
+				,material_number
+				,count)
+		VALUES (OC_SEQ.NEXTVAL
+				,111
+				,#{materialNumber}
+				,1)
+	</insert>
+	
+	
+</mapper>

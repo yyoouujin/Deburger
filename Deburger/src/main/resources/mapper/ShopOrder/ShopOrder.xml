@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.deburger.app.shop.shoporder.mapper.ShopOrderMapper">
+
+	<select id="selectShopOrder" parameterType="ShopOrderVO">
+		select m.material_name
+		,m.unit
+		,o.count
+		,m.sale_Unitprice
+		from order_cart o join material m
+		on m.material_number = o.material_number
+		where o.store_number = 111
+		ORDER by m.material_number
+	</select>
+</mapper>
