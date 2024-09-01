@@ -17,10 +17,13 @@ public class StoreController {
 	
 	private StoreService storeService;
 	
+	// 가맹점 등록
 	@GetMapping("insertStore")
 	public String officeMain() {
 		return "main/store/insertStore";
 	}
+	
+	// 가맹점 등록 post
 	@PostMapping("insertStore")
 	public String postMethodName( StoreVO storeVO) {
 		//TODO: process POST request	
@@ -28,5 +31,16 @@ public class StoreController {
 		return  "main/store/insertStore";
 	}
 	
+	// 가맹점 목록
+		@GetMapping("officeListStore")
+		public String listStore() {
+			return "main/store/officeListStore";
+		}
+		
+	// 가맹점 현황
+		@GetMapping("StoreStatistics")
+		public String StoreStatistics() {
+			return "main/store/StoreStatistics";
+		}		
 
 }
