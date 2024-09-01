@@ -10,22 +10,23 @@ import lombok.Data;
 public class SupplierVO {
 
 		private String clientId;					//공급업체 아이디
-		private String clientName;				//공급업체 이름
-		private int postal;								//공급업체 우편주소
+		private String clientName;					//공급업체 이름
+		private int postal;							//공급업체 우편주소
 		private String address;						//공급업체 기본주소
-		private String addresssec;				//공급업체 상세주소
-		private String email;							//공급업체 이메일
-		private String phone;							//공급업체 전화번호
-		private String businessnum;				//사업자 번호
-		private String representativeName;//대표자 이름
-		private String businessType;			//업태
+		private String addresssec;					//공급업체 상세주소
+		private String note;						//공급업체 참고주소
+		private String email;						//공급업체 이메일
+		private String phone;						//공급업체 전화번호
+		private String businessnum;					//사업자 번호
+		private String representativeName;			//대표자 이름
+		private String businessType;				//업태
 		@DateTimeFormat(pattern="yyyy-MM-dd")
 		private Date contractDay;					//계약일
-		private String contractPdf;				//계약서
-		private String note;							//비고
-		private String personName;				//담당자 이름
-		private String personPhone;				//담당자 전화번호
-		private String personEmail;				//담당자 이메일
+		private String contractPdf;					//계약서
+
+		private String personName;					//담당자 이름
+		private String personPhone;					//담당자 전화번호
+		private String personEmail;					//담당자 이메일
 	
 	
 }

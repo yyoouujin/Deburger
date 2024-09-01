@@ -49,11 +49,6 @@ public class ShopController {
 		return "shop/qnaCorrectShop";
 	}	
 	
-	//가맹점 재고 관리
-	@GetMapping("shopstocklist")
-	public String shopstocklist() {
-		return "shop/stocklist";
-	}
 	
 	//가맹점 재고 상세관리
 	@GetMapping("shopstocklistinfo")

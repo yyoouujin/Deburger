@@ -26,7 +26,7 @@ public class SupplierController {
 		
 		//전체조회 : URI - office/supplierList
 		//				RETURN - 	office/supplier.html
-		@GetMapping("office/supplierList")
+		@GetMapping("supplierList")
 		public String supplierList(Model model) {
 				List<SupplierVO> list = supplierService.supplierList();
 				model.addAttribute("suppliers", list);
@@ -51,7 +51,7 @@ public class SupplierController {
 		}
 		
 		//등록저리 
-		@PostMapping("office/supplierInsert")
+		@PostMapping("supplierInsert")
 		public String supplierInsertProcess(SupplierVO supplierVO) {
 				
 				//반환되는 값이 공급업체 아이디의 SUP0000001 중 0000001만 반환된다

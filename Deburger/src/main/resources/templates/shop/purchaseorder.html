@@ -1,125 +1,128 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/shop_layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>구매 발주서</title>
-    <style>
-      th,
-      td {
-        border: solid 1px black;
-      }
-    </style>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>구매 발주서</title>
+<style>
+th, td {
+	border: solid 1px black;
+}
+</style>
+</head>
 
-  <body>
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>구매 발주서</h1>
-      </div>
-      <div style="margin: 0 0 20px 10%">
-        <button class="btn btn-primary col-lg-5" type="button">
-          수동 발주
-        </button>
-        <button class="btn btn-primary col-lg-5" type="button">
-          자동 발주
-        </button>
-      </div>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>구매 발주서</h1>
+		</div>
+		<div style="margin: 0 0 20px 10%">
+			<button class="btn btn-primary col-lg-5" type="button">수동 발주
+			</button>
+			<button class="btn btn-primary col-lg-5" type="button">자동 발주
+			</button>
+		</div>
 
-      <span>* 자동 발주 조건을 선택해주세요.</span>
-      <div>
-        <div>
-          <input type="radio" name="option" value="1" />재고 수량
-          <input type="text" />
-        </div>
-        <div>
-          <input type="radio" name="option" value="2" />일별 주문
-          <input type="text" />
-        </div>
-      </div>
-      <div style="text-align: right; margin: 0 0 10px 0">
-        <button type="button" class="btn btn-primary">발주 저장</button>
-        <button type="button" class="btn btn-primary">발주 신청</button>
-        <button type="button" class="btn btn-primary">발주 취소</button>
-      </div>
-      <!-- End Page Title -->
-      <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="card-body">
-                <!-- Table with stripped rows -->
-                <!-- <table class="table datatable"> -->
-                <table class="col-lg-12" style="text-align: center">
-                  <thead></thead>
-                  <tbody>
-                    <tr>
-                      <th class="col-lg-1">발주건명</th>
-                      <td colspan="5"></td>
-                    </tr>
-                    <tr>
-                      <th>발주일자</th>
-                      <td colspan="5"></td>
-                    </tr>
-                    <tr>
-                      <th>발신 업체 이름</th>
-                      <td colspan="2"></td>
-                      <th>수신 업체 이름</th>
-                      <td colspan="2"></td>
-                    </tr>
-                    <tr>
-                      <th rowspan="2">연락처</th>
-                      <th class="col-lg-1">전화번호</th>
-                      <td class="col-lg-4"></td>
-                      <th rowspan="2">연락처</th>
-                      <th class="col-lg-1">전화번호</th>
-                      <td class="col-lg-4"></td>
-                    </tr>
-                    <tr>
-                      <th>이메일</th>
-                      <td></td>
-                      <th>이메일</th>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- End Table with stripped rows -->
-                <table class="col-lg-12">
-                  <thead>
-                    <tr>
-                      <th>합계금액</th>
-                      <td colspan="7" style="text-align: center">
-                        일금
-                        <input type="text" style="border: none" /> 원정(<input
-                          type="text"
-                          style="border: none"
-                        />
-                        )세액포함
-                      </td>
-                    </tr>
-                    <tr style="text-align: center">
-                      <th class="col-lg-1">No.</th>
-                      <th class="col-lg-1">품명</th>
-                      <th class="col-lg-1">규격</th>
-                      <th class="col-lg-1">수량</th>
-                      <th class="col-lg-1">단가</th>
-                      <th class="col-lg-1">세액</th>
-                      <th class="col-lg-1">합계금액</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <div id="list"></div>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </body>
+		<span>* 자동 발주 조건을 선택해주세요.</span>
+		<div>
+			<div>
+				<input type="radio" name="option" value="1" />재고 수량 <input
+					type="text" />
+			</div>
+			<div>
+				<input type="radio" name="option" value="2" />일별 주문 <input
+					type="text" />
+			</div>
+		</div>
+		<div style="text-align: right; margin: 0 0 10px 0">
+			<button type="button" class="btn btn-primary">발주 저장</button>
+			<button type="button" class="btn btn-primary">발주 신청</button>
+			<button type="button" class="btn btn-primary">발주 취소</button>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">
+							<!-- Table with stripped rows -->
+							<!-- <table class="table datatable"> -->
+							<table class="col-lg-12" style="text-align: center">
+								<thead></thead>
+								<tbody>
+									<tr>
+										<th class="col-lg-1">발주건명</th>
+										<td colspan="5"></td>
+									</tr>
+									<tr>
+										<th>발주일자</th>
+										<td colspan="5"></td>
+									</tr>
+									<tr>
+										<th>발신 업체 이름</th>
+										<td colspan="2"></td>
+										<th>수신 업체 이름</th>
+										<td colspan="2"></td>
+									</tr>
+									<tr>
+										<th rowspan="2">연락처</th>
+										<th class="col-lg-1">전화번호</th>
+										<td class="col-lg-4"></td>
+										<th rowspan="2">연락처</th>
+										<th class="col-lg-1">전화번호</th>
+										<td class="col-lg-4"></td>
+									</tr>
+									<tr>
+										<th>이메일</th>
+										<td></td>
+										<th>이메일</th>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- End Table with stripped rows -->
+							<table class="col-lg-12">
+								<thead>
+									<tr>
+										<th>합계금액</th>
+										<td colspan="7" style="text-align: center">일금 <input
+											type="text" style="border: none" /> 원정(<input type="text"
+											style="border: none" /> )세액포함
+										</td>
+									</tr>
+									<tr style="text-align: center">
+										<th class="col-lg-1">No.</th>
+										<th class="col-lg-1">품명</th>
+										<th class="col-lg-1">규격</th>
+										<th class="col-lg-1">수량</th>
+										<th class="col-lg-1">단가</th>
+										<th class="col-lg-1">공급 가액</th>
+										<th class="col-lg-1">세액</th>
+										<th class="col-lg-1">합계금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="list,index:${selectOrderCart}">
+										<tr>
+											<td th:text=${index.index+1}/>
+											<td th:text="${list.materialName}" />
+											<td th:text="${list.unit}" />
+											<td><input type="text" th:value="${list.count}"></td>
+											<td th:text="${list.saleUnitprice}" />
+											<td th:text="${list.saleUnitprice*list.count}"></td>
+											<td th:text="${list.saleUnitprice*list.count/10}"></td>
+											<td th:text="${list.saleUnitprice*list.count}+${list.saleUnitprice*list.count/10}"></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
 </html>
