@@ -9,25 +9,7 @@ public class OfficeController {
 	@GetMapping("office")
 	public String officeMain() {
 		return "office/main";
-	}
-
-	//QSC항목 작성(지수)
-	@GetMapping("qscInsertOffice")
-	public String qscInsertOffice() {
-		return "office/qscInsertOffice";
-	}
-	
-	//QSC결과 전체 조회(지수)
-	@GetMapping("qscListOffice")
-	public String qscListOffice() {
-		return "office/qscListOffice";
-	}	
-	
-	//QSC결과 상세 조회(지수)
-	@GetMapping("qscListInfoOffice")
-	public String qscListInfoOffice() {
-		return "office/qscListInfoOffice";
-	}		
+	}			
 	
 	//공지사항 전체 조회(지수)
 	@GetMapping("noticeListOffice")

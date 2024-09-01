@@ -11,24 +11,7 @@ public class ShopController {
 	public String shopMain() {
 		return "shop/main";
 	}
-	
-	//QSC전체조회(희창)
-	@GetMapping("qscListShop")
-	public String qsclist() {
-		return "shop/qscListShop";
-	}
-	
-	//QSC상세조회(희창)
-	@GetMapping("qscListInfoShop")
-	public String qscListInfo() {
-		return "shop/qscListInfoShop";
-	}
-	
-	//QSC작성(희창)
-	@GetMapping("qscInsertShop")
-	public String qscInsert() {
-		return "shop/qscInsertShop";
-	}
+		
 	
 	//공지사항 전체조회(지수)
 	@GetMapping("noticeListShop")
