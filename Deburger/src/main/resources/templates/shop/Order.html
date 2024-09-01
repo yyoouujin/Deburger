@@ -11,8 +11,16 @@
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
+
 			<h1>발주 리스트</h1>
-			<h6><a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동 발주</a></h6>
+
+			<h6 style="display: inline-block;">
+				<a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동
+					발주</a>
+			</h6>
+			<button type="button" class="btn btn-primary btn-sm"
+				style="padding: 5px 20px 5px 20px; margin-left: 80%;" onClick="location.href='selectOrderCart'">발주 신청</button>
+
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -26,7 +34,9 @@
 							<table class="table ">
 								<thead>
 									<tr>
-										<th><th data-type="date" data-format="YYYY/DD/MM">발주 일자</th></th>
+										<th>
+										<th data-type="date" data-format="YYYY/DD/MM">발주 일자</th>
+										</th>
 										<th>발주 번호</th>
 										<th>발주 이름</th>
 										<th>담당자</th>
