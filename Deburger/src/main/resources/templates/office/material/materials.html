@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <main id="main" class="main">
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">재료 관리</h5>
+                <!-- 여기 검색 등록 -->
+                <div class="search-bar">
+                  <form
+                    class="search-form d-flex align-items-center"
+                    method="POST"
+                    action="#"
+                  >
+                    <input
+                      type="text"
+                      name="query"
+                      placeholder="Search"
+                      title="Enter search keyword"
+                    />
+                    <button type="submit" title="Search">검색</button>
+                  </form>
+                </div>
+                <!-- End Search Bar -->
+                <!-- Default Table -->
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>재료 코드</th>
+                      <th>재료 명</th>
+                      <th>재료 구분</th>
+                      <th>규격정보</th>
+                      <th>단위</th>
+                      <th>거래처</th>
+                      <th>안전재고</th>
+                      <th>비고</th>
+                      <th>삭제</th>
+                    </tr>
+                  </thead>
+                  <th:block th:each="list:${materials}">
+                    <tbody>
+                      <tr>
+                        <td th:text="${list.materialNumber}"></td>
+                        <td th:text="${list.materialName}"></td>
+                        <td th:text="${list.materialClassification}"></td>
+                        <td th:text="${list.unit}"></td>
+                        <td th:text="${list.buyUnitprice}"></td>
+                        <td th:text="${list.image}"></td>
+                        <td th:text="${list.cost}"></td>
+                        <td th:text="${list.logisticsSafetyStock}"></td>
+                        <td th:text="${list.cost}"></td>
+                      </tr>
+                    </tbody>
+                  </th:block>
+                </table>
+                <!-- End Default Table Example -->
+                <div class="card">
+                  <div class="card-body">
+                    <!-- Pagination with icons -->
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                    <!-- End Pagination with icons -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script>
+    $("tbody > tr").on("click", function (event) {
+        let tr = event.currentTarget;
+        let did = $(tr).children().eq(0).text();
+        console.log(did);
+        let url = "/materialInfo?materialNumber=" + did;
+        location.href = url;
+    });
+  </script>
+</html>
