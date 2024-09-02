@@ -30,4 +30,26 @@
 	   			)
 	</insert>
 	
+	<insert id="insertPersonInfo" parameterType="com.deburger.app.main.login.service.PersonVO">
+		INSERT INTO person
+		        (  
+		        PERSON_ID
+				,NAME
+				,EMAIL
+				,PHONE
+				,AREA
+				,DEPARTMENT
+				,POSITION	            
+				)
+	    VALUES (
+	             #{personId}
+	             , #{name}
+	             , #{email}
+	             , #{phone}
+	             , #{area}
+	             , #{department}
+	             , #{position}
+	   			)
+	</insert>
+	
 </mapper>

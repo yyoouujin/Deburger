@@ -20,9 +20,8 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	@Transactional
-	public int insertStore(StoreVO storeVO, UserVO userVO) {
-		// TODO Auto-generated method stub		
-		loginService.insertUserInfo(userVO);
+	public int insertStore(StoreVO storeVO, UserVO userVO) {		
+		loginService.insertUserInfo(userVO);		
 		return storeMapper.insertStore(storeVO);
 	}
 
