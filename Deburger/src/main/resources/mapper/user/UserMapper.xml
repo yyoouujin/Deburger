@@ -13,8 +13,21 @@
 		WHERE id = #{id}
 	</select>
 	
-	<insert id="insertUserInfo">
-	
+	<insert id="insertUserInfo" parameterType="com.deburger.app.main.login.service.UserVO">
+		INSERT INTO login_information
+		        (  
+		        ID
+				,PASSWORD	
+				,AUTHORITY
+				,PASSWORD_CHANGE_OPERATION		            
+				)
+	    VALUES (
+	             #{id}
+	             , #{password}
+	             , #{authority}
+	             , #{passwordChangeOpertation}
+	            
+	   			)
 	</insert>
 	
 </mapper>
