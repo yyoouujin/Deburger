@@ -81,52 +81,28 @@
 				</div>
 			</div>
 		</section>
-		<div id="grid">
 		
 		<button id="addRowBtn">추가</button>
 		
 		</div>
+		<div id="grid">
 	</main>
 
 	<script>
 const Grid = tui.Grid;
 const grid = new tui.Grid({
-    el: document.getElementById('grid'),   
-    data: {
-      api: {
-        readData: { url: '/api/readData', method: 'GET' }
-      }
-    },    
-    scrollX: false,
-    scrollY: false,
-    minBodyHeight: 30,
-    rowHeaders: ['rowNum'],
-    pageOptions: {
-      perPage: 5
-    },
+    el: document.getElementById('grid'),
     columns: [
-      {
-        header: 'Name',
-        name: 'name'
-      },
-      {
-        header: 'Artist',
-        name: 'artist'
-      },
-      {
-        header: 'Type',
-        name: 'type'
-      },
-      {
-        header: 'Release',
-        name: 'release'
-      },
-      {
-        header: 'Genre',
-        name: 'genre'
-      }
+        {name: 'name', header: 'Name'},
+        {name: 'age', header: 'Age'},
+        {name: 'address', header: 'Address'}
+    ],
+    data: [
+        {name: 'John Doe', age: 30, address: 'New York'},
+        {name: 'Jane Doe', age: 25, address: 'San Francisco'},
+        {name: 'Bob Smith', age: 50, address: 'Los Angeles'}
     ]
-  });
+});
   
 var addRowBtn = document.getElementById('addRowBtn');
 addRowBtn.addEventListener('click', function() {
