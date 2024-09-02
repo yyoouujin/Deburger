@@ -13,18 +13,7 @@ public class ShopController {
 	}
 		
 	
-	//공지사항 전체조회(지수)
-	@GetMapping("noticeListShop")
-	public String noticeList() {
-		return "shop/noticeListShop";
-	}
-	
-	//공지사항 상세조회(지수)
-	@GetMapping("noticeListInfoShop")
-	public String noticeListInfo() {
-		return "shop/noticeListInfoShop";
-	}	
-	
+
 	//QnA 전체조회(지수)
 	@GetMapping("qnaListShop")
 	public String qnaList() {

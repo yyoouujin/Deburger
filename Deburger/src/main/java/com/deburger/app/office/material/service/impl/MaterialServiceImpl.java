@@ -1,5 +1,6 @@
 package com.deburger.app.office.material.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,33 +18,51 @@ public class MaterialServiceImpl implements MaterialService {
 
 	public MaterialMapper materialMapper;
 
+	// 전체 조회
 	@Override
 	public List<MaterialVO> serviceAllList() {
 		return materialMapper.selectAllList();
 	}
 
+	// 단건 조회
 	@Override
 	public MaterialVO materialInfo(MaterialVO materialVO) {
 		// TODO Auto-generated method stub
 		return materialMapper.selectMaterial(materialVO);
 	}
 
+	// 등록
 	@Override
-	public int insertMaterial() {
+	public int insertMaterial(MaterialVO materialVO) {
 		// TODO Auto-generated method stub
-		return materialMapper.insertMaterialInfo();
+		int result = materialMapper.insertMaterialInfo(materialVO);
+		return 1;
+		// return result == 1 ? materialVO.getMaterialNumber() : -1;
 	}
 
+	// 수정
 	@Override
-	public Map<String, Object> updateMaterial() {
+	public Map<String, Object> updateMaterial(MaterialVO materialVO) {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		boolean isSuccessed = false;
+
+		int result = materialMapper.updateMaterialInfo(materialVO);
+
+		if (result == 1) {
+			isSuccessed = true;
+		}
+
+		map.put("result", isSuccessed);
+		map.put("target", materialVO);
+		return map;
 	}
 
+	// 삭제
 	@Override
-	public Map<String, Object> deleteMaterial() {
+	public int deleteMaterial(String materialNumber) {
 		// TODO Auto-generated method stub
-		return null;
+		return materialMapper.deleteMaterialInfo(materialNumber);
 	}
 
 }

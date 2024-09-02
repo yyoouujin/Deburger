@@ -1,39 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항</title>
 </head>
 
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>공지사항</h1>
+
+			<nav class="navbar navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid">
+					
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShop">전체</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShopUpdate">업데이트</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShopService">서비스</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShopEvent">이벤트</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShopWork">작업</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="noticeListShopAnnouncement">공고</a></li>
+						</ul>
+						
+						<!-- <div class="pagetitle">
+		                <th:block th:if="${notice.division =='업데이트'}"> <p><a href="noticeListShopUpdate">[[ ${notice.division} ]]</a></p></th:block>
+						 -->
+						
+						<form class="d-flex" role="search">
+							<input class="form-control me-2" type="search"
+								placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">Search</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
 
-              
-              <button type="button" class="btn btn-primary">검색</button>
+
 
 					<div class="card">
 						<div class="card-body">
-							<table class="table">
-								<thead>
-									<tr>
-										<th><b>구분</b></th>
-										<th>공지사항</th>
-										<th>공고일</th>
-									</tr>
-								</thead>
-								</tbody>
-							</table>
-							
+							<form method="POST" th:action="@{/noticeListShop}">
+								<table class="table">
+									<thead>
+										<tr>
+											<th><b>일련번호</b></th>
+											<th>구분</th>
+											<th>공지사항</th>
+											<th>공고일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<th:block th:each="lista:${notices}">
+											<tr>
+												<td th:text="${lista.noticeNumber}" />
+												<td th:text="${lista.division}" />
+												<td th:text="${lista.title}" />
+												<td> [[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
+											</tr>
+											<th:block>
+									</tbody>
+								</table>
+							</form>
+							<!-- End Table with stripped rows -->
 						</div>
 					</div>
 
@@ -41,5 +85,17 @@
 			</div>
 		</section>
 	</main>
-
+    <script>
+      $("button").on("click", function(event){
+    	  
+      });
+      
+	  $('tbody > tr').on("click", function(event) {
+		 let num = $(event.currentTarget).children().eq(0).text();
+		 let url ='noticeListInfoShop?noticeNumber='+num;
+		 location.href = url;
+	  });
+      
+      
+    </script>
 </body>

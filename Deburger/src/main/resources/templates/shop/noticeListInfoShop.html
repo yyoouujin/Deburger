@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+
+<head>
+<meta charset="UTF-8">
+<title>공지사항 상세</title>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+		<th:block th:if="${notice.division =='업데이트'}"> <p><a href="noticeListShopUpdate">[[ ${notice.division} ]]</a></p></th:block>
+		<th:block th:if="${notice.division =='서비스'}"> <p><a href="noticeListShopService">[[ ${notice.division} ]]</a></p></th:block>
+		<th:block th:if="${notice.division =='이벤트'}"> <p><a href="noticeListShopEvent">[[ ${notice.division} ]]</a></p></th:block>
+		<th:block th:if="${notice.division =='작업'}"> <p><a href="noticeListShopWork">[[ ${notice.division} ]]</a></p></th:block>
+		<th:block th:if="${notice.division =='공고'}"> <p><a href="noticeListShopAnnouncement">[[ ${notice.division} ]]</a></p></th:block>
+			<h2><b>[[ ${notice.title} ]]</b></h2>
+            <p><a>[[${#dates.format(notice.writerDate,'yyyy-MM-dd')}]]</a></p>
+			<hr>
+			<br>
+			<p>[[ ${notice.content} ]]<p>
+			<br>
+			<hr>
+			<p><a href="noticeListShop">목록으로</a>
+       			
+		</div>
+     </main>
+       
+       
+</body>
+</html>

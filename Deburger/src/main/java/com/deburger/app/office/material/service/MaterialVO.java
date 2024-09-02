@@ -1,5 +1,8 @@
 package com.deburger.app.office.material.service;
 
+import lombok.Data;
+
+@Data
 public class MaterialVO {
 
 	public String materialNumber;

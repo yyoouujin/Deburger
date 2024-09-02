@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="contextPath" th:value="${contextPath}">
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <main id="main" class="main">
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">물류 창고 상세 리스트</h5>
+                <!-- 여기 검색 등록 -->
+				 <div class="row mb-3">
+                    <div class="col-sm-4">
+                  </div>
+                </div>
+                <!-- End Search Bar -->
+                <!-- Default Table -->
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>재료 번호</th>
+                      <th>재료 이름</th>
+                      <th>수량</th>
+                      <th>입고 일자</th>
+                      <th>입고 수량</th>       
+                    </tr>
+                  </thead>
+                  <th:block th:each="info:${container}">
+                    <tbody>
+                      <tr>
+                      	<td th:text="${info.materialNumber}"></td>
+                      	<td th:text="${info.materialName}"></td>
+                      	<td th:text="${info.count}"></td>
+                      	<td th:text="${info.inDay}"></td>
+                      	<td th:text="${info.inCount}"></td>
+                      </tr>
+                    </tbody>
+                  </th:block>
+                </table>
+                <!-- End Default Table Example -->
+                <div class="card">
+                  <div class="card-body">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script>
+  </script>
+</html>

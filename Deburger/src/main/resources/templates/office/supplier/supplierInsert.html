@@ -40,7 +40,7 @@
              <h5 class="card-title"></h5>
              
               <!-- Multi Columns Form -->
-              <form class="row g-3" th:action="@{supplierInsert}" method="post" name="insertForm">
+              <form class="row g-3" th:action="@{supplierInsert}" method="post" name="insertForm" enctype="multipart/form-data">
                 
                 <div class="col-md-12">
                   <label for="cname" class="form-label">상호명</label>
@@ -96,7 +96,7 @@
                 
                 <div class="col-md-12">
                   <label for="contPdf" class="form-label">계약서</label>
-                  <input type="file" class="form-control" id="contPdf" name="contractPdf">
+                  <input type="file" class="form-control" id="contractPdf" name="contractPdfFile">
                 </div>
                 
                 <div class="col-md-12">
