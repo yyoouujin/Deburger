@@ -1,6 +1,7 @@
 package com.deburger.app.shop.stock.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.deburger.app.shop.stock.service.StockVO;
 
@@ -13,6 +14,9 @@ public interface StockMapper {
 	  public int insertCart(StockVO stockVO);
 	  
 	//상세 조회
-	  public StockVO selectStockinfo(StockVO stockVO);
+	  public List<StockVO> selectStockinfo(StockVO stockVO);
+	  
+	//수정(폐기 처분)
+	  public int updateShopStockInfo(StockVO stockVO);
 
 }

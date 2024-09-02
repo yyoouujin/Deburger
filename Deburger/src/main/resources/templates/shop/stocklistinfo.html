@@ -33,16 +33,29 @@
 										<th>현재 재고</th>
 										<th>합계</th>
 										<th data-type="date" data-format="YYYY/DD/MM">유통기한</th>
-										<th>수량 변경</th>
-										<th>폐기</th>
+										<th>재고 조정</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<th:block th:each="list:${shopStockInfo}">
+										<tr id = list>
+											<td>[[${#dates.format(list.orderDay,'yyyy/MM/dd')}]]</td>
+											<td th:text="${list.materialName}" />
+											<td>본사</td>
+											<td th:text="${list.saleUnitprice}" />
+											<td th:text="${list.count}" />
+											<td th:text="${list.remainStockCount}" />
+											<td th:text="${list.saleUnitprice*list.count}" />
+											<td>[[${#dates.format(list.expirationLimit,'yyyy/MM/dd')}]]</td>
+											<td><button type="button" class="btn btn-primary btn-sm btnStock"
+													data-bs-toggle="modal" data-bs-target="#disablebackdrop">재고
+													조정</button></td>
+											<!-- End Disabled Backdrop Modal-->
+										</tr>
+									</th:block>
 								</tbody>
 							</table>
 							<!-- End Table with stripped rows -->
-
 						</div>
 					</div>
 
@@ -50,6 +63,57 @@
 			</div>
 		</section>
 	</main>
+	<form>
+		<div class="modal fade" id="disablebackdrop" tabindex="-1"
+			data-bs-backdrop="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">재고 조정</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<table class="table ">
+							<thead>
+								<tr>
+									<th>발주 일자</th>
+									<th>유통 기한</th>
+									<th>이름</th>
+									<th>현재 재고</th>
+									<th>조정 재고</th>
+									<th>폐기</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td id="orderDay"></td>
+									<td id="limitDay"></td>
+									<td id="materialName"></td>
+									<td id="remainStockCount"></td>
+									<td><input type="text" id="StockCount"></td>
+									<td><input type="checkbox" id=""></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary">저장</button>
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<script>
+	$(".btnStock").on("click", function(event) {
+		document.getElementById('orderDay').innerHTML=$("#list").children().eq(0).text();
+		document.getElementById('limitDay').innerHTML=$("#list").children().eq(7).text();
+		document.getElementById('materialName').innerHTML=$("#list").children().eq(1).text();
+		document.getElementById('remainStockCount').innerHTML=$("#list").children().eq(5).text();
+		
+	});
+	</script>
 </body>
-
 </html>

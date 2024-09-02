@@ -1,5 +1,9 @@
 package com.deburger.app.shop.stock.service;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -23,4 +27,15 @@ public class StockVO {
 	//장바구니 테이블
 	private Integer cartNumber;
 	private Integer count;
+	
+	//입고테이블	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date orderDay;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date expirationLimit;
+	private Integer remainStockCount;
+	private String disposalOperatioin;
+	
+
+	
 }

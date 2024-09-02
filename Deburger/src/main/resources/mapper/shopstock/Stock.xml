@@ -12,9 +12,11 @@
 		,m.sale_unitprice
 		,s.stock_count
 		,s.safety_stock
-		from store_stock s join material m
+		from store_stock s join
+		material m
 		on s.material_number = m.material_number
-		where s.store_number = 111
+		where s.store_number
+		= 111
 		order
 		by m.material_number
 	</select>
@@ -22,14 +24,33 @@
 	<insert id="insertCart" parameterType="StockVO">
 		INSERT INTO
 		order_cart(cart_number
-				,Store_number
-				,material_number
-				,count)
-		VALUES (OC_SEQ.NEXTVAL
-				,111
-				,#{materialNumber}
-				,1)
+		,Store_number
+		,material_number
+		,count)
+		VALUES
+		(OC_SEQ.NEXTVAL
+		,111
+		,#{materialNumber}
+		,1)
 	</insert>
-	
-	
+
+	<select id="selectStockinfo" parameterType="StockVO">
+select o.order_Day
+		,m.material_Name
+		,'본사'
+		,m.sale_Unitprice
+		,d.count
+		,i.remain_Stock_Count
+		,i.expiration_Limit
+		From store_Order o join Order_Details D
+		on o.order_number = d.order_number
+		join store_in i
+		on i.order_details_number = d.order_details_number
+		join material m
+		on d.material_number = m.material_number
+		where o.store_number = 111
+		AND o.order_number = #{materialNumber}
+		order by order_day
+	</select>
+
 </mapper>
