@@ -36,7 +36,7 @@ public class SupplierController {
 		
 		//단건조회 : URI - office/supplierInfo/PARAMETER(SupplierVO)
 		//				RETURN - office/supplierInfo.html
-		@GetMapping("office/supplierInfo")
+		@GetMapping("supplierInfo")
 		public String supplierInfo(SupplierVO supplierVO, Model model) {
 				SupplierVO findVO = supplierService.supplierInfo(supplierVO);
 				model.addAttribute("supplier", findVO);
@@ -56,13 +56,14 @@ public class SupplierController {
 				
 				//반환되는 값이 공급업체 아이디의 SUP0000001 중 0000001만 반환된다
 				int cid = supplierService.insertSupplier(supplierVO);
-				return "redirect:supplierInfo?clientId=SUP" + cid;
-			
+				String strcid = String.format("%07d", cid);
+				return "redirect:supplierInfo?clientId=SUP" + strcid;
+				//return "office/supplier/supplierList";
 		}
-		
+
 		
 		//수정페이지
-		@GetMapping("office/supplierUpdate")
+		@GetMapping("supplierUpdate")
 		public String supplierUpdateForm(SupplierVO supplierVO, Model model) {
 				SupplierVO findVO = supplierService.supplierInfo(supplierVO);
 				model.addAttribute("supplier", findVO);
@@ -70,18 +71,18 @@ public class SupplierController {
 		}
 		
 		//수정처리
-		@PostMapping("office/supplierUpdate")
-		@ResponseBody
-		public Map<String, Object> supplierUpdateProcess(@RequestBody SupplierVO supplierVO) {
-				return supplierService.updateSupplier(supplierVO);
+		@PostMapping("supplierUpdate")
+		public String supplierUpdateProcess(SupplierVO supplierVO) {
+				supplierService.updateSupplier(supplierVO);
+				return "redirect:supplierList";
 		}
 		
 		
 		//삭제
-		@GetMapping("office/supplierDelete")
+		@GetMapping("supplierDelete")
 		public String supplierDelete(String clientId) {
 				supplierService.deleteSupplier(clientId);
-				return "redirect:office/supplierList";
+				return "redirect:supplierList";
 		}
 		
 	
