@@ -28,7 +28,8 @@
 	                      <option value="3">Three</option>
                     </select>
                     <div>
-                    	<button id="insert">등록 하기</button>
+                    <a href="/deburger/containerInsert"><button>등록</button></a>
+                    	                  
                     </div>
                   </div>
                 </div>
@@ -59,6 +60,7 @@
                       	<td th:text="${lists.expirationLimit}"></td>
                       	<td th:text="${lists.expirationLimit}"></td>
                       	<td th:text="${#dates.format(lists.limit, 'yyyy/MM/dd')}"></td>
+                      	
                       	<td th:text="${#dates.format(lists.limit, 'yyyy/MM/dd')}"></td>
                       </tr>
                     </tbody>
@@ -110,5 +112,8 @@
   		location.href = url;
   	});
   	
+  	$("#insert").on('click', function(){
+  		
+  	})
   </script>
 </html>

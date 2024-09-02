@@ -29,4 +29,11 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.selectContainerInfo(containerVO);
 	}
 
+	@Override
+	public int containerInsert(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		int result = containerMapper.insertContainerInfo(containerVO);
+		return result == 1 ? Integer.parseInt(containerVO.getNumber()) : -1;
+	}
+
 }
