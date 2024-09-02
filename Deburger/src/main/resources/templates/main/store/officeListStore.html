@@ -25,7 +25,8 @@
 								<input type="date" class="form-control">
 							</div>
 							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary" th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
+								<button type="button" class="btn btn-primary"
+									th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
 							</div>
 						</div>
 					</form>
@@ -36,26 +37,24 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th scope="col"><b>일련번호</b></th>
-										<th scope="col">검수일자</th>
-										<th scope="col">검수자</th>
-										<th scope="col">처리상태</th>
-										<th scope="col">품질</th>
-										<th scope="col">서비스</th>
-										<th scope="col">청결</th>
-										<th scope="col">총점</th>
+										<th scope="col"><b>가맹점 번호</b></th>
+										<th scope="col">가맹점 이름</th>
+										<th scope="col">오픈날짜</th>
+										<th scope="col">가맹점 대표</th>
+										<th scope="col">전화번호</th>
+										<th scope="col">지역</th>
+										<th scope="col">영업여부</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td scope="row">QAC-0001</td>
-										<td>2023-05-08 오후 04:30:30</td>
-										<td>김지수</td>
-										<td>검수중</td>
-										<td>80&#47;100</td>
-										<td>80&#47;100</td>
-										<td>80&#47;100</td>
-										<td>240&#47;300</td>
+										<td scope="row">FRC0000001</td>
+										<td>대구만촌점</td>
+										<td>23/01/02</td>
+										<td>홍길동</td>
+										<td>010-1234-5678</td>
+										<td>대구 수성구 동원로 136</td>
+										<td>영업중</td>
 									</tr>
 								</tbody>
 							</table>
@@ -75,11 +74,65 @@
 							</nav>
 							<!-- End Pagination with icons -->
 
+
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
+		<div id="grid">
+		
+		<button id="addRowBtn">추가</button>
+		
+		</div>
 	</main>
 
+	<script>
+const Grid = tui.Grid;
+const grid = new tui.Grid({
+    el: document.getElementById('grid'),   
+    data: {
+      api: {
+        readData: { url: '/api/readData', method: 'GET' }
+      }
+    },    
+    scrollX: false,
+    scrollY: false,
+    minBodyHeight: 30,
+    rowHeaders: ['rowNum'],
+    pageOptions: {
+      perPage: 5
+    },
+    columns: [
+      {
+        header: 'Name',
+        name: 'name'
+      },
+      {
+        header: 'Artist',
+        name: 'artist'
+      },
+      {
+        header: 'Type',
+        name: 'type'
+      },
+      {
+        header: 'Release',
+        name: 'release'
+      },
+      {
+        header: 'Genre',
+        name: 'genre'
+      }
+    ]
+  });
+  
+var addRowBtn = document.getElementById('addRowBtn');
+addRowBtn.addEventListener('click', function() {
+    grid.appendRow({});
+});
+
+
+</script>
 </body>
