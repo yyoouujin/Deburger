@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.office.container.mapper.ContainerMapper">
+	
+	<select id="selectAllList" resultType="ContainerVO">
+			select a.material_number as "number",
+			        a.material_item as "item",
+			        a.material_name as "name",
+			        b.count as "count",
+			        c.in_count as "inCount",
+			        c.expiration_limit as "limit" 
+			from material a 
+			left join logistics_order_details b
+			    on a.material_number = b.material_number
+			left join logistics_in c
+			    on b.details_order_number = c.details_order_number
+			order by a.material_number
+	</select>
+	
+	<select id="selectContainerInfo" resultType="ContainerVO">
+			select a.material_number ,
+			       a.material_name,
+			       b.count,
+			       c.in_day,
+			       c.in_count
+			from material a
+			join logistics_order_details b
+			    on a.material_number = b.material_number
+			join logistics_in c
+			    on b.details_order_number = c.details_order_number
+			where a.material_number = #{number}
+	</select>
+</mapper>

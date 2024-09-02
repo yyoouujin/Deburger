@@ -25,7 +25,14 @@ public class MaterialController {
 		List<MaterialVO> list = materialService.serviceAllList();
 		model.addAttribute("materials", list);
 
-		return "office/material";
+		return "office/material/materials";
+	}
+
+	@GetMapping("materialInfo")
+	public String materialInfo(MaterialVO materialVO, Model model) {
+		MaterialVO mvo = materialService.materialInfo(materialVO);
+		model.addAttribute("material", mvo);
+		return "office/material/materialInfo";
 	}
 
 }
