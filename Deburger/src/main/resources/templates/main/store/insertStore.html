@@ -16,37 +16,37 @@
           <h1 class="card-title">가맹점 정보</h1>
 
           <!-- General Form Elements -->
-          <form class="col-md-8" method="post" th:action="@{insertStore}">
+          <form class="col-md-8" method="post" th:action="@{insertStore}" enctype="multipart/form-data">
             <div class="row mb-3">
-              <label for="inputText" class="col-sm-2 col-form-label">가맹점 번호 </label>
+              <label for="storeNumber" class="col-sm-2 col-form-label">가맹점 번호 </label>
               <div class="col-sm-5 col-md-3">
-                <input type="text" class="form-control" name="storeNumber" />
+                <input type="text" class="form-control" name="storeNumber" id="storeNumber" />
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputText" class="col-sm-2 col-form-label">가맹점명 </label>
+              <label for="storeName" class="col-sm-2 col-form-label">가맹점명 </label>
               <div class="col-sm-5 col-md-3">
-                <input type="text" class="form-control" name="storeName" />
+                <input type="text" class="form-control" name="storeName" id="storeName"/>
               </div>
-              <label for="inputText" class="col-sm-2 col-form-label">점주명 </label>
+              <label for="shopkeeper" class="col-sm-2 col-form-label">점주명 </label>
               <div class="col-sm-5 col-md-3">
-                <input type="text" class="form-control" name="shopkeeper" />
+                <input type="text" class="form-control" name="shopkeeper" id="shopkeeper" />
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputEmail" class="col-sm-2 col-form-label">사업자등록번호</label>
+              <label for="businessRegistrationNumber" class="col-sm-2 col-form-label">사업자등록번호</label>
               <div class="col-sm-10">
-                <input type="inputText" class="form-control" name="businessRegistrationNumber" />
+                <input type="inputText" class="form-control" name="businessRegistrationNumber" id="businessRegistrationNumber" />
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputEmail" class="col-sm-2 col-form-label">주소</label>
+              <label for="postalBtn" class="col-sm-2 col-form-label">주소</label>
               <div class="col-sm-10">
                 <input type="text" id="sample6_postcode" placeholder="우편번호" name="postal" class="col-md-5" />
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" /><br />
+                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postalBtn"/><br />
                 <input type="text" id="sample6_address" placeholder="주소" name="address" class="col-md-5" /><br />
                 <input
                   type="text"
@@ -60,48 +60,48 @@
             </div>
 
             <div class="row mb-3">
-              <label for="inputPassword" class="col-sm-2 col-form-label">전화번호</label>
+              <label for="phone" class="col-sm-2 col-form-label">전화번호</label>
               <div class="col-sm-10">
-                <input type="inputText" class="form-control" name="phone" />
+                <input type="inputText" class="form-control" name="phone" id="phone"/>
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputPassword" class="col-sm-2 col-form-label">이메일</label>
+              <label for="email" class="col-sm-2 col-form-label">이메일</label>
               <div class="col-sm-10">
-                <input type="inputText" class="form-control" name="email" />
+                <input type="inputText" class="form-control" name="email" id="email"/>
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputDate" class="col-sm-2 col-form-label">계약기간</label>
+              <label for="contractStartDay" class="col-sm-2 col-form-label">계약기간</label>
               <div class="col-sm-10 col-md-4">
-                <input type="date" class="form-control" name="contractStartDay" />
+                <input type="date" class="form-control" name="contractStartDay" id="contractStartDay"/>
               </div>
               ~
               <div class="col-sm-10 col-md-4">
-                <input type="date" class="form-control" name="contractFinDay" />
+                <input type="date" class="form-control" name="contractFinDay" id="contractFinDay"/>
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputNumber" class="col-sm-2 col-form-label">지정물류창고</label>
+              <label for="logisticsId" class="col-sm-2 col-form-label">지정물류창고</label>
               <div class="col-sm-10 col-md-3">
-                <input type="inputText" class="form-control" name="logisticsId" />
+                <input type="inputText" class="form-control" name="logisticsId" id="logisticsId"/>
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputNumber" class="col-sm-2 col-form-label">계약서</label>
+              <label for="contractImage" class="col-sm-2 col-form-label">계약서</label>
               <div class="col-sm-10">
-                <input class="form-control" type="file" id="formFile" name="contractImage" />
+                <input class="form-control" type="file" id="contractImageFile" name="contractImageFile" />
               </div>
             </div>
 
             <div class="row mb-3">
-              <label for="inputNumber" class="col-sm-2 col-form-label">사업자 등록증</label>
+              <label for="businessLicenseImage" class="col-sm-2 col-form-label">사업자 등록증</label>
               <div class="col-sm-10">
-                <input class="form-control" type="file" id="formFile" name="businessLicenseImage" />
+                <input class="form-control" type="file" id="businessLicenseImageFile" name="businessLicenseImageFile" />
               </div>
             </div>
 

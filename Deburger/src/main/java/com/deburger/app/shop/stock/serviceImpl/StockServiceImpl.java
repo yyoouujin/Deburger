@@ -1,6 +1,7 @@
 package com.deburger.app.shop.stock.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,17 @@ public class StockServiceImpl implements StockService{
 	
 	//상세조회
 	@Override
-	public StockVO selectStockinfo(StockVO stockVO) {
+	public List<StockVO> selectStockinfo(StockVO stockVO) {
 		// TODO Auto-generated method stub
 		return stockMapper.selectStockinfo(stockVO);
 	}
+	
+	//수정 (폐기)
+	@Override
+	public int updateShopStockInfo(StockVO stockVO) {
+		// TODO Auto-generated method stub
+		return stockMapper.updateShopStockInfo(stockVO);
+	}
+
 	
 }

@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -30,6 +30,9 @@
             <div class="card-body">
               <h5 class="card-title">Default Table</h5>
 
+				<div id="gridDiv"></div>
+				
+				
               <!-- Default Table -->
               <table class="table datatable">
 
@@ -39,9 +42,9 @@
                     <th>NO</th>
                     <th>거래처명</th>
                     <th>주소</th>
-                    <th scope="col">전화번호</th>
-                    <th scope="col">사업자번호</th>
-                    <th scope="col"></th>
+                    <th>전화번호</th>
+                    <th>사업자번호</th>
+                    <th></th>
                   </tr>
                 </thead>
                 
@@ -72,24 +75,21 @@
 </html>
 
 <script>
-
-	//const ctPath = $('meta[name="contextPath"]').attr('content');
-	//<meta name="contextPath" th:content="${contextPath}">
 	
+	//<meta name="contextPath" th:content="${contextPath}">
+	const ctPath = $('meta[name="contextPath"]').attr('content');
 	
 	$('button').on('click', function(event) {
 		
 		let btn = event.currentTarget;
-		
 		let cid = $(btn).closest('tr').data('cid');
-
+		
 		//let url = ctPath + '/supplierInfo?clientId=' + cid;
-		let url = '/supplierInfo?clientId=' + cid;
+		
+		let url = '/deburger/supplierInfo?clientId=' + cid;
 		location.href=url;
-		
-		
 		
 	});
 
-	
 </script>
+

@@ -13,11 +13,11 @@ public interface MaterialMapper {
 	public MaterialVO selectMaterial(MaterialVO materialVO);
 
 	// 등록
-	public int insertMaterialInfo();
+	public int insertMaterialInfo(MaterialVO materialVO);
 
 	// 수정
-	public int updateMaterialInfo();
+	public int updateMaterialInfo(MaterialVO materialVO);
 
 	// 삭제
-	public int deleteMaterialInfo(int materialNumber);
+	public int deleteMaterialInfo(String materialNumber);
 }
