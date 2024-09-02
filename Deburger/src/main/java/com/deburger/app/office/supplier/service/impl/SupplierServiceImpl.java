@@ -38,8 +38,9 @@ public class SupplierServiceImpl implements SupplierService {
 		@Override
 		public int insertSupplier(SupplierVO supplierVO) {
 				int result = supplierMapper.insertSupplierInfo(supplierVO);
-				return result == 1 ? Integer.parseInt(supplierVO.getClientId().substring(2)) : -1;
+				return result == 1 ? Integer.parseInt(supplierVO.getClientId().substring(3)) : -1;
 				//거래처 아이디 SUP0000001 중 0000001 만 반환
+				//return result;
 		}
 	
 		@Override
