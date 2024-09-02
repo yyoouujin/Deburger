@@ -11,4 +11,5 @@ public interface ContainerService {
 	public ContainerVO containerInfo(ContainerVO containerVO);
 
 	// 등록
+	public int containerInsert(ContainerVO containerVO);
 }

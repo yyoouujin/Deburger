@@ -36,4 +36,15 @@ public class ContainerController {
 		model.addAttribute("container", findeVO);
 		return "office/container/containerInfo";
 	}
+	
+	// 등록
+	@GetMapping("containerInsert")
+	public String containerInsertForm() {
+		return "office/container/containerInsert";
+	}
+	
+	// 수정
+	
+	// 삭제(폐기 처리)
+	
 }
