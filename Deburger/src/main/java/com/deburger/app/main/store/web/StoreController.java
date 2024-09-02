@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deburger.app.main.login.service.LoginService;
+import com.deburger.app.main.login.service.UserVO;
 import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
 
@@ -28,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StoreController {
 
 	private StoreService storeService;
+	
 
 	@Autowired
 	public StoreController(StoreService storeService) {
@@ -111,8 +114,14 @@ public class StoreController {
 		// 1) 사용자가 업로드할 때 사용한 파일명
 		// 2) 실제 서버에 업로드할 때 사용한 경로
 		storeVO.setBusinessLicenseImage(setImagePath(uploadFileName2));
+		
+		UserVO userVO = new UserVO();
+		userVO.setId("frc" + storeVO.getBusinessRegistrationNumber());
+		userVO.setPassword(storeVO.getPhone());
+		userVO.setAuthority("4");
+		userVO.setPasswordChangeOpertation("N");
 
-		storeService.insertStore(storeVO);
+		storeService.insertStore(storeVO, userVO);
 
 		return "main/store/insertStore";
 	}
