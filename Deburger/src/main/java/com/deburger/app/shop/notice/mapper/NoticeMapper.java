@@ -9,21 +9,8 @@ public interface NoticeMapper {
 	//전체조회(전체)
 	public List<NoticeVO> noticeListShop();
 	
-	//전체조회(업데이트)
-	public List<NoticeVO> noticeListShopUpdate();
-	
-	//전체조회(서비스)
-	public List<NoticeVO> noticeListShopService();
-	
-	//전체조회(이벤트)
-	public List<NoticeVO> noticeListShopEvent();
-		
-	//전체조회(작업)
-	public List<NoticeVO> noticeListShopWork();
-	
-	//전체조회(공고)
-	public List<NoticeVO> noticeListShopAnnouncement();
-	
+	//전체조회(업데이트, 서비스, 이벤트, 작업, 공고)
+	public List<NoticeVO> noticeListShopE(NoticeVO noticeVO);
 	
 	//상세조회
 	public NoticeVO noticeListInfoShop(NoticeVO noticeVO);
@@ -35,5 +22,5 @@ public interface NoticeMapper {
 	public int noticeCorrectOffice(NoticeVO noticeVO);
 	
 	//삭제하기
-	public int noticeDeleteOffice (int noticeVO);
+	public int noticeDeleteOffice (String noticeNumber);
 }
