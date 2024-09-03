@@ -12,4 +12,11 @@ public interface ContainerService {
 
 	// 등록
 	public int containerInsert(ContainerVO containerVO);
+
+	// 물류 창고 입고 조회
+	public List<ContainerVO> containerAllInList();
+
+	// 물류 창고 폐기 처리
+	public int disposeItem(ContainerVO containerVO);
+
 }
