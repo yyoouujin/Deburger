@@ -52,68 +52,7 @@
 
 						<div class="card">
 							<div class="card-body"><br>
-								<table class="table table-bordered ">
-									<thead>
-										<tr class="table-secondary">
-											<th scope="col"><b>항목</b></th>
-											<th scope="col">상세 항목</th>
-											<th scope="col">기준</th>
-											<th scope="col">평가</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="table-secondary">
-											<th colspan="4" style="text-align: center;">Quality(품질)</th>
-										</tr>
-										<tr>
-											<td scope="row">염지육 관리</td>
-											<td style="text-align:left;">염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)</td>
-											<td>3</td>
-											<td>
-
-												<div class="col-sm-10">
-
-													<div class="form-check ">
-
-														<label class="form-check-label" for="gridRadios1">
-															<input type="radio" name="gridRadios" id="gridRadios1"
-																value="option1" checked>
-															1점
-														</label>
-														<label class="form-check-label" for="gridRadios2">
-															<input type="radio" name="gridRadios" id="gridRadios2"
-																value="option2">
-															2점
-														</label>
-														<label class="form-check-label" for="gridRadios3">
-															<input type="radio" name="gridRadios" id="gridRadios3"
-																value="option3">
-															3점
-														</label>
-													</div>
-
-												</div>
-
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
-								<!-- Pagination with icons -->
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-center">
-										<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span
-													aria-hidden="true">&laquo;</span>
-											</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span
-													aria-hidden="true">&raquo;</span>
-											</a></li>
-									</ul>
-								</nav>
-								<!-- End Pagination with icons -->
+								<div id="grid"></div>
 
 							</div>
 						</div>
@@ -121,6 +60,157 @@
 				</div>
 			</div>
 		</section>
+		
+		
 	</main>
+	<script>
+      let grid;
+      
+      
+
+      $(document).ready(async () => {
+        // 2. HTML이 수행된 뒤 함수를 호출한다.
+        grid = await gridLoad();
+      });
+
+      /**
+       *
+       * @return void
+       */
+      const gridLoad = () => {
+        // 3. 그리드 생성
+        const Grid = tui.Grid;
+
+        /**
+         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+         *
+         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+         * @reference https://seokbong.tistory.com/14
+         */
+        Grid.applyTheme('stripe');
+
+        /**
+         * [선택] Grid Confirm 메시지
+         */
+        Grid.setLanguage('en'); // set Korean
+        const grid = new Grid({
+          // ================================== 공통 옵션 적용 ==============================
+          el: document.getElementById('grid'), // [필수] Container element
+          data: [
+            {
+            	list: 'H1',
+            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+            	score: '3',
+            },
+            {
+            	list: 'H1',
+            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+            	score: '3',
+            },
+            {
+            	list: 'H1',
+            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+            	score: '3',
+            },
+          ], // [선택] 그리드 데이터 조회
+
+          /**
+           * [선택] 순번 기능
+           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           */
+           rowHeaders: ['rowNum'],
+
+           pageOptions: {
+               useClient: true,
+               perPage: 10
+             },
+
+          // ================================== 컬럼 옵션 적용 ==============================
+          columns: [
+        	  
+        	// [Column-5] 사용자 취미
+              {
+                header: '항목', // [필수] 컬럼 이름
+                name: 'list', // [필수] 컬럼 매핑 이름 값
+                align: 'center', // [선택] 텍스트 정렬 옵션
+                sortable: true, // [선택] 컬럼의 정렬 여부
+                resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
+                
+                // [Option] select 옵션
+                editor: {
+                  type: 'select',
+                  options: {
+                    listItems: [
+                      { text: '염지육 관리', value: 'H1' },
+                      { text: '재조 매뉴얼 준수', value: 'H2' },
+                      { text: '주류/음료', value: 'H3' },
+                      { text: '식자제 관리', value: 'H4' },
+                    ],
+                  },
+                },
+              },
+            // [Column-2] 사용자 이름
+            {
+              header: '상세 항목', // [필수] 컬럼 이름
+              name: 'content', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              editor: 'text', // [선택] 수정 옵션
+              align: 'left', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-4] 사용자 나이
+            {
+              header: '평가', // [필수] 컬럼 이름
+              name: 'score', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              editor: {
+                  type: 'radio',
+                  options: {
+                    listItems: [
+                      { text: '1점', value: 1 },
+                      { text: '2점', value: 2 },
+                      { text: '3점', value: 3 },
+                    ]
+                  }
+                },
+              align: 'center', // [선택] 텍스트 정렬 옵션
+           
+             
+            },
+            
+
+            
+          ],
+          
+          
+        });
+
+        //  그리드 추가
+
+        return grid;
+      };
+
+      const appendBtn = document.getElementById('appendBtn');
+      const deleteBtn = document.getElementById('deleteBtn');
+
+      const appendedData = {
+      };
+
+      appendBtn.addEventListener('click', () => {
+        grid.appendRow(appendedData);
+      });
+
+      
+      
+      deleteBtn.addEventListener('click', () => {
+    	  grid.removeCheckedRows();
+        });
+      
+     
+    </script>
+	
 
 </body>

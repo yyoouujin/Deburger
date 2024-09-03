@@ -3,21 +3,16 @@ package com.deburger.app.shop.qsc.service;
 import lombok.Data;
 
 @Data
-public class qscVO {
-	
-	public String productNumber;
-	public String productName;
-	public int saleUnitprice;
-	public String image;
-	public String RecipePdf;
-	public int Price;
-	public String category;
-	public String kind;
-	public String registrationDay;
-	public String explanation;
-	public String itemCode;
-	public String itemName;
-	public String consumption;
-	public String unit;
+public class qscVO {		
+	public String qscDate;
+	public String processCondition;
+	public int storeNumber;
+	public String checklistNumber;
+	public String qualityScore;
+	public int cleanlScore;
+	public String serviceScore;
+	public String qscResultDetailsNumber;
+	public String qscNumber;
+	public String score;
 	
 }
