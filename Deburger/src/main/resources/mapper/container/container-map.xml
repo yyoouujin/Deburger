@@ -3,18 +3,21 @@
 <mapper namespace="com.deburger.app.office.container.mapper.ContainerMapper">
 	
 	<select id="selectAllList" resultType="ContainerVO">
-			select a.material_number as "number",
-			        a.material_item as "item",
-			        a.material_name as "name",
-			        b.count as "count",
-			        c.in_count as "inCount",
-			        c.expiration_limit as "limit" 
+			select a.material_number,
+			        a.material_item,
+			        a.material_name,
+			        b.count as,
+			        c.in_count,
+			        c.expiration_limit,
+			        c.expiration_limit+30 as "limit"
 			from material a 
 			left join logistics_order_details b
 			    on a.material_number = b.material_number
 			left join logistics_in c
 			    on b.details_order_number = c.details_order_number
 			order by a.material_number
+			
+			
 	</select>
 	
 	<select id="selectContainerInfo" resultType="ContainerVO">
@@ -28,6 +31,50 @@
 			    on a.material_number = b.material_number
 			join logistics_in c
 			    on b.details_order_number = c.details_order_number
-			where a.material_number = #{number}
+			where a.material_number = #{materialNumber}
 	</select>
+	
+	<select id="selectAllInList" resultType="ContainerVO">
+		select details_order_number,
+	           count,
+	           unit,
+	           material_number,
+	           order_number,
+	           supplier,
+	           person_id,
+	           in_operation,
+	           order_cost,
+	           order_condition
+		from logistics_order_details
+		order by details_order_number desc
+	</select>
+	
+	<!-- 물류 창고 폐기 처리 -->
+	<insert id="containerOutInsert" parameterType="ContainerVO">
+		insert into logistics_out(
+		    logistics_out_number,
+		    out_date,
+		    logistics_id,
+		    inspection,
+		    out_count,
+		    note,
+		    out_operation,
+		    lot
+		)values(
+		        'DV' || LPAD(DV_SEQ.nextval, '7', '0'),    
+		        #{logisticsOutNumber},  
+		        #{logisticsId},
+		        #{inspection},
+		        #{outCount},
+		        #{note},
+		        #{outOperation},
+		        #{lot}
+		)
+	</insert>
+	
+	<update id="containerInupdate">
+		update logistics_in
+		set in_count = #{container.inCount}
+		where lot = #{lot}
+	</update>
 </mapper>
