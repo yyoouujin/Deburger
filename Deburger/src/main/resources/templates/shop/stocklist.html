@@ -23,7 +23,7 @@
 						<div class="card-body">
 							<!-- Table with stripped rows -->
 							<!-- <table class="table datatable"> -->
-							<form method="POST" th:action="@{/shopCartInsert}">
+							<form>
 								<table class="table">
 									<thead>
 										<tr>
@@ -67,7 +67,6 @@
 		</section>
 	</main>
 	<script>
-	<!-- ajax -->
 		$("button").on("click", function(event) {
 			alert("발주 목록에 저장되었습니다.");
 			let url = 'shopCartInsert?materialNumber=' + event.target.id;
