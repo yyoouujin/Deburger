@@ -10,7 +10,7 @@
 		,m.sale_Unitprice
 		from order_cart o join material m
 		on m.material_number = o.material_number
-		where o.store_number = 111
+		where o.store_number = 'FRC0000001'
 		ORDER by m.material_number
 	</select>
 </mapper>
