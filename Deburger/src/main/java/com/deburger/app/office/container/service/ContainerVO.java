@@ -9,24 +9,36 @@ import lombok.Data;
 @Data
 public class ContainerVO {
 
-	public String lot;
 	public String detailsOrderNumber;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date inDay;
-	public int inCount;
-	public String inspectionOperation;
-	public Date expirationLimit;
+
+	public String inspectionOperation;;
 	public Date consumptionLimit;
 	public String disposalOperation;
-	public int outCount;
+
 	public Date manufactureDay;
 	public String personId;
 
-	public String number;
-	public String item;
-	public String name;
-	public String count;
+	// 물류 재고 리스트
+	public String materialNumber;
+	public String materialItem;
+	public String materialName;
+	public int count;
+	public int inCount;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date expirationLimit;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date limit;
 
+	// 물류 재고 상세
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date inDay;
+
+	// 물류 창고 폐기 처리
+	public String logisticsOutNumber;
+	public String logisticsId;
+	public String inspection;
+	public int outCount;
+	public String note;
+	public String outOperation;
+	public String lot;
 }

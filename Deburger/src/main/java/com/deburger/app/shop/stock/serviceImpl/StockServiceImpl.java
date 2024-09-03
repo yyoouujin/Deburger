@@ -44,12 +44,7 @@ public class StockServiceImpl implements StockService{
 		return stockMapper.selectStockinfo(stockVO);
 	}
 	
-	//수정 (폐기)
-	@Override
-	public int updateShopStockInfo(StockVO stockVO) {
-		// TODO Auto-generated method stub
-		return stockMapper.updateShopStockInfo(stockVO);
-	}
+
 
 	
 }
