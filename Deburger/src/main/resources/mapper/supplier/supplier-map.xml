@@ -95,9 +95,10 @@
 		UPDATE supplier
 		SET		client_name = #{clientName}
 				, postal = #{postal}
+				, phone = #{phone}
 				, address = #{address}
 				, addresssec = #{addresssec}
-				, email = #{phone}
+				, email = #{email}
 				, businessnum = #{businessnum}
 				, representative_name = #{representativeName}
 				, businesstype = #{businessType}
