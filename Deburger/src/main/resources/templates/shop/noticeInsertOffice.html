@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>공지사항 작성</title>
+  </head>
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <!-- 작성 칸 영역 -->
+        <div class="card">
+          <div class="card-body">
+            <form
+              class="row g-3"
+              name="noticeInsertOffice"
+              th:action="@{noticeInsertOffice}"
+              method="post"
+            >
+              <div>
+                <h1 style="display: inline-block">공지사항</h1>
+                <button
+                  type="button"
+                  id="btnInsert"
+                  class="btn btn-primary"
+                  style="margin-left: 67%"
+                >
+                  등록하기
+                </button>
+              </div>
+              <br />
+
+              <!--카테고리 작성 칸-->
+              <div class="col-sm-10">
+                <select class="form-select" id="selectdivision" aria-label="Default select example">
+                  <option selected>카테고리를 선택해주세요.</option>
+                  <option value="1">업데이트</option>
+                  <option value="2">서비스</option>
+                  <option value="3">이벤트</option>
+                  <option value="4">작업</option>
+                  <option value="5">공고</option>
+                </select>
+              </div>
+
+              <!--제목 작성 칸-->
+              <div class="col-md-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  placeholder="공지사항 제목을 작성해주세요."
+                />
+              </div>
+
+              <!--내용 작성 칸-->
+              <div class="col-md-10" style="height: 400px">
+                <div id="contentDiv" class="quill-editor-full"></div>
+              </div>
+
+              <br />
+            </form>
+          </div>
+        </div>
+        <!-- 작성 칸 영역 끝 -->
+      </div>
+    </main>
+    <!-- End #main -->
+    <script>
+      $("#btnInsert").on("click", function (event) {
+        //에디터 내용 읽어서
+        let contentText = $("#contentDiv").text();
+
+        //텍스트 에어리어 안에 넣어서
+        let tArea = document.createElement("textarea");
+        tArea.innerText = contentText;
+        tArea.name = "content";
+
+        //어팬드 한다음 서브밋
+        $("form[name='noticeInsertOffice']").append(tArea);
+
+        noticeInsertOffice.submit();
+       
+        //카테고리 값을 읽어서
+        let selectkey = $("#selectdivision").value();
+        console.log(selectkey);
+      
+        
+        alert("게시글이 등록되었습니다.");
+      });
+    </script>
+  </body>
+</html>

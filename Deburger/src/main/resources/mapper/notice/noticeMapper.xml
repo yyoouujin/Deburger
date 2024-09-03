@@ -14,8 +14,8 @@ from notice
 order by notice_number desc
 </select>
 
-<!-- 전체조회(업데이트) -->
-<select id = "noticeListShopUpdate" resultType="NoticeVO">
+<!-- 전체조회(업데이트, 서비스, 이벤트, 작업, 공고) -->
+<select id = "noticeListShopE" resultType="NoticeVO">
 select 	notice_number
         ,division
 	    ,writer_date
@@ -23,63 +23,9 @@ select 	notice_number
 	    ,title 
 	    ,content
 from notice
-where division ='업데이트'
+where division =#{division}
 order by notice_number desc
 </select>
-
-<!-- 전체조회(서비스) -->
-<select id = "noticeListShopService" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where division ='서비스'
-order by notice_number desc
-</select>
-
-<!-- 전체조회(이벤트) -->
-<select id = "noticeListShopEvent" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where division = '이벤트'
-order by notice_number desc
-</select>
-
-<!-- 전체조회(작업) -->
-<select id = "noticeListShopWork" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where division ='작업'
-order by notice_number desc
-</select>
-
-<!-- 전체조회(공고) -->
-<select id = "noticeListShopAnnouncement" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where division ='공고'
-order by notice_number desc
-</select>
-
-
 
 <!-- 상세조회 -->
 <select id="noticeListInfoShop" resultType="NoticeVO">
@@ -95,19 +41,45 @@ where notice_number = #{noticeNumber}
 
 <!-- 등록 -->
 <insert id = "noticeInsertOffice" parameterType="NoticeVO">
-INSERT INTO 	notice_number
-               ,division
-	           ,writer_date
-	           ,writer
-	           ,title 
-	           ,content
+INSERT INTO notice	(notice_number
+	               ,division
+		           ,writer_date
+		           ,writer
+		           ,title 
+		           ,content)
 VALUES        ('ANM' || LPAD(ANM_SEQ.nextval, '7', '0')
                ,#{division}
+               <choose>
+               <when test="writerDate != null">
                ,#{writerDate}
+               </when>
+                  <otherwise>
+                  ,sysdate
+                  </otherwise>
+                </choose>
                ,#{writer}
                ,#{title}
-               ,#{content})
-               
-               
+               ,#{content})              
 </insert>
+
+
+<!-- 수정 -->
+<update id = "noticeCorrectOffice">
+UPDATE notice
+   SET 
+       division=#{division}
+	   ,writer_date=sysdate
+	   ,writer=#{writer}
+	   ,title =#{title}
+	   ,content=#{content}
+   WHERE notice_number=#{noticeNumber}
+</update>
+
+<!-- 삭제 -->
+<delete id ="noticeDeleteOffice">
+DELETE 
+FROM  notice
+WHERE notice_number=#{noticeNumber}
+</delete>
+
 </mapper>  
