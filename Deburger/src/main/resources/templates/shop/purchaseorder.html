@@ -54,90 +54,94 @@ th, td {
 					</div>
 				</div>
 			</div>
-		</div>
-
-
-
-
-		<div style="text-align: right; margin: 0 0 10px 0;">
-			<button type="button" class="btn btn-primary" id="save">발주
-				저장</button>
-			<button type="button" class="btn btn-primary" id="App">발주 신청</button>
-			<button type="button" class="btn btn-primary" id="cancel">발주
-				취소</button>
-		</div>
-		<!-- End Page Title -->
+		</div>		<!-- End Page Title -->
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<table class="col-lg-12">
-								<thead>
-									<tr>
-										<th>발주건명</th>
-										<td colspan='7'></td>
-									</tr>
-									<tr>
-										<th>발주일자</th>
-										<td colspan='7'></td>
-									</tr>
-									<tr>
-										<th>발신 업체 이름</th>
-										<td colspan='3'></td>
-										<th>수신 업체 이름</th>
-										<td colspan='3'></td>
-									</tr>
-									<tr>
-										<th rowspan="2">연락처</th>
-										<th>전화번호</th>
-										<td colspan='2'></td>
-
-										<th rowspan="2">연락처</th>
-										<th>전화번호</th>
-										<td colspan='2'></td>
-
-									</tr>
-									<tr>
-										<th>이메일</th>
-										<td colspan='2'></td>
-										<th>이메일</th>
-										<td colspan='2'></td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th>합계금액</th>
-										<td style="text-align: center" colspan='7'>일금 <input
-											type="text" style="border: none; width: 200px;" /> 원정( <input
-											type="text" style="border: none; width: 200px;" /> )세액포함
-										</td>
-									</tr>
-									<tr style="text-align: center">
-										<th class="col-lg-1">No.</th>
-										<th class="col-lg-1">품명</th>
-										<th class="col-lg-1">규격</th>
-										<th class="col-lg-1">수량</th>
-										<th class="col-lg-1">단가</th>
-										<th class="col-lg-1">공급 가액</th>
-										<th class="col-lg-1">세액</th>
-										<th class="col-lg-1">합계금액</th>
-									</tr>
-									<th:block th:each="list,index:${selectOrderCart}">
+							<form method="post" action="insertShopOrder">
+								<div style="text-align: right; margin: 0 0 10px 0;">
+									<button type="button" class="btn btn-primary" id="save">발주
+										저장</button>
+									<button type="submit" class="btn btn-primary" id="App">발주
+										신청</button>
+									<button type="button" class="btn btn-primary" id="cancel">발주
+										취소</button>
+								</div>
+								<table class="col-lg-12" style="text-align: center">
+									<thead>
 										<tr>
-											<td th:text=${index.index+1} />
-											<td th:text="${list.materialName}" />
-											<td th:text="${list.unit}" />
-											<td><input type="text" th:value="${list.count}" class = "count"></td>
-											<td th:text="${list.saleUnitprice}" id="originPrice" />
-											<td th:text="${list.saleUnitprice*list.count}" id = "money"></td>
-											<td th:text="${list.saleUnitprice*list.count/10}" id = "moneyTax"></td>
-											<td
-												th:text="${list.saleUnitprice*list.count}+${list.saleUnitprice*list.count/10}" id="allPrice"></td>
+											<th>발주건명</th>
+											<td colspan='7'><input type="text" id ="orderName" name="orderName" style="border: none; width: 100%;" ></td>
 										</tr>
-									</th:block>
-								</tbody>
-							</table>
+										<tr>
+											<th>발주일자</th>
+											<td colspan='7'></td>
+										</tr>
+										<tr>
+											<th>발신 업체 이름</th>
+											<td colspan='3'><input type="text" id="storeNumber" name="storeNumber" value="FRC0000001" style="border: none;" readonly></td>
+											<th>수신 업체 이름</th>
+											<td colspan='3'>디버거</td>
+										</tr>
+										<tr>
+											<th rowspan="2">연락처</th>
+											<th>전화번호</th>
+											<td colspan='2'></td>
+
+											<th rowspan="2">연락처</th>
+											<th>전화번호</th>
+											<td colspan='2'>053-0000-0000</td>
+
+										</tr>
+										<tr>
+											<th>이메일</th>
+											<td colspan='2'></td>
+											<th>이메일</th>
+											<td colspan='2'>info@deburger.com</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th>합계금액</th>
+											<td style="text-align: center" colspan='7'>일금 <input
+												type="text" style="border: none; width: 200px;" id="korSum"
+												readonly /> 원정( <input type="text"
+												style="border: none; width: 200px;" id="allSum" readonly />
+												)세액포함
+											</td>
+										</tr>
+										<tr>
+											<th class="col-lg-1">No.</th>
+											<th class="col-lg-1">품명</th>
+											<th class="col-lg-1">규격</th>
+											<th class="col-lg-1">수량</th>
+											<th class="col-lg-1">단가</th>
+											<th class="col-lg-1">공급 가액</th>
+											<th class="col-lg-1">세액</th>
+											<th class="col-lg-1">합계금액</th>
+										</tr>
+										<th:block th:each="list,index:${selectOrderCart}">
+											<tr id="test">
+											    <input type="hidden" th:value="${list.materialNumber}"/>
+												<td th:text=${index.index+1} />
+												<td th:text="${list.materialName}" />
+												<td th:text="${list.unit}" />
+												<td><input type="number" th:value="${list.count}"
+													id="count" name="count" style="border: none;"></td>
+												<td th:text="${list.saleUnitprice}" id="oprice" />
+												<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
+												<td th:text="${list.saleUnitprice*list.count/10}"
+													id="textprice"></td>
+												<td
+													th:text="${list.saleUnitprice*list.count}+${list.saleUnitprice*list.count/10}"
+													id="allprice" class="allprice"></td>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -145,12 +149,58 @@ th, td {
 		</section>
 	</main>
 	<script>
-		$("count").on("change", function(event) {
-			document.getElementById('money').innerHTML=document.querySelector('#count').value*document.querySelector('#originPrice').textContent
-			document.getElementById('moneyTax').innerHTML=document.querySelector('#money').textContent/10
-			document.getElementById('allPrice').innerHTML=Number(document.querySelector('#money').textContent)+Number(document.querySelector('#moneyTax').textContent)
+
+		Calculator();
+	
+		$("input").on("change", function(event) {
+			let tr = $(event.target).closest('tr');
+
+			tr.find('#price').get(0).innerHTML = Number(tr.find('#oprice').text())*Number($(event.target).val());
+			tr.find('#textprice').get(0).innerHTML = Number(tr.find('#price').text()/10);
+			tr.find('#allprice').get(0).innerHTML = Number(tr.find('#price').text())+Number(tr.find('#texPrice').text());
+			
+			Calculator();
 		});
 
+		function Calculator(){
+			let sum = 0;
+			  $('.allprice').each(function(index,item){
+				  sum += Number(item.innerHTML);
+			});
+			  
+			  $('#allSum').val(sum);
+			  $('#korSum').val(geKoreanNumber(sum));
+			 
+		}
+		
+		function geKoreanNumber(number) {
+			  const koreanNumber = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+			  const tenUnit = ['', '십', '백', '천'];
+			  const tenThousandUnit = ['조', '억', '만', ''];
+			  const unit = 10000;
+
+			  let answer = '';
+
+			  while (number > 0) {
+			    const mod = number % unit;
+			    const modToArray = mod.toString().split('');
+			    const length = modToArray.length - 1;
+
+			     const modToKorean = modToArray.reduce((acc, value, index) => {
+			      const valueToNumber = +value;
+			      if (!valueToNumber) return acc;
+
+			      const numberToKorean = index < length && valueToNumber === 1 ? '' : koreanNumber[valueToNumber];
+			      return `${acc}${numberToKorean}${tenUnit[length - index]}`;
+			    }, '');
+
+			    answer = `${modToKorean}${tenThousandUnit.pop()} ${answer}`;
+			    number = Math.floor(number / unit);
+			  }
+
+			  return answer.replace();
+			}
+		
 	</script>
 </body>
 </html>
