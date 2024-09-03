@@ -13,8 +13,6 @@ public interface StockService {
 	
 	//재고 상세 전체 조회
 	public List<StockVO> selectStockinfo(StockVO stockVO);
-	
-	//수정(폐기 처분)
-	public int updateShopStockInfo(StockVO stockVO);
+
 	
 }

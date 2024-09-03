@@ -1,30 +1,25 @@
 package com.deburger.app.shop.notice.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NoticeService {
     
 	//공지사항 전체 조회(전체)
 	public List<NoticeVO> noticeListShop();
 	
-	//공지사항 전체 조회(업데이트)
-	public List<NoticeVO> noticeListShopUpdate();
+	//전체조회(업데이트, 서비스, 이벤트, 작업, 공고)
+	public List<NoticeVO> noticeListShopE(NoticeVO noticeVO);
 	
-	//공지사항 전체 조회(서비스)
-	public List<NoticeVO> noticeListShopService();
-	
-	//공지사항 전체 조회(이벤트)
-	public List<NoticeVO> noticeListShopEvent();
-
-	//공지사항 전체 조회(작업)
-	public List<NoticeVO> noticeListShopWork();
-
-	//공지사항 전체 조회(공고)
-	public List<NoticeVO> noticeListShopAnnouncement();
-	
-	//
 	//공지사항 단건 조회
 	public NoticeVO noticeListInfoShop(NoticeVO noticeVO);
 	
+	//공지사항 등록
+	public int noticeInsertOffice(NoticeVO noticeVO);
 	
+	//공지사항 수정
+	public Map<String, Object> noticeCorrectOffice(NoticeVO noticeVO);
+	
+	//공지사항 삭제
+	public int noticeDeleteOffice(String noticeNumber);
 }

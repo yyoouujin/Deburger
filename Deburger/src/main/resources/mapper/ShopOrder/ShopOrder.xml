@@ -4,13 +4,62 @@
 	namespace="com.deburger.app.shop.shoporder.mapper.ShopOrderMapper">
 
 	<select id="selectShopOrder" parameterType="ShopOrderVO">
-		select m.material_name
+		select
+		m.material_number
+		,m.material_name
 		,m.unit
 		,o.count
 		,m.sale_Unitprice
-		from order_cart o join material m
+		from
+		order_cart o join material m
 		on m.material_number = o.material_number
-		where o.store_number = 111
+		where o.store_number = 'FRC0000001'
 		ORDER by m.material_number
 	</select>
+
+	<insert id="insertShopOrder" parameterType="ShopOrderVO">
+			<selectKey keyProperty="orderNumber" resultType="String"
+			order="BEFORE">
+			select 'FOD' || LPAD(FOD_SEQ.nextval,'7',0) from dual
+		</selectKey>
+		Insert INTO store_Order(
+			ORDER_NUMBER
+			,ORDER_DAY
+			,STORE_NUMBER
+			,AUTO_ORDER_OPERATION
+			,cancel_operation
+			,note
+			,person_id)
+		values (
+			#{orderNumber}
+			,sysdate
+			,#{storeNumber}
+			,'i2'
+			,'j1'
+			,''
+			,'')
+	</insert>
+
+	<insert id="dinsertShopOrder" parameterType="ShopOrderVO">
+
+		Insert INTO Order_details(
+			Order_details_number
+			,count
+			,order_name
+			,Order_Number
+		,MATERIAL_NUMBER)
+		values (
+			'FDO' || LPAD(FDO_SEQ.nextval,'7',0)
+			,1
+			,'test'
+			,#{orderNumber}
+			,'IGD0000025')
+
+	</insert>
+	
+	<delete id="deleteOrderCart">
+	delete from order_cart
+	where store_number=#{storeNumber}
+	</delete>
+
 </mapper>

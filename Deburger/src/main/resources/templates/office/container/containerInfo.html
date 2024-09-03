@@ -32,17 +32,19 @@
                       <th>재료 이름</th>
                       <th>수량</th>
                       <th>입고 일자</th>
-                      <th>입고 수량</th>       
+                      <th>입고 수량</th> 
+                      <th>폐기</th>      
                     </tr>
                   </thead>
                   <th:block th:each="info:${container}">
                     <tbody>
                       <tr>
-                      	<td th:text="${info.materialNumber}"></td>
+                      	<td th:text="${info.materialNumber}" id="a"></td>
                       	<td th:text="${info.materialName}"></td>
                       	<td th:text="${info.count}"></td>
-                      	<td th:text="${info.inDay}"></td>
+                      	<td th:text="${#dates.format(info.inDay,'yyyy/MM/dd')}"></td>
                       	<td th:text="${info.inCount}"></td>
+                      	<td><button id="delete">폐기</button></td>
                       </tr>
                     </tbody>
                   </th:block>
@@ -52,7 +54,6 @@
                   <div class="card-body">
                     <a href="/deburger/container"><button>목록</button></a>
 					<button>수정</button>
-					<a href="/deburger/containerDelete"><button>폐기</button></a>
                   </div>
                 </div>
               </div>
@@ -63,5 +64,13 @@
     </main>
   </body>
   <script>
+	const clc = $('meta[name="contextPath"]').attr('value');
+  	$('#delete').on('click', function(event){
+  		console.log();
+  		let btn = event.currentTarget;
+  		let did = $('#a').text();
+	  	let url = clc + '/containerDelete?materialNumber='+did;
+	  	location.href = url;
+  	});
   </script>
 </html>
