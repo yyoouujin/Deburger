@@ -32,9 +32,9 @@ public class ContainerController {
 
 	// 단건 조회
 	@GetMapping("containerInfo")
-	public String containerInfo(ContainerVO containerVO, Model model) {
-		ContainerVO findeVO = containerService.containerInfo(containerVO);
-		model.addAttribute("container", findeVO);
+	public String containerInfo(ContainerVO containerVO ,Model model) {
+		List<ContainerVO> list = containerService.containerInfo(containerVO);
+		model.addAttribute("container", list);
 		return "office/container/containerInfo";
 	}
 
@@ -49,8 +49,8 @@ public class ContainerController {
 	// 삭제(폐기 처리)
 	@GetMapping("containerDelete")
 	public String containerDelete(ContainerVO containerVO, Model model) {
-		ContainerVO findVO = containerService.containerInfo(containerVO);
-		model.addAttribute("container", findVO);
+		List<ContainerVO> list = containerService.containerInfo(containerVO);
+		model.addAttribute("container", list);
 		return "office/container/containerdelete";
 	}
 
