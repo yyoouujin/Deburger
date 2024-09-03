@@ -26,7 +26,7 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 상세 조회
 	@Override
-	public ContainerVO containerInfo(ContainerVO containerVO) {
+	public List<ContainerVO> containerInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.selectContainerInfo(containerVO);
 	}

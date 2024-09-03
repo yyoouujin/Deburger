@@ -10,15 +10,23 @@ import lombok.Data;
 public class ContainerVO {
 
 	public String detailsOrderNumber;
-
-	public String inspectionOperation;;
 	public Date consumptionLimit;
 	public String disposalOperation;
 
 	public Date manufactureDay;
-	public String personId;
 
-	// 물류 재고 리스트
+
+	// 물류 재고 리스트	
+	public String logisticsId;
+	public String logisticsName;
+	public String personId;
+	public String stockNumber;
+	public String stockCount;
+	public String logisticsSafetyStock;
+	public String inspectionOperation;
+	public String materialClassification;
+	
+	
 	public String materialNumber;
 	public String materialItem;
 	public String materialName;
@@ -35,7 +43,6 @@ public class ContainerVO {
 
 	// 물류 창고 폐기 처리
 	public String logisticsOutNumber;
-	public String logisticsId;
 	public String inspection;
 	public int outCount;
 	public String note;

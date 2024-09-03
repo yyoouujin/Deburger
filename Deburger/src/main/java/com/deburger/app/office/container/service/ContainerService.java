@@ -8,7 +8,7 @@ public interface ContainerService {
 	public List<ContainerVO> containerAllList();
 
 	// 단건 조회
-	public ContainerVO containerInfo(ContainerVO containerVO);
+	public List<ContainerVO> containerInfo(ContainerVO containerVO);
 
 	// 등록
 	public int containerInsert(ContainerVO containerVO);

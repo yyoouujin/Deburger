@@ -30,6 +30,7 @@
                     <div>
                     <a href="/deburger/containerInsert"><button>등록</button></a>                    	                  
                     </div>
+                    <h3 th:text="${containers[0].logisticsName}"></h3>
                   </div>
                 </div>
                 <!-- End Search Bar -->
@@ -37,29 +38,23 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>재료 코드</th>
+                      <th>재료 번호</th>
                       <th>재료 구분</th>
                       <th>재료 명</th>
                       <th>총 재고</th>
-                      <th>정상</th>
-                      <th>유통기한 임박</th>
-                      <th>출고 불가</th>
-                      <th>임박 기준일</th>
-                      <th>불가 기준일</th>         
+                      <th>안전 재고</th>
+                      <th>검수</th>       
                     </tr>
                   </thead>
                   <th:block th:each="lists:${containers}">
                     <tbody>
                       <tr>
                       	<td th:text="${lists.materialNumber}"></td>
-                      	<td th:text="${lists.materialItem}"></td>
+                      	<td th:text="${lists.materialClassification}"></td>
                       	<td th:text="${lists.materialName}"></td>
-                      	<td th:text="${lists.inCount}"></td>
-                      	<td th:text="${lists.inCount}"></td>
-                      	<td ></td>
-                      	<td ></td>
-                      	<td th:text="${#dates.format(lists.expirationLimit, 'yyyy/MM/dd')}"></td>
-                      	<td th:text="${#dates.format(lists.limit, 'yyyy/MM/dd')}"></td>                      	
+                      	<td th:text="${lists.stockCount}"></td>
+                      	<td th:text="${lists.logisticsSafetyStock}"></td>                     	
+                      	<td th:text="${lists.inspectionOperation}"></td>                     	
                       </tr>
                     </tbody>
                   </th:block>
