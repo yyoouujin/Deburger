@@ -3,53 +3,52 @@
 <mapper
 	namespace="com.deburger.app.shop.stock.mapper.StockMapper">
 	<select id="selectStock" parameterType="StockVO">
-		select
-		s.material_number
+select m.material_number
 		,m.material_name
 		,m.material_classification
 		,m.unit
 		,m.unit
 		,m.sale_unitprice
-		,s.stock_count
-		,s.safety_stock
-		from store_stock s join
-		material m
+		,NVL(s.stock_count,0)
+		,NVL(s.safety_stock,0)
+from store_stock s RIGHT OUTER JOIN material m
 		on s.material_number = m.material_number
-		where s.store_number
-		= 111
-		order
-		by m.material_number
+order by STOCK_COUNT
 	</select>
 
 	<insert id="insertCart" parameterType="StockVO">
 		INSERT INTO
-		order_cart(cart_number
-		,Store_number
-		,material_number
-		,count)
+			order_cart(cart_number
+			,Store_number
+			,material_number
+			,count)
 		VALUES
-		(OC_SEQ.NEXTVAL
-		,111
-		,#{materialNumber}
-		,1)
+			(OC_SEQ.NEXTVAL
+			,'FRC0000001'
+			,#{materialNumber}
+			,1)
 	</insert>
 
 	<select id="selectStockinfo" parameterType="StockVO">
-select o.order_Day
+		select o.order_Day
 		,m.material_Name
 		,'본사'
 		,m.sale_Unitprice
 		,d.count
 		,i.remain_Stock_Count
 		,i.expiration_Limit
-		From store_Order o join Order_Details D
+		From store_Order o join
+		Order_Details D
 		on o.order_number = d.order_number
 		join store_in i
-		on i.order_details_number = d.order_details_number
+		on
+		i.order_details_number = d.order_details_number
 		join material m
-		on d.material_number = m.material_number
-		where o.store_number = 111
-		AND o.order_number = #{materialNumber}
+		on
+		d.material_number = m.material_number
+		where o.store_number = 'FRC0000001'
+		AND
+		o.order_number = #{materialNumber}
 		order by order_day
 	</select>
 
