@@ -2,19 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.office.container.mapper.ContainerMapper">
 	
+	<!-- 전체 조회 -->
 	<select id="selectAllList" resultType="ContainerVO">
 			select distinct
-			        a.logistics_id,
-			        a.logistics_name,
-			        a.person_id,
-			        b.stock_number,
-			        b.stock_count,
-			        b.material_number,
-			        c.material_name,
-			        c.material_classification,
-			        c.logistics_safety_stock,
-			        d.person_id,
-			        e.inspection_operation
+		        a.logistics_id,
+		        a.logistics_name,
+		        a.person_id,
+		        b.stock_number,
+		        b.stock_count,
+		        b.material_number,
+		        c.material_name,
+		        c.material_classification,
+		        c.logistics_safety_stock,
+		        d.person_id,
+		        e.inspection_operation,
+		        e.material_number,
+		        sum(e.in_count) as inCount,
+		        sum(e.out_count) as outCount     
 			from logistics a
 			join logistics_stock b
 			    on a.logistics_id = b.logistics_id
@@ -24,17 +28,34 @@
 			    on c.material_number = d.material_number
 			join logistics_in e
 			    on d.details_order_number = e.details_order_number
+			group by a.logistics_id,
+			        a.logistics_name,
+			        a.person_id,
+			        b.stock_number,
+			        b.stock_count,
+			        b.material_number,
+			        c.material_name,
+			        c.material_classification,
+			        c.logistics_safety_stock,
+			        d.person_id,
+			        e.inspection_operation,
+			        e.material_number    
 			order by b.stock_number
 	</select>
 	
+	<!-- 상세 조회 -->
 	<select id="selectContainerInfo" resultType="ContainerVO">
 			select distinct
 			         a.details_order_number,
 			         a.count,
 			         a.supplier,
+			         a.order_condition,
+                     a.in_operation,
+                     a.person_id,
 			         b.lot,
 			     	 b.in_day,
 				     b.in_count,
+				     b.expiration_limit,
 				     c.material_number,
 				     c.material_name,
 			         d.logistics_id,
@@ -47,8 +68,11 @@
 			join logistics_order d
 				on a.order_number = d.order_number
 			where c.material_number = #{materialNumber}
+			and b.disposal_operation = 'N' 
+			order by b.expiration_limit
 	</select>
 	
+	<!-- 입고 조회 -->
 	<select id="selectAllInList" resultType="ContainerVO">
 		select details_order_number,
 	           count,
@@ -64,22 +88,46 @@
 		order by details_order_number desc
 	</select>
 	
+	<!-- 물류 창고 폐기 조회 -->
+	<select id="ContainerDeleteInfo" resultType="ContainerVO">
+			select distinct
+			         a.details_order_number,
+			         a.count,
+			         a.supplier,
+			         a.order_condition,
+                     a.in_operation,
+                     a.person_id,
+			         b.lot,
+			     	 b.in_day,
+				     b.in_count,
+				     c.material_number,
+				     c.material_name,
+			         d.logistics_id,
+			         d.client_id
+			from logistics_order_details a
+			join logistics_in b
+				on a.details_order_number = b.details_order_number
+			join material c
+				on a.material_number = c.material_number 
+			join logistics_order d
+				on a.order_number = d.order_number
+			where b.lot = #{lot}
+	</select>
+	
 	<!-- 물류 창고 폐기 처리 -->
 	<insert id="containerOutInsert" parameterType="ContainerVO">
 		insert into logistics_out(
 		    logistics_out_number,
 		    out_date,
 		    logistics_id,
-		    inspection,
 		    out_count,
 		    note,
 		    out_operation,
 		    lot
 		)values(
 		        'DV' || LPAD(DV_SEQ.nextval, '7', '0'),    
-		        #{logisticsOutNumber},  
+		        #{outDate},  
 		        #{logisticsId},
-		        #{inspection},
 		        #{outCount},
 		        #{note},
 		        #{outOperation},
@@ -89,7 +137,10 @@
 	
 	<update id="containerInupdate">
 		update logistics_in
-		set in_count = #{container.inCount}
+		set out_count = #{outCount},
+			disposal_operation = #{disposalOperation}
 		where lot = #{lot}
 	</update>
+	
+
 </mapper>
