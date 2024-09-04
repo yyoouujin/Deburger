@@ -18,6 +18,9 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">재료 입고 조회 List</h5>
+                    <div>
+                      <a href="/deburger/containerInsert"><button>등록</button></a>                    	                  
+                    </div>
                 <!-- 여기 검색 등록 -->
 				 <div class="row mb-3">
                     <div class="col-sm-4">
@@ -26,18 +29,29 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>입고 예정일</th>
-                      <th>진행 상태</th>
-                      <th>재료 명</th>
-                      <th>예정 수량</th>
+                      <th>LOT</th>
+                      <th>재료 이름</th>
+                      <th>상세 발주 번호</th>
+                      <th>예정 수량</th>	<!-- 발주 수량 -->
+                      <th>검수 상태</th>
+                      <th>입고 수량</th>
                       <th>등록일</th>
-                      <th>완료일</th>
+                      <th>매입처</th>
                       <th>등록자</th>      
                     </tr>
                   </thead>
-                  <th:block th:each="lists:${containers}">
+                  <th:block th:each="lists:${containersIn}">
                     <tbody>
-                      <tr>
+                      <tr >
+                      	<td th:text="${lists.lot}"></td>
+                      	<td th:text="${lists.materialName}"></td>
+                      	<td th:text="${lists.detailsOrderNumber}"></td>
+                      	<td th:text="${lists.count}"></td>
+                      	<td th:text="${lists.inspectionOperation}"></td>
+                      	<td th:text="${lists.inCount}"></td>
+                      	<td th:text="${#dates.format(lists.inDay, 'yyyy/MM/dd')}"></td>
+                      	<td th:text="${lists.clientName}"></td>
+                      	<td th:text="${lists.personId}"></td>
                       </tr>
                     </tbody>
                   </th:block>

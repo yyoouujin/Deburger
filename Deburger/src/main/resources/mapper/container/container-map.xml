@@ -74,18 +74,32 @@
 	
 	<!-- 입고 조회 -->
 	<select id="selectAllInList" resultType="ContainerVO">
-		select details_order_number,
-	           count,
-	           unit,
-	           material_number,
-	           order_number,
-	           supplier,
-	           person_id,
-	           in_operation,
-	           order_cost,
-	           order_condition
-		from logistics_order_details
-		order by details_order_number desc
+			select a.lot,
+			    a.in_day,
+				a.in_count,
+				a.inspection_operation,
+				a.person_id,
+				b.details_order_number,
+				b.count,
+				b.order_condition,
+			    c.material_name,
+			    d.order_day,
+			    e.logistics_name,
+			    f.client_id,
+			    g.client_name
+			from logistics_in a
+			join logistics_order_details b
+				on a.details_order_number = b.details_order_number
+			join material c
+				on b.material_number = c.material_number
+			join logistics_order d
+			on b.order_number = d.order_number
+			join logistics e
+				on d.logistics_id = e.logistics_id
+			join company_material f 
+			    on c.material_number = f.material_number 
+			join supplier g
+			    on f.client_id = g.client_id
 	</select>
 	
 	<!-- 물류 창고 폐기 조회 -->
