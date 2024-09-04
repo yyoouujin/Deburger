@@ -46,12 +46,18 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.selectAllInList();
 	}
 
+	// 물류 창고 폐기 조회
+	@Override
+	public List<ContainerVO> containerDtInfo(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.ContainerDeleteInfo(containerVO);
+	}
+
 	// 물류 창고 폐기 처리
 	@Override
 	@Transactional
 	public int disposeItem(ContainerVO containerVO) {
-		String lot = containerVO.getMaterialNumber();
-		containerMapper.containerInupdate(lot, containerVO);
+		containerMapper.containerInupdate(containerVO);
 		return containerMapper.containerOutInsert(containerVO);
 	}
 

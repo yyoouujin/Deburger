@@ -30,9 +30,9 @@ public class ContainerController {
 		return "office/container/containers";
 	}
 
-	// 단건 조회
+	// 상세 조회
 	@GetMapping("containerInfo")
-	public String containerInfo(ContainerVO containerVO ,Model model) {
+	public String containerInfo(ContainerVO containerVO, Model model) {
 		List<ContainerVO> list = containerService.containerInfo(containerVO);
 		model.addAttribute("container", list);
 		return "office/container/containerInfo";
@@ -46,14 +46,6 @@ public class ContainerController {
 
 	// 수정
 
-	// 삭제(폐기 처리)
-	@GetMapping("containerDelete")
-	public String containerDelete(ContainerVO containerVO, Model model) {
-		List<ContainerVO> list = containerService.containerInfo(containerVO);
-		model.addAttribute("container", list);
-		return "office/container/containerdelete";
-	}
-
 	// 물류 창고 입고 조회
 	@GetMapping("containerIn")
 	public String containerInList(Model model) {
@@ -62,9 +54,17 @@ public class ContainerController {
 		return "office/container/containersIn";
 	}
 
+	// 폐기 조회
+	@GetMapping("containerDelete")
+	public String containerDelete(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerDtInfo(containerVO);
+		model.addAttribute("container", list);
+		return "office/container/containerdelete";
+	}
+
+	// 폐기 처리
 	@PostMapping("containerIn")
 	public String disposeController(ContainerVO containerVO, Model model) {
-
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}

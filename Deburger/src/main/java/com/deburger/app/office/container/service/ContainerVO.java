@@ -15,8 +15,7 @@ public class ContainerVO {
 
 	public Date manufactureDay;
 
-
-	// 물류 재고 리스트	
+	// 물류 재고 리스트
 	public String logisticsId;
 	public String logisticsName;
 	public String personId;
@@ -25,8 +24,9 @@ public class ContainerVO {
 	public String logisticsSafetyStock;
 	public String inspectionOperation;
 	public String materialClassification;
-	
-	
+	public String orderCondition;
+	public String inOperation;
+
 	public String materialNumber;
 	public String materialItem;
 	public String materialName;
@@ -43,6 +43,8 @@ public class ContainerVO {
 
 	// 물류 창고 폐기 처리
 	public String logisticsOutNumber;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date outDate;
 	public String inspection;
 	public int outCount;
 	public String note;
