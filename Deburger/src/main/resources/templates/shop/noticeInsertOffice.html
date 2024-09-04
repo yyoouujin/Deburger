@@ -36,13 +36,13 @@
 
               <!--카테고리 작성 칸-->
               <div class="col-sm-10">
-                <select class="form-select" id="selectdivision" aria-label="Default select example">
+                <select class="form-select" id="selectdivision" name="division" aria-label="Default select example">
                   <option selected>카테고리를 선택해주세요.</option>
-                  <option value="1">업데이트</option>
-                  <option value="2">서비스</option>
-                  <option value="3">이벤트</option>
-                  <option value="4">작업</option>
-                  <option value="5">공고</option>
+                  <option value="업데이트" >업데이트</option>
+                  <option value="서비스">서비스</option>
+                  <option value="이벤트">이벤트</option>
+                  <option value="작업">작업</option>
+                  <option value="공고">공고</option>
                 </select>
               </div>
 
@@ -70,7 +70,11 @@
     </main>
     <!-- End #main -->
     <script>
-      $("#btnInsert").on("click", function (event) {
+      
+      $("#btnInsert").on("click", function (event) {    	  
+        //카테고리 값을 읽어서 셀렉트 값은 그냥 넘어 감....제발... 되면 안되니... ? .......?
+        let selectkey = $("#selectdivision").val();
+        
         //에디터 내용 읽어서
         let contentText = $("#contentDiv").text();
 
@@ -79,16 +83,25 @@
         tArea.innerText = contentText;
         tArea.name = "content";
 
+        debugger
         //어팬드 한다음 서브밋
         $("form[name='noticeInsertOffice']").append(tArea);
 
-        noticeInsertOffice.submit();
-       
-        //카테고리 값을 읽어서
-        let selectkey = $("#selectdivision").value();
-        console.log(selectkey);
-      
+        //엔터,띄어쓰기...? 이미지는...????? 
+        //enter => <br>
+        //var text = $('textarea').val();
+        //text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        //<br> => enter
+        //var text = $('textarea').val();
+        //text = text.split('<br>').join("\r\n");
         
+        
+        noticeInsertOffice.submit();
+        
+        
+        
+        //console.log(selectkey);
+
         alert("게시글이 등록되었습니다.");
       });
     </script>
