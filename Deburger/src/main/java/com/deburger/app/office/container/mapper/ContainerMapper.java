@@ -18,7 +18,7 @@ public interface ContainerMapper {
 
 	// 삭제
 
-	// 재료 입고 조회
+	// 물류 창고 입고 조회
 	public List<ContainerVO> selectAllInList();
 
 	// 물류 창고 폐기 조회

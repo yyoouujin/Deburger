@@ -7,7 +7,7 @@ public interface ContainerService {
 	// 전체 조회
 	public List<ContainerVO> containerAllList();
 
-	// 단건 조회
+	// 상세 조회
 	public List<ContainerVO> containerInfo(ContainerVO containerVO);
 
 	// 등록
