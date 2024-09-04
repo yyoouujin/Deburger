@@ -2,6 +2,8 @@ package com.deburger.app.shop.shoporder.mapper;
 
 import java.util.List;
 
+import com.deburger.app.shop.shoporder.service.ShopOrderCartVO;
+import com.deburger.app.shop.shoporder.service.ShopOrderDetailsVO;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 
 public interface ShopOrderMapper {
@@ -13,8 +15,8 @@ public interface ShopOrderMapper {
 		public int insertShopOrder(ShopOrderVO shopOrderVO);
 		
 		//발주 상세
-		public int dinsertShopOrder(ShopOrderVO shopOrderVO);
+		public int dinsertShopOrder(ShopOrderDetailsVO ShopOrderDetailsVO);
 
 		//장바구니 삭제
-		public int deleteOrderCart(ShopOrderVO shopOrderVO);
+		public int deleteOrderCart(ShopOrderCartVO ShopOrderCartVO);
 }

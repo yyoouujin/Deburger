@@ -34,8 +34,8 @@
 			#{orderNumber}
 			,sysdate
 			,#{storeNumber}
-			,'i2'
-			,'j1'
+			,#{autoOrderOperation}
+			,#{cancelOperation}
 			,''
 			,'')
 	</insert>
@@ -45,21 +45,20 @@
 		Insert INTO Order_details(
 			Order_details_number
 			,count
-			,order_name
 			,Order_Number
 		,MATERIAL_NUMBER)
 		values (
 			'FDO' || LPAD(FDO_SEQ.nextval,'7',0)
-			,1
-			,'test'
+			,#{count}
 			,#{orderNumber}
-			,'IGD0000025')
+			,#{materialNumber})
 
 	</insert>
 	
 	<delete id="deleteOrderCart">
 	delete from order_cart
 	where store_number=#{storeNumber}
-	</delete>
+	AND material_Number=#{materialNumber}
+	</delete> 
 
 </mapper>
