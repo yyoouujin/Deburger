@@ -1,5 +1,7 @@
 package com.deburger.app.main.store.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,11 @@ public class StoreServiceImpl implements StoreService{
 	public int insertStore(StoreVO storeVO, UserVO userVO) {		
 		loginService.insertUserInfo(userVO);		
 		return storeMapper.insertStore(storeVO);
+	}
+
+	@Override
+	public List<StoreVO> selectStoreList() {
+		return storeMapper.selectStoreList();
 	}
 
 }

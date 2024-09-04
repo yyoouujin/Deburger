@@ -45,168 +45,159 @@
       </section>
     </main>
 
-    <script>
-      let grid;
+    <script th:inline="javascript">
 
-      $(document).ready(async () => {
-        // 2. HTML이 수행된 뒤 함수를 호출한다.
-        grid = await gridLoad();
-        
-        grid.resetData([{
-            storeNumber: 'FRC0000001',
-            storeName: '대구만촌점',
-            contractStartDay: '23/01/02',
-            shopkeeper: '홍길동',
-            phone: '010-1234-5678',
-            addressses: '대구 수성구 ',
-            contractStartDay: '영업중',
-          },
-          {
-            storeNumber: 'FRC0000002',
-            storeName: '대구만촌점',
-            contractStartDay: '23/01/02',
-            shopkeeper: '홍길동',
-            phone: '010-1234-5678',
-            addressses: '대구 수성구 ',
-            contractStartDay: '영업중',
-          },
-          {
-            storeNumber: 'FRC0000003',
-            storeName: '대구만촌점',
-            contractStartDay: '23/01/02',
-            shopkeeper: '홍길동',
-            phone: '010-1234-5678',
-            addressses: '대구 수성구 ',
-            contractStartDay: '영업중',
-          },])
-        
-      
-      });
+        	var StoreList = [[${StoreList}]];
 
-      /**
-       *
-       * @return void
-       */
-      const gridLoad = () => {
-        // 3. 그리드 생성
-        const Grid = tui.Grid;
+        	 let grid;
 
-        /**
-         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
-         *
-         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
-         * @reference https://seokbong.tistory.com/14
-         */
-        Grid.applyTheme('stripe');
+        	class CustomDateRender {
+                constructor(props) {
+                  const el = document.createElement('div');
 
-        /**
-         * [선택] Grid Confirm 메시지
-         */
-        Grid.setLanguage('en'); // set Korean
-        const grid = new Grid({
-          // ================================== 공통 옵션 적용 ==============================
-          el: document.getElementById('grid'), // [필수] Container element
-          data: [
-            {
-              storeNumber: 'FRC0000001',
-              storeName: '대구만촌점',
-              contractStartDay: '23/01/02',
-              shopkeeper: '홍길동',
-              phone: '010-1234-5678',
-              addressses: '대구 수성구 ',
-              contractStartDay: '영업중',
-            },
-          ], // [선택] 그리드 데이터 조회
+                  this.el = el;
+                  this.render(props);
+                }
+
+                getElement() {
+                  return this.el;
+                }
+
+                render(props) {
+              	  let value = props.value
+              	  let dateFormat = value.substring(0,4) + '년 ' + value.substring(5,7) + '월 ' + value.substring(8,10) + '일';
+                  this.el.innerHTML = dateFormat;
+                }
+              }
+
+
+
+
+          $(document).ready(async () => {
+            // 2. HTML이 수행된 뒤 함수를 호출한다.
+            grid = await gridLoad();
+
+          });
+
+
+
+
 
           /**
-           * [선택] 순번 기능
-           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           *
+           * @return void
            */
-          rowHeaders: ['rowNum'],
-          
-			// 패이징			
-          pageOptions: {
-        	  useClient: true,
-            perPage: 10,
-          },
+          const gridLoad = () => {
+            // 3. 그리드 생성
+            const Grid = tui.Grid;
 
-          // ================================== 컬럼 옵션 적용 ==============================
-          columns: [
-            // [Column-2] 가맹점 번호
-            {
-              header: '가맹점 번호', // [필수] 컬럼 이름
-              name: 'storeNumber', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              
-            },
-            // [Column-2] 가맹점 이름
-            {
-              header: '가맹점 이름', // [필수] 컬럼 이름
-              name: 'storeName', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-2] 오픈날짜
-            {
-              header: '오픈날짜', // [필수] 컬럼 이름
-              name: 'contractStartDay', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-2] 가맹점 대표
-            {
-              header: '가맹점 대표', // [필수] 컬럼 이름
-              name: 'shopkeeper', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
+            /**
+             * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+             *
+             * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+             * @reference https://seokbong.tistory.com/14
+             */
 
-            // [Column-4] 전화번호
-            {
-              header: '전화번호', // [필수] 컬럼 이름
-              name: 'phone', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
 
-            // [Column-4] 지역
-            {
-              header: '지역', // [필수] 컬럼 이름
-              name: 'addressses', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-4] 영업여부
-            {
-              header: '영업여부', // [필수] 컬럼 이름
-              name: 'contractStartDay', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-          ],
-        });
+            /**
+             * [선택] Grid Confirm 메시지
+             */
+            Grid.setLanguage('en'); // set Korean
+            const grid = new Grid({
+              // ================================== 공통 옵션 적용 ==============================
+              el: document.getElementById('grid'), // [필수] Container element
+              data: StoreList, // [선택] 그리드 데이터 조회
 
-        //  그리드 추가
 
-       grid.on('click', (ev) => {
-      	let url ='officeStoreInfo?storeNumber=' + grid.getData()[ev.rowKey].storeNumber;
-		location.href = url;
-      	})
-        
-        return grid;
-      };
+              /**
+               * [선택] 순번 기능
+               * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+               */
+              rowHeaders: ['rowNum'],
 
-    	
-    	
+      	// 패이징
+              pageOptions: {
+            	  useClient: true,
+                perPage: 10,
+              },
 
+              // ================================== 컬럼 옵션 적용 ==============================
+              columns: [
+                // [Column-2] 가맹점 번호
+                {
+                  header: '가맹점 번호', // [필수] 컬럼 이름
+                  name: 'storeNumber', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+
+                },
+                // [Column-2] 가맹점 이름
+                {
+                  header: '가맹점 이름', // [필수] 컬럼 이름
+                  name: 'storeName', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-2] 오픈날짜
+                {
+                  header: '오픈날짜', // [필수] 컬럼 이름
+                  name: 'contractStartDay', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                  renderer: {
+                      type: CustomDateRender,
+                    },
+                },
+                // [Column-2] 가맹점 대표
+                {
+                  header: '가맹점 대표', // [필수] 컬럼 이름
+                  name: 'shopkeeper', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+
+                // [Column-4] 전화번호
+                {
+                  header: '전화번호', // [필수] 컬럼 이름
+                  name: 'phone', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+
+                // [Column-4] 지역
+                {
+                  header: '지역', // [필수] 컬럼 이름
+                  name: 'address', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-4] 영업여부
+                {
+                  header: '영업여부', // [필수] 컬럼 이름
+                  name: 'contractStartDay', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+              ],
+            });
+
+            //  그리드 추가
+
+           grid.on('dblclick', (ev) => {
+          	let url ='officeStoreInfo?storeNumber=' + grid.getData()[ev.rowKey].storeNumber;
+      location.href = url;
+          	})
+			
+          	grid.off('hover');
+            
+            return grid;
+          };
     </script>
   </body>
 </html>

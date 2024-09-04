@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.main.store.mapper.StoreMapper">
 
+
+
+	
+	<select id="selectStoreList" resultType="com.deburger.app.main.store.service.StoreVO">	
+	select  
+                STORE_NUMBER
+               ,SHOPKEEPER
+               ,BUSINESS_REGISTRATION_NUMBER
+               ,PHONE
+               ,EMAIL
+               ,STORE_NAME
+               ,ADDRESS
+               ,CONTRACT_START_DAY
+               ,CONTRACT_FIN_DAY
+               ,CONTRACT_IMAGE
+               ,BUSINESS_LICENSE_IMAGE
+               ,POSTAL
+               ,ADDRESSSEC
+               ,NOTE
+               ,LOGISTICS_ID
+		                 
+	from store
+	
+	</select>
+	
 	<insert id="insertStore" parameterType="com.deburger.app.main.store.service.StoreVO">
 	INSERT INTO store(
 	                  STORE_NUMBER
