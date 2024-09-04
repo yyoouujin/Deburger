@@ -1,83 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
-<head>
-<meta charset="UTF-8" />
-<title>Insert title here</title>
-</head>
-s
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  s
 
-<body>
-	<main id="main" class="main">
-		<div class="pagetitle">
-			<h1>QSC 항목 관리</h1>
-			<br />
-			<p>*가맹점에서 사용하는 체크리스트의 상세 항목을 작성할 수 있습니다.</p>
-		</div>
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>QSC 항목 관리</h1>
+        <br />
+        <p>*가맹점에서 사용하는 체크리스트의 상세 항목을 작성할 수 있습니다.</p>
+      </div>
 
-		<!-- End Page Title -->
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-12" style="text-align: center">
-					<div class="row mb-3">
-						<div class="col-sm-10 col-md-3">
-							<input type="text" class="form-control" value="디버거 감삼점" />
-						</div>
-						<div class="row mb-3 col-md-4">
-							<label for="inputText" class="col-sm-2 col-form-label col-md-3">검수자:
-							</label>
-							<div class="col-sm-10 col-md-8">
-								<input type="text" class="form-control" value="김지수" />
-							</div>
-						</div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12" style="text-align: center">
+            <div class="row mb-3">
+              <div class="col-sm-10 col-md-3">
+                <input type="text" class="form-control" value="디버거 감삼점" />
+              </div>
 
-						<div class="col-sm-10 col-md-3">
-							<button type="button" class="btn btn-primary col-md-12">제출하기</button>
-						</div>
-					</div>
+              <div class="col-sm-10 col-md-3">
+                <button type="button" class="btn btn-primary col-md-12" id="insertBtn">제출하기</button>
+              </div>
+            </div>
 
-					<div class="row mb-3">
-						<div class="col-sm-10 col-md-2">
-							<button type="button" class="btn btn-info col-md-12">Quality(품질)</button>
-						</div>
-						<div class="col-sm-10 col-md-2">
-							<button type="button" class="btn btn-info col-md-12">Service(서비스)</button>
-						</div>
-						<div class="col-sm-10 col-md-2">
-							<button type="button" class="btn btn-info col-md-12">Cleanliness(청결)</button>
-						</div>
-					</div>
+            <div class="row mb-3">
+              <div class="col-sm-10 col-md-2">
+                <button type="button" class="btn btn-info col-md-12">Quality(품질)</button>
+              </div>
+              <div class="col-sm-10 col-md-2">
+                <button type="button" class="btn btn-info col-md-12">Service(서비스)</button>
+              </div>
+              <div class="col-sm-10 col-md-2">
+                <button type="button" class="btn btn-info col-md-12">Cleanliness(청결)</button>
+              </div>
+            </div>
 
-					<div class="card">
-						<div class="card-body">
-							<br />
-							<div class="row position-absolute top-0 end-0" >
-								<div class="col-sm-10 col-md-6">
-									<button type="button" class="btn btn-info col-md-12"
-										id="appendBtn">추가</button>
-								</div>
-									<div class="col-sm-10 col-md-6">
-										<button type="button" class="btn btn-info col-md-12"
-											id="deleteBtn">삭제</button>
-									</div>
-							</div><br>
-							<div id="grid"></div>
+            <div class="card">
+              <div class="card-body">
+                <br />
+                <div class="row position-absolute top-0 end-0">
+                  <div class="col-sm-10 col-md-6">
+                    <button type="button" class="btn btn-info col-md-12" id="appendBtn">추가</button>
+                  </div>
+                  <div class="col-sm-10 col-md-6">
+                    <button type="button" class="btn btn-info col-md-12" id="deleteBtn">삭제</button>
+                  </div>
+                </div>
+                <br />
+                <div id="grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-	</main>
-
-
-	<script>
+    <script>
       let grid;
-      
-      
 
       $(document).ready(async () => {
         // 2. HTML이 수행된 뒤 함수를 호출한다.
@@ -109,19 +98,19 @@ s
           el: document.getElementById('grid'), // [필수] Container element
           data: [
             {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
+              list: 'H1',
+              content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+              score: '3',
             },
             {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
+              list: 'H1',
+              content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+              score: '3',
             },
             {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
+              list: 'H1',
+              content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
+              score: '3',
             },
           ], // [선택] 그리드 데이터 조회
 
@@ -129,40 +118,39 @@ s
            * [선택] 순번 기능
            * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
            */
-           rowHeaders: ['checkbox'],
+          rowHeaders: ['checkbox'],
 
-           pageOptions: {
-               useClient: true,
-               perPage: 10
-             },
-             draggable: true,
+          pageOptions: {
+            useClient: true,
+            perPage: 10,
+          },
+          draggable: true,
 
           // ================================== 컬럼 옵션 적용 ==============================
           columns: [
-        	  
-        	// [Column-5] 사용자 취미
-              {
-                header: '항목', // [필수] 컬럼 이름
-                name: 'list', // [필수] 컬럼 매핑 이름 값
-                align: 'center', // [선택] 텍스트 정렬 옵션
-                sortable: true, // [선택] 컬럼의 정렬 여부
-                resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
-                
-                // [Option] select 옵션
-                editor: {
-                  type: 'select',
-                  options: {
-                    listItems: [
-                      { text: '염지육 관리', value: 'H1' },
-                      { text: '재조 매뉴얼 준수', value: 'H2' },
-                      { text: '주류/음료', value: 'H3' },
-                      { text: '식자제 관리', value: 'H4' },
-                    ],
-                  },
+            // [Column-5] 사용자 취미
+            {
+              header: '항목', // [필수] 컬럼 이름
+              name: 'list', // [필수] 컬럼 매핑 이름 값
+              align: 'center', // [선택] 텍스트 정렬 옵션
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
+
+              // [Option] select 옵션
+              editor: {
+                type: 'select',
+                options: {
+                  listItems: [
+                    { text: '염지육 관리', value: 'H1' },
+                    { text: '재조 매뉴얼 준수', value: 'H2' },
+                    { text: '주류/음료', value: 'H3' },
+                    { text: '식자제 관리', value: 'H4' },
+                  ],
                 },
               },
-            // [Column-2] 사용자 이름
+            },
+            // [Column-2] 상세 항목
             {
               header: '상세 항목', // [필수] 컬럼 이름
               name: 'content', // [필수] 컬럼 매핑 이름 값
@@ -170,9 +158,21 @@ s
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               editor: 'text', // [선택] 수정 옵션
               align: 'left', // [선택] 텍스트 정렬 옵션
+              validation: {
+                regExp: /^(.){1,10}$/,
+              },
+              onAfterChange(ev) {
+                if (ev.value.length > 10) {
+                  alert('글자수가 초과되었습니다.');
+                  ev.value = ev.value.substring(0, 10);
+                  grid.focus(ev.rowKey, 'content', true);
+                  grid.refreshLayout();
+                }
+                console.log(ev);
+              },
             },
 
-            // [Column-4] 사용자 나이
+            // [Column-4] 배점
             {
               header: '배점', // [필수] 컬럼 이름
               name: 'score', // [필수] 컬럼 매핑 이름 값
@@ -180,14 +180,8 @@ s
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               editor: 'text', // [선택] 수정 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
-             
             },
-            
-
-            
           ],
-          
-          
         });
 
         //  그리드 추가
@@ -197,21 +191,23 @@ s
 
       const appendBtn = document.getElementById('appendBtn');
       const deleteBtn = document.getElementById('deleteBtn');
-
-      const appendedData = {
-      };
+      const insertBtn = document.getElementById('insertBtn');
+      const appendedData = {};
 
       appendBtn.addEventListener('click', () => {
         grid.appendRow(appendedData);
       });
 
-      
-      
       deleteBtn.addEventListener('click', () => {
-    	  grid.removeCheckedRows();
+        grid.removeCheckedRows();
+      });            
+      
+      insertBtn.addEventListener('click', () => {
+    	  
+    	  
+    	  console.log(grid.getData());
         });
       
-     
     </script>
-</body>
+  </body>
 </html>
