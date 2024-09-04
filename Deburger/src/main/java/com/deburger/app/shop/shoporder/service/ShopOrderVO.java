@@ -1,6 +1,7 @@
 package com.deburger.app.shop.shoporder.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,5 +34,7 @@ public class ShopOrderVO {
 	private String detailsNumber;
 	private String orderName;
 	
+	List<ShopOrderDetailsVO> detList;
+	List<ShopOrderCartVO> cartList;
 	
 }

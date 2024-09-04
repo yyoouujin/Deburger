@@ -8,11 +8,11 @@ import com.deburger.app.office.container.service.ContainerVO;
 
 public interface ContainerMapper {
 
-	// 전체 조회
+	// 물류 재고 전체 조회
 	public List<ContainerVO> selectAllList();
 
-	// 단건 조회
-	public ContainerVO selectContainerInfo(ContainerVO containerVO);
+	// 상세 조회
+	public List<ContainerVO> selectContainerInfo(ContainerVO containerVO);
 
 	// 등록
 	public int insertContainerInfo(ContainerVO containerVO);

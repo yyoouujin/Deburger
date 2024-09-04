@@ -1,5 +1,6 @@
 package com.deburger.app.main.store.web;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -148,8 +150,16 @@ public class StoreController {
 	// 가맹점 목록
 	@GetMapping("officeListStore")
 	public String listStore() {
+		
 		return "main/store/officeListStore";
 	}
+	
+	// 가맹점 상제 정보
+	@GetMapping("officeStoreInfo")
+	public String officeStoreInfo(String storeNumber) {
+		return "main/store/officeStoreInfo";
+	}
+	
 
 	// 가맹점 현황
 	@GetMapping("StoreStatistics")

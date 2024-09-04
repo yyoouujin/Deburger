@@ -10,7 +10,7 @@
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>QSC 항목 관리</h1>
+			<h1>QSC 관리</h1>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -25,7 +25,8 @@
 								<input type="date" class="form-control">
 							</div>
 							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary" th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
+								<button type="button" class="btn btn-primary"
+									th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
 							</div>
 						</div>
 					</form>
@@ -33,53 +34,175 @@
 
 					<div class="card">
 						<div class="card-body">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th scope="col"><b>일련번호</b></th>
-										<th scope="col">검수일자</th>
-										<th scope="col">검수자</th>
-										<th scope="col">처리상태</th>
-										<th scope="col">품질</th>
-										<th scope="col">서비스</th>
-										<th scope="col">청결</th>
-										<th scope="col">총점</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td scope="row">QAC-0001</td>
-										<td>2023-05-08 오후 04:30:30</td>
-										<td>김지수</td>
-										<td>검수중</td>
-										<td>80&#47;100</td>
-										<td>80&#47;100</td>
-										<td>80&#47;100</td>
-										<td>240&#47;300</td>
-									</tr>
-								</tbody>
-							</table>
-							<!-- Pagination with icons -->
-							<nav aria-label="Page navigation example">
-								<ul class="pagination justify-content-center">
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#"
-										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-									</a></li>
-								</ul>
-							</nav>
-							<!-- End Pagination with icons -->
+							<div id="grid"></div>
 
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
+		
+		
+		 
 	</main>
+	<script>
+      let grid;
+
+      $(document).ready(async () => {
+        // 2. HTML이 수행된 뒤 함수를 호출한다.
+        grid = await gridLoad();
+        
+      
+      });
+
+      /**
+       *
+       * @return void
+       */
+      const gridLoad = () => {
+        // 3. 그리드 생성
+        const Grid = tui.Grid;
+
+        /**
+         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+         *
+         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+         * @reference https://seokbong.tistory.com/14
+         */
+        Grid.applyTheme('stripe');
+
+        /**
+         * [선택] Grid Confirm 메시지
+         */
+         
+         
+        Grid.setLanguage('en'); // set Korean
+        const grid = new Grid({
+          // ================================== 공통 옵션 적용 ==============================
+          el: document.getElementById('grid'), // [필수] Container element
+          data: [
+            {
+            	storeNumber: '디버거 감삼점',
+            	qscDate: '2023-05-08 오후 04:30:30',
+            	processCondition: '검수중',
+            	qualityScore: '80/100',
+            	serviceScore: '80/100 ',
+            	cleanlScore: '80/100',
+            	score: '240/300',
+            },
+            {
+            	storeNumber: '디버거 신세계점',
+            	qscDate: '2023-05-08 오후 04:30:30',
+            	processCondition: '검수중',
+            	qualityScore: '80/100',
+            	serviceScore: '80/100 ',
+            	cleanlScore: '80/100',
+            	score: '240/300',
+            },
+            {
+            	storeNumber: '디버거 용산점',
+            	qscDate: '2023-05-08 오후 04:30:30',
+            	processCondition: '검수중',
+            	qualityScore: '80/100',
+            	serviceScore: '80/100 ',
+            	cleanlScore: '80/100',
+            	score: '240/300',
+            },
+          ], // [선택] 그리드 데이터 조회
+
+          /**
+           * [선택] 순번 기능
+           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           */
+          rowHeaders: ['rowNum'],
+          
+			// 패이징			
+          pageOptions: {
+        	  useClient: true,
+            perPage: 10,
+          },
+
+          // ================================== 컬럼 옵션 적용 ==============================
+        	  
+          columns: [
+        	  
+        	  
+        	  // [Column-2] 일련번호
+              {
+                header: '지점명', // [필수] 컬럼 이름
+                name: 'storeNumber', // [필수] 컬럼 매핑 이름 값
+                sortable: true, // [선택] 컬럼의 정렬 여부
+                resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                align: 'center', // [선택] 텍스트 정렬 옵션
+                
+              },
+            // [Column-2] 검수일자
+            {
+              header: '검수일자', // [필수] 컬럼 이름
+              name: 'qscDate', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+              
+            },
+            // [Column-2] 처리상태
+            {
+              header: '처리상태', // [필수] 컬럼 이름
+              name: 'processCondition', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-2] 품질 
+            {
+              header: '품질', // [필수] 컬럼 이름
+              name: 'qualityScore', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-4] 서비스
+            {
+              header: '서비스', // [필수] 컬럼 이름
+              name: 'serviceScore', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-4] 청결
+            {
+              header: '청결', // [필수] 컬럼 이름
+              name: 'cleanlScore', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-4] 총점
+            {
+              header: '총점', // [필수] 컬럼 이름
+              name: 'score', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+          ],
+        });
+
+        //  그리드 추가
+
+       /* grid.on('click', (ev) => {
+      	let url ='officeStoreInfo?storeNumber=' + grid.getData()[ev.rowKey].storeNumber;
+		location.href = url;
+      	}) */
+        
+        return grid;
+      };
+
+    	
+    	
+
+    </script>
 
 </body>

@@ -3,35 +3,50 @@
 <mapper namespace="com.deburger.app.office.container.mapper.ContainerMapper">
 	
 	<select id="selectAllList" resultType="ContainerVO">
-			select a.material_number,
-			        a.material_item,
-			        a.material_name,
-			        b.count as,
-			        c.in_count,
-			        c.expiration_limit,
-			        c.expiration_limit+30 as "limit"
-			from material a 
-			left join logistics_order_details b
-			    on a.material_number = b.material_number
-			left join logistics_in c
-			    on b.details_order_number = c.details_order_number
-			order by a.material_number
-			
-			
+			select distinct
+			        a.logistics_id,
+			        a.logistics_name,
+			        a.person_id,
+			        b.stock_number,
+			        b.stock_count,
+			        b.material_number,
+			        c.material_name,
+			        c.material_classification,
+			        c.logistics_safety_stock,
+			        d.person_id,
+			        e.inspection_operation
+			from logistics a
+			join logistics_stock b
+			    on a.logistics_id = b.logistics_id
+			join material c
+			    on b.material_number = c.material_number
+			join logistics_order_details d
+			    on c.material_number = d.material_number
+			join logistics_in e
+			    on d.details_order_number = e.details_order_number
+			order by b.stock_number
 	</select>
 	
 	<select id="selectContainerInfo" resultType="ContainerVO">
-			select a.material_number ,
-			       a.material_name,
-			       b.count,
-			       c.in_day,
-			       c.in_count
-			from material a
-			join logistics_order_details b
-			    on a.material_number = b.material_number
-			join logistics_in c
-			    on b.details_order_number = c.details_order_number
-			where a.material_number = #{materialNumber}
+			select distinct
+			         a.details_order_number,
+			         a.count,
+			         a.supplier,
+			         b.lot,
+			     	 b.in_day,
+				     b.in_count,
+				     c.material_number,
+				     c.material_name,
+			         d.logistics_id,
+			         d.client_id
+			from logistics_order_details a
+			join logistics_in b
+				on a.details_order_number = b.details_order_number
+			join material c
+				on a.material_number = c.material_number 
+			join logistics_order d
+				on a.order_number = d.order_number
+			where c.material_number = #{materialNumber}
 	</select>
 	
 	<select id="selectAllInList" resultType="ContainerVO">

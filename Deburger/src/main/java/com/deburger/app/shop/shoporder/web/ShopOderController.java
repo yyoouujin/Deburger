@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.shop.shoporder.service.ShopOrderService;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
@@ -31,9 +33,8 @@ public class ShopOderController {
 	}
 	
 	@PostMapping("insertShopOrder")
-	public String insertShopOrder(ShopOrderVO shopOrderVO,Model model) {
-		shopOrderService.insertShopOrder(shopOrderVO);
-		
-		return "redirect:selectOrderCart";
+	@ResponseBody
+	public int insertShopOrder(@RequestBody ShopOrderVO shopOrderVO,Model model) {
+		return shopOrderService.insertShopOrder(shopOrderVO);	
 	}
 }
