@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.deburger.app.shop.shoporder.mapper.ShopOrderMapper;
+import com.deburger.app.shop.shoporder.service.ShopOrderCartVO;
+import com.deburger.app.shop.shoporder.service.ShopOrderDetailsVO;
 import com.deburger.app.shop.shoporder.service.ShopOrderService;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 
@@ -31,9 +34,16 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 @Transactional
 	public int insertShopOrder (ShopOrderVO shopOrderVO) {
 	    
+	
 	   shopOrderMapper.insertShopOrder(shopOrderVO);
-	   shopOrderMapper.dinsertShopOrder(shopOrderVO);
-	   return shopOrderMapper.deleteOrderCart(shopOrderVO);
+	   
+	   for(ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
+		   shopOrderMapper.dinsertShopOrder(devo);
+	   }
+	   for(ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
+		   shopOrderMapper.deleteOrderCart(shvo);
+	   }
+	   return 1;
 		
 	}
 

@@ -54,94 +54,99 @@ th, td {
 					</div>
 				</div>
 			</div>
-		</div>		<!-- End Page Title -->
+		</div>
+		<!-- End Page Title -->
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<form method="post" action="insertShopOrder">
-								<div style="text-align: right; margin: 0 0 10px 0;">
-									<button type="button" class="btn btn-primary" id="save">발주
-										저장</button>
-									<button type="submit" class="btn btn-primary" id="App">발주
-										신청</button>
-									<button type="button" class="btn btn-primary" id="cancel">발주
-										취소</button>
-								</div>
-								<table class="col-lg-12" style="text-align: center">
-									<thead>
-										<tr>
-											<th>발주건명</th>
-											<td colspan='7'><input type="text" id ="orderName" name="orderName" style="border: none; width: 100%;" ></td>
-										</tr>
-										<tr>
-											<th>발주일자</th>
-											<td colspan='7'></td>
-										</tr>
-										<tr>
-											<th>발신 업체 이름</th>
-											<td colspan='3'><input type="text" id="storeNumber" name="storeNumber" value="FRC0000001" style="border: none;" readonly></td>
-											<th>수신 업체 이름</th>
-											<td colspan='3'>디버거</td>
-										</tr>
-										<tr>
-											<th rowspan="2">연락처</th>
-											<th>전화번호</th>
-											<td colspan='2'></td>
+							<div style="text-align: right; margin: 0 0 10px 0;">
+								<button type="button" class="btn btn-primary" id="save">발주
+									저장</button>
+								<button type="submit" class="btn btn-primary"
+									onclick="makeData()">발주 신청</button>
+								<button type="button" class="btn btn-primary" id="cancel">발주
+									취소</button>
+							</div>
+							<table class="col-lg-12" style="text-align: center">
+								<thead>
+									<tr>
+										<th>발주건명</th>
+										<td colspan='8'><input type="text" id="orderName"
+											name="orderName" style="border: none; width: 100%;"></td>
+									</tr>
+									<tr>
+										<th>발주일자</th>
+										<td colspan='8'></td>
+									</tr>
+									<tr>
+										<th>발신 업체 이름</th>
+										<td colspan='3'><input type="text" id="storeNumber"
+											name="storeNumber" value="FRC0000001" style="border: none;"
+											readonly></td>
+										<th>수신 업체 이름</th>
+										<td colspan='4'>디버거</td>
+									</tr>
+									<tr>
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='2'></td>
 
-											<th rowspan="2">연락처</th>
-											<th>전화번호</th>
-											<td colspan='2'>053-0000-0000</td>
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='3'>053-0000-0000</td>
 
-										</tr>
+									</tr>
+									<tr>
+										<th>이메일</th>
+										<td colspan='2'></td>
+										<th>이메일</th>
+										<td colspan='3'>info@deburger.com</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>합계금액</th>
+										<td style="text-align: center" colspan='8'>일금 <input
+											type="text" style="border: none; width: 200px;" id="korSum"
+											readonly /> 원정( <input type="text"
+											style="border: none; width: 200px;" id="allSum" readonly />
+											)세액포함
+										</td>
+									</tr>
+									<tr>
+										<th class="col-lg-1"><input type="checkbox"
+											name="allOrder"></th>
+										<th class="col-lg-1">No.</th>
+										<th class="col-lg-1">품명</th>
+										<th class="col-lg-1">규격</th>
+										<th class="col-lg-1">수량</th>
+										<th class="col-lg-1">단가</th>
+										<th class="col-lg-1">공급 가액</th>
+										<th class="col-lg-1">세액</th>
+										<th class="col-lg-1">합계금액</th>
+									</tr>
+									<th:block th:each="list,index:${selectOrderCart}">
 										<tr>
-											<th>이메일</th>
-											<td colspan='2'></td>
-											<th>이메일</th>
-											<td colspan='2'>info@deburger.com</td>
+											<td style="display: none;"><input type="text" th:value="${list.materialNumber}" /></td>
+											<td><input type="checkbox" name="checkOrder" /></td>
+											<td th:text=${index.index+1} />
+											<td th:text="${list.materialName}" />
+											<td th:text="${list.unit}" />
+											<td><input type="number" th:value="${list.count}"
+												id="count" name="count" style="border: none;"></td>
+											<td th:text="${list.saleUnitprice}" id="oprice" />
+											<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
+											<td th:text="${list.saleUnitprice*list.count/10}"
+												id="texprice"></td>
+											<td
+												th:text="${list.saleUnitprice*list.count}+${list.saleUnitprice*list.count/10}"
+												id="allprice" class="allprice"></td>
 										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th>합계금액</th>
-											<td style="text-align: center" colspan='7'>일금 <input
-												type="text" style="border: none; width: 200px;" id="korSum"
-												readonly /> 원정( <input type="text"
-												style="border: none; width: 200px;" id="allSum" readonly />
-												)세액포함
-											</td>
-										</tr>
-										<tr>
-											<th class="col-lg-1">No.</th>
-											<th class="col-lg-1">품명</th>
-											<th class="col-lg-1">규격</th>
-											<th class="col-lg-1">수량</th>
-											<th class="col-lg-1">단가</th>
-											<th class="col-lg-1">공급 가액</th>
-											<th class="col-lg-1">세액</th>
-											<th class="col-lg-1">합계금액</th>
-										</tr>
-										<th:block th:each="list,index:${selectOrderCart}">
-											<tr id="test">
-											    <input type="hidden" th:value="${list.materialNumber}"/>
-												<td th:text=${index.index+1} />
-												<td th:text="${list.materialName}" />
-												<td th:text="${list.unit}" />
-												<td><input type="number" th:value="${list.count}"
-													id="count" name="count" style="border: none;"></td>
-												<td th:text="${list.saleUnitprice}" id="oprice" />
-												<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
-												<td th:text="${list.saleUnitprice*list.count/10}"
-													id="textprice"></td>
-												<td
-													th:text="${list.saleUnitprice*list.count}+${list.saleUnitprice*list.count/10}"
-													id="allprice" class="allprice"></td>
-											</tr>
-										</th:block>
-									</tbody>
-								</table>
-							</form>
+									</th:block>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -151,17 +156,61 @@ th, td {
 	<script>
 
 		Calculator();
+		
+		function makeData(){
+			let list = {};
+			let detList = [];
+			let cartList = [];
+			
+				//발주
+				let orderName = $('#orderName').get(0).value;
+				let storeNumber = $('#storeNumber').get(0).value;				
+				let autoOrderOperation = 'i1';
+				let cancelOperation = 'J1';
+				
+				
+
+			$("[name='checkOrder']:checked").each(function(i,checkbox){
+				let tr = $(checkbox).closest('tr').children();
+				
+				//상세 발주
+				
+				let count = tr.eq(5).find('input').val();
+				let materialNumber = tr.eq(0).find('input').val();
+				
+				detList.push({materialNumber,count});
+				
+				//장바구니 삭제
+				cartList.push({storeNumber,materialNumber});
+			})
+			
+			list= {orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
+			
+			$.ajax({
+				url : "insertShopOrder",
+				method : "POST",
+				contentType:"application/JSON",
+				data : JSON.stringify(list),
+				
+			}).then((end) => {
+				location.href="shop"
+			})
+		}
+		
+		
 	
 		$("input").on("change", function(event) {
+			
 			let tr = $(event.target).closest('tr');
 
-			tr.find('#price').get(0).innerHTML = Number(tr.find('#oprice').text())*Number($(event.target).val());
-			tr.find('#textprice').get(0).innerHTML = Number(tr.find('#price').text()/10);
-			tr.find('#allprice').get(0).innerHTML = Number(tr.find('#price').text())+Number(tr.find('#texPrice').text());
+			
+			tr.find('#price').get(0).innerHTML = Number(tr.find('#oprice').text())*tr.find('#count').val();
+			tr.find('#texprice').get(0).innerHTML = Number(tr.find('#price').text()/10);
+			tr.find('#allprice').get(0).innerHTML = Number(tr.find('#price').text())+Number(tr.find('#texprice').text());
 			
 			Calculator();
 		});
-
+		
 		function Calculator(){
 			let sum = 0;
 			  $('.allprice').each(function(index,item){

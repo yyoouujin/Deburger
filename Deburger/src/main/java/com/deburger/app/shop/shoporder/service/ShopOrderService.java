@@ -9,5 +9,6 @@ public interface ShopOrderService {
 	
 	//발주 신청
 	public int insertShopOrder(ShopOrderVO shopOrderVO);
+
 		
 }
