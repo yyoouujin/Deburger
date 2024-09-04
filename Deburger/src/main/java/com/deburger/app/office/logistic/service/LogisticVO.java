@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -30,7 +32,7 @@ public class LogisticVO {
 		private String unit;
 		private String materialItem;
 		private String materialClassification;				//제빵류
-		private int logisticsSafetyStock;
+		private int logisticsSafetyStock;							//안전재고
 		
 		
 		//물류창고 재고 테이블
@@ -42,10 +44,26 @@ public class LogisticVO {
 		//private String materialNumber;
 		
 		//물류창고 입고 테이블
-		private Date expirationLimit;			//유통기한
 		@DateTimeFormat(pattern="yyyy-MM-dd")
+		@JsonFormat(pattern="yyyy-MM-dd")
+		private Date expirationLimit;			//유통기한
+		
+		@DateTimeFormat(pattern="yyyy-MM-dd")
+		private Date minExpirationLimit;	//가장 빠른 유통기한		
+
+		
+		@DateTimeFormat(pattern="yyyy-MM-dd")
+		@JsonFormat(pattern="yyyy-MM-dd")
 		private Date inDay;								//입고날짜
+		
+		
 		private int inCount;							//입고수량
+		private int outCount;							//출고수량
+		
+		private String clientId;
+		private String aggclientId;
+		private String clientName;
+		private String aggclientName;
 		
 
 }

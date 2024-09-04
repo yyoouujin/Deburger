@@ -140,11 +140,9 @@
 	            		<td>[[ ${info.materialName} ]]</td>
 	            		<td>[[ ${info.stockCount} ]]개</td>
 	            		<td>[[ ${info.unit} ]]</td>
-	            		<td>[[ ${#dates.format(info.expirationLimit, 'yyyy-MM-dd')} ]]</td>
+	            		<td>[[ ${#dates.format(info.minExpirationLimit, 'yyyy-MM-dd')} ]]</td>
 						<td th:text="${info.requireStock} < 0 ? '충분' : '부족' "></td>
 
-              			<td th:if="${info.requireStock} < 0">충분</td>
-						<td th:unless="${info.requireStock} < 0">부족</td>
 						
 	                </tr>
 	            </th:block>
@@ -157,18 +155,41 @@
               <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
+                  
                     <div class="modal-header">
-                      <h5 class="modal-title">제품명 들어오자</h5>
+                      <h3 class="modal-title"></h3>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
                     <div class="modal-body">
-                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                      This content should appear at the bottom after you scroll.
+                    
+                    <div id="top-tag">
+                    	<h5><b>분류 : </b><span id="mate_class"></span></h5>
+                    	<h5><b>용량 : </b><span id="mate_unit"></span></h5>
+                    	<h5><b>안전수량 : </b><span id="mate_safetyStock"></span></h5>
+                    	<h5><b>거래처 : </b><span id="mate_supplier"></span></h5>
                     </div>
+					
+		              <!-- Small tables -->
+		              <table class="table table-sm">
+		                <thead>
+		                  <tr>
+		                    <th scope="col">입고일</th>
+		                    <th scope="col">유통기한</th>
+		                    <th scope="col">입고수량</th>
+		                  </tr>
+		                </thead>
+		                <tbody class="mat_detail">
+		                </tbody>
+		              </table>
+		              <!-- End small tables -->
+
+                    </div>
+                    
+                    
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <!--  <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                   </div>
                 </div>
@@ -190,31 +211,71 @@
 
 
 <script>
-	
-	$('tbody > tr').on('click', function(event) {
-		
 
+	const urlParams = new URL(location.href).searchParams;
+	const lid = urlParams.get('logisticsId');
+	
+	$('tbody > tr').on('click', makeTag);
+		
+	function makeTag() {
+		
 		let tr = event.currentTarget;
 		let mid = $(tr).data('mid');
 		console.log(mid);
 		//let url = "http://localhost:8094/deburger/stockInfoAjax?materialNumber" + mid;
 		
-
-		
 		$.ajax({
-			url:"stockInfoAjax?materialNumber="+mid,
+			url:"stockInfoAjax?materialNumber="+mid + "&logisticsId=" + lid,
 			method: "GET"
 		})
 		.done(data => {
-			console.log(data);
+			
+			
+			$('.modal-title').append(`${data[0].materialName}`);
+			
+			
+			let tag = ` 
+                    	<h5><b>분류 : </b><span id="mate_class">${data[0].materialName}</span></h5>
+                    	<h5><b>용량 : </b><span id="mate_unit">${data[0].materialClassification}</span></h5>
+                    	<h5><b>안전수량 : </b><span id="mate_safetyStock">${data[0].unit}</span></h5>
+                    	<h5><b>거래처 : </b><span id="mate_supplier">${data[0].logisticsSafetyStock} 개</span></h5>`
+			
+            $('#top-tag').html(tag); //append는 계속 갖다 붛히는거, html로 초기화
+
+			//거래처
+			$('#mate_supplier').append(`${data[0].aggclientName}`);
+			
+			data.forEach(element => {
+				let tr = document.createElement('tr');
+				$(tr).append(`<td>${element.inDay}</td>`);
+				$(tr).append(`<td>${element.expirationLimit}</td>`);
+				$(tr).append(`<td>${element.inCount}</td>`);
+				$('.mat_detail').append(tr);
+			});
 		})
 		.fail (err => console.log(err))
-
+		
+	}
+	
+	
+	
+	
+	/*
+	$('#modalDialogScrollable').on('hidden.bs.modal', function () {
+		$(this).removeData();
+	})
+	*/
+	
+	
+	//모달 초기화
+	$('#modalDialogScrollable').on('hidden.bs.modal', function () {
+		document.querySelector('.mat_detail').innerHTML="";
+		document.querySelector('.modal-title').innerHTML="";
+		document.querySelector('#top-tag').innerHTML="";
+		
 	});
 	
 	
-	
-
 </script>
 
 </html>
