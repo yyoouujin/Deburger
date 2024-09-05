@@ -72,20 +72,70 @@
 			order by b.expiration_limit
 	</select>
 	
-	<!-- 입고 조회 -->
+		<!-- 입고 조회 -->
 	<select id="selectAllInList" resultType="ContainerVO">
-		select details_order_number,
-	           count,
-	           unit,
-	           material_number,
-	           order_number,
-	           supplier,
-	           person_id,
-	           in_operation,
-	           order_cost,
-	           order_condition
-		from logistics_order_details
-		order by details_order_number desc
+			select a.lot,
+			    a.in_day,
+				a.in_count,
+				a.inspection_operation,
+				a.person_id,
+				b.details_order_number,
+				b.count,
+				b.order_condition,
+			    c.material_name,
+			    d.order_day,
+			    e.logistics_name,
+			    f.client_id,
+			    g.client_name
+			from logistics_in a
+			join logistics_order_details b
+				on a.details_order_number = b.details_order_number
+			join material c
+				on b.material_number = c.material_number
+			join logistics_order d
+			on b.order_number = d.order_number
+			join logistics e
+				on d.logistics_id = e.logistics_id
+			join company_material f 
+			    on c.material_number = f.material_number 
+			join supplier g
+			    on f.client_id = g.client_id
+	</select>
+	
+	<!-- 입고 처리 조회 -->
+	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
+		select a.details_order_number,
+		        a.count,
+		        a.unit,
+		        a.order_cost,
+		        b.order_number,
+		        c.logistics_name,
+		        c.phone as logisticsPhone,
+		        d.material_name,
+		        e.material_number,
+		        f.client_id,
+		        f.client_name
+		from  logistics_order_details a
+		join logistics_order b
+		        on a.order_number = b.order_number
+		join logistics c
+		        on b.logistics_id = c.logistics_id
+		join material d
+		        on a.material_number = d.material_number
+		join company_material e
+		         on d.material_number = e.material_number
+		join supplier f
+		       on e.client_id = f.client_id
+		where a.details_order_number in 
+    	<foreach item="obj" index="index" collection="list"
+        	open="(" separator="," close=")">
+			#{obj.detailsOrderNumber}
+    	</foreach>
+    	and f.client_id in
+    	 <foreach item="obj" index="index" collection="list"
+        	open="(" separator="," close=")">
+			#{obj.clientId}
+    	</foreach>
 	</select>
 	
 	<!-- 물류 창고 폐기 조회 -->

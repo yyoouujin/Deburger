@@ -1,12 +1,16 @@
 package com.deburger.app.shop.notice.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.shop.notice.service.NoticeService;
 import com.deburger.app.shop.notice.service.NoticeVO;
@@ -104,6 +108,24 @@ public class NoticeController {
     	return "redirect:noticeListShop";
     }
     //수정
+    @GetMapping("noticeCorrectOffice")
+    public String noticeCorrectOffice(NoticeVO noticeVO, Model model) {
+    	NoticeVO noticesVO = noticeService.noticeListInfoShop(noticeVO);
+    	model.addAttribute("notice",noticesVO);
+    	return "shop/noticeCorrectOffice";
+    }
+    //수정
+    @PostMapping("noticeCorrectOffice")
+    @ResponseBody
+    public Map<String, Object> noticeCorrectProcess(@RequestBody NoticeVO noticeVO) {
+    	return noticeService.noticeCorrectOffice(noticeVO);
+    }
     
+    //삭제
+    @GetMapping("noticeDeleteOffice")
+    public String noticeDeleteOffice(String noticeNumber) {
+    	noticeService.noticeDeleteOffice(noticeNumber);
+    	return "redirect:noticeListShop";
+    }
     
 }

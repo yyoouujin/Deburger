@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>공지사항 수정</title>
+  </head>
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <!-- 작성 칸 영역 -->
+        <div class="card">
+          <div class="card-body">
+            <form
+              class="row g-3"
+              name="noticeCorrectOffice"
+              method="post"
+              th:object="${notice}"
+            >
+              <div>
+                <h1 style="display: inline-block">공지사항</h1>
+                <button
+                  type="button"
+                  id="btnInsert"
+                  class="btn btn-primary"
+                  style="margin-left: 67%"
+                >
+                  등록하기
+                </button>
+              </div>
+              <br />
+
+              <!--카테고리 작성 칸-->
+              <div class="col-sm-10">
+                <select class="form-select" id="selectdivision" th:field="*{division}" aria-label="Default select example">
+                  <option value="" selected>카테고리를 선택해주세요.</option>
+                  <option value="업데이트" >업데이트</option>
+                  <option value="서비스" >서비스</option>
+                  <option value="이벤트">이벤트</option>
+                  <option value="작업">작업</option>
+                  <option value="공고">공고</option>
+                </select>
+              </div>
+
+              <!--제목 작성 칸-->
+              <div class="col-md-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  th:field="*{title}"
+                  placeholder="공지사항 제목을 작성해주세요."
+                 
+                />
+              </div>
+
+              <!--내용 작성 칸-->
+              <div class="col-md-10" style="height: 400px">
+                <div id="contentDiv" class="quill-editor-full">[[${notice.content}]]</div>
+              </div>
+
+              <br />
+              <input type="hidden" th:field="*{noticeNumber}">
+     
+            </form>
+          </div>
+        </div>
+        <!-- 작성 칸 영역 끝 -->
+      </div>
+    </main>
+    <!-- End #main -->
+    <script>
+    
+          //수정
+          function getNoticeInfo() {
+              let formData = $('form[name="noticeCorrectOffice"]').serializeArray();
+              let boardObj = {};
+              $.each(formData, function(idx, keyVal) {
+                 boardObj[keyVal.name] = keyVal.value;
+              });
+              return boardObj;
+           }
+    	  
+         
+         //Ajax 파일 보내기
+         $('#btnInsert').on('click', updateAjax)
+         
+         function updateAjax(){
+             
+             //console.log(selectkey);    
+             //카테고리 값을 읽어서 셀렉트 값은 그냥 넘어 감....제발... 되면 안되니... ? .......?
+      
+      
+             //에디터 내용 읽어서
+             let contentText = $("#contentDiv").text();
+
+             //텍스트 에어리어 안에 넣어서
+             let tArea = document.createElement("textarea");
+             tArea.innerText = contentText;
+             tArea.name = "content";
+
+             //어팬드 한다음 서브밋
+             $("form[name='noticeCorrectOffice']").append(tArea);
+         
+        	 
+            //1) 보낼 데이터 가져오기 2) Ajax 보내기
+            let info = getNoticeInfo();
+            
+            $.ajax('noticeCorrectOffice', {
+               type : 'post',
+               contentType : 'application/json',
+               data : JSON.stringify(info)
+            })
+            .done(result => {alert("정상적으로 수정되었습니다!");
+                              location.href="noticeListShop"}) 
+            .fail(err => alert("오류가 발생했습니다!"));
+         }
+
+   
+    </script>
+  </body>
+</html>

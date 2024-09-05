@@ -39,11 +39,18 @@ public class ContainerServiceImpl implements ContainerService {
 		return result == 1 ? Integer.parseInt(containerVO.getMaterialNumber()) : -1;
 	}
 
-	// 물류 창고 입고 리스트
+	// 물류 창고 입고 list
 	@Override
 	public List<ContainerVO> containerAllInList() {
 		// TODO Auto-generated method stub
 		return containerMapper.selectAllInList();
+	}
+
+	// 물류 창고 입고 list 조회
+	@Override
+	public List<ContainerVO> containerInInfo(List<ContainerVO> list) {
+		// TODO Auto-generated method stub
+		return containerMapper.selectInInfoList(list);
 	}
 
 	// 물류 창고 폐기 조회

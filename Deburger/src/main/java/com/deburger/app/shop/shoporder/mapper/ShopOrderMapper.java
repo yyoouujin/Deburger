@@ -2,13 +2,15 @@ package com.deburger.app.shop.shoporder.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.deburger.app.shop.shoporder.service.ShopOrderCartVO;
 import com.deburger.app.shop.shoporder.service.ShopOrderDetailsVO;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 
 public interface ShopOrderMapper {
 		
-		//전체 조회
+		//장바구니 전체 조회
 		public List<ShopOrderVO> selectShopOrder();
 		
 		//발주 신청
@@ -19,4 +21,13 @@ public interface ShopOrderMapper {
 
 		//장바구니 삭제
 		public int deleteOrderCart(ShopOrderCartVO ShopOrderCartVO);
+		
+		//발주 전체 조회
+		public List<ShopOrderVO> ShopOrderList();
+		
+		//발주 취소 저장
+		public int updateOrderCancel(ShopOrderVO shopOrderVO);
+		
+		//발주 상세 조회
+		public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO);
 }
