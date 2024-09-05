@@ -111,9 +111,17 @@
   			url : "/deburger/containerInsert",
   			method : "post",
   			contentType : "application/json",
-			data : JSON.stringify(list),  			
+			data : JSON.stringify(list),
+			async: false,
+			success: function(result) {
+	            console.log(result); // 성공하면
+	            window.location.href="/deburger/containerInsert";
+	        },
+	        fail: function(result) {
+	            fail(error); 
+	            console.log(result.responseText); // 실패하면
+	        }
   		})
-  		.then()
   	}
   </script>
 </html>

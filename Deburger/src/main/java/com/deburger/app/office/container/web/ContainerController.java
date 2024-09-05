@@ -17,7 +17,7 @@ import com.deburger.app.office.container.service.ContainerVO;
 public class ContainerController {
 
 	public ContainerService containerService;
-
+	private List<ContainerVO> testList;
 	@Autowired
 	ContainerController(ContainerService containerService) {
 		this.containerService = containerService;
@@ -61,7 +61,16 @@ public class ContainerController {
 	@PostMapping("containerInsert")
 	@ResponseBody
 	public List<ContainerVO> selectcontainerInInfo(@RequestBody List<ContainerVO> list) {
-		return containerService.containerInInfo(list);
+		System.out.println("aaaa");
+		testList = containerService.containerInInfo(list);
+		return testList;
+	}
+	@GetMapping("containerInsert")
+	public String insertPage(Model model) {
+		System.out.println("tttt");
+		System.out.println(testList.toString());
+		model.addAttribute("list", testList);
+		return "office/container/containerInsert";
 	}
 
 	// 폐기 조회

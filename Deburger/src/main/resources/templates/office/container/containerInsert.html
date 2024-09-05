@@ -73,15 +73,33 @@ th, td {
 									<tr>
 										<th class="col-lg-1"><input type="checkbox"
 											name="allOrder"></th>
-										<th class="col-lg-1">No.</th>
 										<th class="col-lg-1">품명</th>
 										<th class="col-lg-1">규격</th>
 										<th class="col-lg-1">수량</th>
 										<th class="col-lg-1">단가</th>
-										<th class="col-lg-1">공급 가액</th>
-										<th class="col-lg-1">세액</th>
-										<th class="col-lg-1">합계금액</th>
+										<th class="col-lg-1">입고 수량</th>
+										<th class="col-lg-1">유통 기한</th>
+										<th class="col-lg-1">검수</th>
+										<th class="col-lg-1">비고</th>
 									</tr>
+									<th:block th:each="container : ${list}">
+									<tr>
+										<td class="col-lg-1"><input type="checkbox"
+											name="allOrder"></td>
+										<td class="col-lg-1" th:text="${container.materialName}"></td>	
+										<td class="col-lg-1" th:text="${container.unit}"></td>	
+										<td class="col-lg-1" th:text="${container.count}"></td>	
+										<td class="col-lg-1" th:text="${container.orderCost}"></td>	
+										<td class="col-lg-1" ><input type="text"
+											name="allOrder"></td>	
+										<td class="col-lg-1" ><input type="text"
+											name="allOrder"></td>	
+										<td class="col-lg-1" ><input type="text"
+											name="allOrder"></td>	
+										<td class="col-lg-1" ><input type="text"
+											name="allOrder"></td>
+									</tr>
+									</th:block>
 								</tbody>
 							</table>
 						</div>
