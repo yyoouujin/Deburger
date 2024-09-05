@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
@@ -30,30 +32,23 @@ public class ContainerController {
 		return "office/container/containers";
 	}
 
-	// 단건 조회
+	// 상세 조회
 	@GetMapping("containerInfo")
-	public String containerInfo(ContainerVO containerVO ,Model model) {
+	public String containerInfo(ContainerVO containerVO, Model model) {
 		List<ContainerVO> list = containerService.containerInfo(containerVO);
 		model.addAttribute("container", list);
 		return "office/container/containerInfo";
 	}
 
 	// 등록
-	@GetMapping("containerInsert")
+	// @GetMapping("containerInsert")
 	public String containerInsertForm() {
 		return "office/container/containerInsert";
 	}
 
 	// 수정
 
-	// 삭제(폐기 처리)
-	@GetMapping("containerDelete")
-	public String containerDelete(ContainerVO containerVO, Model model) {
-		List<ContainerVO> list = containerService.containerInfo(containerVO);
-		model.addAttribute("container", list);
-		return "office/container/containerdelete";
-	}
-
+	// ----------------------------
 	// 물류 창고 입고 조회
 	@GetMapping("containerIn")
 	public String containerInList(Model model) {
@@ -62,9 +57,24 @@ public class ContainerController {
 		return "office/container/containersIn";
 	}
 
+	// 물류 창고 입고 상세 조회
+	@PostMapping("containerInsert")
+	@ResponseBody
+	public List<ContainerVO> selectcontainerInInfo(@RequestBody List<ContainerVO> list) {
+		return containerService.containerInInfo(list);
+	}
+
+	// 폐기 조회
+	@GetMapping("containerDelete")
+	public String containerDelete(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerDtInfo(containerVO);
+		model.addAttribute("container", list);
+		return "office/container/containerdelete";
+	}
+
+	// 폐기 처리
 	@PostMapping("containerIn")
 	public String disposeController(ContainerVO containerVO, Model model) {
-
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}

@@ -108,10 +108,10 @@ th, td {
 								<tbody>
 									<tr>
 										<th>합계금액</th>
-										<td style="text-align: center" colspan='8'>일금 <input
-											type="text" style="border: none; width: 200px;" id="korSum"
-											readonly /> 원정( <input type="text"
-											style="border: none; width: 200px;" id="allSum" readonly />
+										<td style="text-align: center" colspan='8'>일금 
+										<input type="text" style="border: none; width: 200px;" id="korSum"
+											readonly /> 원정( 
+											<input type="text" style="border: none; width: 200px;" id="allSum" readonly />
 											)세액포함
 										</td>
 									</tr>
@@ -167,6 +167,8 @@ th, td {
 				let storeNumber = $('#storeNumber').get(0).value;				
 				let autoOrderOperation = 'i1';
 				let cancelOperation = 'J1';
+				let oderApp = 'L1';
+				let allprice = $('#allSum').get(0).value;
 				
 				
 
@@ -184,7 +186,7 @@ th, td {
 				cartList.push({storeNumber,materialNumber});
 			})
 			
-			list= {orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
+			list= {oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
 			
 			$.ajax({
 				url : "insertShopOrder",
@@ -193,7 +195,7 @@ th, td {
 				data : JSON.stringify(list),
 				
 			}).then((end) => {
-				location.href="shop"
+				location.href="ShopOrderList"
 			})
 		}
 		

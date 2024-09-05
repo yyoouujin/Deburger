@@ -7,11 +7,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -149,8 +151,9 @@ public class StoreController {
 
 	// 가맹점 목록
 	@GetMapping("officeListStore")
-	public String listStore() {
-		
+	public String listStore(Model model) {
+		List<StoreVO> list = storeService.selectStoreList();		
+		model.addAttribute("StoreList", list);
 		return "main/store/officeListStore";
 	}
 	

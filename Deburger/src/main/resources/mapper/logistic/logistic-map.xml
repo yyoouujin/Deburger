@@ -15,23 +15,24 @@
 
 <!-- 물류창고 상세 조회 -->
 	<select id="selectLogisticInfo" resultType="LogisticVO">
-		SELECT DISTINCT l.logistics_id
+		SELECT distinct l.logistics_id
 		      , l.logistics_name
 		      , s.material_number
 		      , m.material_name
 		      , m.unit
 		      , s.stock_count
-		      , i.expiration_limit
-		      , (m.logistics_safety_stock - s.stock_count) AS require_stock
+		      , (select min(expiration_limit)
+		          from logistics_in) as min_expiration_limit
+		      , (m.logistics_safety_stock - s.stock_count) as require_stock
 		      , (SELECT SUM(stock_count)
-		         FROM logistics_stock) AS all_stock
+		         FROM logistics_stock) AS allstock
 		FROM logistics l JOIN logistics_stock s
 		                 ON (l.logistics_id = s.logistics_id)
 		                JOIN material m 
 		                ON (m.material_number = s.material_number)
 		                LEFT OUTER JOIN logistics_in i
 		                ON (i.material_number = m.material_number)
-		WHERE l.logistics_id = #{logisticsId}
+		WHERE l.logistics_id = #{logisticsId} AND (i.in_count - i.out_count) > 0
 		
 	</select>
 	
@@ -41,15 +42,25 @@
 		SELECT i.material_number 
 		      , m.material_name
 		      , m.material_classification
+		      , m.unit
+		      , m.logistics_safety_stock
 		      , i.expiration_limit
 		      , i.in_day
-		FROM logistics_in i JOIN material m 
+		      , i.in_count
+		      , LISTAGG(c.client_id, ', ') WITHIN GROUP(ORDER BY c.client_id) AS aggclient_id
+		      , LISTAGG(s.client_name, ', ') WITHIN GROUP(ORDER BY s.client_name) AS aggclient_name
+		FROM logistics_in i LEFT OUTER JOIN material m 
 		                    ON i.material_number = m.material_number
 		                    JOIN logistics_order_details d
 		                    ON d.details_order_number = i.details_order_number
 		                    JOIN logistics_order l
 		                    ON l.order_number = d.order_number
-		WHERE i.material_number=#{materialNumber}
+		                    JOIN company_material c
+		                    ON c.material_number = m.material_number
+		                    JOIN supplier s
+		                    ON c.client_id = s.client_id
+		WHERE l.logistics_id = #{logisticsId} and i.material_number=#{materialNumber}
+		GROUP BY i.material_number, m.material_name, m.material_classification, m.unit, m.logistics_safety_stock, i.expiration_limit, i.in_day, i.in_count
 	</select>
 	
 	

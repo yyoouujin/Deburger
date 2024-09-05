@@ -31,20 +31,27 @@
                       <th>재료 번호</th>
                       <th>재료 이름</th>
                       <th>주문 수량</th>
+                      <th>발주 상태</th>
+                      <th>입고 여부</th>
                       <th>입고 일자</th>
-                      <th>입고 수량</th> 
+                      <th>입고 수량</th>
+                      <th>유통 기한</th> 
                       <th>폐기</th>      
                     </tr>
                   </thead>
                   <th:block th:each="info:${container}">
                     <tbody>
                       <tr>
-                      	<td th:text="${info.materialNumber}" id="a"></td>
+                      	<td th:text="${info.lot}" style="display:none"></td>
+                      	<td th:text="${info.materialNumber}"></td>
                       	<td th:text="${info.materialName}"></td>
-                      	<td th:text="${info.inCount}"></td>
+                      	<td th:text="${info.count}"></td>
+                      	<td th:text="${info.orderCondition} ? '완료' : '진행'"></td>
+                      	<td th:text="${info.inOperation} ? '입고 완료' : '미입고'"></td>
                       	<td th:text="${#dates.format(info.inDay,'yyyy/MM/dd')}"></td>
                       	<td th:text="${info.inCount}"></td>
-                      	<td><button id="delete">폐기</button></td>
+                      	<td th:text="${#dates.format(info.expirationLimit,'yyyy/MM/dd')}"></td>
+                      	<td><button>폐기</button></td>
                       </tr>
                     </tbody>
                   </th:block>
@@ -65,11 +72,10 @@
   </body>
   <script>
 	const clc = $('meta[name="contextPath"]').attr('value');
-  	$('#delete').on('click', function(event){
-  		console.log();
-  		let btn = event.currentTarget;
-  		let did = $('#a').text();
-	  	let url = clc + '/containerDelete?materialNumber='+did;
+	$('tbody > tr > td > button').on('click', function(event){
+  		let btn = event.currentTarget.closest("tr");
+  		let did = $(btn).children().eq(0).text();
+	  	let url = clc + '/containerDelete?lot='+did;
 	  	location.href = url;
   	});
   </script>

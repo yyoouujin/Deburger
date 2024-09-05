@@ -2,8 +2,6 @@ package com.deburger.app.office.container.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.deburger.app.office.container.service.ContainerVO;
 
 public interface ContainerMapper {
@@ -20,11 +18,19 @@ public interface ContainerMapper {
 
 	// 삭제
 
-	// 입고 조회
+	// 물류 창고 입고 조회
 	public List<ContainerVO> selectAllInList();
+
+	// 물류 창고 입고 조회 list
+	public List<ContainerVO> selectInInfoList(List<ContainerVO> list);
+
+	// 물류 창고 입고 조회 처리
+
+	// 물류 창고 폐기 조회
+	public List<ContainerVO> ContainerDeleteInfo(ContainerVO containerVO);
 
 	// 물류 창고 폐기 처리
 	public int containerOutInsert(ContainerVO containerVO);
 
-	public int containerInupdate(@Param("lot") String lot, @Param("container") ContainerVO containerVO);
+	public int containerInupdate(ContainerVO containerVO);
 }

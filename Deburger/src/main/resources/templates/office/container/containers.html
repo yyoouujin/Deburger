@@ -27,10 +27,9 @@
 	                      <option value="2">Two</option>
 	                      <option value="3">Three</option>
                     </select>
-                    <div>
-                    <a href="/deburger/containerInsert"><button>등록</button></a>                    	                  
-                    </div>
+
                     <h3 th:text="${containers[0].logisticsName}"></h3>
+                    <h3 th:text="${containers[0].personId}"></h3>
                   </div>
                 </div>
                 <!-- End Search Bar -->
@@ -52,7 +51,8 @@
                       	<td th:text="${lists.materialNumber}"></td>
                       	<td th:text="${lists.materialClassification}"></td>
                       	<td th:text="${lists.materialName}"></td>
-                      	<td th:text="${lists.stockCount}"></td>
+                      	<td th:text="${lists.inCount}-${lists.outCount}"></td>
+                      	<td th:text="${lists.outCount}" style="display:none;"></td>
                       	<td th:text="${lists.logisticsSafetyStock}"></td>                     	
                       	<td th:text="${lists.inspectionOperation}"></td>                     	
                       </tr>
@@ -104,6 +104,7 @@
   		let url = clc + '/containerInfo?materialNumber='+did;
   		location.href = url;
   	});
+  	
   	
 
   </script>

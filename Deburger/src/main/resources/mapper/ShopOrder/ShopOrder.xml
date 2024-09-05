@@ -3,6 +3,7 @@
 <mapper
 	namespace="com.deburger.app.shop.shoporder.mapper.ShopOrderMapper">
 
+	<!-- 발주 전체 조회 -->
 	<select id="selectShopOrder" parameterType="ShopOrderVO">
 		select
 		m.material_number
@@ -17,48 +18,112 @@
 		ORDER by m.material_number
 	</select>
 
+	<!-- 가맹점 발주 리스트 -->
 	<insert id="insertShopOrder" parameterType="ShopOrderVO">
-			<selectKey keyProperty="orderNumber" resultType="String"
+		<selectKey keyProperty="orderNumber" resultType="String"
 			order="BEFORE">
 			select 'FOD' || LPAD(FOD_SEQ.nextval,'7',0) from dual
 		</selectKey>
 		Insert INTO store_Order(
-			ORDER_NUMBER
-			,ORDER_DAY
-			,STORE_NUMBER
-			,AUTO_ORDER_OPERATION
-			,cancel_operation
-			,note
-			,person_id)
+		ORDER_NUMBER
+		,Order_name
+		,ORDER_DAY
+		,STORE_NUMBER
+		,AUTO_ORDER_OPERATION
+		,cancel_operation
+		,note
+		,person_id
+		,allprice
+		,oder_App)
 		values (
-			#{orderNumber}
-			,sysdate
-			,#{storeNumber}
-			,#{autoOrderOperation}
-			,#{cancelOperation}
-			,''
-			,'')
+		#{orderNumber}
+		,#{orderName}
+		,sysdate
+		,#{storeNumber}
+		,#{autoOrderOperation}
+		,#{cancelOperation}
+		,''
+		,''
+		,#{allprice}
+		,#{oderApp})
 	</insert>
 
+	<!-- 가맹점 상세 발주 리스트 -->
 	<insert id="dinsertShopOrder" parameterType="ShopOrderVO">
 
-		Insert INTO Order_details(
-			Order_details_number
-			,count
-			,Order_Number
+		Insert INTO
+		Order_details(
+		Order_details_number
+		,count
+		,Order_Number
 		,MATERIAL_NUMBER)
 		values (
-			'FDO' || LPAD(FDO_SEQ.nextval,'7',0)
-			,#{count}
-			,#{orderNumber}
-			,#{materialNumber})
+		'FDO' || LPAD(FDO_SEQ.nextval,'7',0)
+		,#{count}
+		,#{orderNumber}
+		,#{materialNumber})
 
 	</insert>
-	
+
+	<!-- 가맹점 발주 장바구니 삭제 -->
 	<delete id="deleteOrderCart">
-	delete from order_cart
-	where store_number=#{storeNumber}
-	AND material_Number=#{materialNumber}
-	</delete> 
+		delete from order_cart
+		where
+		store_number=#{storeNumber}
+		AND material_Number=#{materialNumber}
+	</delete>
+
+	<!-- 발주 내역 -->
+	<select id="ShopOrderList" parameterType="ShopOrderVO">
+		select s.order_number
+		,s.order_day
+		,s.cancel_operation
+		,s.order_name
+		,p.name
+		,p.email
+		,p.phone
+		,s.allprice
+		,s.oder_App
+		from store_order s LEFT OUTER join person p
+		on
+		s.person_id =
+		p.person_id
+		where auto_order_operation = 'i1'
+		AND
+		store_number='FRC0000001'
+		ORDER by s.order_number DESC
+	</select>
+
+	<!-- 발주 취소 -->
+	<update id="updateOrderCancel">
+		update store_order
+		set cancel_operation = 'J2'
+		where
+		order_number = #{orderNumber}
+	</update>
+
+	<!-- 발주 상세 내역 -->
+	<select id="orderInfo" parameterType="ShopOrderVO">
+	select o.count
+       ,s.order_day
+       ,s.store_number
+       ,s.order_name
+       ,m.material_name
+       ,m.unit
+       ,m.sale_unitprice
+       ,m.material_item
+       ,m.material_classification  
+       ,p.person_id
+       ,p.email
+       ,p.phone
+from order_details o join store_order s
+       on o.order_number = s.order_number
+       join material m
+       on o.material_number = m.material_number
+        LEFT OUTER JOIN person p
+       on p.person_id = s.person_id
+       where o.order_number = #{orderNumber}
+	
+	</select>
 
 </mapper>

@@ -49,9 +49,9 @@
 												<td th:text="${list.saleUnitprice}" />
 												<td th:text="${list.stockCount}" />
 												<td th:text="${list.safetyStock}" />
-												<td onclick="event.stopPropagation()"><button type="button"
+												<td><button type="button" 
 														class="btn btn-primary btn-sm"
-														th:id="${list.materialNumber}">발주하기</button></td>
+														th:id="${list.materialNumber}"  onclick="event.stopPropagation()">발주하기</button></td>
 
 											</tr>
 										</th:block>
