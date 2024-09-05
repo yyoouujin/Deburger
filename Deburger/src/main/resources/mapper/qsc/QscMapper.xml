@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.deburger.app.shop.qsc.mapper.QscMapper">
+	
+	<select id="selectQscListRecent" >
+	SELECT QSC_NUMBER
+			,CATEGORY
+			,CONTENT
+			,SCORE
+			,VERSION_INFORMATION
+			,FINAL_CHANGE_DAY
+			,LIST
+			FROM qsc_list
+	WHERE version_information = (SELECT MAX(VERSION_INFORMATION)
+	                             FROM qsc_list)	
+	</select>
+	
+	<select id="cntQscListRecent" >
+	SELECT MAX(VERSION_INFORMATION)+1 VERSION_INFORMATION
+    FROM qsc_list	
+	</select>
+	
+	
+	<insert id="insertQscListRecent" parameterType="com.deburger.app.shop.qsc.service.QscVO">
+	
+	INSERT INTO qsc_list(
+						QSC_NUMBER
+						,CATEGORY
+						,CONTENT
+						,SCORE
+						,VERSION_INFORMATION
+						,FINAL_CHANGE_DAY
+						,LIST)
+	VALUES('QN' || LPAD(QN_SEQ.nextval, '7', '0')
+	        , #{list}
+	        , #{content}
+	        , #{score}
+	        , #{versionInformation}
+	        , sysdate
+	        , #{list}
+	        )
+	
+	</insert>
+	
+	<insert id="insertQscDetails" parameterType="com.deburger.app.shop.qsc.service.QscVO">
+	<selectKey keyProperty="checklistNumber"
+           order="BEFORE"
+           resultType="String">
+	SELECT 'QRN' || LPAD(QRN_SEQ.nextval, '7', '0') 
+	from dual
+	</selectKey>
+		INSERT INTO qsc_result(
+				CHECKLIST_NUMBER
+				,QSC_DATE
+				,PROCESS_CONDITION
+				,STORE_NUMBER
+				,QUALITY_SCORE
+				,CLEANL_SCORE
+				,SERVICE_SCORE
+				)
+		VALUES (
+		        #{checklistNumber}
+		        ,sysdate
+		        , 'N'
+		        , 'FRC0000001'
+		        , #{qualityScore}
+		        , #{cleanlScore}
+		        , #{serviceScore}
+		        );					
+	</insert>
+	
+	<insert id="insertQscResultDetails" parameterType="com.deburger.app.shop.qsc.service.QscVO">
+	
+		INSERT INTO qsc_result_details(
+					QSC_RESULT_DETAILS_NUMBER
+					,QSC_NUMBER
+					,CHECKLIST_NUMBER
+					,SCORE
+					)
+		VALUES (
+					'QRN' || LPAD(QRN_SEQ.nextval, '7', '0')
+					, #{qscNumber}
+					, #{checklistNumber}
+					, #{score}
+);					
+	</insert>
+	
+	
+</mapper>

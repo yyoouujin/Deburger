@@ -49,27 +49,7 @@
 
         	var StoreList = [[${StoreList}]];
 
-        	 let grid;
-
-        	class CustomDateRender {
-                constructor(props) {
-                  const el = document.createElement('div');
-
-                  this.el = el;
-                  this.render(props);
-                }
-
-                getElement() {
-                  return this.el;
-                }
-
-                render(props) {
-              	  let value = props.value
-              	  let dateFormat = value.substring(0,4) + '년 ' + value.substring(5,7) + '월 ' + value.substring(8,10) + '일';
-                  this.el.innerHTML = dateFormat;
-                }
-              }
-
+        	 let grid;   	
 
 
 
@@ -78,9 +58,6 @@
             grid = await gridLoad();
 
           });
-
-
-
 
 
           /**
@@ -146,9 +123,6 @@
                   name: 'contractStartDay', // [필수] 컬럼 매핑 이름 값
                   sortable: true, // [선택] 컬럼의 정렬 여부
                   align: 'center', // [선택] 텍스트 정렬 옵션
-                  renderer: {
-                      type: CustomDateRender,
-                    },
                 },
                 // [Column-2] 가맹점 대표
                 {
