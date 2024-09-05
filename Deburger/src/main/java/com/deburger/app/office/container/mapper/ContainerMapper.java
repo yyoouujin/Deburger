@@ -21,6 +21,11 @@ public interface ContainerMapper {
 	// 물류 창고 입고 조회
 	public List<ContainerVO> selectAllInList();
 
+	// 물류 창고 입고 조회 list
+	public List<ContainerVO> selectInInfoList(List<ContainerVO> list);
+
+	// 물류 창고 입고 조회 처리
+
 	// 물류 창고 폐기 조회
 	public List<ContainerVO> ContainerDeleteInfo(ContainerVO containerVO);
 

@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class ContainerVO {
 
-
 	public Date consumptionLimit;
 	public String disposalOperation;
 
@@ -40,14 +39,19 @@ public class ContainerVO {
 	// 물류 재고 상세
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date inDay;
-	
+
 	// 물류 입고 조회
 	public String detailsOrderNumber;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public String orderDay;
 	public String clientId;
 	public String clientName;
-	
+
+	// 물류 입고 상세
+	public int orderCost;
+	public String orderNumber;
+	public String logisticsPhone;
+
 	// 물류 창고 폐기 처리
 	public String logisticsOutNumber;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -57,6 +61,5 @@ public class ContainerVO {
 	public String note;
 	public String outOperation;
 	public String lot;
-	
-	
+
 }
