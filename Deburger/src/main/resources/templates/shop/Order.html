@@ -15,11 +15,18 @@
 			<h1>발주 리스트</h1>
 
 			<h6 style="display: inline-block;">
-				<a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동
+				<a href="ShopOrderList" class="badge border-dark border-1 text-dark">수동 발주</a><span> | </span><a href="OrderAuto" class="badge border-dark border-1 text-dark">자동
 					발주</a>
 			</h6>
+			
+
+			
+			
+			
+			
 			<button type="button" class="btn btn-primary btn-sm"
-				style="padding: 5px 20px 5px 20px; margin-left: 80%;" onClick="location.href='selectOrderCart'">발주 신청</button>
+				style="padding: 5px 20px 5px 20px; margin-left: 80%;"
+				onClick="location.href='selectOrderCart'">발주 신청</button>
 
 		</div>
 		<!-- End Page Title -->
@@ -34,20 +41,41 @@
 							<table class="table ">
 								<thead>
 									<tr>
-										<th>
 										<th data-type="date" data-format="YYYY/DD/MM">발주 일자</th>
-										</th>
 										<th>발주 번호</th>
 										<th>발주 이름</th>
+										<th>총 금액</th>
 										<th>담당자</th>
 										<th>이메일</th>
-										<th>총 금액</th>
-										<th>삼품명</th>
+										<th>연락처</th>
+										<th>진행 상태</th>
 										<th>상세내역</th>
+										<th>취소여부</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<th:block th:each="list:${ShopOrderList}">
+										<tr>
+											<td>[[${#dates.format(list.orderDay,'yyyy/MM/dd')}]]</td>
+											<td th:text="${list.orderNumber}" id="orderNumber" />
+											<td th:text="${list.orderName}" />
+											<td th:text="${list.allprice}" />
+											<td th:text="${list.personID}" />
+											<td th:text="${list.email}">
+											<td th:text="${list.phone}">
+											<td th:if="${list.cancelOperation == 'J2' and list.oderApp == 'L1'}">취소 완료</td>
+											<td th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L1'}">발주 승인 전</td>
+											<td th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L2'}">발주 승인</td>
+											<td th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L3'}">출고 완료</td>
+											<td ><button type="button"
+													class="btn btn-primary btn-sm" th:id="${list.orderNumber}" onclick="orderInfo()">상세
+													내역</button></td>
+											<td><button type="button"
+													class="btn btn-primary btn-sm" id="canclebtn"
+													th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L1'}">취소
+													</button></td>				
+										</tr>
+									</th:block>
 								</tbody>
 							</table>
 							<!-- End Table with stripped rows -->
@@ -59,6 +87,29 @@
 			</div>
 		</section>
 	</main>
+	<script>
+
+	
+	$("#canclebtn").on("click",function(event){		
+		$.ajax({
+			url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
+			method : "POST",
+			
+		}).then((end) => {
+			location.href="ShopOrderList"
+		})
+		
+	})
+	
+	function orderInfo(){
+		
+		let url ='ShopOrderInfo?orderNumber=' + event.target.id;
+		location.href = url;
+	}
+
+	
+
+	</script>
 </body>
 
 </html>

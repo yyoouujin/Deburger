@@ -15,5 +15,6 @@ public interface StockMapper {
 	  
 	//상세 조회
 	  public List<StockVO> selectStockinfo(StockVO stockVO);
-	  
+	 
+	 
 }

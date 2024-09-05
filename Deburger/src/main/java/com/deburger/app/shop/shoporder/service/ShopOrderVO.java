@@ -19,6 +19,8 @@ public class ShopOrderVO {
 	private String materialName;
 	private String unit;
 	private int saleUnitprice;
+	private String materialItem;
+	private String materialClassification;
 	
 	//발주
 	private String orderNumber; 
@@ -28,11 +30,17 @@ public class ShopOrderVO {
 	private String note;
 	private String personID;
 	private String cancelOperation;
+	private String orderName;
+	private int allprice;
+	private String oderApp;
 	
 	//상세 발주
 	private String orderDetailsNumber;
 	private String detailsNumber;
-	private String orderName;
+	
+	//담당자 id
+	private String email;
+	private String phone;
 	
 	List<ShopOrderDetailsVO> detList;
 	List<ShopOrderCartVO> cartList;
