@@ -51,6 +51,7 @@ public class ContainerVO {
 	public int orderCost;
 	public String orderNumber;
 	public String logisticsPhone;
+	public String unit;
 
 	// 물류 창고 폐기 처리
 	public String logisticsOutNumber;
