@@ -69,7 +69,6 @@ UPDATE notice
    SET 
        division=#{division}
 	   ,writer_date=sysdate
-	   ,writer=#{writer}
 	   ,title =#{title}
 	   ,content=#{content}
    WHERE notice_number=#{noticeNumber}

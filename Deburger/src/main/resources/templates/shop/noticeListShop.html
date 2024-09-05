@@ -15,7 +15,7 @@
 
 			<nav class="navbar navbar-expand-lg bg-body-tertiary">
 				<div class="container-fluid">
-					
+
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link active"
@@ -31,37 +31,17 @@
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="noticeListShopAnnouncement">공고</a></li>
 						</ul>
-						
-<!-- 						                여기 검색 등록
-                <div class="search-bar">
-                  <form
-                    class="search-form d-flex align-items-center"
-                    method="POST"
-                    action="#"
-                  >
-                    <input
-                      type="text"
-                      name="query"
-                      placeholder="Search"
-                      title="Enter search keyword"
-                    />
-                    <button type="submit" title="Search">검색</button>
-                  </form>
-                </div> -->
-                
+
+
 						<form class="d-flex" role="search">
 							<input class="form-control me-3" type="search"
 								placeholder="Search" aria-label="Search">
 							<button class="btn btn-outline-success" type="submit">Search</button>
-						</form> -->
-						<form style="margin:5px">	
-					    <button
-                             type="button"
-                             id="btnInsert"
-                             class="btn btn-primary"
-                             >작성하기</button>	
 						</form>
-						
+						<form style="margin: 5px">
+							<button type="button" id="btnInsert" class="btn btn-primary">작성하기</button>
+						</form>
+
 
 					</div>
 				</div>
@@ -93,7 +73,8 @@
 												<td th:text="${lista.noticeNumber}" />
 												<td th:text="${lista.division}" />
 												<td th:text="${lista.title}" />
-												<td> [[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
+												<td>
+													[[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
 											</tr>
 											<th:block>
 									</tbody>
@@ -107,28 +88,17 @@
 			</div>
 		</section>
 	</main>
-    <script>
-/*     $("tbody > tr").on("click", function (event) {
-        let tr = event.currentTarget;
-        let did = $(tr).children().eq(0).text();
-        console.log(did);
-        let url = "/materialInfo?materialNumber=" + did;
-        location.href = url;
-    }); */
-    
-    
-      $("#btnInsert").on("click", function (event) {
-      //$("button").on("click", function(event){
-    	 let url ='noticeInsertOffice';
-		 location.href = url;  
-      });
-      
-	  $('tbody > tr').on("click", function(event) {
-		 let num = $(event.currentTarget).children().eq(0).text();
-		 let url ='noticeListInfoShop?noticeNumber='+num;
-		 location.href = url;
-	  });
-      
-      
-    </script>
+	<script>
+		$("#btnInsert").on("click", function(event) {
+			//$("button").on("click", function(event){
+			let url = 'noticeInsertOffice';
+			location.href = url;
+		});
+
+		$('tbody > tr').on("click", function(event) {
+			let num = $(event.currentTarget).children().eq(0).text();
+			let url = 'noticeListInfoShop?noticeNumber=' + num;
+			location.href = url;
+		});
+	</script>
 </body>
