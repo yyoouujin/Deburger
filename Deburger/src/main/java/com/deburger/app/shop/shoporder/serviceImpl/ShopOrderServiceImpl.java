@@ -1,6 +1,8 @@
 package com.deburger.app.shop.shoporder.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,21 +32,45 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		return shopOrderMapper.selectShopOrder();
 	}
 
-@Override
-@Transactional
-	public int insertShopOrder (ShopOrderVO shopOrderVO) {
-	    
-	
-	   shopOrderMapper.insertShopOrder(shopOrderVO);
-	   
-	   for(ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
-		   shopOrderMapper.dinsertShopOrder(devo);
-	   }
-	   for(ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
-		   shopOrderMapper.deleteOrderCart(shvo);
-	   }
-	   return 1;
+	// 발주
+	@Override
+	@Transactional
+	public int insertShopOrder(ShopOrderVO shopOrderVO) {
+
+		shopOrderMapper.insertShopOrder(shopOrderVO);
+
+		for (ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
+			devo.setOrderNumber(shopOrderVO.getOrderNumber());
+			shopOrderMapper.dinsertShopOrder(devo);
+		}
+		for (ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
+			shopOrderMapper.deleteOrderCart(shvo);
+		}
+		return 1;
+
+	}
+
+	// 발주 리스트
+	@Override
+	public List<ShopOrderVO> ShopOrderList() {
+		// TODO Auto-generated method stub
+		return shopOrderMapper.ShopOrderList();
+	}
+
+	// 발주 취소 설정
+	@Override
+	public int updateOrderCancel(ShopOrderVO shopOrderVO) {
+		// TODO Auto-generated method stub
 		
+		shopOrderMapper.updateOrderCancel(shopOrderVO);
+		return 1;
+	}
+	
+	// 발주 상세 조회
+	@Override
+	public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO) {
+		// TODO Auto-generated method stub
+		return shopOrderMapper.orderInfo(shopOrderVO);
 	}
 
 }
