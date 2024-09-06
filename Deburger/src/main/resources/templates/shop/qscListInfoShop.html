@@ -23,36 +23,89 @@
 							<div class="col-sm-10 col-md-3">
 								<input type="text" class="form-control" value="디버거 감삼점">
 							</div>
-							<div class="row mb-3 col-md-4">
-								<label for="inputText" class="col-sm-2 col-form-label col-md-3">검수자:
-								</label>
-								<div class="col-sm-10 col-md-8">
-									<input type="text" class="form-control" value="김지수">
-								</div>
-							</div>
 
 							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary col-md-12">제출하기</button>
+								<button type="button" class="btn btn-primary col-md-12" id="insertBtn">제출하기</button>
 							</div>
 						</div>
 
 
-						<div class="row mb-3">
-							<div class="col-sm-10 col-md-2">
-								<button type="button" class="btn btn-info col-md-12">Quality(품질)</button>
-							</div>
-							<div class="col-sm-10 col-md-2">
-								<button type="button" class="btn btn-info col-md-12">Service(서비스)</button>
-							</div>
-							<div class="col-sm-10 col-md-2">
-								<button type="button" class="btn btn-info col-md-12">Cleanliness(청결)</button>
-							</div>
-						</div>
 
 
 						<div class="card">
 							<div class="card-body"><br>
-								<div id="grid"></div>
+							
+							<div class="card">
+              <div class="card-body">
+                <!-- Default Tabs -->
+                <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button
+                      class="nav-link w-100 active"
+                      id="home-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#home-justified"
+                      type="button"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                      onclick="grid1.refreshLayout()"
+                    >
+                      Quality(품질)
+                    </button>
+                  </li>
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button
+                      class="nav-link w-100"
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-justified"
+                      type="button"
+                      role="tab"
+                      aria-controls="profile"
+                      aria-selected="false"
+                      onclick="grid2.refreshLayout()"
+                    >
+                      Service(서비스)
+                    </button>
+                  </li>
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button
+                      class="nav-link w-100"
+                      id="contact-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#contact-justified"
+                      type="button"
+                      role="tab"
+                      aria-controls="contact"
+                      aria-selected="false"
+                      onclick="grid3.refreshLayout()"
+                    >
+                      Cleanliness(청결)
+                    </button>
+                  </li>
+                </ul>
+
+                <div class="tab-content pt-2" id="myTabjustifiedContent">
+                  <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
+                    
+                    <!-- grid1 -->
+                    <div id="grid1"></div>
+                  </div>
+
+                  <div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
+                    
+                    <!-- grid2 -->
+                    <div id="grid2"></div>
+                  </div>
+
+                  <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
+                    
+                    <!-- grid3 -->
+                    <div id="grid3"></div>
+                  </div>
+                  <!-- End Bordered Tabs Justified -->
+                  
 
 							</div>
 						</div>
@@ -63,21 +116,64 @@
 		
 		
 	</main>
-	<script>
-      let grid;
-      
-      
+	<script th:inline="javascript">
+	let grid1;
+    let grid2;
+    let grid3;
 
-      $(document).ready(async () => {
-        // 2. HTML이 수행된 뒤 함수를 호출한다.
-        grid = await gridLoad();
-      });
+    var detaList = [[${QscList}]];
+    let QualityData = [];
+    let ServiceData = [];
+    let CleanlinessData = [];
 
-      /**
-       *
-       * @return void
-       */
-      const gridLoad = () => {
+
+    detaList.forEach(function(ele){
+      if(ele.category.substring(0, 1) == 'Q'){
+        QualityData.push(ele);
+      }else if(ele.category.substring(0, 1) == 'S'){
+        ServiceData.push(ele)
+      }if(ele.category.substring(0, 1) == 'C'){
+        CleanlinessData.push(ele)
+      }
+    });
+
+
+    let options1 = [
+      { text: '염지육 관리', value: 'Q1' },
+      { text: '재조 매뉴얼 준수', value: 'Q2' },
+      { text: '주류/음료', value: 'Q3' },
+      { text: '식자제 관리', value: 'Q4' },
+    ];
+
+    let options2 = [
+      { text: '단정', value: 'S1' },
+      { text: '준비', value: 'S2' },
+      { text: '영업/대기', value: 'S3' },
+      { text: '홀 서비스', value: 'S4' },
+      { text: '기타', value: 'S5' },
+    ];
+
+    let options3 = [
+      { text: '매장 내부', value: 'C1' },
+      { text: '매장 외부', value: 'C2' },
+      { text: '화장실', value: 'C3' },
+      { text: '주방', value: 'C4' },
+      { text: '홀 기기', value: 'C5' },
+      { text: '위생', value: 'C6' },
+    ];
+
+    $(document).ready(async () => {
+      // 2. HTML이 수행된 뒤 함수를 호출한다.
+      grid1 = await gridLoad(options1, 'grid1', QualityData);
+      grid2 = await gridLoad(options2, 'grid2', ServiceData);
+      grid3 = await gridLoad(options3, 'grid3', CleanlinessData);
+    });
+
+    /**
+     *
+     * @return void
+     */
+    const gridLoad = (optionsList, gridname, datas) => {
         // 3. 그리드 생성
         const Grid = tui.Grid;
 
@@ -95,24 +191,8 @@
         Grid.setLanguage('en'); // set Korean
         const grid = new Grid({
           // ================================== 공통 옵션 적용 ==============================
-          el: document.getElementById('grid'), // [필수] Container element
-          data: [
-            {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
-            },
-            {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
-            },
-            {
-            	list: 'H1',
-            	content: "염지육은 적정 냉장 온도에서 보관되고 있는가?(영업중:3'C~5'C/종료:0'C~5'C)",
-            	score: '3',
-            },
-          ], // [선택] 그리드 데이터 조회
+          el: document.getElementById(gridname), // [필수] Container element
+          data: datas, // [선택] 그리드 데이터 조회
 
           /**
            * [선택] 순번 기능
@@ -129,6 +209,11 @@
           columns: [
         	  
         	// [Column-5] 사용자 취미
+        	{
+                header: '항목', // [필수] 컬럼 이름
+                name: 'qscNumber', // [필수] 컬럼 매핑 이름 값
+                hidden: true,      
+              },
               {
                 header: '항목', // [필수] 컬럼 이름
                 name: 'list', // [필수] 컬럼 매핑 이름 값
@@ -141,12 +226,7 @@
                 editor: {
                   type: 'select',
                   options: {
-                    listItems: [
-                      { text: '염지육 관리', value: 'H1' },
-                      { text: '재조 매뉴얼 준수', value: 'H2' },
-                      { text: '주류/음료', value: 'H3' },
-                      { text: '식자제 관리', value: 'H4' },
-                    ],
+                    listItems: optionsList,
                   },
                 },
               },
@@ -156,7 +236,8 @@
               name: 'content', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              editor: 'text', // [선택] 수정 옵션
+              editor: 'text', // [선택] 수정 옵션  
+              width: 1000,
               align: 'left', // [선택] 텍스트 정렬 옵션
             },
 
@@ -177,38 +258,36 @@
                   }
                 },
               align: 'center', // [선택] 텍스트 정렬 옵션
-           
-             
             },
-            
-
-            
           ],
-          
-          
         });
 
         //  그리드 추가
 
         return grid;
       };
+      
+      const insertBtn = document.getElementById('insertBtn');
+      
+      insertBtn.addEventListener('click', () => {
+          
+           let qscDataList = [...grid1.getData(), ...grid2.getData(), ...grid3.getData()]
+           console.log(qscDataList);
+           $.ajax({
+               url: "/deburger/qscListInfoShop",
+               method: "post",
+               contentType:"application/json",
+               data  : JSON.stringify(qscDataList),
+               
+               
+            })
+            .then((result) =>{
+              let url = 'qscListShop'
+              // location.replace(url);
+            })
 
-      const appendBtn = document.getElementById('appendBtn');
-      const deleteBtn = document.getElementById('deleteBtn');
-
-      const appendedData = {
-      };
-
-      appendBtn.addEventListener('click', () => {
-        grid.appendRow(appendedData);
+          
       });
-
-      
-      
-      deleteBtn.addEventListener('click', () => {
-    	  grid.removeCheckedRows();
-        });
-      
      
     </script>
 	
