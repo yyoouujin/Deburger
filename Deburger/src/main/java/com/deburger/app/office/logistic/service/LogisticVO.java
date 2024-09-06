@@ -45,7 +45,7 @@ public class LogisticVO {
 		
 		//물류창고 입고 테이블
 		@DateTimeFormat(pattern="yyyy-MM-dd")
-		@JsonFormat(pattern="yyyy-MM-dd")
+		@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 		private Date expirationLimit;			//유통기한
 		
 		@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -53,9 +53,8 @@ public class LogisticVO {
 
 		
 		@DateTimeFormat(pattern="yyyy-MM-dd")
-		@JsonFormat(pattern="yyyy-MM-dd")
+		@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 		private Date inDay;								//입고날짜
-		
 		
 		private int inCount;							//입고수량
 		private int outCount;							//출고수량
@@ -64,6 +63,8 @@ public class LogisticVO {
 		private String aggclientId;
 		private String clientName;
 		private String aggclientName;
+		
+		
 		
 
 }

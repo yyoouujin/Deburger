@@ -1,5 +1,6 @@
 package com.deburger.app.office.logistic.web;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class LogisticController {
 				List<LogisticVO> list = logisticService.logisticInfo(logisticVO);
 				//LogisticVO findVO = logisticService.logisticInfo(logisticVO);
 				model.addAttribute("logistic", list);
+				model.addAttribute("localDateTime", LocalDateTime.now());
 				return "office/logistic/logisticInfo";
 		}
 		
