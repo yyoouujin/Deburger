@@ -242,6 +242,10 @@
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
+              rowSpan : true,
+              validation: {
+                  regExp: /^(.){1,5}$/,
+                },
 
               // [Option] select 옵션
               editor: {
@@ -259,7 +263,7 @@
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               editor: 'text', // [선택] 수정 옵션
               align: 'left', // [선택] 텍스트 정렬 옵션
-              width: 1000,
+              width: 1000,              
               validation: {
                 regExp: /^(.){1,100}$/,
               },
@@ -331,7 +335,7 @@
          })
 
        }else{
-        alert("붉은색으로 표시된 항목의 글자수가 초과되었습니다. 확인후 저장해주세요")
+        alert("붉은색으로 표시된 항목의 글자수가 잘못되었습니다. \n확인후 다시저장해주세요")
        }
 
       });

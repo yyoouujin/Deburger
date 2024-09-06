@@ -43,7 +43,7 @@
 	
 	</insert>
 	
-	<insert id="insertQscDetails" parameterType="com.deburger.app.shop.qsc.service.QscVO">
+	<insert id="insertQscDetails">
 	<selectKey keyProperty="checklistNumber"
            order="BEFORE"
            resultType="String">
@@ -61,16 +61,16 @@
 				)
 		VALUES (
 		        #{checklistNumber}
-		        ,sysdate
+		        , SYSDATE
 		        , 'N'
-		        , 'FRC0000001'
+		        , #{storeNumber}
 		        , #{qualityScore}
 		        , #{cleanlScore}
 		        , #{serviceScore}
-		        );					
+		        )					
 	</insert>
 	
-	<insert id="insertQscResultDetails" parameterType="com.deburger.app.shop.qsc.service.QscVO">
+	<insert id="insertQscResultDetails">
 	
 		INSERT INTO qsc_result_details(
 					QSC_RESULT_DETAILS_NUMBER
@@ -79,12 +79,40 @@
 					,SCORE
 					)
 		VALUES (
-					'QRN' || LPAD(QRN_SEQ.nextval, '7', '0')
+					'QIN' || LPAD(QIN_SEQ.nextval, '7', '0')
 					, #{qscNumber}
 					, #{checklistNumber}
 					, #{score}
-);					
+			 )	
 	</insert>
 	
+	<select id="selectQscListShop">	
+	SELECT  QSC_DATE
+	        , PROCESS_CONDITION
+	        , q.STORE_NUMBER STORE_NUMBER
+	        , CHECKLIST_NUMBER
+	        , QUALITY_SCORE
+	        , CLEANL_SCORE
+	        , SERVICE_SCORE 
+	        , STORE_NAME
+	        , (QUALITY_SCORE + SERVICE_SCORE + CLEANL_SCORE) / 3 SCORE
+	FROM qsc_result q JOIN store s
+	on q.store_number = s.store_number
+	WHERE q.STORE_NUMBER = #{storeNumber}
+	</select>
+	
+	<select id="selectQscInfoDetail">
+	SELECT  d.QSC_NUMBER QSC_NUMBER
+			, CATEGORY
+	        , CONTENT
+	        , FINAL_CHANGE_DAY QSC_DATE
+	        , LIST
+	        , QSC_RESULT_DETAILS_NUMBER
+	        , CHECKLIST_NUMBER
+	        , d.SCORE SCORE
+	FROM qsc_list l JOIN qsc_result_details d
+	on l.qsc_number = d.qsc_number
+	WHERE d.checklist_number = #{checklistNumber}		
+	</select>
 	
 </mapper>

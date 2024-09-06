@@ -15,6 +15,9 @@ public class QscResultVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date qscDate;	
 	public String processCondition;
+	public String category;
+	public String list;
+	public String content;
 	public String storeNumber;
 	public String checklistNumber;
 	public int qualityScore;
@@ -22,5 +25,7 @@ public class QscResultVO {
 	public int serviceScore;
 	public String qscResultDetailsNumber;
 	public String qscNumber;
+	public String storeName;
 	public int score;
+	public int qscTotal;
 }

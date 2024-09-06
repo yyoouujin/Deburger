@@ -10,7 +10,7 @@
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>QSC 체크리스트</h1>
+			<h1>QSC 상세 정보</h1>
 			<br>
 			<p>*본사 담당자가 매장을 방문하여 QSC점검 시 참고 자료로 활용 됩니다.</p>
 		</div>
@@ -23,14 +23,11 @@
 							<div class="col-sm-10 col-md-3">
 								<input type="text" class="form-control" value="디버거 감삼점" disabled>
 							</div>
-
 							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary col-md-12" id="insertBtn">제출하기</button>
+								<input type="text" class="form-control" th:value="${#dates.format(qscDates.qscDate, 'yyyy-MM-dd ')}" disabled>
 							</div>
+
 						</div>
-
-
-
 
 						<div class="card">
 							<div class="card-body"><br>
@@ -236,7 +233,6 @@
               name: 'content', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              editor: 'text', // [선택] 수정 옵션  
               width: 1000,
               align: 'left', // [선택] 텍스트 정렬 옵션
             },
@@ -247,16 +243,6 @@
               name: 'score', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              editor: {
-                  type: 'radio',
-                  options: {
-                    listItems: [
-                      { text: '1점', value: 1 },
-                      { text: '2점', value: 2 },
-                      { text: '3점', value: 3 },
-                    ]
-                  }
-                },
               align: 'center', // [선택] 텍스트 정렬 옵션
             },
           ],
@@ -278,39 +264,9 @@
         return grid;
       };
       
-      const insertBtn = document.getElementById('insertBtn');
       
-      insertBtn.addEventListener('click', () => {
-    	  
-          
-           let qscDataList = [...grid1.getData(), ...grid2.getData(), ...grid3.getData()]
-           
-           
-		   let scores = {qualityScore: ((grid1.getSummaryValues('score')
-        		   .sum -1)/((grid1.getSummaryValues('score')
-        				   .cnt * 3) -1)*100),
-        				   cleanlScore :((grid2.getSummaryValues('score')
-        		        		   .sum -1)/((grid2.getSummaryValues('score')
-        		        				   .cnt * 3) -1)*100),
-        		        				   serviceScore:  ((grid3.getSummaryValues('score')
-        		        		        		   .sum -1)/((grid3.getSummaryValues('score')
-        		        		        				   .cnt * 3) -1)*100)} ;
-          console.log(scores);
-           $.ajax({
-               url: "/deburger/qscListInfoShop",
-               method: "post",
-               contentType:"application/json",
-               data  : JSON.stringify({"qscDataList" : qscDataList, "scores": scores}),
-               
-               
-            })
-            .then((result) =>{
-              let url = 'qscListShop'
-              // location.replace(url);
-            })
 
           
-      });
      
     </script>
 	
