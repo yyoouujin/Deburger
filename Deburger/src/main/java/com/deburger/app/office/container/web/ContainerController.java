@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
@@ -18,6 +16,7 @@ public class ContainerController {
 
 	public ContainerService containerService;
 	private List<ContainerVO> testList;
+
 	@Autowired
 	ContainerController(ContainerService containerService) {
 		this.containerService = containerService;
@@ -58,19 +57,18 @@ public class ContainerController {
 	}
 
 	// 물류 창고 입고 상세 조회
-	@PostMapping("containerInsert")
-	@ResponseBody
-	public List<ContainerVO> selectcontainerInInfo(@RequestBody List<ContainerVO> list) {
-		System.out.println("aaaa");
-		testList = containerService.containerInInfo(list);
-		return testList;
-	}
 	@GetMapping("containerInsert")
-	public String insertPage(Model model) {
-		System.out.println("tttt");
-		System.out.println(testList.toString());
-		model.addAttribute("list", testList);
+	public String selectcontainerInInfo(ContainerVO containerVO, Model model) {
+		List<ContainerVO> lists = containerService.containerInInfo(containerVO);
+		model.addAttribute("list", lists);
 		return "office/container/containerInsert";
+	}
+
+	// 물류 창고 입고 처리
+	// @PostMapping("containerInsert")
+	public String containerInInsert(ContainerVO containerVO) {
+		containerService.containerInTreatment(containerVO);
+		return "redirect:containerInsert";
 	}
 
 	// 폐기 조회

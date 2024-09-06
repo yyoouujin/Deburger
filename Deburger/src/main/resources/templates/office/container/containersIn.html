@@ -17,10 +17,7 @@
           <div class="col-lg-10">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">재료 입고 조회 List</h5>
-                    <div>
-                      <button onclick="mkrData()">등록</button>                   	                  
-                    </div>
+                <h5 class="card-title">재료 입고 조회 List</h5>        
                 <!-- 여기 검색 등록 -->
 				 <div class="row mb-3">
                     <div class="col-sm-4">
@@ -29,32 +26,26 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th><input type="checkbox"></th>
-                      <th>LOT</th>
-                      <th>재료 이름</th>
-                      <th>상세 발주 번호</th>	
-                      <th>예정 수량</th>	<!-- 발주 수량 -->
-                      <th>검수 상태</th>
+                      <th>발주 번호</th>
+                      <th>전체 수량</th>
                       <th>입고 수량</th>
-                      <th>등록일</th>
-                      <th>매입처</th>
-                      <th>등록자</th>      
+                      <th>입고 여부</th>
+                      <th>담당자 ID</th>	
+                      <th>거래처 이름</th>	
+                      <th>비고</th>
+                      <th></th>      
                     </tr>
                   </thead>
                   <th:block th:each="lists:${containersIn}">
                     <tbody>
                       <tr >
-                      	<td><input type="checkbox" name="id"></td>
-                      	<td th:text="${lists.lot}"></td>
-                      	<td th:text="${lists.materialName}"></td>
-                      	<td th:text="${lists.detailsOrderNumber}"></td>
-                      	<td th:text="${lists.count}"></td>
-                      	<td th:text="${lists.inspectionOperation}"></td>
+                      	<td th:text="${lists.orderNumber}"></td>
+                      	<td th:text="${lists.sum}"></td>
                       	<td th:text="${lists.inCount}"></td>
-                      	<td th:text="${#dates.format(lists.inDay, 'yyyy/MM/dd')}"></td>
-                      	<td th:text="${lists.clientName}"></td>
+                      	<td th:text="${lists.inOperation}"></td>
                       	<td th:text="${lists.personId}"></td>
-                      	<th th:text="${lists.clientId}" style="display:none;"></th>
+                      	<td th:text="${lists.clientName}"></td>
+                      	<td th:text="${lists.note}"></td>
                       </tr>
                     </tbody>
                   </th:block>
@@ -97,31 +88,11 @@
     </main>
   </body>
   <script>
-  	function mkrData(){
-  		let list = [];
-  		
-  		$("[name='id']:checked").each(function(i, checkbox){
-  			let tds = $(checkbox).closest("tr").children();
-  			let detailsOrderNumber = tds.eq(3).text(); 			
-  			let clientId = tds.eq(10).text(); 
-  			list.push({detailsOrderNumber, clientId});
-  		})
-  		console.log(list);
-  		$.ajax({
-  			url : "/deburger/containerInsert",
-  			method : "post",
-  			contentType : "application/json",
-			data : JSON.stringify(list),
-			async: false,
-			success: function(result) {
-	            console.log(result); // 성공하면
-	            window.location.href="/deburger/containerInsert";
-	        },
-	        fail: function(result) {
-	            fail(error); 
-	            console.log(result.responseText); // 실패하면
-	        }
-  		})
-  	}
+  	$('tbody > tr').on('click',function(e){
+  		let tds = e.currentTarget;
+  		let did = $(tds).children().eq(0).text();
+ 		let url = '/deburger/containerInsert?orderNumber='+did;
+ 		location.href = url;
+  	})
   </script>
 </html>

@@ -74,32 +74,34 @@
 	
 		<!-- 입고 조회 -->
 	<select id="selectAllInList" resultType="ContainerVO">
-			select a.lot,
-			    a.in_day,
-				a.in_count,
-				a.inspection_operation,
-				a.person_id,
-				b.details_order_number,
-				b.count,
-				b.order_condition,
-			    c.material_name,
-			    d.order_day,
-			    e.logistics_name,
-			    f.client_id,
-			    g.client_name
-			from logistics_in a
+			select a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        sum(b.count) as sum,
+			        c.logistics_id,
+			        d.client_name,
+			        sum(e.in_count) as inCount
+			from logistics_order a
 			join logistics_order_details b
-				on a.details_order_number = b.details_order_number
-			join material c
-				on b.material_number = c.material_number
-			join logistics_order d
-			on b.order_number = d.order_number
-			join logistics e
-				on d.logistics_id = e.logistics_id
-			join company_material f 
-			    on c.material_number = f.material_number 
-			join supplier g
-			    on f.client_id = g.client_id
+			        on a.order_number = b.order_number
+			join logistics c
+			        on a.logistics_id  = c.logistics_id
+			join supplier d
+			        on a.client_id = d.client_id
+			join logistics_in e
+			        on b.details_order_number = e.details_order_number
+			where  c.logistics_id = 'CTN0000013'        
+			group by a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        c.logistics_id,
+			        d.client_name
 	</select>
 	
 	<!-- 입고 처리 조회 -->
@@ -108,6 +110,7 @@
 		        a.count,
 		        a.unit,
 		        a.order_cost,
+		        a.person_id,
 		        b.order_number,
 		        c.logistics_name,
 		        c.phone as logisticsPhone,
@@ -126,18 +129,42 @@
 		         on d.material_number = e.material_number
 		join supplier f
 		       on e.client_id = f.client_id
-		where a.details_order_number in 
-    	<foreach item="obj" index="index" collection="list"
-        	open="(" separator="," close=")">
-			#{obj.detailsOrderNumber}
-    	</foreach>
-    	and f.client_id in
-    	 <foreach item="obj" index="index" collection="list"
-        	open="(" separator="," close=")">
-			#{obj.clientId}
-    	</foreach>
+		where b.order_number = #{orderNumber}
 	</select>
+	<!-- 입고 처리 -->
+	<insert id="containerInInsert">
+		 insert into logistics_in(
+			        lot,
+			        details_order_number,
+			        in_day,
+			        in_count,
+			        expiration_limit,
+			        consumption_limit,
+			        manufacture_day,
+			        inspection_operation,
+			        person_id
+		 )values(
+		      'LOT' || LPAD(LOT_SEQ.nextval, '7', '0'), 
+		      #{detailsOrderNumber},
+		      #{inDay},
+		      #{inCount},
+	          #{expirationLimit},
+	          #{consumptionLimit},
+	          #{manufactureDay},
+	          #{inspectionOperation},
+	          #{personId}	           
+		 );
+	</insert>
 	
+	<update id="containerInDelete">
+		
+	</update>
+	
+	<update id="containerInUpdate">
+		update logistics_order_details
+ 		set in_operation = #{inOperation}
+ 		where details_order_number = #{detailsOrderNumber}
+	</update>
 	<!-- 물류 창고 폐기 조회 -->
 	<select id="ContainerDeleteInfo" resultType="ContainerVO">
 			select distinct
@@ -163,6 +190,7 @@
 				on a.order_number = d.order_number
 			where b.lot = #{lot}
 	</select>
+
 	
 	<!-- 물류 창고 폐기 처리 -->
 	<insert id="containerOutInsert" parameterType="ContainerVO">
