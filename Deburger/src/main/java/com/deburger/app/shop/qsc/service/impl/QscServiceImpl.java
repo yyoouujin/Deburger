@@ -35,12 +35,31 @@ public class QscServiceImpl implements QscService{
 
 	@Override
 	@Transactional
-	public int insertQscDetails(List<QscResultVO>  qscResultVO) {
-		for(QscResultVO qscResultVOs : qscResultVO) {
-		qscMapper.insertQscResultDetails(qscResultVOs);
-		qscMapper.insertQscDetails(qscResultVOs);
-		}
-		return 0;
+	public int insertQscDetails(List<QscResultVO>  qscResultVOList, QscResultVO qscResultVO) {
+		int cnt = 0;
+		String shopNo = "FRC0000001" ;
+		qscResultVO.setStoreNumber(shopNo);
+		System.out.println(qscResultVO);
+		qscMapper.insertQscDetails(qscResultVO);				
+		
+		for(QscResultVO qscResultVOs : qscResultVOList) {
+			qscResultVOs.setChecklistNumber(qscResultVO.getChecklistNumber());
+			System.out.println(qscResultVOs);
+			qscMapper.insertQscResultDetails(qscResultVOs);
+		cnt++;
+		};
+		
+		return cnt;
+	}
+
+	@Override
+	public List<QscResultVO> selectQscListShop(QscResultVO qscResultVO) {
+		return qscMapper.selectQscListShop(qscResultVO);
+	}
+
+	@Override
+	public List<QscResultVO> selectQscInfoDetail(QscResultVO qscResultVO) {
+		return qscMapper.selectQscInfoDetail(qscResultVO);
 	}
 
 	

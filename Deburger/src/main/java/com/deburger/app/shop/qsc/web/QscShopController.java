@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.shop.qsc.service.QscListVO;
 import com.deburger.app.shop.qsc.service.QscResultVO;
 import com.deburger.app.shop.qsc.service.QscService;
 import com.deburger.app.shop.qsc.service.QscVO;
@@ -25,7 +26,13 @@ public class QscShopController {
 	// 가맹점
 	//QSC전체조회(희창)
 	@GetMapping("qscListShop")
-	public String qsclist() {
+	public String qsclist(Model model) {
+		String storeNo = "FRC0000001";
+		QscResultVO qscResultVO = new QscResultVO();
+		qscResultVO.setStoreNumber(storeNo);
+		
+		List<QscResultVO> list =  qscService.selectQscListShop(qscResultVO);
+		model.addAttribute("QscList", list);
 		return "shop/qscListShop";
 	}
 	
@@ -40,21 +47,15 @@ public class QscShopController {
 		return "shop/qscListInfoShop";
 	}
 	
-	//QSC상세조회(희창)
+	//QSC 작성(희창)
 	@PostMapping("qscListInfoShop")
 	@ResponseBody
-	public String qscListInfoInsert(@RequestBody List<QscResultVO>  qscResultVOs) {
-		qscService.insertQscDetails(qscResultVOs);
+	public String qscListInfoInsert(@RequestBody QscListVO qscListVO) {
+		qscService.insertQscDetails(qscListVO.getQscDataList(), qscListVO.getScores());		
 		return "qscListShop";
 	}
 	
 	
-	//QSC작성(희창)
-	@GetMapping("qscInsertShop")
-	public String qscInsert() {
-		
-		return "shop/qscInsertShop";
-	}
 	
 	// 본점
 	//QSC항목 작성(희창)
@@ -82,14 +83,23 @@ public class QscShopController {
 	
 	//QSC결과 전체 조회(희창)
 	@GetMapping("qscListOffice")
-	public String qscListOffice() {
+	public String qscListOffice(Model model) {
+		String storeNo = "FRC0000001";
+		QscResultVO qscResultVO = new QscResultVO();
+		qscResultVO.setStoreNumber(storeNo);
+		
+		List<QscResultVO> list =  qscService.selectQscListShop(qscResultVO);
+		model.addAttribute("QscList", list);
 		return "office/qscListOffice";
 	}	
 	
 	//QSC결과 상세 조회(희창)
-	@GetMapping("qscListInfoOffice")
-	public String qscListInfoOffice() {
-		return "office/qscListInfoOffice";
+	@GetMapping("qscListInfoDetail")
+	public String qscListInfoDetail(QscResultVO qscResultVO, Model model) {
+		List<QscResultVO> list =  qscService.selectQscInfoDetail(qscResultVO);
+		model.addAttribute("QscList", list);
+		model.addAttribute("qscDates", list.get(0));
+		return "shop/qscListInfoDetail";
 	}
 	
 	
