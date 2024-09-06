@@ -108,10 +108,10 @@ th, td {
 								<tbody>
 									<tr>
 										<th>합계금액</th>
-										<td style="text-align: center" colspan='8'>일금 
-										<input type="text" style="border: none; width: 200px;" id="korSum"
-											readonly /> 원정( 
-											<input type="text" style="border: none; width: 200px;" id="allSum" readonly />
+										<td style="text-align: center" colspan='8'>일금 <input
+											type="text" style="border: none; width: 200px;" id="korSum"
+											readonly /> 원정( <input type="text"
+											style="border: none; width: 200px;" id="allSum" readonly />
 											)세액포함
 										</td>
 									</tr>
@@ -129,7 +129,8 @@ th, td {
 									</tr>
 									<th:block th:each="list,index:${selectOrderCart}">
 										<tr>
-											<td style="display: none;"><input type="text" th:value="${list.materialNumber}" /></td>
+											<td style="display: none;"><input type="text"
+												th:value="${list.materialNumber}" /></td>
 											<td><input type="checkbox" name="checkOrder" /></td>
 											<td th:text=${index.index+1} />
 											<td th:text="${list.materialName}" />
@@ -162,16 +163,21 @@ th, td {
 			let detList = [];
 			let cartList = [];
 			
-				//발주
-				let orderName = $('#orderName').get(0).value;
-				let storeNumber = $('#storeNumber').get(0).value;				
-				let autoOrderOperation = 'i1';
-				let cancelOperation = 'J1';
-				let oderApp = 'L1';
-				let allprice = $('#allSum').get(0).value;
+			//발주
+			let orderName = $('#orderName').get(0).value;
+			let storeNumber = $('#storeNumber').get(0).value;				
+			let autoOrderOperation = 'i1';
+			let cancelOperation = 'J1';
+			let oderApp = 'L1';
+			let allprice = $('#allSum').get(0).value;
 				
-				
-
+			if($("[name='checkOrder']:checked").length == 0){
+				alert("체크박스를 입력해주세요.");
+				return;
+			}
+			
+			
+			
 			$("[name='checkOrder']:checked").each(function(i,checkbox){
 				let tr = $(checkbox).closest('tr').children();
 				
