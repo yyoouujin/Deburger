@@ -14,27 +14,5 @@ public class ShopController {
 		
 	
 
-	//QnA 전체조회(지수)
-	@GetMapping("qnaListShop")
-	public String qnaList() {
-		return "shop/qnaListShop";
-	}
-	
-	//QnA 상세조회(지수)
-	@GetMapping("qnaListInfoShop")
-	public String qnaListInfo() {
-		return "shop/qnaListInfoShop";
-	}	
-	
-	//QnA작성(지수)
-	@GetMapping("qnaInsertShop")
-	public String qnaInsert() {
-		return "shop/qnaInsertShop";
-	}
-	
-	//QnA수정(지수)
-	@GetMapping("qnaCorrectShop")
-	public String qnaCorrect() {
-		return "shop/qnaCorrectShop";
-	}	
+
 }
