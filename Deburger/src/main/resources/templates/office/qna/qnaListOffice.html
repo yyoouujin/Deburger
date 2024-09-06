@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>QnA</h1>
+			<form
+				style="margin: 0px; width: 81.5%; display: inline-block;">
+				<p>
+					<i class="bi bi-chat-right-text-fill"></i> 고객센터 답변 시간 : 월~금
+					09:00~18:00
+				</p>
+			</form>
+			<form style="margin: 5px; display: inline-block; value: right">
+				<button type="button" id="qnaInsert" class="btn btn-primary">문의하기</button>
+			</form>
+			<br>
+			<!--  -->
+			<div class="row">
+
+				<!-- Sales Card -->
+				<div class="col-xxl-4 col-md-6" style="width: 30%">
+					<div class="card info-card sales-card">
+
+						<div class="filter">
+							<a class="icon" href="#" data-bs-toggle="dropdown"></a>
+						</div>
+
+						<div class="card-body">
+							<h5 class="card-title">접수</h5>
+
+							<div class="d-flex align-items-center">
+								<div
+									class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+									<i class="bi bi-chat-square-dots"></i>
+								</div>
+								<div class="ps-4">
+									<h3>145</h3>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- End Sales Card -->
+
+				<!-- Sales Card -->
+				<div class="col-xxl-4 col-md-6" style="width: 30%">
+					<div class="card info-card sales-card">
+
+						<div class="filter">
+							<a class="icon" href="#" data-bs-toggle="dropdown"></a>
+						</div>
+
+						<div class="card-body">
+							<h5 class="card-title">처리중</h5>
+
+							<div class="d-flex align-items-center">
+								<div
+									class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+									<i class="bi bi-clock-history"></i>
+								</div>
+								<div class="ps-4">
+									<h3>145</h3>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- End Sales Card -->
+
+				<!-- Sales Card -->
+				<div class="col-xxl-4 col-md-6" style="width: 30%">
+					<div class="card info-card sales-card">
+
+						<div class="filter">
+							<a class="icon" href="#" data-bs-toggle="dropdown"></a>
+						</div>
+
+						<div class="card-body">
+							<h5 class="card-title">완료</h5>
+
+							<div class="d-flex align-items-center">
+								<div
+									class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+									<i class="bi bi-check-circle"></i>
+								</div>
+								<div class="ps-4">
+									<h3>145</h3>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- End Sales Card -->
+
+
+
+
+				<section class="section" style="width: 90%">
+					<div class="row">
+						<div class="col-lg-12">
+
+							<div class="card">
+								<div class="card-body">
+									<form method="POST" th:action="@{/noticeListShop}">
+										<table class="table">
+											<thead>
+												<tr>
+													<th><b>일련번호</b></th>
+													<th>문의내역</th>
+													<th>문의매장</th>
+													<th>작성자</th>
+													<th>상태</th>
+													<th>작성일</th>
+												</tr>
+											</thead>
+											<tbody>
+												<th:block th:each="lista:${notices}">
+													<tr>
+														<td th:text="${lista.noticeNumber}" />
+														<td th:text="${lista.division}" />
+														<td th:text="${lista.title}" />
+														<td>
+															[[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
+													</tr>
+													<th:block>
+											</tbody>
+										</table>
+									</form>
+									<!-- End Table with stripped rows -->
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</section>
+
+			</div>
+
+		</div>
+
+	</main>
+</body>
+</html>
