@@ -46,6 +46,7 @@ public class ContainerVO {
 	public String orderDay;
 	public String clientId;
 	public String clientName;
+	public int sum;
 
 	// 물류 입고 상세
 	public int orderCost;

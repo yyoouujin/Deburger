@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.deburger.app.shop.storein.mapper.StoreInMapper">
+
+	<select id="StoreInList" resultType="StoreInVO">
+		select DISTINCT
+		o.order_day
+		,i.in_Day
+		,o.order_Number
+		,i.disposal_Operation
+		,o.order_Name
+		,i.note
+		,o.oder_App
+		,in_operation
+		From store_order o JOIN order_details d
+		on o.order_number = d.order_number
+		LEFT OUTER JOIN store_in i
+		on d.order_details_number = i.order_details_number
+		where oder_app='L3'
+		ORDER by ORDER_NUMBER DESC
+	</select>
+
+	<select id="StoreIninfoList" resultType="StoreInVO">
+		select o.order_number
+		,o.order_day
+		,d.order_details_number
+		,m.material_name
+		,d.count
+		,i.Expiration_limit
+		,i.consumption_limit
+		,i.manufacture_day
+		,d.material_number
+		from store_order o join order_details d
+		on o.order_number = d.order_number
+		join material m
+		on d.material_number = m.material_number
+		LEFT OUTER JOIN logistics_out l
+		on o.order_number = l.order_number
+		LEFT OUTER JOIN logistics_in i
+		on l.LOT = i.LOT
+		where o.order_number = #{orderNumber}
+	</select>
+
+	<insert id="">
+		insert into store_in(
+			IN_NUMBER
+			,DISPOSAL_OPERATION
+			,IN_IMAGE
+			,NOTE
+			,MANUFACTURE_DAY
+			,REMAIN_STOCK_COUNT
+			,CONSUMPTION_LIMIT
+			,EXPIRATION_LIMIT
+			,IN_DAY
+			,ORDER_DETAILS_NUMBER
+			,IN_OPERATION
+			,COUNT
+			,MATERIAL_NUMBER
+		values (
+			SI_SEQ.NEXTVAL
+			,'k1'
+			,#{inImage}
+			,#{note}
+			,#{manufactureDay}
+			,#{remainStockCount}
+			,#{consumptionLimit}
+			,#{expirationLimit}
+			,sysdate
+			,#{orderDetailsNumber}
+			,#{inOperation}
+			,#{count}
+			,#{materialNumber}
+		)
+
+	</insert>
+</mapper>
