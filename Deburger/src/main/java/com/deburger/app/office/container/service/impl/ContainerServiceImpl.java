@@ -48,9 +48,17 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 입고 list 조회
 	@Override
-	public List<ContainerVO> containerInInfo(List<ContainerVO> list) {
+	public List<ContainerVO> containerInInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.selectInInfoList(list);
+		return containerMapper.selectInInfoList(containerVO);
+	}
+
+	// 물류 창고 입고 list 처리
+	@Override
+	@Transactional
+	public int containerInTreatment(ContainerVO containerVO) {
+		containerMapper.containerInInsert(containerVO);
+		return containerMapper.containerInUpdate(containerVO);
 	}
 
 	// 물류 창고 폐기 조회
