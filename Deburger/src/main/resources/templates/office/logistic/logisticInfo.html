@@ -10,6 +10,7 @@
 </head>
 <body>
 
+
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -36,7 +37,6 @@
                 <li class="dropdown-header text-start">
                   <h6>Filter</h6>
                 </li>
-
                 <li><a class="dropdown-item" href="#">Today</a></li>
                 <li><a class="dropdown-item" href="#">This Month</a></li>
                 <li><a class="dropdown-item" href="#">This Year</a></li>
@@ -109,9 +109,56 @@
 
             </div>
           </div><!-- End Website Traffic -->
-          </div>
           
-    
+          
+          
+          <!-- 유통기한 임박 -->
+          
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">유통기한 임박 <span> | 발주 필요 재고</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="ps-0">
+                      <h6>145</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                    </div>
+                  </div>
+                </div>
+                
+                
+               	<div class="card-body">
+                  <h5 class="card-title">유통기한 임박 <span> | 발주 필요 재고</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="ps-0">
+                      <h6>145</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                    </div>
+                  </div>
+                </div>
+               
+            </div><!-- End Sales Card -->
+
+
+
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">유통기한 임박 <span> | 발주 필요 재고</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="ps-0">
+                      <h6>145</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                    </div>
+                  </div>
+                </div>
+               
+            </div><!-- End Sales Card -->
+            
+          </div>
 
         <div class="col-lg-8">
 
@@ -128,8 +175,8 @@
                     <th scope="col">재료명</th>
                     <th scope="col">수량</th>
                     <th scope="col">용량</th>
-                    <th scope="col">유통기한</th>
                     <th scope="col">발주필요 재고</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -140,10 +187,7 @@
 	            		<td>[[ ${info.materialName} ]]</td>
 	            		<td>[[ ${info.stockCount} ]]개</td>
 	            		<td>[[ ${info.unit} ]]</td>
-	            		<td>[[ ${#dates.format(info.minExpirationLimit, 'yyyy-MM-dd')} ]]</td>
-						<td th:text="${info.requireStock} < 0 ? '충분' : '부족' "></td>
-
-						
+	            		<td th:text="${info.requireStock} < 0 ? '충분' : '부족' "></td>
 	                </tr>
 	            </th:block>
                 </tbody>
@@ -230,20 +274,16 @@
 		})
 		.done(data => {
 			
-			
 			$('.modal-title').append(`${data[0].materialName}`);
-			
-			
+
 			let tag = ` 
-                    	<h5><b>분류 : </b><span id="mate_class">${data[0].materialName}</span></h5>
-                    	<h5><b>용량 : </b><span id="mate_unit">${data[0].materialClassification}</span></h5>
-                    	<h5><b>안전수량 : </b><span id="mate_safetyStock">${data[0].unit}</span></h5>
-                    	<h5><b>거래처 : </b><span id="mate_supplier">${data[0].logisticsSafetyStock} 개</span></h5>`
+                    	<h5><b>분류 : </b><span id="mate_class">${data[0].materialClassification}</span></h5>
+                    	<h5><b>용량 : </b><span id="mate_unit">${data[0].unit}</span></h5>
+                    	<h5><b>안전수량 : </b><span id="mate_safetyStock">${data[0].logisticsSafetyStock}개</span></h5>
+                    	<h5><b>거래처 : </b><span id="mate_supplier">${data[0].aggclientName}</span></h5>`
 			
             $('#top-tag').html(tag); //append는 계속 갖다 붛히는거, html로 초기화
 
-			//거래처
-			$('#mate_supplier').append(`${data[0].aggclientName}`);
 			
 			data.forEach(element => {
 				let tr = document.createElement('tr');
@@ -286,7 +326,7 @@
 
 	<td th:if="${info.requireStock} < 0">충분</td>
 	<td th:unless="${info.requireStock} < 0">부족</td>
-  
+  <td th:if="${info.minExpirationLimit} - localDateTime > 7">유효</td>
 */-->
 
 <!--/* 
@@ -304,3 +344,22 @@
 	});
 	
  */-->
+ 
+ 
+ 
+<!--/*  
+	            		
+	<td>[[ ${#dates.format(info.minExpirationLimit, 'yyyy-MM-dd')} ]]</td>
+	            		
+	<td>[[ ${#dates.day(info.minExpirationLimit)} ]]</td>
+	<td>[[ ${#dates.month(info.minExpirationLimit)} ]]</td>
+	            		
+	<td>[[ ${#temporals.month(localDateTime)} ]]</td>
+	<td>[[ ${#temporals.day(localDateTime)} ]]</td>
+	            		
+	<td th:if="${#dates.day(info.minExpirationLimit)} < ${#temporals.day(localDateTime)}">만료</td>
+	<td th:unless="${#dates.day(info.minExpirationLimit)} < ${#temporals.day(localDateTime)}">유효</td>
+	            		
+*/-->
+	            		
+	            		
