@@ -108,10 +108,10 @@ th, td {
 								<tbody>
 									<tr>
 										<th>합계금액</th>
-										<td style="text-align: center" colspan='8'>일금 
-										<input type="text" style="border: none; width: 200px;" id="korSum"
-											readonly /> 원정( 
-											<input type="text" style="border: none; width: 200px;" id="allSum" readonly />
+										<td style="text-align: center" colspan='8'>일금 <input
+											type="text" style="border: none; width: 200px;" id="korSum"
+											readonly /> 원정( <input type="text"
+											style="border: none; width: 200px;" id="allSum" readonly />
 											)세액포함
 										</td>
 									</tr>
@@ -129,12 +129,13 @@ th, td {
 									</tr>
 									<th:block th:each="list,index:${selectOrderCart}">
 										<tr>
-											<td style="display: none;"><input type="text" th:value="${list.materialNumber}" /></td>
+											<td style="display: none;"><input type="text"
+												th:value="${list.materialNumber}" /></td>
 											<td><input type="checkbox" name="checkOrder" /></td>
 											<td th:text=${index.index+1} />
 											<td th:text="${list.materialName}" />
 											<td th:text="${list.unit}" />
-											<td><input type="number" th:value="${list.count}"
+											<td><input type="number" min="1" th:value="${list.count}"
 												id="count" name="count" style="border: none;"></td>
 											<td th:text="${list.saleUnitprice}" id="oprice" />
 											<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
@@ -155,23 +156,27 @@ th, td {
 	</main>
 	<script>
 
-		Calculator();
+
 		
 		function makeData(){
 			let list = {};
 			let detList = [];
 			let cartList = [];
 			
-				//발주
-				let orderName = $('#orderName').get(0).value;
-				let storeNumber = $('#storeNumber').get(0).value;				
-				let autoOrderOperation = 'i1';
-				let cancelOperation = 'J1';
-				let oderApp = 'L1';
-				let allprice = $('#allSum').get(0).value;
+			//발주
+			let orderName = $('#orderName').get(0).value;
+			let storeNumber = $('#storeNumber').get(0).value;				
+			let autoOrderOperation = 'i1';
+			let cancelOperation = 'J1';
+			let oderApp = 'L1';
+			let allprice = $('#allSum').get(0).value;
 				
-				
-
+			if($("[name='checkOrder']:checked").length == 0){
+				alert("체크박스를 입력해주세요.");
+				return;
+			}
+			
+			
 			$("[name='checkOrder']:checked").each(function(i,checkbox){
 				let tr = $(checkbox).closest('tr').children();
 				
@@ -184,6 +189,8 @@ th, td {
 				
 				//장바구니 삭제
 				cartList.push({storeNumber,materialNumber});
+				
+				
 			})
 			
 			list= {oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
@@ -210,14 +217,27 @@ th, td {
 			tr.find('#texprice').get(0).innerHTML = Number(tr.find('#price').text()/10);
 			tr.find('#allprice').get(0).innerHTML = Number(tr.find('#price').text())+Number(tr.find('#texprice').text());
 			
-			Calculator();
+			Calculator()
+
 		});
 		
 		function Calculator(){
 			let sum = 0;
-			  $('.allprice').each(function(index,item){
+			
+/* 			  $('.allprice').each(function(index,item){
 				  sum += Number(item.innerHTML);
-			});
+			
+			  }); */
+			  
+				$("[name='checkOrder']:checked").each(function(i,checkbox){
+					let tr = $(checkbox).closest('tr').children();
+					sum += Number(tr.eq(9).html());
+					
+					
+				})
+			  
+			  
+			  
 			  
 			  $('#allSum').val(sum);
 			  $('#korSum').val(geKoreanNumber(sum));
