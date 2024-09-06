@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.shop.notice.mapper.QnaMapper"> 
+
+<!-- 전체 조회(본점) -->
+<select id = "qnaListOffice" resultType="QnaVO">
+select   q.qna_number
+        ,q.title
+        ,s.store_name
+        ,q.writer              <!-- 문의상태 -->
+        ,q.writer_day
+from qna q JOIN store s
+on q.store_number = s.store_number
+</select>
+
+<!-- 전체 조회에서 상태 update -->
+<update id = "qnaListWriterUpdate">
+UPDATE qna
+   SET
+      writer=#{writer}
+   WHERE qna_number=#{qnaNumber} 
+</update>
+
+<!-- 전체조회(가맹점) -->
+<select id = "qnaListShop" resultType="QnaVO">
+select  title
+       ,writer
+       ,writer_day
+from qna
+</select>
+</mapper>
