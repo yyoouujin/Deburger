@@ -22,9 +22,12 @@ public interface ContainerMapper {
 	public List<ContainerVO> selectAllInList();
 
 	// 물류 창고 입고 조회 list
-	public List<ContainerVO> selectInInfoList(List<ContainerVO> list);
+	public List<ContainerVO> selectInInfoList(ContainerVO containerVO);
 
 	// 물류 창고 입고 조회 처리
+	public int containerInInsert(ContainerVO containerVO);
+
+	public int containerInUpdate(ContainerVO containerVO);
 
 	// 물류 창고 폐기 조회
 	public List<ContainerVO> ContainerDeleteInfo(ContainerVO containerVO);

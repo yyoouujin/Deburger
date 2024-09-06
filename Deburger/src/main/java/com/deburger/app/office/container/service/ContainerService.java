@@ -17,7 +17,10 @@ public interface ContainerService {
 	public List<ContainerVO> containerAllInList();
 
 	// 물류 창고 입고 처리 조회
-	public List<ContainerVO> containerInInfo(List<ContainerVO> list);
+	public List<ContainerVO> containerInInfo(ContainerVO containerVO);
+
+	// 물류 창고 입고 처리
+	public int containerInTreatment(ContainerVO containerVO);
 
 	// 물류 창고 폐기 조회
 	public List<ContainerVO> containerDtInfo(ContainerVO containerVO);
