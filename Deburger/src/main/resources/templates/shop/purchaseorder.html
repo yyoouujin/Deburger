@@ -135,7 +135,7 @@ th, td {
 											<td th:text=${index.index+1} />
 											<td th:text="${list.materialName}" />
 											<td th:text="${list.unit}" />
-											<td><input type="number" th:value="${list.count}"
+											<td><input type="number" min="1" th:value="${list.count}"
 												id="count" name="count" style="border: none;"></td>
 											<td th:text="${list.saleUnitprice}" id="oprice" />
 											<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
@@ -156,7 +156,7 @@ th, td {
 	</main>
 	<script>
 
-		Calculator();
+
 		
 		function makeData(){
 			let list = {};
@@ -177,7 +177,6 @@ th, td {
 			}
 			
 			
-			
 			$("[name='checkOrder']:checked").each(function(i,checkbox){
 				let tr = $(checkbox).closest('tr').children();
 				
@@ -190,6 +189,8 @@ th, td {
 				
 				//장바구니 삭제
 				cartList.push({storeNumber,materialNumber});
+				
+				
 			})
 			
 			list= {oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
@@ -216,14 +217,27 @@ th, td {
 			tr.find('#texprice').get(0).innerHTML = Number(tr.find('#price').text()/10);
 			tr.find('#allprice').get(0).innerHTML = Number(tr.find('#price').text())+Number(tr.find('#texprice').text());
 			
-			Calculator();
+			Calculator()
+
 		});
 		
 		function Calculator(){
 			let sum = 0;
-			  $('.allprice').each(function(index,item){
+			
+/* 			  $('.allprice').each(function(index,item){
 				  sum += Number(item.innerHTML);
-			});
+			
+			  }); */
+			  
+				$("[name='checkOrder']:checked").each(function(i,checkbox){
+					let tr = $(checkbox).closest('tr').children();
+					sum += Number(tr.eq(9).html());
+					
+					
+				})
+			  
+			  
+			  
 			  
 			  $('#allSum').val(sum);
 			  $('#korSum').val(geKoreanNumber(sum));

@@ -25,18 +25,39 @@
 							<table class="table ">
 								<thead>
 									<tr>
-										<th>주문 번호</th>
+										<th data-type="date" data-format="YYYY/DD/MM">주문 날짜</th>
 										<th data-type="date" data-format="YYYY/DD/MM">입고 날짜</th>
-										<th data-type="date" data-format="YYYY/DD/MM">제조 날짜</th>
-										<th>입고 수량</th>
+										<th>주문 번호</th>
 										<th>구분</th>
-										<th>입고 물품</th>
+										<th>입고 이름</th>
 										<th>폐기 사유</th>
 										<th>입고 여부</th>
 									</tr>
 								</thead>
 								<tbody>
+									<th:block th:each="list:${storeInList}">
+										<tr>
+											<td th:text="${#dates.format(list.orderDay,'yyyy/MM/dd')}" />
+											<td th:text="${#dates.format(list.inDay,'yyyy/MM/dd')}" />
+											<td th:text="${list.orderNumber}" />
+											<td
+												th:if="${list.inOperation == null and list.oderApp == 'L3'}">입고
+												전</td>
+											<td
+												th:if="${list.inOperation == 'F0' and list.oderApp == 'L3'}">폐기</td>
+											<td
+												th:if="${list.inOperation == 'F1' and list.oderApp == 'L3'}">부분
+												입고</td>
+											<td
+												th:if="${list.inOperation == 'F2' and list.oderApp == 'L3'}">입고
+												완료</td>
+											<td th:text="${list.orderName}" />
+											<td th:text="${list.note}" />
+											<td><button type="button" class="btn btn-primary btn-sm"
+													onclick="infobtn()" th:id="${list.orderNumber}">입고</button></td>
 
+										</tr>
+									</th:block>
 								</tbody>
 							</table>
 							<!-- End Table with stripped rows -->
@@ -48,6 +69,12 @@
 			</div>
 		</section>
 	</main>
-</body>
+	<script>
+		function infobtn() {
+			let url = 'storeIninfoList?orderNumber=' + event.target.id
+			location.href = url;
 
+		}
+	</script>
+</body>
 </html>
