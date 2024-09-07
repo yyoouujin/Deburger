@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 public class LogisticVO {
 		
+	
 		//물류창고 테이블
 		private String logisticsId;
 		private String logisticsName;
@@ -18,8 +19,6 @@ public class LogisticVO {
 		private String basicsAddress;
 		private String detailsAddress;
 		private String note;
-		
-		private String address = basicsAddress + detailsAddress + note;
 		
 		private String phone;
 		@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -63,7 +62,6 @@ public class LogisticVO {
 		private String aggclientId;
 		private String clientName;
 		private String aggclientName;
-		
 		
 		
 

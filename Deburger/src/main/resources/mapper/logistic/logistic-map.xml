@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.office.logistic.mapper.LogisticMapper">
-	
-<!-- 물류창고 전체 조회 -->
+
+
+<!-- 물류창고 전체 조회
 	<select id="selectLogisticAll" resultType="LogisticVO">
 		SELECT logistics_id
 		      , logistics_name
@@ -11,7 +12,34 @@
 		FROM logistics
 		ORDER BY logistics_id
 	</select>
+ -->
 
+
+<!-- 물류창고 전체 조회 페이징 -->
+	<select id="selectLogisticAll" resultType="LogisticVO">
+	    <![CDATA[
+			SELECT logistics_id
+			      , logistics_name
+			      , basics_address
+	          	  , details_address
+	          	  , note
+			      , permission_day
+	    FROM 
+	    (
+	        SELECT
+	        ROWNUM R, logistics_id, logistics_name, basics_address, details_address, note, permission_day
+	        FROM logistics
+	        WHERE ROWNUM <= #{pageNum} * #{amount}
+	    )
+	    WHERE R> (#{pageNum}-1) * #{amount}
+	    ]]>
+	</select>
+
+
+<!-- 전체 데이터 카운트 -->
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM logistics
+	</select>
 
 <!-- 물류창고 상세 조회 -->
 	<select id="selectLogisticInfo" resultType="LogisticVO">
@@ -29,9 +57,7 @@
 	</select>
 	
 <!--/*
-
 [물류창고 상세 조회]
-
 	<select id="selectLogisticInfo" resultType="LogisticVO">
 		SELECT distinct l.logistics_id
 		      , l.logistics_name
@@ -51,10 +77,7 @@
 		                LEFT OUTER JOIN logistics_in i
 		                ON (i.material_number = m.material_number)
 		WHERE l.logistics_id = #{logisticsId} AND (i.in_count - i.out_count) > 0 AND  disposal_operation = 'd1'
-		
 	</select>	
-	
-	
 */-->
 
 <!-- 물류창고 물품 상세 조회 -->
@@ -79,6 +102,7 @@
 		                JOIN supplier s ON c.client_id = s.client_id
 		WHERE o.logistics_id = #{logisticsId} AND i.material_number = #{materialNumber}
 		GROUP BY m.material_number, m.material_name, m.material_classification, m.unit, m.logistics_safety_stock, i.expiration_limit, i.in_day, i.in_count, i.details_order_number, d.order_number, l.logistics_id
+		ORDER BY l.logistics_id
 	</select>
 	
 <!-- 
@@ -107,9 +131,44 @@
 		WHERE l.logistics_id = #{logisticsId} and i.material_number=#{materialNumber}
 		GROUP BY i.material_number, m.material_name, m.material_classification, m.unit, m.logistics_safety_stock, i.expiration_limit, i.in_day, i.in_count
 	</select>
+-->
 
 
--->	
-	
+<!-- 물류창고 등록시 담당자 ID 정보 -->
+	<select id="selectLogisticPersonId" resultType="LogisticVO">
+		SELECT person_id
+		FROM person
+		WHERE department = '물류관리팀'
+	</select>
+
+
+<!-- 물류창고 등록 -->
+	<insert id="insertLogisticInfo">
+	<selectKey keyProperty="logisticsId"
+				resultType="String"
+				order="BEFORE">
+		SELECT 'CTN' || LPAD((MAX(SUBSTR(logistics_id, 4))+1), '7', '0')
+		FROM logistics
+	</selectKey>
+		INSERT INTO logistics (logistics_id
+		                      , logistics_name
+		                      , postal
+		                      , basics_address
+		                      , details_address
+		                      , note
+		                      , phone
+		                      , permission_day
+		                      , person_id)
+		VALUES ( #{logisticsId}
+		        , #{logisticsName}
+		        , #{postal}
+		        , #{basicsAddress}
+		        , #{detailsAddress}
+		        , #{note}
+		        , #{phone}
+		        , #{permissionDay}
+		        , #{personId})
+	</insert>
+
 	
 </mapper>

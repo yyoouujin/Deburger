@@ -1,0 +1,30 @@
+              <div th:object="${pageMaker}">
+                    <div class="big-width" style="text-align: center">
+                        <a class="changePage" th:if="*{prev}" th:onClick="|location.href='@{/logisticList(pageNum=*{startPage - 1})}'|"><code>&lt;</code></a>
+                        
+                        <!-- 1~5 페이징 시작 -->
+                        <th:block th:each="num : ${#numbers.sequence(pageMaker.getStartPage(), pageMaker.getEndPage())}">
+                            <code th:if="${pageMaker.criteria.getPageNum() == num}" th:text="${num}"></code>
+                            <a class="changePage" th:unless="${pageMaker.criteria.getPageNum() == num}" th:onClick="|location.href='@{/logisticList(pageNum=${num})}'|"><code th:text="${num}"></code></a>
+                        </th:block>
+                        <!-- 1~5 페이징 끝 -->
+                        <a class="changePage" th:if="*{next}" th:onClick="|location.href='@{/logisticList(pageNum=*{endPage + 1})}'|"><code>&gt;</code></a>
+                    </div>
+                    
+                    
+                    <div class="small-width" style="text-align: center">
+                        <a class="changePage" th:if="*{criteria.pageNum > 1}" th:onClick="|location.href='@{/logisticList(pageNum=*{criteria.pageNum - 1})}'|">
+                        	<code>&lt;</code>
+                        </a>
+                        <code th:text="*{criteria.pageNum}"></code>
+                        <a class="changePage" th:if="*{criteria.pageNum < realEnd}" th:onClick="|location.href='@{/logisticList(pageNum=*{criteria.pageNum + 1})}'|">
+                        	<code>&gt;</code>
+                        </a>
+                    </div>
+                    <form action="/deburger/logisticList" th:object="${criteria}" name="pageForm">
+                        <input type="hidden" name="pageNum" th:field="*{pageNum}">
+                        <input type="hidden" name="amount" th:field="*{amount}">
+                    </form>
+                </div>
+                
+https://hongs-coding.tistory.com/125

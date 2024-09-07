@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.deburger.app.office.logistic.service.Criteria;
 import com.deburger.app.office.logistic.service.LogisticService;
 import com.deburger.app.office.logistic.service.LogisticVO;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.deburger.app.office.logistic.service.PageDTO;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -26,11 +29,26 @@ public class LogisticController {
 				this.logisticService = logisticService;
 		}
 		
+		/*
 		//창고 전체조회
 		@GetMapping("logisticList")
 		public String logisticList(Model model) {
 				List<LogisticVO> list = logisticService.logisticList();
 				model.addAttribute("logistics", list);
+				return "office/logistic/logisticList";
+		}
+		*/
+		
+		
+		//창고 전체조회(페이징)
+		@GetMapping("logisticList")
+		public String logisticList(Criteria criteria, Model model) {
+				List<LogisticVO> list = logisticService.logistiList(criteria);
+				
+				model.addAttribute("logistics", list);
+				
+				model.addAttribute("pageMaker", new PageDTO(logisticService.getTotal(), 5, criteria));
+				
 				return "office/logistic/logisticList";
 		}
 		
@@ -44,7 +62,17 @@ public class LogisticController {
 				return "office/logistic/logisticInfo";
 		}
 		
-		//물품 단건조회
+		//창고 수정처리
+		@PostMapping("logisticInfo")
+		public String logisticUpdateProcess(LogisticVO logisticVO) {
+			int lid = logisticService.updateLogistic(logisticVO);
+			String strlid = String.format("%07d", lid);
+			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
+			//return "office/logistic/logisticList";
+		}
+		
+		
+		//창고 내 물품 단건조회
 		@GetMapping("stockInfoAjax")
 		@ResponseBody
 		public List<LogisticVO> getMaterialInfoAjax(LogisticVO logisticVO) {
@@ -52,5 +80,29 @@ public class LogisticController {
 			return infoVO;
 		}
 		
+		//창고 등록 페이지
+		@GetMapping("logisticInsert")
+		public String logisticInsertForm() {
+			return "office/logistic/logisticInsert";
+		}
+		
+		//창고 등록 페이지 담당자 아이디 선택
+		@GetMapping("selectDBGidAjax")
+		@ResponseBody
+		public List<LogisticVO> getLogisticPersonIdAjax(LogisticVO logisticVO) {
+			List<LogisticVO> infoVO = logisticService.logisticPersonInfo(logisticVO);
+			return infoVO;
+		}
+		
+		//창고 등록처리
+		@PostMapping("logisticInsert")
+		public String logisticInsertProcess(LogisticVO logisticVO) {
+			int lid = logisticService.insertLogistic(logisticVO);
+			String strlid = String.format("%07d", lid);
+			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
+			//return "office/logistic/logisticList";
+		}
+		
+
 		
 }

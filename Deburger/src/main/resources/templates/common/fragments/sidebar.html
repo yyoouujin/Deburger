@@ -17,17 +17,15 @@
         </a>
       </li>
 
-
-      
-	<!-- 물류관리 시작 -->
+	<!-- 대운 물류관리 시작 -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#logistics" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box-seam"></i><span>물류 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" data-bs-target="#container" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-box2-heart"></i><span>물류 관리(대운)</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="logistics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="container" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="container">
-             <span>물류창고 조회</span>
+             <span>창고 재료 조회</span>
             </a>
           </li>
           <li>
@@ -37,17 +35,47 @@
           </li>
           <li>
             <a href="forms-editors.html">
+              <span>입고 등록</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+             <span>재료 출고 조회</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    <!-- 대운 물류관리 끝 -->
+      
+	<!-- 유진 물류관리 시작 -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#logistics" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-box-seam"></i><span>물류 관리(유진)</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="logistics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a th:href="@{logisticList}">
+             <span>물류창고 조회</span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{logisticInsert}">
+              <span>물류창고 등록</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
               <span>납품 지시</span>
             </a>
           </li>
           <li>
             <a href="forms-validation.html">
-             <span>출고 현황</span>
+             <span>출고 지시</span>
             </a>
           </li>
         </ul>
       </li>
-    <!-- 물류관리 끝 -->
+    <!-- 유진 물류관리 끝 -->
     
     
 	<!-- 발주입고관리 시작 -->
