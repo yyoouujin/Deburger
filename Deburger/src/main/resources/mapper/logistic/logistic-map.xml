@@ -170,5 +170,21 @@
 		        , #{personId})
 	</insert>
 
+
+<!-- 물류창고 정보 디테일 조회 -->
+	<select id="selectLogisticDetailInfo" resultType="LogisticVO">
+		SELECT logistics_id
+			, logistics_name
+			, postal
+			, basics_address
+			, note
+			, details_address
+			, phone
+			, permission_day
+			, person_id
+			, note
+		FROM logistics
+		WHERE logistics_id= #{logisticsId}
+	</select>
 	
 </mapper>

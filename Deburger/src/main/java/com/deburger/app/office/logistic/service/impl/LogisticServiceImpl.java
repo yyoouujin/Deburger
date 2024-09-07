@@ -62,6 +62,12 @@ public class LogisticServiceImpl implements LogisticService {
 		return logisticMapper.selectLogisticPersonId(logisticVO);
 	}
 	
+	
+	@Override
+	public LogisticVO logisticDetailInfo(LogisticVO logisticVO) {
+		return logisticMapper.selectLogisticDetailInfo(logisticVO);
+	}
+	
 	@Override
 	public int updateLogistic(LogisticVO logisticVO) {
 		int result = logisticMapper.updateLogisticInfo(logisticVO);

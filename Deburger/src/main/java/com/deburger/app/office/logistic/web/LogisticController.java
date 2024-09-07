@@ -62,16 +62,7 @@ public class LogisticController {
 				return "office/logistic/logisticInfo";
 		}
 		
-		//창고 수정처리
-		@PostMapping("logisticInfo")
-		public String logisticUpdateProcess(LogisticVO logisticVO) {
-			int lid = logisticService.updateLogistic(logisticVO);
-			String strlid = String.format("%07d", lid);
-			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
-			//return "office/logistic/logisticList";
-		}
-		
-		
+
 		//창고 내 물품 단건조회
 		@GetMapping("stockInfoAjax")
 		@ResponseBody
@@ -102,6 +93,26 @@ public class LogisticController {
 			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
 			//return "office/logistic/logisticList";
 		}
+		
+		//창고 수정페이지
+		@GetMapping("logisticUpdate")
+		public String logisticUpdateForm(LogisticVO logisticVO, Model model) {
+			LogisticVO findVO = logisticService.logisticDetailInfo(logisticVO);
+			model.addAttribute("logistic", findVO);
+			int lid = logisticService.updateLogistic(logisticVO);
+			String strlid = String.format("%07d", lid);
+			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
+		}
+		
+		//창고 수정처리
+		@PostMapping("logisticInfo")
+		public String logisticUpdateProcess(LogisticVO logisticVO) {
+			int lid = logisticService.updateLogistic(logisticVO);
+			String strlid = String.format("%07d", lid);
+			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
+			//return "office/logistic/logisticList";
+		}
+		
 		
 
 		

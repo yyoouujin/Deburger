@@ -23,6 +23,9 @@ public interface LogisticMapper {
 		public int insertLogisticInfo(LogisticVO logisticVO);
 		//물류창고 담당자 선택
 		public List<LogisticVO> selectLogisticPersonId(LogisticVO logisticVO);
+		
+		//물류창고 정보 단건조회
+		public LogisticVO selectLogisticDetailInfo(LogisticVO logisticVO);
 		//물류창고 수정
 		public int updateLogisticInfo(LogisticVO logisticVO);
 		//물류창고 삭제

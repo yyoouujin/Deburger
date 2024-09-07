@@ -24,6 +24,8 @@ public interface LogisticService {
 		//물류창고 수정
 		//public Map<String, Object> updateLogistic(LogisticVO logisticVO);
 		
+		//물류창고 정보 단건조회
+		public LogisticVO logisticDetailInfo(LogisticVO logisticVO);
 		//물류창고 수정
 		public int updateLogistic(LogisticVO logisticVO);
 		
