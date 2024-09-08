@@ -25,9 +25,9 @@ public interface ContainerMapper {
 	public List<ContainerVO> selectInInfoList(ContainerVO containerVO);
 
 	// 물류 창고 입고 조회 처리
-	public int containerInInsert(ContainerVO containerVO);
+	public int containerInInsert(ContainerVO vo);
 
-	public int containerInUpdate(ContainerVO containerVO);
+	public int containerInUpdate(ContainerVO vo);
 
 	// 물류 창고 폐기 조회
 	public List<ContainerVO> ContainerDeleteInfo(ContainerVO containerVO);

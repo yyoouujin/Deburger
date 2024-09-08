@@ -121,17 +121,20 @@ th, td {
   			let consumptionLimit = tds.eq(6).children().val(); 
   			let manufactureDay = tds.eq(7).children().val(); 
   			let inspectionOperation = tds.eq(8).children().val();
+  			let inOperation = tds.eq(8).children().val();
   			let personId = tds.eq(9).text();
 
 			list.push({detailsOrderNumber, inDay, inCount,//
-  					expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId});
+  					expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation});
   		})
 		console.log(list);
+  		console.log(JSON.stringify(list));
   		$.ajax({
   			url: '/deburger/containerInsert',
   			method:'post',
   			contentType: 'application/json',
   			data:JSON.stringify(list),	
+
   		})
   		.then()
   	}

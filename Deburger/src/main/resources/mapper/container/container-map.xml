@@ -131,6 +131,7 @@
 		       on e.client_id = f.client_id
 		where b.order_number = #{orderNumber}
 	</select>
+	
 	<!-- 입고 처리 -->
 	<insert id="containerInInsert">
 		 insert into logistics_in(
@@ -153,7 +154,7 @@
 	          #{manufactureDay},
 	          #{inspectionOperation},
 	          #{personId}	           
-		 );
+		 )
 	</insert>
 	
 	<update id="containerInDelete">
