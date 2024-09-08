@@ -56,9 +56,12 @@ public class ContainerServiceImpl implements ContainerService {
 	// 물류 창고 입고 list 처리
 	@Override
 	@Transactional
-	public int containerInTreatment(ContainerVO containerVO) {
-		containerMapper.containerInInsert(containerVO);
-		return containerMapper.containerInUpdate(containerVO);
+	public int containerInTreatment(List<ContainerVO> list) {
+		for(ContainerVO vo : list) {
+			containerMapper.containerInInsert(vo);
+			containerMapper.containerInUpdate(vo);
+		}
+		return 1;
 	}
 
 	// 물류 창고 폐기 조회

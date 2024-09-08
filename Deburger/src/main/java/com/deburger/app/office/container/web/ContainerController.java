@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
@@ -63,14 +65,15 @@ public class ContainerController {
 		model.addAttribute("list", lists);
 		return "office/container/containerInsert";
 	}
-
+	//---------------------------------------
 	// 물류 창고 입고 처리
-	// @PostMapping("containerInsert")
-	public String containerInInsert(ContainerVO containerVO) {
-		containerService.containerInTreatment(containerVO);
+	@PostMapping("containerInsert")
+	@ResponseBody
+	public String containerInInsert(@RequestBody List<ContainerVO> list) {
+		containerService.containerInTreatment(list);
 		return "redirect:containerInsert";
 	}
-
+	
 	// 폐기 조회
 	@GetMapping("containerDelete")
 	public String containerDelete(ContainerVO containerVO, Model model) {
@@ -85,4 +88,7 @@ public class ContainerController {
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}
+	
+	// 출고 리스트
+	
 }
