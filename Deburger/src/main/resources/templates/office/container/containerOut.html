@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/layout}"
+	  layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    <meta name="contextPath" th:value="${contextPath}">
+</head>
+<body>
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>출고 list</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Blank</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Example Card</h5>
+              	<table class="table">
+              		<thead>
+              			<tr>
+              				<th>발주 번호</th>
+              				<th>출고 날짜</th>
+              				<th>가맹점 이름</th>
+              				<th>진행 상태</th>
+              				<th>수량</th>
+              				<th>비고</th>
+              			</tr>
+              		</thead>
+              		<th:block th:each="lists:${out}">
+	              		<tbody>
+	              			<tr>
+	              				<td th:text="${lists.orderNumber}"></td>
+	              				<td ></td>
+	              				<td th:text="${lists.storeName}"></td>
+	              				<td ></td>
+	              				<td th:text="${lists.count}"></td>
+	              				<td ></td>
+	              			</tr>
+	              		</tbody>            		
+              		</th:block>
+              	</table>
+            </div>
+          </div>
+        </div>       
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+	const clc = $('meta[name="contextPath"]').attr('value');
+  	$('tbody > tr').on('click', function(event){
+  		let tr = event.currentTarget;
+  		let did = $(tr).children().eq(0).text();
+  		console.log(did);
+  		let url = clc + '/containerOutInfo?orderNumber='+did;
+  		location.href = url;
+  	});
+</script>
+</html>

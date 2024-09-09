@@ -1,6 +1,7 @@
 package com.deburger.app.office.container.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,8 @@ public class ContainerController {
 		model.addAttribute("list", lists);
 		return "office/container/containerInsert";
 	}
-	//---------------------------------------
+
+	// ---------------------------------------
 	// 물류 창고 입고 처리
 	@PostMapping("containerInsert")
 	@ResponseBody
@@ -73,7 +75,7 @@ public class ContainerController {
 		containerService.containerInTreatment(list);
 		return "redirect:containerInsert";
 	}
-	
+
 	// 폐기 조회
 	@GetMapping("containerDelete")
 	public String containerDelete(ContainerVO containerVO, Model model) {
@@ -88,7 +90,26 @@ public class ContainerController {
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}
-	
+
 	// 출고 리스트
-	
+	@GetMapping("containerOut")
+	public String containerOutListAll(Model model) {
+		List<ContainerVO> list = containerService.containerOutAllList();
+		model.addAttribute("out", list);
+		return "office/container/containerOut";
+	}
+
+	// 출고 상세 리스트
+	@GetMapping("containerOutInfo")
+	public String containerOutInfoList(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerOutInfo(containerVO);
+		model.addAttribute("outList", list);
+		return "office/container/containerOutInfo";
+	}
+
+	@PostMapping("containerModal")
+	@ResponseBody
+	public Map<String, Object> containerModalInfo(@RequestBody List<ContainerVO> list) {
+		return containerService.containerOutModalInfo(list);
+	}
 }
