@@ -9,6 +9,8 @@ public interface QnaMapper {
 	//전체조회(본사)
 	public List<QnaVO> qnaListOffice();
 	
+	//전체조회(본사 카운트)
+	public int qnaListOfficeConut(QnaVO qnaVO);
 	
 	//전체조회(전체 조회에서 상태 update)
 	public int qnaListWriterUpdate(QnaVO qnaVO);

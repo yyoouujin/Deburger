@@ -42,7 +42,7 @@
 									<i class="bi bi-chat-square-dots"></i>
 								</div>
 								<div class="ps-4">
-									<h3>145</h3>
+									<h3><span th:text="${counts.count1}"></span></h3>
 								</div>
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 									<i class="bi bi-clock-history"></i>
 								</div>
 								<div class="ps-4">
-									<h3>145</h3>
+									<h3><span th:text="${counts.count2}"></span></h3>
 								</div>
 							</div>
 						</div>
@@ -94,7 +94,7 @@
 									<i class="bi bi-check-circle"></i>
 								</div>
 								<div class="ps-4">
-									<h3>145</h3>
+									<h3><span th:text="${counts.count3}"></span></h3>
 								</div>
 							</div>
 						</div>
@@ -112,26 +112,27 @@
 
 							<div class="card">
 								<div class="card-body">
-									<form method="POST" th:action="@{/noticeListShop}">
+										<form method="POST" th:action="@{/qna/qnaListOffice}">
 										<table class="table">
 											<thead>
 												<tr>
 													<th><b>일련번호</b></th>
 													<th>문의내역</th>
 													<th>문의매장</th>
-													<th>작성자</th>
 													<th>상태</th>
 													<th>작성일</th>
 												</tr>
 											</thead>
 											<tbody>
-												<th:block th:each="lista:${notices}">
+												<th:block th:each="list:${qnas}">
 													<tr>
-														<td th:text="${lista.noticeNumber}" />
-														<td th:text="${lista.division}" />
-														<td th:text="${lista.title}" />
+														<td th:text="${list.qnaNumber}" />
+														<td th:text="${list.title}" />
+														<td th:text="${list.storeName}" />
+														<td th:text="${list.writer}" />
+														<td th:text="${list.writerDay}" />
 														<td>
-															[[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
+															[[${#dates.format(list.writerDay,'yyyy-MM-dd')}]]</td>
 													</tr>
 													<th:block>
 											</tbody>
