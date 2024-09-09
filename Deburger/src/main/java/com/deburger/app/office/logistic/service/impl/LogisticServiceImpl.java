@@ -23,13 +23,6 @@ public class LogisticServiceImpl implements LogisticService {
 			this.logisticMapper = logisticMapper;
 	}
 	
-	/*
-	@Override
-	public List<LogisticVO> logisticList() {
-			return logisticMapper.selectLogisticAll();
-	}
-	*/
-	
 	@Override
 	public List<LogisticVO> logistiList(Criteria criteria) {
 		return logisticMapper.selectLogisticAll(criteria);
@@ -62,40 +55,29 @@ public class LogisticServiceImpl implements LogisticService {
 		return logisticMapper.selectLogisticPersonId(logisticVO);
 	}
 	
-	
+
 	@Override
-	public LogisticVO logisticDetailInfo(LogisticVO logisticVO) {
+	public List<LogisticVO> logisticDetailInfo(LogisticVO logisticVO) {
 		return logisticMapper.selectLogisticDetailInfo(logisticVO);
 	}
 	
-	@Override
-	public int updateLogistic(LogisticVO logisticVO) {
-		int result = logisticMapper.updateLogisticInfo(logisticVO);
-		return result == 1 ? Integer.parseInt(logisticVO.getLogisticsId().substring(3)) : -1;
-	}
 	
-
-	/*
 	@Override
-	public Map<String, Object> updateLogistic(LogisticVO logisticVO) {
+	public Map<String, Object> updateLogisticInfo(LogisticVO logisticVO) {
 		Map<String, Object> map = new HashMap<>();
-			
+		
 		boolean isSuccessed = false;
 		int result = logisticMapper.updateLogisticInfo(logisticVO);
-			
-		if (result == 1) {
+		
+		if(result == 1) {
 			isSuccessed = true;
 		}
-			
 		map.put("result", isSuccessed);
 		map.put("target", logisticVO);
-			
+		
 		return map;
 	}
-	*/
 	
-	
-
 	@Override
 	public int deleteLogistic(String logisticsId) {
 		return logisticMapper.deleteLogisticInfo(logisticsId);

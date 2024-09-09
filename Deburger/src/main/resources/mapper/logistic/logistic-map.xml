@@ -24,14 +24,15 @@
 	          	  , details_address
 	          	  , note
 			      , permission_day
-	    FROM 
-	    (
-	        SELECT
-	        ROWNUM R, logistics_id, logistics_name, basics_address, details_address, note, permission_day
-	        FROM logistics
-	        WHERE ROWNUM <= #{pageNum} * #{amount}
-	    )
-	    WHERE R> (#{pageNum}-1) * #{amount}
+		    FROM 
+		    (
+		        SELECT
+		        ROWNUM R, logistics_id, logistics_name, basics_address, details_address, note, permission_day
+		        FROM logistics
+		        WHERE ROWNUM <= #{pageNum} * #{amount}
+		    )
+		    WHERE R> (#{pageNum}-1) * #{amount}
+		    ORDER BY logistics_id
 	    ]]>
 	</select>
 
@@ -171,7 +172,7 @@
 	</insert>
 
 
-<!-- 물류창고 정보 디테일 조회 -->
+<!-- 물류창고 정보 조회 아작스 -->
 	<select id="selectLogisticDetailInfo" resultType="LogisticVO">
 		SELECT logistics_id
 			, logistics_name
@@ -186,5 +187,24 @@
 		FROM logistics
 		WHERE logistics_id= #{logisticsId}
 	</select>
+
+
+<!-- 물류창고 정보 수정 아작스 -->
+	<update id="updateLogisticInfo" parameterType="LogisticVO">
+		UPDATE logistics
+		SET logistics_name = #{logisticsName}
+		    , basics_address = #{basicsAddress}
+		    , details_address = #{detailsAddress}
+		    , note = #{note}
+		    , postal = #{postal}
+		    , phone = #{phone}
+		WHERE logistics_id=#{logisticsId}
+	</update>
+	
+<!-- 물류창고 정보 삭제 -->
+	<delete id="deleteLogisticInfo" parameterType="LogisticVO">
+		DELETE logistics
+		WHERE logistics_id=#{logisticsId}
+	</delete>
 	
 </mapper>
