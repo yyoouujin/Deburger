@@ -21,14 +21,11 @@ public interface LogisticService {
 		//물류창고 등록(담당자 선택)
 		public List<LogisticVO> logisticPersonInfo(LogisticVO logisticVO);
 		
-		//물류창고 수정
-		//public Map<String, Object> updateLogistic(LogisticVO logisticVO);
 		
 		//물류창고 정보 단건조회
-		public LogisticVO logisticDetailInfo(LogisticVO logisticVO);
+		public List<LogisticVO> logisticDetailInfo(LogisticVO logisticVO);
 		//물류창고 수정
-		public int updateLogistic(LogisticVO logisticVO);
-		
+		public Map<String, Object> updateLogisticInfo(LogisticVO logisticVO);
 		//물류창고 삭제
 		public int deleteLogistic(String logisticsId);
 

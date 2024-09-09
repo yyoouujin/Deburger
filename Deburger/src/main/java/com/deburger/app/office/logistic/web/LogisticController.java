@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.deburger.app.office.logistic.service.Criteria;
@@ -61,7 +62,6 @@ public class LogisticController {
 				model.addAttribute("localDateTime", LocalDateTime.now());
 				return "office/logistic/logisticInfo";
 		}
-		
 
 		//창고 내 물품 단건조회
 		@GetMapping("stockInfoAjax")
@@ -94,26 +94,28 @@ public class LogisticController {
 			//return "office/logistic/logisticList";
 		}
 		
-		//창고 수정페이지
-		@GetMapping("logisticUpdate")
-		public String logisticUpdateForm(LogisticVO logisticVO, Model model) {
-			LogisticVO findVO = logisticService.logisticDetailInfo(logisticVO);
-			model.addAttribute("logistic", findVO);
-			int lid = logisticService.updateLogistic(logisticVO);
-			String strlid = String.format("%07d", lid);
-			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
+		//창고 정보 조회(아작스)
+		@GetMapping("logisticDetailInfoAjax")
+		@ResponseBody
+		public List<LogisticVO> logisticDetailInfoAjax(LogisticVO logisticVO, Model model) {
+			List<LogisticVO> infoVO = logisticService.logisticDetailInfo(logisticVO);
+			return infoVO;
 		}
 		
 		//창고 수정처리
-		@PostMapping("logisticInfo")
+		@PostMapping("logisticUpdate")
 		public String logisticUpdateProcess(LogisticVO logisticVO) {
-			int lid = logisticService.updateLogistic(logisticVO);
-			String strlid = String.format("%07d", lid);
-			return "redirect:logisticInfo?logisticsId=CTN" + strlid;
-			//return "office/logistic/logisticList";
+			logisticService.updateLogisticInfo(logisticVO);
+			return "redirect:logisticList";
 		}
 		
 		
-
+		//창고 삭제
+		@GetMapping("logisticDelete")
+		public String logisticDelete(String logisticsId) {
+			logisticService.deleteLogistic(logisticsId);
+			return "redirect:logisticList";
+		}
 		
+
 }
