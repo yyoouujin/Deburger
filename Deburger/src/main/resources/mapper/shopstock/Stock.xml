@@ -7,7 +7,6 @@ select m.material_number
 		,m.material_name
 		,m.material_classification
 		,m.unit
-		,m.unit
 		,m.sale_unitprice
 		,NVL(s.stock_count,0)
 		,NVL(s.safety_stock,0)
@@ -30,26 +29,20 @@ order by STOCK_COUNT
 	</insert>
 
 	<select id="selectStockinfo" parameterType="StockVO">
-		select o.order_Day
-		,m.material_Name
-		,'본사'
-		,m.sale_Unitprice
-		,d.count
-		,i.remain_Stock_Count
-		,i.expiration_Limit
-		From store_Order o join
-		Order_Details D
-		on o.order_number = d.order_number
-		join store_in i
-		on
-		i.order_details_number = d.order_details_number
-		join material m
-		on
-		d.material_number = m.material_number
-		where o.store_number = 'FRC0000001'
-		AND
-		o.order_number = #{materialNumber}
-		order by order_day
+select i.expiration_limit
+       ,m.material_name
+       ,i.remain_stock_count
+       ,d.count
+       ,o.order_day
+       ,i.order_details_number
+from store_in i join material m
+      on i.Material_number = m.Material_number
+      join order_details d
+      on i.order_details_Number = d.order_details_Number
+      join store_Order o
+      on o.order_number = d.order_number
+where i.Material_number = #{materialNumber}
+order by i.order_details_number
 	</select>
 
 </mapper>

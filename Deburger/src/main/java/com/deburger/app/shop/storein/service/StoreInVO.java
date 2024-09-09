@@ -28,12 +28,12 @@ public class StoreInVO {
 	//입고 
 	private int inNumber;
 	private String disposalOperation;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date consumptionLimit;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date expirationLimit;
 	private String inImage;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date manufactureDay;
 	private int remainStockCount;
 	private String note;
@@ -46,5 +46,10 @@ public class StoreInVO {
 	
 	//
 	private MultipartFile contractImageFile;
-
+	
+	//재고저장
+	private int stockNumber;
+	private int stockCount;
+	private int safetyStock;
+	
 }

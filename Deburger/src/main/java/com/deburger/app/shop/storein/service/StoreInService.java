@@ -11,5 +11,5 @@ public interface StoreInService {
 	public List<StoreInVO> StoreIninfoList(StoreInVO storeInVO);
 
 	//입고 저장
-	public int insertStoreInList(StoreInVO storeInVO);
+	public int insertStoreInList(ListVO listVO);
 }
