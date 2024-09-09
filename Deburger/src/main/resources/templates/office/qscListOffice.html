@@ -10,7 +10,7 @@
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>QSC 관리</h1>
+			<h1>QSC 결과 조회</h1>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -23,10 +23,6 @@
 							</div>
 							<div class="col-sm-10 col-md-3">
 								<input type="date" class="form-control">
-							</div>
-							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary"
-									th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
 							</div>
 						</div>
 					</form>
@@ -45,9 +41,11 @@
 		
 		 
 	</main>
-	<script>
+	<script th:inline="javascript">
       let grid;
 
+      var detaList = [[${QscList}]];
+      
       $(document).ready(async () => {
         // 2. HTML이 수행된 뒤 함수를 호출한다.
         grid = await gridLoad();
@@ -80,35 +78,7 @@
         const grid = new Grid({
           // ================================== 공통 옵션 적용 ==============================
           el: document.getElementById('grid'), // [필수] Container element
-          data: [
-            {
-            	storeNumber: '디버거 감삼점',
-            	qscDate: '2023-05-08 오후 04:30:30',
-            	processCondition: '검수중',
-            	qualityScore: '80/100',
-            	serviceScore: '80/100 ',
-            	cleanlScore: '80/100',
-            	score: '240/300',
-            },
-            {
-            	storeNumber: '디버거 신세계점',
-            	qscDate: '2023-05-08 오후 04:30:30',
-            	processCondition: '검수중',
-            	qualityScore: '80/100',
-            	serviceScore: '80/100 ',
-            	cleanlScore: '80/100',
-            	score: '240/300',
-            },
-            {
-            	storeNumber: '디버거 용산점',
-            	qscDate: '2023-05-08 오후 04:30:30',
-            	processCondition: '검수중',
-            	qualityScore: '80/100',
-            	serviceScore: '80/100 ',
-            	cleanlScore: '80/100',
-            	score: '240/300',
-            },
-          ], // [선택] 그리드 데이터 조회
+          data: detaList, // [선택] 그리드 데이터 조회
 
           /**
            * [선택] 순번 기능
@@ -126,11 +96,15 @@
         	  
           columns: [
         	  
-        	  
+        	  {
+                  header: '체크리스트 번호', // [필수] 컬럼 이름
+                  name: 'checklistNumber', // [필수] 컬럼 매핑 이름 값
+                  hidden: true,      
+                },
         	  // [Column-2] 일련번호
               {
                 header: '지점명', // [필수] 컬럼 이름
-                name: 'storeNumber', // [필수] 컬럼 매핑 이름 값
+                name: 'storeName', // [필수] 컬럼 매핑 이름 값
                 sortable: true, // [선택] 컬럼의 정렬 여부
                 resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
                 align: 'center', // [선택] 텍스트 정렬 옵션
@@ -197,6 +171,11 @@
 		location.href = url;
       	}) */
         
+      	 grid.on('dblclick', (ev) => {
+           	let url ='qscListInfoDetail?checklistNumber=' + grid.getData()[ev.rowKey].checklistNumber;
+       location.href = url;
+           	})
+      	
         return grid;
       };
 

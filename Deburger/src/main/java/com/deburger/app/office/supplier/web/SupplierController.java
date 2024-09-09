@@ -29,13 +29,11 @@ import groovy.util.logging.Slf4j;
 @Controller
 public class SupplierController {
 	
-	
-		
 		private SupplierService supplierService;
 		
 		@Autowired
 		public SupplierController(SupplierService supplierService) {
-				this.supplierService = supplierService;
+			this.supplierService = supplierService;
 		}
 		
 		// application.properties 에서 불러와 필드에 담음
@@ -46,9 +44,9 @@ public class SupplierController {
 		//				RETURN - 	office/supplier.html
 		@GetMapping("supplierList")
 		public String supplierList(Model model) {
-				List<SupplierVO> list = supplierService.supplierList();
-				model.addAttribute("suppliers", list);
-				return "office/supplier/supplierList";
+			List<SupplierVO> list = supplierService.supplierList();
+			model.addAttribute("suppliers", list);
+			return "office/supplier/supplierList";
 		}
 		
 		
@@ -56,16 +54,16 @@ public class SupplierController {
 		//				RETURN - office/supplierInfo.html
 		@GetMapping("supplierInfo")
 		public String supplierInfo(SupplierVO supplierVO, Model model) {
-				SupplierVO findVO = supplierService.supplierInfo(supplierVO);
-				model.addAttribute("supplier", findVO);
-				return "office/supplier/supplierInfo";
+			SupplierVO findVO = supplierService.supplierInfo(supplierVO);
+			model.addAttribute("supplier", findVO);
+			return "office/supplier/supplierInfo";
 		}
 		
 		
 		//등록페이지
 		@GetMapping("supplierInsert")
 		public String supplierInsertForm() {
-				return "office/supplier/supplierInsert";
+			return "office/supplier/supplierInsert";
 		}
 		
 		//등록저리 
