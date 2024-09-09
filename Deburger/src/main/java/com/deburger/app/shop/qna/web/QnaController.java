@@ -1,19 +1,22 @@
 package com.deburger.app.shop.qna.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.deburger.app.shop.notice.service.NoticeVO;
 import com.deburger.app.shop.qna.service.QnaService;
 import com.deburger.app.shop.qna.service.QnaVO;
 
-import ch.qos.logback.core.model.Model;
+
+
+
 
 @Controller
 public class QnaController {
@@ -27,10 +30,49 @@ public class QnaController {
 	
 	//QnA 전체조회(본사)
 	@GetMapping("qnaListOffice")
-	public String qnaListOffice() {
+	public String qnaListOffice(Model model,QnaVO vo) {
+		// 접수현황
+		Map<String, Object> count = qnaService.qnaListOfficeConut(vo);
+		model.addAttribute("counts", count);
+		
+		//접수리스트
+		List<QnaVO> list = qnaService.qnaListOffice();
+		model.addAttribute("qnas",list);
+		
 		return "office/qna/qnaListOffice";
 	}
 	
+/*	//QnA 전체조회(본사 카운트:접수)
+	@GetMapping("qnaListOffice")
+	public String qnaListOfficeConut(Model model,QnaVO qnaVO) {
+	
+		qnaVO.setWriter("접수");
+		int list = qnaService.qnaListOfficeConut(qnaVO);
+		model.addAttribute("qnas",list);
+		
+		return "office/qna/qnaListOffice";
+	}
+	
+	//QnA 전체조회(본사 카운트:처리중)
+	@GetMapping("qnaListOffice")
+	public String qnaListOfficeConutProcess(Model model,QnaVO qnaVO) {
+		qnaVO.setWriter("처리중");
+		int list = qnaService.qnaListOfficeConut(qnaVO);
+		model.addAttribute("qnas",list);
+		
+		return "office/qna/qnaListOffice";
+	}
+	
+	//QnA 전체조회(본사 카운트:완료)
+	@GetMapping("qnaListOffice")
+	public String qnaListOfficeConutComplete(Model model,QnaVO qnaVO) {
+		qnaVO.setWriter("완료");
+		int list = qnaService.qnaListOfficeConut(qnaVO);
+		model.addAttribute("qnas",list);
+		
+		return "office/qna/qnaListOffice";
+	}
+	*/
 	//QnA 전체 조회 상태 update)
 	@PostMapping("qnaListWriterUpdate")
 	@ResponseBody
