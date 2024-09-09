@@ -109,7 +109,7 @@ public class ContainerController {
 
 	@PostMapping("containerModal")
 	@ResponseBody
-	public Map<String, Object> containerModalInfo(@RequestBody List<ContainerVO> list) {
-		return containerService.containerOutModalInfo(list);
+	public Map<String, Object> containerModalInfo(@RequestBody ContainerVO containerVO) {
+		return containerService.containerOutModalInfo(containerVO);
 	}
 }

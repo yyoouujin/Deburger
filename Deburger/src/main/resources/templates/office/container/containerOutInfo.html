@@ -148,7 +148,6 @@ th, td {
 		
 		let num = $('tbody > tr').children().eq(11).text();	// 여기 확인 필요
 		console.log(num);
-		console.log('abc');	
 		
 		list.push({num});
 		
@@ -160,6 +159,7 @@ th, td {
 		})
 		.done(datas =>{
 			console.log(datas.result);
+
 		})
 		.fail(err => console.log(err));	
 	}

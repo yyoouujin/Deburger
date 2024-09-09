@@ -36,5 +36,5 @@ public interface ContainerService {
 	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
 
 	// 모달
-	public Map<String, Object> containerOutModalInfo(List<ContainerVO> liSt);
+	public Map<String, Object> containerOutModalInfo(ContainerVO containerVO);
 }
