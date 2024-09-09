@@ -26,6 +26,20 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaVO> qnaListOffice() {
 		return mapper.qnaListOffice();
 	}
+	
+	//QnA 카운트 조회
+	@Override
+	public Map<String, Object> qnaListOfficeConut(QnaVO vo) {
+		Map<String, Object> map = new HashMap<>();
+		
+		vo.setWriter("접수");
+		map.put("count1", mapper.qnaListOfficeConut(vo));
+		vo.setWriter("처리중");
+		map.put("count2", mapper.qnaListOfficeConut(vo));
+		vo.setWriter("완료");
+		map.put("count3", mapper.qnaListOfficeConut(vo));
+		return map;
+	}
 
 	//QnA 전체 조회(전체 조회에서 상태 update)
 	@Override

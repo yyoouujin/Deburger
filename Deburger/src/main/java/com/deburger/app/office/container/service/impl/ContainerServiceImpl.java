@@ -1,6 +1,9 @@
 package com.deburger.app.office.container.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,10 +60,12 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	@Transactional
 	public int containerInTreatment(List<ContainerVO> list) {
-		for(ContainerVO vo : list) {
+
+		for (ContainerVO vo : list) {
 			containerMapper.containerInInsert(vo);
 			containerMapper.containerInUpdate(vo);
 		}
+		
 		return 1;
 	}
 
@@ -77,6 +82,33 @@ public class ContainerServiceImpl implements ContainerService {
 	public int disposeItem(ContainerVO containerVO) {
 		containerMapper.containerInupdate(containerVO);
 		return containerMapper.containerOutInsert(containerVO);
+	}
+
+	@Override
+	public List<ContainerVO> containerOutAllList() {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutList();
+	}
+
+	@Override
+	public List<ContainerVO> containerOutInfo(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutListInfo(containerVO);
+	}
+
+	@Override
+	public Map<String, Object> containerOutModalInfo(List<ContainerVO> containerVO) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		List<String> list = new ArrayList<String>();
+		for (ContainerVO vo : containerVO) {
+			containerMapper.containerOutModal(vo);
+			list.add(vo.lot);
+		}
+
+		map.put("result", list);
+		return map;
 	}
 
 }

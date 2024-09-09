@@ -23,6 +23,9 @@
 						<div class="card-body">
 							<!-- Table with stripped rows -->
 							<!-- <table class="table datatable"> -->
+							<button type="button" class="btn btn-primary btn-sm"
+								style="padding: 5px 20px 5px 20px; margin-left: 80%;"
+								onClick="location.href='selectOrderCart'">발주 신청</button>
 							<form>
 								<table class="table">
 									<thead>
@@ -31,7 +34,6 @@
 											<th>품목 이름</th>
 											<th>품목 구분</th>
 											<th>규격</th>
-											<th>단위</th>
 											<th>단가</th>
 											<th>현재 재고</th>
 											<th>적정 재고</th>
@@ -45,13 +47,13 @@
 												<td th:text="${list.materialName}" />
 												<td th:text="${list.materialClassification}" />
 												<td th:text="${list.unit}" />
-												<td th:text="${list.unit}" />
 												<td th:text="${list.saleUnitprice}" />
 												<td th:text="${list.stockCount}" />
 												<td th:text="${list.safetyStock}" />
-												<td><button type="button" 
+												<td><button type="button"
 														class="btn btn-primary btn-sm"
-														th:id="${list.materialNumber}"  onclick="event.stopPropagation()">발주하기</button></td>
+														th:id="${list.materialNumber}"
+														onclick="event.stopPropagation()">발주하기</button></td>
 
 											</tr>
 										</th:block>
@@ -67,15 +69,15 @@
 		</section>
 	</main>
 	<script>
-		$("button").on("click", function(event) {
+		$("td > button").on("click", function(event) {
 			alert("발주 목록에 저장되었습니다.");
 			let url = 'shopCartInsert?materialNumber=' + event.target.id;
-			location.href = url; 
+			location.href = url;
 		});
-		
+
 		$('tbody > tr').on("click", function(event) {
 			let num = $(event.currentTarget).children().eq(0).text();
-			let url ='shopStockInfo?materialNumber=' + num;
+			let url = 'shopStockInfo?materialNumber=' + num;
 			location.href = url;
 		});
 	</script>

@@ -13,15 +13,14 @@
     <main id="main" class="main">
       <div class="pagetitle">
         <!-- 작성 칸 영역 -->
-        <div class="card">
-          <div class="card-body">
+
             <form
               class="row g-3"
               name="noticeCorrectOffice"
               method="post"
               th:object="${notice}"
             >
-              <div>
+              <div style="margin-Left: 8px">
                 <h1 style="display: inline-block">공지사항</h1>
                 <button
                   type="button"
@@ -33,9 +32,11 @@
                 </button>
               </div>
               <br />
-
+              <div class="col-md-10">
+        <div class="card">
+          <div class="card-body">
               <!--카테고리 작성 칸-->
-              <div class="col-sm-10">
+              <div class="col-sm-12" style="margin-top: 10px">
                 <select class="form-select" id="selectdivision" th:field="*{division}" aria-label="Default select example">
                   <option value="" selected>카테고리를 선택해주세요.</option>
                   <option value="업데이트" >업데이트</option>
@@ -47,7 +48,7 @@
               </div>
 
               <!--제목 작성 칸-->
-              <div class="col-md-10">
+              <div class="col-md-12" style="margin-top: 10px">
                 <input
                   type="text"
                   class="form-control"
@@ -58,22 +59,23 @@
               </div>
 
               <!--내용 작성 칸-->
-              <div class="col-md-10" style="height: 400px">
-                <div id="contentDiv" class="quill-editor-full">[[${notice.content}]]</div>
+              <div class="col-md-12"
+								style="height: 450px; margin-top: 10px; margin-bottom: 10px">
+                <div id="contentDiv" class="quill-editor-full">[(${notice.content})]</div>
               </div>
 
               <br />
               <input type="hidden" th:field="*{noticeNumber}">
-     
-            </form>
           </div>
-        </div>
+        </div>  
+        </div>   
+            </form>
+
         <!-- 작성 칸 영역 끝 -->
       </div>
     </main>
     <!-- End #main -->
     <script>
-    
           //수정
           function getNoticeInfo() {
               let formData = $('form[name="noticeCorrectOffice"]').serializeArray();
@@ -89,14 +91,8 @@
          $('#btnInsert').on('click', updateAjax)
          
          function updateAjax(){
-             
-             //console.log(selectkey);    
-             //카테고리 값을 읽어서 셀렉트 값은 그냥 넘어 감....제발... 되면 안되니... ? .......?
-      
-      
              //에디터 내용 읽어서
              let contentText = $("#contentDiv").text();
-
              //텍스트 에어리어 안에 넣어서
              let tArea = document.createElement("textarea");
              tArea.innerText = contentText;

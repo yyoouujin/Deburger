@@ -112,24 +112,25 @@
 
 							<div class="card">
 								<div class="card-body">
-									<form method="POST" th:action="@{/noticeListShop}">
+									<form method="POST" th:action="@{/qnaListShop}">
 										<table class="table">
 											<thead>
 												<tr>
 													<th><b>일련번호</b></th>
 													<th>문의내역</th>
 													<th>문의매장</th>
-													<th>작성자</th>
 													<th>상태</th>
 													<th>작성일</th>
 												</tr>
 											</thead>
 											<tbody>
-												<th:block th:each="lista:${notices}">
+												<th:block th:each="list:${qnas}">
 													<tr>
-														<td th:text="${lista.noticeNumber}" />
-														<td th:text="${lista.division}" />
-														<td th:text="${lista.title}" />
+														<td th:text="${list.qnaNumber}" />
+														<td th:text="${list.title}" />
+														<td th:text="${list.storeName}" />
+														<td th:text="${list.writer}" />
+														<td th:text="${list.writerDay}" />
 														<td>
 															[[${#dates.format(lista.writerDate,'yyyy-MM-dd')}]]</td>
 													</tr>

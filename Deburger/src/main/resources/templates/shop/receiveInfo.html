@@ -24,7 +24,8 @@
 							<table class="table">
 								<thead>
 									<div style="text-align: left; margin-left: 90%;">
-										<button type="button" class="btn btn-primary" onclick="makeData()">저장</button>
+										<button type="button" class="btn btn-primary"
+											onclick="makeData()">저장</button>
 										<button type="button" class="btn btn-primary">취소</button>
 									</div>
 								</thead>
@@ -33,7 +34,8 @@
 										<th>주문 번호</th>
 										<th>주문 일자</th>
 									<tr>
-										<th th:text="${storeIninfoList[0].orderNumber}" id="orderNumber"></th>
+										<th th:text="${storeIninfoList[0].orderNumber}"
+											id="orderNumber"></th>
 										<th>[[${#dates.format(storeIninfoList[0].orderDay,'yyyy/MM/dd')}]]</th>
 									</tr>
 								</tbody>
@@ -57,21 +59,19 @@
 								<tbody id="GetList">
 									<th:block th:each="list:${storeIninfoList}">
 										<tr>
-											<td th:text="${list.materialNumber}" style="display: none;"/>
+											<td th:text="${list.materialNumber}" style="display: none;" />
 											<td th:text="${list.orderDetailsNumber}" />
 											<td th:text="${list.materialName}" />
-											<td th:text="${list.count}" id="count"/>
+											<td th:text="${list.count}" id="count" />
 											<td class="col-sm-1"><input type="number" min="0"
 												th:max="${list.count}" th:value="${list.count}"
 												style="border: none;"></td>
-											<td th:text="${list.manufactureDay}" />
-											<td th:text="${list.expirationLimit}" />
-											<td th:text="${list.consumptionLimit}" />
-											<td class="col-sm-2">
-												<div>
-													<input class="form-control" type="file"
-														id="contractImageFile" name="contractImageFile" />
-												</div>
+											<td>[[${#dates.format(list.manufactureDay,'yyyy/MM/dd')}]]</td>
+											<td>[[${#dates.format(list.expirationLimit,'yyyy/MM/dd')}]]</td>
+											<td>[[${#dates.format(list.consumptionLimit,'yyyy/MM/dd')}]]</td>
+											<td class="col-sm-2"><input class="form-control"
+												type="file" id="contractImageFile" name="contractImageFile" />
+
 											</td>
 											<td class="col-sm-2">입고</td>
 											<td><input type="text" style="border: none;"></td>
@@ -90,57 +90,89 @@
 		</section>
 	</main>
 	<script>
-	
-	function makeData(){
-		var form = new formData();;
-		
-		$('#GetList > tr').each(function(i,checkbox){
-			let tr = $(checkbox).closest('tr').children()
+		function makeData() {
 			
-			let note = tr.find('input').val();
-			let manufactureDay = tr.eq(5).html();
-			let remainStockCount = tr.find('input').val();
-			let consumptionLimit = tr.eq(7).html();
-			let expirationLimit = tr.eq(6).html();
+			var formData = new FormData();
 			
-			let orderDetailsNumber = $('#orderNumber').html();
 			
-			let inOperation ='';
-			if(tr.eq(9).html() == '입고'){
-				inOperation = 'F2'
-			}else if(tr.eq(9).html() == '부분 입고'){
-				inOperation = 'F1'
-			}else if(tr.eq(9).html() == '폐기'){
-				inOperation = 'F0'
-			}
 			
-			let count = tr.find('input').val();
-			let materialNumber = tr.eq(0).html();
-			
-			 form.append()
-			
-		})
-		
-		
-		console.log(list);
-	}
-		
-	$("input").on("change", function(event){
 
-		let incount = $(event.target).closest('tr').find('input').val()
-		let ordercount =$(event.target).closest('tr').children().eq(3).html()
-		
-		
-		if((ordercount - incount) == 0){
-			$(event.target).closest('tr').children().eq(9).html("입고")
-		}else if(incount == 0){
-			$(event.target).closest('tr').children().eq(9).html("입고 거부")
-		}else if(ordercount - incount > 0){
-			$(event.target).closest('tr').children().eq(9).html("부분 입고")
-		} 
-	});
-	
-	
+			$('#GetList > tr').each(
+					function(i, list) {
+
+						let tr = $(list).children()
+
+						// 재고 테이블
+						formData.append(`StoreInList[${i}].stockCount`,tr.eq(4).find('input').val());
+						formData.append(`StoreInList[${i}].safetyStock`,tr.eq(4).find('input').val());
+						
+						// 입고 테이븦
+						var fileInput = list.querySelector("#contractImageFile");
+						
+						if(fileInput.files.length > 0){
+							formData.append(`StoreInList[${i}].contractImageFile`, fileInput.files[0]);
+						}
+						
+						formData.append(`StoreInList[${i}].note`, tr.eq(10).find('input').val());
+						formData.append(`StoreInList[${i}].manufactureDay`, tr.eq(5).html());
+						formData.append(`StoreInList[${i}].remainStockCount`,tr.eq(4).find('input').val());
+						formData.append(`StoreInList[${i}].consumptionLimit`,tr.eq(7).html());
+						formData.append(`StoreInList[${i}].expirationLimit`, tr.eq(6).html());
+						formData.append(`StoreInList[${i}].orderDetailsNumber`,tr.eq(1).html());
+
+						if (tr.eq(9).html() == '입고') {
+							formData.append(`StoreInList[${i}].inOperation`,
+									'F2');
+						} else if (tr.eq(9).html() == '부분 입고') {
+							formData.append(`StoreInList[${i}].inOperation`,
+									'F1');
+						} else if (tr.eq(9).html() == '폐기') {
+							formData.append(`StoreInList[${i}].inOperation`,
+									'F0');
+						}
+
+						formData.append(`StoreInList[${i}].count`, tr.find(
+								'input').val());
+						formData.append(`StoreInList[${i}].materialNumber`, tr
+								.eq(0).html());
+
+					})
+
+			$.ajax({
+				type : "POST",
+				//enctype : 'multipart/form-data', ajax에는 없음 대신 사용하는것이 processData,contentType 
+				url : 'insertStoreInList',
+				data : formData,
+				processData : false,
+				contentType : false,
+				cache : false,
+				success : function(result) {
+				}
+			}).then((end) => {
+				location.href="storeInList"
+			});
+		}
+
+		$("input").on(
+				"change",
+				function(event) {
+
+					let incount = $(event.target).closest('tr').find('input')
+							.val()
+					let ordercount = $(event.target).closest('tr').children()
+							.eq(3).html()
+
+					if ((ordercount - incount) == 0) {
+						$(event.target).closest('tr').children().eq(9).html(
+								"입고")
+					} else if (incount == 0) {
+						$(event.target).closest('tr').children().eq(9).html(
+								"입고 거부")
+					} else if (ordercount - incount > 0) {
+						$(event.target).closest('tr').children().eq(9).html(
+								"부분 입고")
+					}
+				});
 	</script>
 </body>
 
