@@ -97,18 +97,11 @@ public class ContainerServiceImpl implements ContainerService {
 	}
 
 	@Override
-	public Map<String, Object> containerOutModalInfo(List<ContainerVO> containerVO) {
+	public Map<String, Object> containerOutModalInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		List<String> list = new ArrayList<String>();
-		for (ContainerVO vo : containerVO) {
-			containerMapper.containerOutModal(vo);
-			list.add(vo.lot);
-		}
-
-		map.put("result", list);
-		return map;
+		return null;
 	}
+
+
 
 }
