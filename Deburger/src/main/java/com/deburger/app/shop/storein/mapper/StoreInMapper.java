@@ -2,6 +2,7 @@ package com.deburger.app.shop.storein.mapper;
 
 import java.util.List;
 
+import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInVO;
 
 public interface StoreInMapper {
@@ -15,4 +16,6 @@ public interface StoreInMapper {
 	//입고 저장
 	public int insertStoreInList(StoreInVO storeInVO);
 	
+	//재고 저장
+	public int storeStock(StoreInVO storeInVO);
 }

@@ -14,9 +14,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deburger.app.main.login.service.UserVO;
+import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInService;
 import com.deburger.app.shop.storein.service.StoreInVO;
 
@@ -53,40 +56,44 @@ public class StoreInController {
 	private String uploadPath;
 	
 	//입고 저장
-	@GetMapping("insertStoreInList")
-	public String insertStoreInList(StoreInVO storeInVO,MultipartFile contractImageFile,
-			MultipartFile businessLicenseImageFile) {
+	@PostMapping("insertStoreInList")
+	@ResponseBody
+	public String insertStoreInList(ListVO listVO) {
+		for(StoreInVO storein:  listVO.getStoreInList()) {
 		
-		String fileName = contractImageFile.getOriginalFilename();
-//      String fileName = originalName.substring(originalName.lastIndexOf("//")+1);
-
-		// 날짜 폴더 생성
-		String folderPath = makeFolder();
-		// UUID 고유값을 보장함
-		String uuid = UUID.randomUUID().toString();
-		// 저장할 파일 이름 중간에 "_"를 이용하여 구분
-
-		String uploadFileName = folderPath + File.separator + uuid + "_" + fileName;
-
-		String saveName = uploadPath + File.separator + uploadFileName;
-
-		Path savePath = Paths.get(saveName);
-		// Paths.get() 메서드는 특정 경로의 파일 정보를 가져옵니다.(경로 정의하기)
-		System.out.println("path : " + saveName);
-		try {
-			contractImageFile.transferTo(savePath);
-			// uploadFile에 파일을 업로드 하는 메서드 transferTo(file)
-		} catch (IOException e) {
-			e.printStackTrace();
+			//파일이 업로드 하지 않아도 빈파일이 넘어오기 때문에 사이즈 체크를 해야함.
+			if(storein.getContractImageFile() != null && storein.getContractImageFile().getSize()>0) {
+				String fileName = storein.getContractImageFile().getOriginalFilename();
+		//      String fileName = originalName.substring(originalName.lastIndexOf("//")+1);
+		
+				// 날짜 폴더 생성
+				String folderPath = makeFolder();
+				// UUID 고유값을 보장함
+				String uuid = UUID.randomUUID().toString();
+				// 저장할 파일 이름 중간에 "_"를 이용하여 구분
+		
+				String uploadFileName = folderPath + File.separator + uuid + "_" + fileName;
+		
+				String saveName = uploadPath + File.separator + uploadFileName;
+		
+				Path savePath = Paths.get(saveName);
+				// Paths.get() 메서드는 특정 경로의 파일 정보를 가져옵니다.(경로 정의하기)
+				System.out.println("path : " + saveName);
+				try {
+					storein.getContractImageFile().transferTo(savePath);
+					// uploadFile에 파일을 업로드 하는 메서드 transferTo(file)
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				// DB에 해당 경로 저장
+				// 1) 사용자가 업로드할 때 사용한 파일명
+				// 2) 실제 서버에 업로드할 때 사용한 경로
+				storein.setInImage(setImagePath(uploadFileName));
+			}
+				
 		}
-		// DB에 해당 경로 저장
-		// 1) 사용자가 업로드할 때 사용한 파일명
-		// 2) 실제 서버에 업로드할 때 사용한 경로
-		storeInVO.setInImage(setImagePath(uploadFileName));
-		
-		storeInService.insertStoreInList(storeInVO);
-
-		return "redirect:storeInList";
+		storeInService.insertStoreInList(listVO);
+		return "1";
 	}
 	
 	private String makeFolder() {

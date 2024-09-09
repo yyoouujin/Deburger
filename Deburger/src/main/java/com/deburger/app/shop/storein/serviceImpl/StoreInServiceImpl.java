@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.deburger.app.shop.storein.mapper.StoreInMapper;
+import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInService;
 import com.deburger.app.shop.storein.service.StoreInVO;
 
@@ -35,9 +37,16 @@ public class StoreInServiceImpl implements StoreInService {
 	
 	//입고 저장
 	@Override
-	public int insertStoreInList(StoreInVO storeInVO) {
+	@Transactional
+	public int insertStoreInList(ListVO listVO) {
 		// TODO Auto-generated method stub
-		storeInMapper.insertStoreInList(storeInVO);
+		//리스트를 하나식 뽑아서 반복하여 다시 넣음.
+		for(StoreInVO storein:  listVO.getStoreInList()) {
+			
+			storeInMapper.insertStoreInList(storein);
+	
+			storeInMapper.storeStock(storein);
+		}
 		
 		return 1;
 	}

@@ -53,7 +53,7 @@
 												완료</td>
 											<td th:text="${list.orderName}" />
 											<td th:text="${list.note}" />
-											<td><button type="button" class="btn btn-primary btn-sm"
+											<td th:if="${list.inOperation == null and list.oderApp == 'L3'}"><button type="button" class="btn btn-primary btn-sm"
 													onclick="infobtn()" th:id="${list.orderNumber}">입고</button></td>
 
 										</tr>
