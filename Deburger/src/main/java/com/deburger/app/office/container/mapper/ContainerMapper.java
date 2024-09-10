@@ -42,7 +42,10 @@ public interface ContainerMapper {
 
 	// 물류 창고 출고 상세 조회
 	public List<ContainerVO> containerOutListInfo(ContainerVO containerVO);
+
 	// 모달
 	public List<ContainerVO> containerOutModal(ContainerVO containerVO);
+
+	// 모달 처리
 
 }
