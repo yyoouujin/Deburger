@@ -26,7 +26,7 @@ public class StoreVO {
 	private String contractImage;
 	private String businessLicenseImage;
 	private Integer postal;
-	private String addresssec;
+	private String addressses;
 	private String note;
 	private String logisticsId;	
 }

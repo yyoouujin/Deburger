@@ -4,9 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <th:block th:replace="~{common/configs/config :: ConfigFrag}"></th:block>
+<!-- csrf -->
+ <meta th:value="${_csrf.token}" name="_csrf"> 
 <title>Insert title here</title>
 </head>
 <body>
+<script type="text/javascript">
+  let csrf = $("meta[name='_csrf']").attr("value");
+  $.ajaxSetup({
+	  headers: {
+		  "X-CSRF-TOKEN" : csrf
+	  }
+  });
+</script>
 	<header th:replace="~{common/fragments/header :: HeaderFrag}"></header>
 	<aside th:replace="~{common/fragments/shop_sidebar :: SidebarFrag}"></aside>
 	<main>

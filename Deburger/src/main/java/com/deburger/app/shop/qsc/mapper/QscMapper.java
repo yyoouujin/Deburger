@@ -14,4 +14,5 @@ public interface QscMapper {
 	public int insertQscResultDetails(QscResultVO qscResultVO);
 	public List<QscResultVO> selectQscListShop(QscResultVO qscResultVO);
 	public List<QscResultVO> selectQscInfoDetail(QscResultVO qscResultVO);
+	public List<QscResultVO> selectAllQscListShop();
 }

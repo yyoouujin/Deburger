@@ -20,7 +20,9 @@ public class LoginUserVO implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-		auths.add(new SimpleGrantedAuthority(userVO.getAuthority()));
+		auths.add(new SimpleGrantedAuthority("ROLE_"+userVO.getAuthority()));
+		
+		
 		return auths;
 	}
 

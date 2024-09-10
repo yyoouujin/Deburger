@@ -4,11 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import jakarta.servlet.DispatcherType;
@@ -18,8 +14,13 @@ import jakarta.servlet.DispatcherType;
 public class SpringSecurityConfig {
 
 	@Bean // 비밀번호 암호화
-	PasswordEncoder passwordEncoder() {
+	BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	CustomLoginSuccessHandler loginSuccessHandler() {
+		return new CustomLoginSuccessHandler();
 	}
 
 	// 인증 및 인가
@@ -28,16 +29,18 @@ public class SpringSecurityConfig {
 		http  // Security가 적용될 URI
 		.authorizeHttpRequests((authorize) -> authorize
 				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-				.requestMatchers("/", "/all").permitAll()
-				.requestMatchers("/**").permitAll()
+				.requestMatchers("/login","/assets/**").permitAll()
+				.requestMatchers("/**").hasAnyRole("4","3","2","1")
 				.anyRequest().authenticated())
 		.formLogin(formlogin -> formlogin
-				.defaultSuccessUrl("/all"))
+				.loginPage("/login")
+				//.loginProcessingUrl("/loginProc")
+				.successHandler(loginSuccessHandler()))
 		.logout(logout -> logout
-				.logoutSuccessUrl("/all")
+				.logoutSuccessUrl("/login")
 				.invalidateHttpSession(true));
 		
-		http.csrf(csrf -> csrf.disable());
+//		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 	
