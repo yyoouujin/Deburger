@@ -7,4 +7,5 @@ import com.deburger.app.main.login.service.UserVO;
 public interface StoreService {
 	public int insertStore(StoreVO storeVO, UserVO userVO);
 	public List<StoreVO> selectStoreList();
+	public String selectStoreInfoNumber(String id);
 }
