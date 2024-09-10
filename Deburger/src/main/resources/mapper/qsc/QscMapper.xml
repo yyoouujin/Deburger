@@ -101,6 +101,21 @@
 	WHERE q.STORE_NUMBER = #{storeNumber}
 	</select>
 	
+	<select id="selectAllQscListShop">	
+	SELECT  QSC_DATE
+	        , PROCESS_CONDITION
+	        , q.STORE_NUMBER STORE_NUMBER
+	        , CHECKLIST_NUMBER
+	        , QUALITY_SCORE
+	        , CLEANL_SCORE
+	        , SERVICE_SCORE 
+	        , STORE_NAME
+	        , (QUALITY_SCORE + SERVICE_SCORE + CLEANL_SCORE) / 3 SCORE
+	FROM qsc_result q JOIN store s
+	on q.store_number = s.store_number
+	</select>
+	
+	
 	<select id="selectQscInfoDetail">
 	SELECT  d.QSC_NUMBER QSC_NUMBER
 			, CATEGORY

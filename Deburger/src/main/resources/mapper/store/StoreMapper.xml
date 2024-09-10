@@ -65,5 +65,10 @@
 			)
 	</insert>
 	
+	<select id="selectStoreInfoNumber">
+	SELECT store_number FROM store 
+	WHERE business_registration_number = #{id}
+	</select>
+	
 	
 </mapper>

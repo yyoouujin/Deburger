@@ -77,7 +77,9 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+		<button type="submit">로그아웃</button>
+	</form>
               </a>
             </li>
 

@@ -21,7 +21,7 @@
 					<form>
 						<div class="row mb-3">
 							<div class="col-sm-10 col-md-3">
-								<input type="text" class="form-control" value="디버거 감삼점" disabled>
+								<input type="text" class="form-control" th:value="${id}" disabled>
 							</div>
 
 							<div class="col-sm-10 col-md-3">
@@ -306,7 +306,7 @@
             })
             .then((result) =>{
               let url = 'qscListShop'
-              // location.replace(url);
+               location.replace(url);
             })
 
           

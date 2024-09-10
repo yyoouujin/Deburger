@@ -9,4 +9,5 @@ public interface QscService {
 	public int insertQscDetails(List<QscResultVO>  qscResultVOs, QscResultVO QscResultVO);
 	public List<QscResultVO> selectQscListShop(QscResultVO qscResultVO);
 	public List<QscResultVO> selectQscInfoDetail(QscResultVO qscResultVO);
+	public List<QscResultVO> selectAllQscListShop();
 }

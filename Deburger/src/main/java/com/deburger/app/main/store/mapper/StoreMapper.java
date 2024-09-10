@@ -9,5 +9,6 @@ public interface StoreMapper {
 	
 	public int insertStore(StoreVO storeVO);
 	
+	public String selectStoreInfoNumber(String id);
 	
 }
