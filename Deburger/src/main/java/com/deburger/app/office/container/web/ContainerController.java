@@ -1,7 +1,6 @@
 package com.deburger.app.office.container.web;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -107,9 +106,13 @@ public class ContainerController {
 		return "office/container/containerOutInfo";
 	}
 
+	// 모달창 input lot 리스트
 	@PostMapping("containerModal")
 	@ResponseBody
-	public Map<String, Object> containerModalInfo(@RequestBody ContainerVO containerVO) {
+	public List<ContainerVO> containerModalInfo(@RequestBody ContainerVO containerVO) {
 		return containerService.containerOutModalInfo(containerVO);
 	}
+
+	// 모달창 checkbox
+
 }

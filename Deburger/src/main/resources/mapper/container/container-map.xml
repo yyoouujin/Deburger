@@ -48,7 +48,6 @@
 			select distinct
 			         a.details_order_number,
 			         a.count,
-			         a.supplier,
 			         a.order_condition,
                      a.in_operation,
                      a.person_id,
@@ -172,7 +171,6 @@
 			select distinct
 			         a.details_order_number,
 			         a.count,
-			         a.supplier,
 			         a.order_condition,
                      a.in_operation,
                      a.person_id,
@@ -267,5 +265,26 @@
 			on b.material_number = c.material_number
 		where c.material_number = #{materialNumber}		
 	</select>
+
+	<insert id="containerOutDB">
+		insert into logistics_out(
+			    logistics_out_number,
+			    out_date,
+			    logistics_id,
+			    inspection,
+			    out_count,
+			    lot
+		)values(
+			   #{logisticsOutNumber},
+			   #{outDate},
+			   #{logisticsId},
+			   #{inspection},
+	.		   #{outCount},
+			   #{lot}
+		)
+	</insert>
+	
+	<update id="containerOutUp">
+	</update>
 
 </mapper>

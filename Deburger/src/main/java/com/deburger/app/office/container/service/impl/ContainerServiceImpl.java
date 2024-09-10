@@ -1,9 +1,6 @@
 package com.deburger.app.office.container.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +62,7 @@ public class ContainerServiceImpl implements ContainerService {
 			containerMapper.containerInInsert(vo);
 			containerMapper.containerInUpdate(vo);
 		}
-		
+
 		return 1;
 	}
 
@@ -97,11 +94,9 @@ public class ContainerServiceImpl implements ContainerService {
 	}
 
 	@Override
-	public Map<String, Object> containerOutModalInfo(ContainerVO containerVO) {
+	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return null;
+		return containerMapper.containerOutModal(containerVO);
 	}
-
-
 
 }
