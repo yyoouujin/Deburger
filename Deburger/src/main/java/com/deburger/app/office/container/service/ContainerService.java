@@ -1,7 +1,6 @@
 package com.deburger.app.office.container.service;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ContainerService {
 
@@ -36,5 +35,5 @@ public interface ContainerService {
 	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
 
 	// 모달
-	public Map<String, Object> containerOutModalInfo(ContainerVO containerVO);
+	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
 }
