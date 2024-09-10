@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deburger.app.main.login.config.SecurityUtil;
+import com.deburger.app.shop.stock.service.StockVO;
 import com.deburger.app.shop.storein.mapper.StoreInMapper;
 import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInService;
@@ -25,7 +27,10 @@ public class StoreInServiceImpl implements StoreInService {
 	@Override
 	public List<StoreInVO> StoreInList() {
 		// TODO Auto-generated method stub
-		return storeInMapper.StoreInList();
+		String mcode = SecurityUtil.memberCode();
+		StoreInVO storeInVO = new StoreInVO();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.StoreInList(storeInVO);
 	}
 	
 	//입고 재고 상세 조회

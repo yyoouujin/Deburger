@@ -5,46 +5,62 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.stock.mapper.StockMapper;
 import com.deburger.app.shop.stock.service.StockService;
 import com.deburger.app.shop.stock.service.StockVO;
 
 @Service
-public class StockServiceImpl implements StockService{
-	
+public class StockServiceImpl implements StockService {
+
 	private StockMapper stockMapper;
-	
+
 	@Autowired
-	StockServiceImpl(StockMapper stockMapper){
+	StockServiceImpl(StockMapper stockMapper) {
 		this.stockMapper = stockMapper;
 	}
-	
-	//전체 조회
+
+	// 전체 조회
 	@Override
 	public List<StockVO> selectStock() {
 		// TODO Auto-generated method stub
-		return stockMapper.selectStock();
+		String mcode = SecurityUtil.memberCode();
+		StockVO stockVO = new StockVO();
+		stockVO.setStockNumber(mcode);
+		return stockMapper.selectStock(stockVO);
 	}
-	
-	//장바구니 저장
+
+	// 장바구니 저장
 	@Override
 	public int insertCart(StockVO stockVO) {
 		// TODO Auto-generated method stub
+
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
 		
 		int result = stockMapper.insertCart(stockVO);
 
-		return result == 1? 1 : -1;
+		return result == 1 ? 1 : -1;
 	}
-	
-	//상세조회
+
+	// 상세조회
 	@Override
 	public List<StockVO> selectStockinfo(StockVO stockVO) {
 		// TODO Auto-generated method stub
 		return stockMapper.selectStockinfo(stockVO);
 	}
-	
 
+	@Override
+	@Transactional
+	public int updqtestoreStock(StockVO stockVO) {
+		// TODO Auto-generated method stub
+		
+		stockMapper.updqtestoreIn(stockVO);
+		stockMapper.updqtestoreStock(stockVO);
+		stockMapper.insertstoreProductSale(stockVO);
+		return 1;
+	}
 
-	
 }

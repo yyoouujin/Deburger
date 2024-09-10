@@ -14,7 +14,7 @@
 		from
 		order_cart o join material m
 		on m.material_number = o.material_number
-		where o.store_number = 'FRC0000001'
+		where o.store_number = #{storeNumber}
 		ORDER by m.material_number
 	</select>
 
@@ -85,12 +85,9 @@
 		,s.allprice
 		,s.oder_App
 		from store_order s LEFT OUTER join person p
-		on
-		s.person_id =
-		p.person_id
+		on s.person_id = p.person_id
 		where auto_order_operation = 'i1'
-		AND
-		store_number='FRC0000001'
+		AND	store_number=#{storeNumber}
 		ORDER by s.order_number DESC
 	</select>
 

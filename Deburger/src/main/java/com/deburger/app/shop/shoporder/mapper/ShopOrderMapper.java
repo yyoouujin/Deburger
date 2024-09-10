@@ -11,7 +11,7 @@ import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 public interface ShopOrderMapper {
 		
 		//장바구니 전체 조회
-		public List<ShopOrderVO> selectShopOrder();
+		public List<ShopOrderVO> selectShopOrder(ShopOrderVO shopOrderVO);
 		
 		//발주 신청
 		public int insertShopOrder(ShopOrderVO shopOrderVO);
@@ -23,7 +23,7 @@ public interface ShopOrderMapper {
 		public int deleteOrderCart(ShopOrderCartVO ShopOrderCartVO);
 		
 		//발주 전체 조회
-		public List<ShopOrderVO> ShopOrderList();
+		public List<ShopOrderVO> ShopOrderList(ShopOrderVO shopOrderVO);
 		
 		//발주 취소 저장
 		public int updateOrderCancel(ShopOrderVO shopOrderVO);

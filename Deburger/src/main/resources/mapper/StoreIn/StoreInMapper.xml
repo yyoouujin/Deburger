@@ -18,6 +18,7 @@
 		LEFT OUTER JOIN store_in i
 		on d.order_details_number = i.order_details_number
 		where oder_app='L3'
+		and store_number = #{storeNumber}
 		ORDER by ORDER_NUMBER DESC
 	</select>
 
@@ -81,7 +82,7 @@
 MERGE INTO store_stock
       USING dual
            on( Material_number = #{materialNumber}
-            and store_number = 'FRC0000001')
+            and store_number = #{storeNumber})
       WHEN NOT MATCHED THEN
       insert (
             stock_count
@@ -94,7 +95,7 @@ MERGE INTO store_stock
             #{stockCount}
             ,#{safetyStock}
             ,SS_SEQ.NEXTVAL
-            ,'FRC0000001'
+            ,#{storeNumber}
             ,#{materialNumber}
       )
       WHEN MATCHED THEN
