@@ -82,9 +82,7 @@ th, td {
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
-										<td colspan='3'><input type="text" id="storeNumber"
-											name="storeNumber" value="FRC0000001" style="border: none;"
-											readonly></td>
+										<td colspan='3' sec:authentication="name" id="storeNumber"></td>
 										<th>수신 업체 이름</th>
 										<td colspan='4'>디버거</td>
 									</tr>
@@ -185,7 +183,7 @@ th, td {
 			
 			//발주
 			let orderName = $('#orderName').get(0).value;
-			let storeNumber = $('#storeNumber').get(0).value;				
+			let storeNumber = $('#storeNumber').html();				
 			let autoOrderOperation = 'i1';
 			let cancelOperation = 'J1';
 			let oderApp = 'L1';

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.stock.mapper.StockMapper;
 import com.deburger.app.shop.stock.service.StockService;
 import com.deburger.app.shop.stock.service.StockVO;
@@ -25,7 +26,10 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public List<StockVO> selectStock() {
 		// TODO Auto-generated method stub
-		return stockMapper.selectStock();
+		String mcode = SecurityUtil.memberCode();
+		StockVO stockVO = new StockVO();
+		stockVO.setStockNumber(mcode);
+		return stockMapper.selectStock(stockVO);
 	}
 
 	// 장바구니 저장
@@ -33,6 +37,9 @@ public class StockServiceImpl implements StockService {
 	public int insertCart(StockVO stockVO) {
 		// TODO Auto-generated method stub
 
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
+		
 		int result = stockMapper.insertCart(stockVO);
 
 		return result == 1 ? 1 : -1;

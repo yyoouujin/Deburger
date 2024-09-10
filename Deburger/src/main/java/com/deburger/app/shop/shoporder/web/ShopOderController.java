@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.shoporder.service.ShopOrderService;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 
@@ -27,6 +28,7 @@ public class ShopOderController {
 	//장바구니 전체 조회
 	@GetMapping("selectOrderCart")
 	public String selectShopOrder(Model model) {
+		
 		List<ShopOrderVO> list = shopOrderService.selectShopOrder();
 		
 		model.addAttribute("selectOrderCart", list);

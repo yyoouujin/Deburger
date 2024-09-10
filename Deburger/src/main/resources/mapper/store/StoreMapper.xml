@@ -21,8 +21,7 @@
                ,POSTAL
                ,ADDRESSSEC
                ,NOTE
-               ,LOGISTICS_ID
-		                 
+               ,LOGISTICS_ID              
 	from store
 	
 	</select>

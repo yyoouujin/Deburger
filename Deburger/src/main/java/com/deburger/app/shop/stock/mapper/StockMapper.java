@@ -8,7 +8,7 @@ import com.deburger.app.shop.stock.service.StockVO;
 public interface StockMapper {
 	
 	//전체 조회
-	  public List<StockVO> selectStock();
+	  public List<StockVO> selectStock(StockVO stockVO);
 	  
 	//장바구니 업데이트
 	  public int insertCart(StockVO stockVO);

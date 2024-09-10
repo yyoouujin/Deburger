@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.shoporder.mapper.ShopOrderMapper;
 import com.deburger.app.shop.shoporder.service.ShopOrderCartVO;
 import com.deburger.app.shop.shoporder.service.ShopOrderDetailsVO;
@@ -29,7 +30,11 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	public List<ShopOrderVO> selectShopOrder() {
 		// TODO Auto-generated method stub
-		return shopOrderMapper.selectShopOrder();
+		String mcode = SecurityUtil.memberCode();
+		ShopOrderVO shopOrderVO = new ShopOrderVO();
+		shopOrderVO.setStoreNumber(mcode);
+		
+		return shopOrderMapper.selectShopOrder(shopOrderVO);
 	}
 
 	// 발주
@@ -54,7 +59,10 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	public List<ShopOrderVO> ShopOrderList() {
 		// TODO Auto-generated method stub
-		return shopOrderMapper.ShopOrderList();
+		String mcode = SecurityUtil.memberCode();
+		ShopOrderVO shopOrderVO = new ShopOrderVO();
+		shopOrderVO.setStoreNumber(mcode);
+		return shopOrderMapper.ShopOrderList(shopOrderVO);
 	}
 
 	// 발주 취소 설정

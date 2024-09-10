@@ -11,7 +11,7 @@ public class StockVO {
 
 	
 	//재고 테이블
-	private Integer stockNumber;
+	private String stockNumber;
 	private Integer stockCount;
 	private String storeNumber;
 	private Integer safetyStock;
