@@ -3,6 +3,18 @@
 <mapper
 	namespace="com.deburger.app.shop.productSale.mapper.StoreSaleMapper">
 	
-	
+	<select id="selectStoreSaleList">
+	SELECT  PRODUCT_NUMBER
+			,PRODUCT_NAME
+			,SALE_UNITPRICE
+			,IMAGE
+			,RECIPE_PDF
+			,PRICE
+			,CATEGORY
+			,REGISTRATION_DAY
+			,KIND
+			,NOTE 
+	FROM product
+	</select>
 	
 </mapper>

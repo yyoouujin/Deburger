@@ -11,14 +11,16 @@ import lombok.Data;
 @Data
 public class StoreSaleVO {	
 	
-	
-	public String qscNumber;
+	public String productNumber;
+	public String productName;
+	public int saleUnitprice;
+	public String image;
+	public String recipePdf;
+	public int price;
 	public String category;
-	public String content;
-	public int score;
-	public String versionInformation;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date finalChangeDay;
-	public String list;		
+	public Date registrationDay;
+	public String kind;
+	public String note;
 }
