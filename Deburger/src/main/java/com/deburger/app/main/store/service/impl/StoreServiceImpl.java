@@ -26,6 +26,7 @@ public class StoreServiceImpl implements StoreService{
 	public int insertStore(StoreVO storeVO, UserVO userVO) {
 		String password = passwordEncoder.encode(userVO.getPassword());
 		userVO.setPassword(password);
+		
 		loginService.insertUserInfo(userVO);		
 		return storeMapper.insertStore(storeVO);
 	}

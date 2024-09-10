@@ -46,7 +46,7 @@
 	                 ,LOGISTICS_ID
 	                 )
 	VALUES (
-	                  'FRC' || LPAD(FRC_SEQ.nextval, '7', '0')
+	                  #{storeNumber}
 	                  ,#{shopkeeper}
 	                  ,#{businessRegistrationNumber}
 	                  ,#{phone}
