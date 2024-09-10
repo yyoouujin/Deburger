@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.deburger.app.shop.stock.service.StockService;
 import com.deburger.app.shop.stock.service.StockVO;
@@ -51,6 +53,12 @@ public class StockController {
 		return "shop/stocklistinfo";
 	}
 	
-	
-	
+	@PostMapping("storeStockUPandIN")
+	public String storeStockUPandIN (@RequestBody StockVO stockVO) {
+		
+		System.err.println(stockVO);
+		stockService.updqtestoreStock(stockVO);
+		
+		return "redirect:shopStock";
+	}
 }

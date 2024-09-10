@@ -117,7 +117,7 @@ th, td {
 									</tr>
 									<tr>
 										<th class="col-lg-1"><input type="checkbox"
-											name="allOrder"></th>
+											name="allOrder" id="allOrder"></th>
 										<th class="col-lg-1">No.</th>
 										<th class="col-lg-1">품명</th>
 										<th class="col-lg-1">규격</th>
@@ -131,12 +131,13 @@ th, td {
 										<tr>
 											<td style="display: none;"><input type="text"
 												th:value="${list.materialNumber}" /></td>
-											<td><input type="checkbox" name="checkOrder" /></td>
+											<td><input type="checkbox" name="checkOrder" class="checkOrder"/></td>
 											<td th:text=${index.index+1} />
 											<td th:text="${list.materialName}" />
 											<td th:text="${list.unit}" />
-											<td><input type="number" min="1" th:value="${list.count}"
-												id="count" name="count" style="border: none;"></td>
+											<td><input type="number" min="1"
+												th:value="${list.count}" id="count" name="count"
+												style="border: none;"></td>
 											<td th:text="${list.saleUnitprice}" id="oprice" />
 											<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
 											<td th:text="${list.saleUnitprice*list.count/10}"
@@ -156,7 +157,26 @@ th, td {
 	</main>
 	<script>
 
+	allOrder.addEventListener('click', function(){
+			const isChecked = allOrder.checked;
+			
+			 if(isChecked){
+			        const checkboxes = document.querySelectorAll('.checkOrder');
 
+			        for(const checkbox of checkboxes){
+			            checkbox.checked = true;
+			        }
+			    }
+
+			    else{
+			        const checkboxes = document.querySelectorAll('.checkOrder');
+			        for(const checkbox of checkboxes){
+			            checkbox.checked = false;
+			        }
+			    }
+			 Calculator()
+		})
+	
 		
 		function makeData(){
 			let list = {};
