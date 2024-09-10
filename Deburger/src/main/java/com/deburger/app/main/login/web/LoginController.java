@@ -35,6 +35,7 @@ public class LoginController {
 		
 		UserVO userVO = new UserVO();
 		userVO.setId("DBG"+ personVO.getPersonId());
+		personVO.setPersonId(userVO.getId());
 		userVO.setPassword(personVO.getPhone());
 		if(personVO.getDepartment().equals("물류담당자")) {
 			userVO.setAuthority("3");			

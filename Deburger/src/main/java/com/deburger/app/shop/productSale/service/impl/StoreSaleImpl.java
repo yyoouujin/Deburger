@@ -1,10 +1,13 @@
 package com.deburger.app.shop.productSale.service.impl;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.deburger.app.shop.productSale.mapper.StoreSaleMapper;
 import com.deburger.app.shop.productSale.service.StoreSaleService;
-import com.deburger.app.shop.qsc.mapper.QscMapper;
+import com.deburger.app.shop.productSale.service.StoreSaleVO;
 
 import lombok.AllArgsConstructor;
 
@@ -12,7 +15,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StoreSaleImpl implements StoreSaleService{
 	
-	private QscMapper qscMapper;
+	private StoreSaleMapper storeSaleMapper;
+
+	@Override
+	public List<StoreSaleVO> selectStoreSaleList() {
+		// TODO Auto-generated method stub
+		return storeSaleMapper.selectStoreSaleList();
+	}
 	
 	
 		
