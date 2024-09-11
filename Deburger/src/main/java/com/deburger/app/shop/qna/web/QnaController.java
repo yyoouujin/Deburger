@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.shop.notice.service.NoticeVO;
 import com.deburger.app.shop.qna.service.QnaService;
 import com.deburger.app.shop.qna.service.QnaVO;
 
@@ -62,11 +63,26 @@ public class QnaController {
 	
 	//글 등록(가맹점)
 	@GetMapping("qnaShopInsert")
-	public String qnaShopInsert(QnaVO qnaVO) {
-		qnaService.qnaShopInsert(qnaVO);
-		
-		return "redirect:qnaListShop";
+	public String qnaShopInsert() {
+		return "shop/qnaShopInsert";
 	}
 	
+	//글 등록(가맹점)
+    @PostMapping("qnaShopInsert")
+    public String qnaShopInsert(QnaVO qnaVO) {
+    	qnaService.qnaShopInsert(qnaVO);
+    	
+    	return "redirect:qnaListShop";
+    }
+    
+    //상세 조회(가맹점)
+    @GetMapping("qnaListInfoShop")
+    public String noticeListInfoShop(QnaVO qnaVO, Model model) {
+    	Map<String, Object> Info = qnaService.qnaListInfoShop(qnaVO);
+    	model.addAttribute("qna", Info);
+    	
+    	return "shop/qnaListInfoShop";
+    }
+        
 
 }

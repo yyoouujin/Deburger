@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>QnA 문의</title>
+</head>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<!-- 작성 칸 영역 -->
+
+			<form class="row g-3" name="qnaShopInsert"
+				th:action="@{qnaShopInsert}" method="post">
+				<div style="margin-Left: 8px">
+					<h1 style="display: inline-block">QnA 문의</h1>
+					<button type="button" id="btnInsert" class="btn btn-primary"
+						style="margin-left: 67%">등록하기</button>
+				</div>
+
+				<div class="col-md-10">
+					<div class="card">
+						<div class="card-body">
+
+							<!--제목 작성 칸-->
+							<div class="col-md-12" style="margin-top: 10px">
+								<input type="text" class="form-control" name="title"
+									placeholder=" QnA 문의 제목을 작성해주세요." />
+							</div>
+
+							<!--내용 작성 칸-->
+							<div class="col-md-12"
+								style="height: 450px; margin-top: 10px; margin-bottom: 10px">
+								<div id="contentDiv" class="editer"></div>
+							</div>
+
+							<br />
+						</div>
+					</div>
+				</div>
+			</form>
+			<!-- 작성 칸 영역 끝 -->
+		</div>
+
+	</main>
+	<!-- End #main -->
+	<script>
+	let quill;
+	quilljsediterInit();
+	
+    function quilljsediterInit(){
+
+
+        quill =   new Quill("#contentDiv", {
+            modules: {
+              toolbar: [
+                [{
+                  font: []
+                }, {
+                  size: []
+                }],
+                ["bold", "italic", "underline", "strike"],
+                [{
+                    color: []
+                  },
+                  {
+                    background: []
+                  }
+                ],
+                [{
+                    script: "super"
+                  },
+                  {
+                    script: "sub"
+                  }
+                ],
+                [{
+                    list: "ordered"
+                  },
+                  {
+                    list: "bullet"
+                  },
+                  {
+                    indent: "-1"
+                  },
+                  {
+                    indent: "+1"
+                  }
+                ],
+                ["direction", {
+                  align: []
+                }],
+                ["link", "image", "video"],
+                ["clean"]
+              ]
+            },
+            theme: "snow"
+          });
+    }
+		$("#btnInsert").on("click", function(event) {
+			
+			//텍스트 에어리어 안에 넣어서
+			let tArea = document.createElement("textarea");
+			tArea.value =  quill.root.innerHTML;
+			tArea.name = "content";
+
+			//debugger
+			//어팬드 한다음 서브밋
+			$("form[name='qnaShopInsert']").append(tArea);
+
+			qnaShopInsert.submit();
+
+			//console.log(selectkey);
+
+			alert("게시글이 등록되었습니다.");
+		});
+	</script>
+</body>
+</html>

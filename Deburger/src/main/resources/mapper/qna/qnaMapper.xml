@@ -33,7 +33,8 @@ UPDATE qna
 
 <!-- 전체조회(가맹점) 해당 가맹점만 노출 오류 생길수도?-->
 <select id = "qnaListShop" resultType="QnaVO">
-select  title
+select  qna_number
+       ,title
        ,writer
        ,writer_day
 from qna
@@ -51,21 +52,37 @@ where store_number = #{storeNumber}
 <!-- 글 등록(가맹점) -->
 <insert id="qnaShopInsert" parameterType ="QnaVO">
 INSERT INTO qna (qna_number
+                , store_number
                 , title
                 , content
-                , store_number
                 , writer_day
                 , writer)
-VALUES         (LPAD(QNA_SEQ.nextval, '7', '0')
+VALUES         (
+                QNA_SEQ.nextval
+                ,#{storeNumber}
                 ,#{title}
                 ,#{content}
-                ,#{storeNumber}
                 ,sysdate
                 ,'접수')
 </insert>
 
-<!--  -->
+<!-- QnA상세 조회(가맹점) -->
+<select id="qnaListInfoShop" resultType="QnaVO">
+select   qna_number
+        ,title
+        ,writer
+        ,writer_day
+from qna
+where qna_number=#{qnaNumber}
+</select>
 
-
+<!-- QnA상세 조회(가맹점 댓글 조회) -->
+<select id="qnaListInfoShopComment" resultType="QnaVO">
+select   c.com_content
+from comments c JOIN qna q
+on (c.qna_number = q.qna_number)
+where q.store_number = #{storeNumber}
+  AND c.comments_number=#{commentsNumber}
+</select>
 
 </mapper>

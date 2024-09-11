@@ -1,6 +1,7 @@
 package com.deburger.app.shop.qna.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.deburger.app.shop.qna.service.QnaVO;
 
@@ -16,10 +17,10 @@ public interface QnaMapper {
 	// 전체조회( 전체 조회에서 상태 변경(본사, 가맹점 공통))
 	public int qnaListWriterUpdate(QnaVO qnaVO);
 	
-	//전체조회(가맹점) 
+	//전체조회(가맹점) -완
 	public List<QnaVO> qnaListShop(String storeNumber);
 	  
-	//전체조회(가맹점 카운트) 
+	//전체조회(가맹점 카운트) -완 
 	public int qnaListShopConut(QnaVO qnaVO);
 	  
 	  
@@ -28,7 +29,11 @@ public interface QnaMapper {
 	//가맹점에서 글 등록
 	public int qnaShopInsert(QnaVO qnaVO);
 	  
-	//QnA상세 조회(가맹점) public QnaVO qnaShopInfoShop(QnaVO qnaVO);
+	//QnA상세 조회(가맹점) 
+	public QnaVO qnaListInfoShop(QnaVO qnaVO);
+	
+	//QnA상세 조회(가맹점 댓글 조회)
+	public QnaVO qnaListInfoShopComment(QnaVO qnaVO);
 	  
 	//가맹점에서 QnA수정(접수 상태일때 활성화) public int qnaShopUpdate(QnaVO qnaVO);
 	  

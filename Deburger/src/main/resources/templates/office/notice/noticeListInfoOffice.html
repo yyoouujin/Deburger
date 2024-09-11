@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 
 <head>
 <meta charset="UTF-8">
@@ -18,6 +18,10 @@
 		<th:block th:if="${notice.division =='작업'}"> <p><a href="noticeListShopWork">[[ ${notice.division} ]]</a></p></th:block>
 		<th:block th:if="${notice.division =='공고'}"> <p><a href="noticeListShopAnnouncement">[[ ${notice.division} ]]</a></p></th:block>
 		</form>
+	    <form style="margin: 5px ; display: inline-block ; value: right">
+			<button type="button" id="btnInsert" class="btn btn-primary">수정하기</button>
+			<button type="button" id="btnDelete" class="btn btn-primary">삭제하기</button>
+	    </form>	
 			<h2><b>[[ ${notice.title} ]]</b></h2>
             <p><a>[[${#dates.format(notice.writerDate,'yyyy-MM-dd')}]]</a></p>
 			<hr>
