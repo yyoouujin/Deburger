@@ -1,5 +1,7 @@
 package com.deburger.app.main.login.web;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ public class LoginController {
 	
 	// 담당자 등록
 	@GetMapping("insertPerson")
+	@PreAuthorize("hasAnyRole('4','3','2','1')")
 	public String insertPerson() {
 		return "main/login/insertPerson";
 	}
