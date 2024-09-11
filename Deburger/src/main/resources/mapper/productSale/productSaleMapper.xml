@@ -15,6 +15,20 @@
 			,KIND
 			,NOTE 
 	FROM product
+	ORDER BY CATEGORY
 	</select>
 	
+	<insert id="insertStoreSaleList">	
+	INSERT INTO store_product_sale(
+			COUNT
+			,PRODUCT_DATE
+			,SEQ
+			,STORE_NUMBER
+			,PRODUCT_NUMBER)
+	VALUES (#{count}
+			, sysdate
+			, SP_SEQ.nextval
+			, #{storeNumber}
+			, #{productNumber})   	
+	</insert>
 </mapper>

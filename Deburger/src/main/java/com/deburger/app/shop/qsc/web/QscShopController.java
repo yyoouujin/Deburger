@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.main.store.mapper.StoreMapper;
+import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.shop.qsc.service.QscListVO;
 import com.deburger.app.shop.qsc.service.QscResultVO;
 import com.deburger.app.shop.qsc.service.QscService;
@@ -25,7 +26,7 @@ import lombok.AllArgsConstructor;
 public class QscShopController {
 	
 	private QscService qscService;
-	private StoreMapper storeMapper;
+	private StoreService storeService;
 	
 	
 
@@ -36,15 +37,15 @@ public class QscShopController {
 		String mcode = SecurityUtil.memberCode();
 		
 		QscResultVO qscResultVO = new QscResultVO();
-		String id = storeMapper.selectStoreInfoNumber(mcode.substring(3));
+		String id = storeService.selectStoreInfoNumber(mcode);
 				
-		qscResultVO.setStoreNumber(id);
+		qscResultVO.setStoreNumber(mcode);
 		
 		
 		
 		List<QscResultVO> list =  qscService.selectQscListShop(qscResultVO);
 		model.addAttribute("QscList", list);
-		model.addAttribute("id", mcode);
+		model.addAttribute("id", id);
 		return "shop/qscListShop";
 	}
 	
@@ -52,12 +53,14 @@ public class QscShopController {
 	@GetMapping("qscListInfoShop")
 	public String qscListInfo(Model model) {
 		String mcode = SecurityUtil.memberCode();
+		String id = storeService.selectStoreInfoNumber(mcode);
+		
 		List<QscVO> list =  qscService.selectQscListRecent();
 		for(QscVO qscVO : list) {
 			qscVO.setScore(1);			
 		}
 		model.addAttribute("QscList", list);
-		model.addAttribute("id", mcode);
+		model.addAttribute("id", id);
 		return "shop/qscListInfoShop";
 	}
 	
