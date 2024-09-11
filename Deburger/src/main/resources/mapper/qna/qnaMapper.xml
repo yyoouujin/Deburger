@@ -19,6 +19,7 @@ order by qna_number desc
 select count(writer)
 from qna
 where writer=#{writer}
+
 </select>
 
 
@@ -30,24 +31,40 @@ UPDATE qna
    WHERE qna_number=#{qnaNumber} 
 </update>
 
-<!-- 전체조회(가맹점) 해당 가맹점만 노출 -->
+<!-- 전체조회(가맹점) 해당 가맹점만 노출 오류 생길수도?-->
 <select id = "qnaListShop" resultType="QnaVO">
-select  q.title
-       ,q.writer
-       ,q.writer_day
-from qna q JOIN login_infomation
-where id = #{id}
+select  title
+       ,writer
+       ,writer_day
+from qna
+where store_number = #{storeNumber}
 </select>
 
-<!-- 전체 조회 카운트(가맹점) -->
-<select id="qnaListOfficeConut" resultType="int">
+<!-- 전체 조회 카운트(가맹점) 오류 생길수도?-->
+<select id="qnaListShopConut" resultType="int">
 select count(writer)
-from qna 
-where writer=#{writer}
+from qna
+where store_number = #{storeNumber}
+  AND writer=#{writer}
 </select>
 
 <!-- 글 등록(가맹점) -->
+<insert id="qnaShopInsert" parameterType ="QnaVO">
+INSERT INTO qna (qna_number
+                , title
+                , content
+                , store_number
+                , writer_day
+                , writer)
+VALUES         (LPAD(QNA_SEQ.nextval, '7', '0')
+                ,#{title}
+                ,#{content}
+                ,#{storeNumber}
+                ,sysdate
+                ,'접수')
+</insert>
 
+<!--  -->
 
 
 
