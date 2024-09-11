@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 
 <head>
 <meta charset="UTF-8">
@@ -19,17 +19,17 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShop">전체</a></li>
+								aria-current="page" href="noticeListOffice">전체</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopUpdate">업데이트</a></li>
+								aria-current="page" href="noticeListOfficeUpdate">업데이트</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopService">서비스</a></li>
+								aria-current="page" href="noticeListOfficeService">서비스</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopEvent">이벤트</a></li>
+								aria-current="page" href="noticeListOfficeEvent">이벤트</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopWork">작업</a></li>
+								aria-current="page" href="noticeListOfficeWork">작업</a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopAnnouncement">공고</a></li>
+								aria-current="page" href="noticeListOfficeAnnouncement">공고</a></li>
 						</ul>
 
 
@@ -38,7 +38,9 @@
 								placeholder="Search" aria-label="Search">
 							<button class="btn btn-outline-success" type="submit">Search</button>
 						</form>
-						
+						<form style="margin: 5px">
+							<button type="button" id="btnInsert" class="btn btn-primary">작성하기</button>
+						</form>
 
 
 					</div>
@@ -87,11 +89,15 @@
 		</section>
 	</main>
 	<script>
-
+		$("#btnInsert").on("click", function(event) {
+			//$("button").on("click", function(event){
+			let url = 'noticeInsertOffice';
+			location.href = url;
+		});
 
 		$('tbody > tr').on("click", function(event) {
 			let num = $(event.currentTarget).children().eq(0).text();
-			let url = 'noticeListInfoShop?noticeNumber=' + num;
+			let url = 'noticeListInfoOffice?noticeNumber=' + num;
 			location.href = url;
 		});
 	</script>

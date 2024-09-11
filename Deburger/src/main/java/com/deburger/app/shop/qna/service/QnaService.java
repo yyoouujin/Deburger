@@ -25,4 +25,9 @@ public interface QnaService {
 	//글 등록(가맹점)
 	public int qnaShopInsert(QnaVO qnaVO);
 	
+	//QnA상세 조회(가맹점) 
+	public Map<String, Object> qnaListInfoShop(QnaVO qnaVO);
+
+	
+	
 }

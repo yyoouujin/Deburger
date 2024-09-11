@@ -167,7 +167,7 @@ public class NoticeController {
     //등록(본점)
     @GetMapping("noticeInsertOffice")
     public String noticeInsertOffice() {
-    	return "shop/noticeInsertOffice";
+    	return "office/notice/noticeInsertOffice";
     }
    
     //등록(본점)
@@ -175,14 +175,14 @@ public class NoticeController {
     public String noticeInsertOffice(NoticeVO noticeVO) {
     	noticeService.noticeInsertOffice(noticeVO);
     	
-    	return "redirect:noticeListShop";
+    	return "redirect:noticeListOffice";
     }
     //수정(본점)
     @GetMapping("noticeCorrectOffice")
     public String noticeCorrectOffice(NoticeVO noticeVO, Model model) {
     	NoticeVO noticesVO = noticeService.noticeListInfoShop(noticeVO);
     	model.addAttribute("notice",noticesVO);
-    	return "shop/noticeCorrectOffice";
+    	return "office/notice/noticeCorrectOffice";
     }
     //수정(본점)
     @PostMapping("noticeCorrectOffice")
@@ -195,7 +195,7 @@ public class NoticeController {
     @GetMapping("noticeDeleteOffice")
     public String noticeDeleteOffice(String noticeNumber) {
     	noticeService.noticeDeleteOffice(noticeNumber);
-    	return "redirect:noticeListShop";
+    	return "redirect:noticeListOffice";
     }
     
 }

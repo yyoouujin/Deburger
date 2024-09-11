@@ -86,8 +86,29 @@ public class QnaServiceImpl implements QnaService {
 	//글 등록(가맹점)
 	@Override
 	public int qnaShopInsert(QnaVO qnaVO) {
+		String mcode = SecurityUtil.memberCode();//storeNumber
+		qnaVO.setStoreNumber(mcode);
 		int result = mapper.qnaShopInsert(qnaVO);
 		return result;
 	}
-}
+
+	//QnA상세 조회(가맹점) 
+	@Override
+	public Map<String, Object> qnaListInfoShop(QnaVO qnaVO) {
+	    // QnA 상세 정보 조회
+	    QnaVO qnaDetail = mapper.qnaListInfoShop(qnaVO);
+	    
+	    // QnA 댓글 조회
+	    QnaVO comments = mapper.qnaListInfoShopComment(qnaVO);
+	
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("qnaDetail", qnaDetail);
+	    resultMap.put("comments", comments);
+	    
+	    return resultMap;
+	}
+
+
+	}
+
 	
