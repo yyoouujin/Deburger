@@ -113,10 +113,8 @@ th, td {
 			                     		<th>입고 날짜</th>
 	                     			</tr>
 	                     		</thead>
-	                     		<th:block th:each="${}">
-		                     		<tbody>
-		                     		</tbody>
-	                     		</th:block>
+	                     		<tbody id="modal">
+	                     		</tbody>
 	                     	</table>				
 	                     </div>
 	                    <div class="modal-footer">
@@ -151,6 +149,7 @@ th, td {
 		})
 		.done(datas =>{
 			$('#name').html('재료 이름: ' +datas[0].materialName);
+			console.log(datas);
 			$(datas).each(function(index, item){
 				var lot = item.lot;
 				var inCount = item.inCount;
