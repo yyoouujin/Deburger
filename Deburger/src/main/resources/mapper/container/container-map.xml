@@ -243,10 +243,19 @@
 		select a.order_details_number,
 		        a.material_number,
 		        a.order_number,
-		        b.material_name
+		        a.count,
+		        b.material_name,
+		        b.unit,
+		        c.store_number,
+		        d.store_name,
+		        d.phone         
 		from order_details a
 		join material b
 		    on a.material_number = b.material_number
+		join store_order c
+		    on  a.order_number = c.order_number
+		join store d
+		    on c.store_number = d.store_number
 		where a.order_number = #{orderNumber}
 	
 	</select>
@@ -279,12 +288,33 @@
 			   #{outDate},
 			   #{logisticsId},
 			   #{inspection},
-	.		   #{outCount},
+			   #{outCount},
 			   #{lot}
 		)
 	</insert>
-	
+
 	<update id="containerOutUp">
 	</update>
+
+	<!-- 출고 프로 시저 -->
+	<select id="containerOutprocedure" statementType="CALLABLE"
+	parameterType="ContainerVO" resultMap="containersOut">
+		{
+			call logistics_out_p(
+				#{pNumber, mode=IN, jdbcType=VARCHAR},
+				#{pOutCnt, mode=IN, jdbcType=INTEGER},
+				#{pInspection, mode=IN, jdbcType=VARCHAR},
+				#{pOutOperation, mode=IN, jdbcType=VARCHAR}				
+			)
+		}
+	</select>
+	<resultMap type="ContainerVO" id="containersOut">
+		<result property="pNumber" column="p_number"></result>
+		<result property="pOutCnt" column="p_out_cnt"></result>
+		<result property="pInspection" column="p_inspection"></result>
+		<result property="pOutOperation" column="p_out_operation"></result>
+	</resultMap>
+	
+
 
 </mapper>
