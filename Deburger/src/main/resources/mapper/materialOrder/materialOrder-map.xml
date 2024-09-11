@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.office.materialOrder.mapper.MaterialOrderMapper">
+
+<!-- 물류창고 발주 -> 물류창고 발주 상세 시작 -->
+	<insert id="insertLogisticOrder" parameterType="MaterialOrderVO">
+		INSERT INTO logistics_order (order_number
+		                            , order_day
+		                            , logistics_id
+		                            , note
+		                            , client_id)
+		VALUES( 'OD' || LPAD(OD_SEQ.nextval, '7', '0')
+		        , sysdate
+		        , #{logisticsId}
+		        , #{note}
+		        , #{clientId})
+	</insert>
+	
+	<insert id="insertLogisticOrderDetail" parameterType="MaterialOrderVO">
+		INSERT INTO logistics_order_details (details_order_number
+		                                    , count
+		                                    , unit
+		                                    , material_number
+		                                    , order_number
+		                                    , person_id
+		                                    , order_cost
+		                                    , order_condition)
+		VALUES ( 'DOD' || LPAD(DOD_SEQ.nextval, '7', '0')
+		        , #{count}
+		        , #{unit}
+		        , #{materialNumber}
+		        , #{orderNumber}
+		        , #{personId}
+		        , #{orderCost}
+		        , #{orderCondition} )
+	</insert>
+<!-- 물류창고 발주 -> 물류창고 발주 상세 끝 -->
+
+
+<!-- 물류창고 발주 시작 -->
+
+</mapper>
+
+
+
+<!-- 물류 창고 폐기 처리 
+	<insert id="containerOutInsert" parameterType="ContainerVO">
+		insert into logistics_out(
+		    logistics_out_number,
+		    out_date,
+		    logistics_id,
+		    out_count,
+		    note,
+		    out_operation,
+		    lot
+		)values(
+		        'DV' || LPAD(DV_SEQ.nextval, '7', '0'),    
+		        #{outDate},  
+		        #{logisticsId},
+		        #{outCount},
+		        #{note},
+		        #{outOperation},
+		        #{lot}
+		)
+	</insert>
+	
+	<update id="containerInupdate">
+		update logistics_in
+		set out_count = #{outCount},
+			disposal_operation = #{disposalOperation}
+		where lot = #{lot}
+	</update>
+
+-->
+

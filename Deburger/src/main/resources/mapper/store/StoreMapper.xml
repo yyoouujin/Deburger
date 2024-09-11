@@ -21,8 +21,7 @@
                ,POSTAL
                ,ADDRESSSEC
                ,NOTE
-               ,LOGISTICS_ID
-		                 
+               ,LOGISTICS_ID              
 	from store
 	
 	</select>
@@ -46,7 +45,7 @@
 	                 ,LOGISTICS_ID
 	                 )
 	VALUES (
-	                  'FRC' || LPAD(FRC_SEQ.nextval, '7', '0')
+	                  #{storeNumber}
 	                  ,#{shopkeeper}
 	                  ,#{businessRegistrationNumber}
 	                  ,#{phone}
@@ -64,6 +63,11 @@
 	
 			)
 	</insert>
+	
+	<select id="selectStoreInfoNumber">
+	SELECT store_number FROM store 
+	WHERE business_registration_number = #{id}
+	</select>
 	
 	
 </mapper>

@@ -18,6 +18,7 @@
 		LEFT OUTER JOIN store_in i
 		on d.order_details_number = i.order_details_number
 		where oder_app='L3'
+		and store_number = #{storeNumber}
 		ORDER by ORDER_NUMBER DESC
 	</select>
 
@@ -36,13 +37,14 @@
 		join material m
 		on d.material_number = m.material_number
 		LEFT OUTER JOIN logistics_out l
-		on o.order_number = l.order_number
+		on d.order_details_number = l.order_details_number
 		LEFT OUTER JOIN logistics_in i
 		on l.LOT = i.LOT
 		where o.order_number = #{orderNumber}
+		order by d.order_details_number
 	</select>
 
-	<insert id="">
+	<insert id="insertStoreInList" parameterType="StoreInVO">
 		insert into store_in(
 			IN_NUMBER
 			,DISPOSAL_OPERATION
@@ -57,6 +59,7 @@
 			,IN_OPERATION
 			,COUNT
 			,MATERIAL_NUMBER
+			)
 		values (
 			SI_SEQ.NEXTVAL
 			,'k1'
@@ -74,4 +77,28 @@
 		)
 
 	</insert>
+	
+	<insert id="storeStock" parameterType="StoreInVO">
+MERGE INTO store_stock
+      USING dual
+           on( Material_number = #{materialNumber}
+            and store_number = #{storeNumber})
+      WHEN NOT MATCHED THEN
+      insert (
+            stock_count
+            ,safety_stock
+            ,stock_number
+            ,store_number
+            ,material_number
+            )
+      values (
+            #{stockCount}
+            ,#{safetyStock}
+            ,SS_SEQ.NEXTVAL
+            ,#{storeNumber}
+            ,#{materialNumber}
+      )
+      WHEN MATCHED THEN
+       update set stock_count = stock_count + #{stockCount}
+      </insert>
 </mapper>

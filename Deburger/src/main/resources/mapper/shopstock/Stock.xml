@@ -3,53 +3,84 @@
 <mapper
 	namespace="com.deburger.app.shop.stock.mapper.StockMapper">
 	<select id="selectStock" parameterType="StockVO">
-select m.material_number
+		select m.material_number
 		,m.material_name
 		,m.material_classification
 		,m.unit
-		,m.unit
 		,m.sale_unitprice
-		,NVL(s.stock_count,0)
-		,NVL(s.safety_stock,0)
-from store_stock s RIGHT OUTER JOIN material m
-		on s.material_number = m.material_number
-order by STOCK_COUNT
+		,NVL(s.stock_count,0) AS stock_Count
+		,NVL(s.safety_stock,0) AS safety_Stock
+		from (select * from store_stock where store_number = #{storeNumber} ) s 
+		RIGHT OUTER JOIN material m  on	s.material_number =	m.material_number
+		order by STOCK_COUNT DESC
 	</select>
 
 	<insert id="insertCart" parameterType="StockVO">
 		INSERT INTO
-			order_cart(cart_number
-			,Store_number
-			,material_number
-			,count)
+		order_cart(cart_number
+		,store_number
+		,material_number
+		,count)
 		VALUES
-			(OC_SEQ.NEXTVAL
-			,'FRC0000001'
-			,#{materialNumber}
-			,1)
+		(OC_SEQ.NEXTVAL
+		,#{storeNumber}
+		,#{materialNumber}
+		,1)
 	</insert>
 
 	<select id="selectStockinfo" parameterType="StockVO">
-		select o.order_Day
-		,m.material_Name
-		,'본사'
-		,m.sale_Unitprice
+		select
+		i.expiration_limit
+		,m.material_name
+		,i.remain_stock_count
 		,d.count
-		,i.remain_Stock_Count
-		,i.expiration_Limit
-		From store_Order o join
-		Order_Details D
-		on o.order_number = d.order_number
-		join store_in i
-		on
-		i.order_details_number = d.order_details_number
+		,o.order_day
+		,i.order_details_number
+		,i.Material_number
+		from store_in i
 		join material m
-		on
-		d.material_number = m.material_number
-		where o.store_number = 'FRC0000001'
-		AND
-		o.order_number = #{materialNumber}
-		order by order_day
+		on i.Material_number = m.Material_number
+		join
+		order_details d
+		on i.order_details_Number = d.order_details_Number
+		join
+		store_Order o
+		on o.order_number = d.order_number
+		where i.Material_number	= #{materialNumber}
+		and store_number = #{storeNumber}
+		order by i.order_details_number
 	</select>
+
+	<update id="updqtestoreStock" parameterType="StockVO">
+		update store_stock
+		set stock_count = stock_count + #{stockCount}
+		where store_Number = #{storeNumber}
+		AND MATERIAL_NUMBER = #{materialNumber} 
+	</update>
+
+	<update id="updqtestoreIn" parameterType="StockVO">
+		update store_in
+		set remain_Stock_Count = remain_Stock_Count + #{remainStockCount}
+		where order_details_number = #{orderDetailsNumber}
+	</update>
+
+	<insert id="insertstoreProductSale" parameterType="StockVO">
+		Insert Into store_Material_consumption(
+			material_Number
+			,amountcon
+			,product_date
+			,seq
+			,store_number
+			,operation
+		)
+		values(
+			#{materialNumber}
+			,#{amountcon}
+			,sysdate
+			,SM_SEQ.NEXTVAL
+			,#{storeNumber}
+			,'M1'
+		)
+	</insert>
 
 </mapper>

@@ -124,7 +124,8 @@ public class StoreController {
 		userVO.setPassword(storeVO.getPhone());
 		userVO.setAuthority("4");
 		userVO.setPasswordChangeOpertation("N");
-
+		
+		storeVO.setStoreNumber("frc" + storeVO.getBusinessRegistrationNumber());
 		storeService.insertStore(storeVO, userVO);
 
 		return "main/store/insertStore";

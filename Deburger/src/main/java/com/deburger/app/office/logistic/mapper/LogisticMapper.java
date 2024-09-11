@@ -7,10 +7,6 @@ import com.deburger.app.office.logistic.service.LogisticVO;
 
 public interface LogisticMapper {
 	
-		/*
-		//물류창고 전체조회
-		public List<LogisticVO> selectLogisticAll();
-		*/
 		//물류창고 전체조회페이징
 		public List<LogisticVO> selectLogisticAll(Criteria criteria);
 		//물류창고 전체데이터(페이징)
@@ -25,11 +21,12 @@ public interface LogisticMapper {
 		public List<LogisticVO> selectLogisticPersonId(LogisticVO logisticVO);
 		
 		//물류창고 정보 단건조회
-		public LogisticVO selectLogisticDetailInfo(LogisticVO logisticVO);
+		public List<LogisticVO> selectLogisticDetailInfo(LogisticVO logisticVO);
 		//물류창고 수정
 		public int updateLogisticInfo(LogisticVO logisticVO);
 		//물류창고 삭제
 		public int deleteLogisticInfo(String logisticsId);
+		
 		
 
 }

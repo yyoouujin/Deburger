@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.deburger.app.main.login.config.SecurityUtil;
+import com.deburger.app.main.store.mapper.StoreMapper;
 import com.deburger.app.shop.qsc.mapper.QscMapper;
 import com.deburger.app.shop.qsc.service.QscResultVO;
 import com.deburger.app.shop.qsc.service.QscService;
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 public class QscServiceImpl implements QscService{
 	
 	private QscMapper qscMapper;
+	private StoreMapper storeMapper;
 	
 	@Override
 	public List<QscVO> selectQscListRecent() {		
@@ -37,8 +40,12 @@ public class QscServiceImpl implements QscService{
 	@Transactional
 	public int insertQscDetails(List<QscResultVO>  qscResultVOList, QscResultVO qscResultVO) {
 		int cnt = 0;
-		String shopNo = "FRC0000001" ;
-		qscResultVO.setStoreNumber(shopNo);
+		
+		// store id 찾기
+		String mcode = SecurityUtil.memberCode();//id
+		String id = storeMapper.selectStoreInfoNumber(mcode.substring(3));//찾아오는 스토어id
+		qscResultVO.setStoreNumber(id);
+		
 		System.out.println(qscResultVO);
 		qscMapper.insertQscDetails(qscResultVO);				
 		
@@ -60,6 +67,12 @@ public class QscServiceImpl implements QscService{
 	@Override
 	public List<QscResultVO> selectQscInfoDetail(QscResultVO qscResultVO) {
 		return qscMapper.selectQscInfoDetail(qscResultVO);
+	}
+
+	@Override
+	public List<QscResultVO> selectAllQscListShop() {
+		// TODO Auto-generated method stub
+		return qscMapper.selectAllQscListShop();
 	}
 
 	

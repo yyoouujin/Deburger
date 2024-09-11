@@ -64,4 +64,7 @@ public class ContainerVO {
 	public String outOperation;
 	public String lot;
 
+	// 물류 창고 출고 조회
+	public String storeName;
+	public String orderDetailsNumber;
 }

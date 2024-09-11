@@ -57,10 +57,12 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	@Transactional
 	public int containerInTreatment(List<ContainerVO> list) {
-		for(ContainerVO vo : list) {
+
+		for (ContainerVO vo : list) {
 			containerMapper.containerInInsert(vo);
 			containerMapper.containerInUpdate(vo);
 		}
+
 		return 1;
 	}
 
@@ -77,6 +79,24 @@ public class ContainerServiceImpl implements ContainerService {
 	public int disposeItem(ContainerVO containerVO) {
 		containerMapper.containerInupdate(containerVO);
 		return containerMapper.containerOutInsert(containerVO);
+	}
+
+	@Override
+	public List<ContainerVO> containerOutAllList() {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutList();
+	}
+
+	@Override
+	public List<ContainerVO> containerOutInfo(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutListInfo(containerVO);
+	}
+
+	@Override
+	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutModal(containerVO);
 	}
 
 }

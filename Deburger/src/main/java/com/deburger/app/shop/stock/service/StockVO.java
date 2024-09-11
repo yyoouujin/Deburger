@@ -11,12 +11,14 @@ public class StockVO {
 
 	
 	//재고 테이블
-	private Integer stockNumber;
+	private String stockNumber;
 	private Integer stockCount;
 	private String storeNumber;
 	private Integer safetyStock;
 	private String autoApplicationOperation;
 	private String materialNumber;
+	private String disposalOperation;
+	private Integer amountcon;
 	
 	//재료 테이블
 	private String materialName;
@@ -36,6 +38,7 @@ public class StockVO {
 	private Integer remainStockCount;
 	private String disposalOperatioin;
 	
+	//상세테이블
+	private String orderDetailsNumber;
 
-	
 }

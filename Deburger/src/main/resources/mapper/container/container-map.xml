@@ -43,12 +43,11 @@
 			order by b.stock_number
 	</select>
 	
-	<!-- 상세 조회 -->
+	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
 	<select id="selectContainerInfo" resultType="ContainerVO">
 			select distinct
 			         a.details_order_number,
 			         a.count,
-			         a.supplier,
 			         a.order_condition,
                      a.in_operation,
                      a.person_id,
@@ -68,7 +67,6 @@
 			join logistics_order d
 				on a.order_number = d.order_number
 			where c.material_number = #{materialNumber}
-			and b.disposal_operation = 'N' 
 			order by b.expiration_limit
 	</select>
 	
@@ -166,12 +164,13 @@
  		set in_operation = #{inOperation}
  		where details_order_number = #{detailsOrderNumber}
 	</update>
+	
+	
 	<!-- 물류 창고 폐기 조회 -->
 	<select id="ContainerDeleteInfo" resultType="ContainerVO">
 			select distinct
 			         a.details_order_number,
 			         a.count,
-			         a.supplier,
 			         a.order_condition,
                      a.in_operation,
                      a.person_id,
@@ -221,5 +220,71 @@
 		where lot = #{lot}
 	</update>
 	
+	
+	<!-- 물류창고 출고 리스트 -->
+	<select id="containerOutList">
+		select a.order_number,
+		        sum(b.count) as count,
+		        c.logistics_id,
+		        c.store_name
+		from store_order a
+		join order_details b
+		    on a.order_number = b.order_number
+		join store c
+		    on a.store_number = c.store_number
+		group by a.order_number,
+		        c.logistics_id,
+		        c.store_name
+		order by order_number
+	</select>
+	
+	<!-- 출고 상세 조회-->
+	<select id="containerOutListInfo">
+		select a.order_details_number,
+		        a.material_number,
+		        a.order_number,
+		        b.material_name
+		from order_details a
+		join material b
+		    on a.material_number = b.material_number
+		where a.order_number = #{orderNumber}
+	
+	</select>
+	
+	<select id="containerOutModal">
+		select a.lot,
+		       a.in_count,
+			   a.in_day,
+			   b.details_order_number,
+			   c.material_number,
+			   c.material_name
+		from logistics_in a
+			join logistics_order_details b
+			on a.details_order_number = b.details_order_number
+			join material c
+			on b.material_number = c.material_number
+		where c.material_number = #{materialNumber}		
+	</select>
+
+	<insert id="containerOutDB">
+		insert into logistics_out(
+			    logistics_out_number,
+			    out_date,
+			    logistics_id,
+			    inspection,
+			    out_count,
+			    lot
+		)values(
+			   #{logisticsOutNumber},
+			   #{outDate},
+			   #{logisticsId},
+			   #{inspection},
+	.		   #{outCount},
+			   #{lot}
+		)
+	</insert>
+	
+	<update id="containerOutUp">
+	</update>
 
 </mapper>

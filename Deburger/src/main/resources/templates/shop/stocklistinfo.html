@@ -5,7 +5,7 @@
 	layout:fragment="Content">
 <head>
 <meta charset="UTF-8" />
-<title>재고 리스트</title>
+<title>재고 상세 관리</title>
 </head>
 
 <body>
@@ -28,10 +28,8 @@
 										<th data-type="date" data-format="YYYY/DD/MM">발주 일자</th>
 										<th>품목 이름</th>
 										<th>거래처 이름</th>
-										<th>단가</th>
 										<th>주문 수량</th>
 										<th>현재 재고</th>
-										<th>합계</th>
 										<th data-type="date" data-format="YYYY/DD/MM">유통기한</th>
 										<th>재고 조정</th>
 									</tr>
@@ -42,14 +40,14 @@
 											<td>[[${#dates.format(list.orderDay,'yyyy/MM/dd')}]]</td>
 											<td th:text="${list.materialName}" />
 											<td>본사</td>
-											<td th:text="${list.saleUnitprice}" />
 											<td th:text="${list.count}" />
 											<td th:text="${list.remainStockCount}" />
-											<td th:text="${list.saleUnitprice*list.count}" />
 											<td>[[${#dates.format(list.expirationLimit,'yyyy/MM/dd')}]]</td>
 											<td><button type="button" class="btn btn-primary btn-sm btnStock"
 													data-bs-toggle="modal" data-bs-target="#disablebackdrop">재고
 													조정</button></td>
+											<td style="display: none;" th:text="${list.orderDetailsNumber}" />
+											<td style="display: none;" th:text="${list.materialNumber}" />
 											<!-- End Disabled Backdrop Modal-->
 										</tr>
 									</th:block>
@@ -91,14 +89,16 @@
 									<td id="limitDay"></td>
 									<td id="materialName"></td>
 									<td id="remainStockCount"></td>
-									<td><input type="text" id="StockCount"></td>
-									<td><input type="checkbox" id=""></td>
+									<td><input type="number" value="0" id="StockCount"></td>
+									<td><input type="checkbox" name="checkOrder"></td>
+									<td style="display: none;" id="orderDetails"></td>
+									<td style="display: none;" id="material"></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary">저장</button>
+						<button type="button" class="btn btn-primary" id="savebtn">저장</button>
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
 					</div>
@@ -108,12 +108,55 @@
 	</form>
 	<script>
 	$(".btnStock").on("click", function(event) {
-		document.getElementById('orderDay').innerHTML=$("#list").children().eq(0).text();
-		document.getElementById('limitDay').innerHTML=$("#list").children().eq(7).text();
-		document.getElementById('materialName').innerHTML=$("#list").children().eq(1).text();
-		document.getElementById('remainStockCount').innerHTML=$("#list").children().eq(5).text();
-		
+		document.getElementById('orderDay').innerHTML=$(event.target).closest('tr').children().eq(0).text();
+		document.getElementById('limitDay').innerHTML=$(event.target).closest('tr').children().eq(5).text();
+		document.getElementById('materialName').innerHTML=$(event.target).closest('tr').children().eq(1).text();
+		document.getElementById('remainStockCount').innerHTML=$(event.target).closest('tr').children().eq(3).text();
+		document.getElementById('orderDetails').innerHTML=$(event.target).closest('tr').children().eq(7).text();
+		document.getElementById('material').innerHTML=$(event.target).closest('tr').children().eq(8).text();
 	});
+	
+	$("#savebtn").on("click", function(event) {
+		let list = {};
+		
+
+		
+		if($("[name='checkOrder']:checked").length == 0){
+			var orderDetailsNumber = $('#orderDetails').html();
+			var stockCount = $('#StockCount').val();
+			var remainStockCount = $('#StockCount').val();
+			var materialNumber = $('#material').html();
+			var amountcon =  $('#StockCount').val();
+			var disposalOperation = 'F1';
+			
+			
+		}else{
+			var orderDetailsNumber = $('#orderDetails').html();
+			var stockCount = 0;
+			var materialNumber = $('#material').html();
+			var remainStockCount = 0;
+			var amountcon =  0;
+			var disposalOperation = 'F2';
+
+			
+		}
+		list = {orderDetailsNumber,remainStockCount,stockCount,materialNumber,amountcon,disposalOperation};
+
+		console.log(list)
+		
+		$.ajax({
+			url : "storeStockUPandIN",
+			method : "POST",
+			contentType:"application/JSON",
+			data : JSON.stringify(list),
+			
+		})
+		
+		.then((end) => {
+			location.href="shopStock"
+		})
+	});
+	
 	</script>
 </body>
 </html>

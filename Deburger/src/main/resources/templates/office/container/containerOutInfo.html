@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>출고 처리</title>
+<style>
+th, td {
+	border: solid 1px black;
+}
+</style>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1 class="card-title">출고 처리</h1>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">
+							<table class="col-lg-12" style="text-align: center">
+								<thead>
+									<tr>
+										<th>발주번호</th>
+											<td colspan='8'><input type="text" id="orderName"
+												name="orderName" style="border: none; width: 100%;" th:text="${outList[0].orderNumber}" readonly></td>
+									</tr>
+									<tr>
+										<th>출고 일자</th>
+										<td colspan='8'></td>
+									</tr>
+									<tr>
+										<th>발신 업체 이름</th>
+										<td colspan='3'><input type="text" id="storeNumber"
+											name="storeNumber" value="FRC0000001" style="border: none;"
+											 readonly></td>
+										<th>수신 업체 이름</th>
+										<td colspan='4'>디버거</td>
+									</tr>
+									<tr>
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='2'></td>
+
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='3'>053-0000-0000</td>
+
+									</tr>
+									<tr>
+										<th>이메일</th>
+										<td colspan='2'></td>
+										<th>이메일</th>
+										<td colspan='3'>info@deburger.com</td>
+									</tr>
+								</thead>
+								<tbody id="outLists">
+									<tr>
+										<th >상세 발주번호</th>
+										<th >품명</th>
+										<th >규격</th>
+										<th >수량</th>								
+										<th >단가</th>
+										<th >출고 수량</th>
+										<th >유통 기한</th>
+										<th >소비 기한</th>
+										<th >검수</th>
+									</tr>
+									<th:block th:each="lists:${outList}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
+										<tr>
+											<td th:text="${lists.orderDetailsNumber}"></td>
+											<td th:text="${lists.materialName}"></td>
+											<td th:text="${lists.materialNumber}" style="display:none;"></td>
+											<td>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
+								                Extra Large Modal
+								              </button>
+											</td>
+								            <td></td>
+								            <td></td>
+								            <td></td>
+								            <td></td>
+								            <td></td>
+								            <td></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+							<div style="text-align: right; margin: 0 0 10px 0;">
+								<a href=""><button type="button" class="btn btn-primary">목록</button></a>
+								<button type="submit" class="btn btn-primary"
+									id="update">수정</button>
+								<button type="button" class="btn btn-primary" id="save">저장</button>
+							</div>
+					</div>
+				</div>
+			</div>
+			<form id="modalForm">
+				<div class="modal fade" id="ExtralargeModal" tabindex="-1">
+	                <div class="modal-dialog modal-xl">
+	                  <div class="modal-content">
+	                    <div class="modal-header">
+	                      <h5 class="modal-title" id="name">
+	                      </h5>
+	                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+	                    </div>
+	                    <div class="modal-body">
+	                    	<table class="table">
+	                     		<thead>
+	                     			<tr>
+			                     		<th><input type="checkbox"></th>
+			                     		<th>LOT</th>
+			                     		<th>수량</th>
+			                     		<th>입고 날짜</th>
+	                     			</tr>
+	                     		</thead>
+	                     		<tbody>
+	                     		</tbody>
+	                     	</table>				
+	                     </div>
+	                    <div class="modal-footer">
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="down">Close</button>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+			</form>
+		</section>
+	</main>
+</body>
+<script>
+	$('#outLists > tr').eq(1).on('click', function(event){
+		let tr = event.currentTarget;
+		let abc = $(tr).children().eq(0).text();
+		console.log(abc);
+	})
+
+
+
+	function onModal(){
+		let list = [];
+		let materialNumber = $('tbody > tr').children().eq(11).text();	// 여기 확인 필요
+		$.ajax({
+			url : "/deburger/containerModal",
+			method : "post",
+			contentType : "application/json",
+			data : JSON.stringify({materialNumber}),
+		})
+		.done(datas =>{
+			$('#name').html('재료 이름: ' +datas[0].materialName);
+			$(datas).each(function(index, item){
+				var lot = item.lot;
+				var inCount = item.inCount;
+				var inDay = item.inDay;
+				let tr =`<tr>
+     				<td><input type="checkbox" id="checkOrder"></td>
+     				<td>${lot}</td>
+     				<td>${inCount}</td>
+     				<td>${inDay}</td>
+     			</tr>`
+     			
+				$('#modal').append(tr)
+				
+				$('#down').on('click',function(){					
+				$('#modal').html('');
+				})
+			});		
+		})
+		.fail(err => console.log(err));	
+	}
+	
+	
+
+	
+	
+</script>
+</html>

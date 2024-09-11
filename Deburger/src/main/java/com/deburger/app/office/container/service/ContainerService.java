@@ -28,4 +28,12 @@ public interface ContainerService {
 	// 물류 창고 폐기 처리
 	public int disposeItem(ContainerVO containerVO);
 
+	// 물류 창고 출고 조회
+	public List<ContainerVO> containerOutAllList();
+
+	// 물류 창고 출고 상세 조회
+	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
+
+	// 모달
+	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
 }
