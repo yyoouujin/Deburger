@@ -130,9 +130,7 @@
 														<td th:text="${list.title}" />
 														<td th:text="${list.storeName}" />
 														<td th:text="${list.writer}" />
-														<td th:text="${list.writerDay}" />
-														<td>
-															[[${#dates.format(list.writerDay,'yyyy-MM-dd')}]]</td>
+														<td th:text="${#dates.format(list.writerDay, 'yyyy-MM-dd')}"></td>
 													</tr>
 													<th:block>
 											</tbody>

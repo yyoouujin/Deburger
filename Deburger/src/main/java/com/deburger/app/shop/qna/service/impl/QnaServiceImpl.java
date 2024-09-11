@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.qna.mapper.QnaMapper;
 import com.deburger.app.shop.qna.service.QnaService;
 import com.deburger.app.shop.qna.service.QnaVO;
@@ -27,7 +28,7 @@ public class QnaServiceImpl implements QnaService {
 		return mapper.qnaListOffice();
 	}
 	
-	//QnA 카운트 조회
+	//전체조회(본점 카운트)
 	@Override
 	public Map<String, Object> qnaListOfficeConut(QnaVO vo) {
 		Map<String, Object> map = new HashMap<>();
@@ -58,10 +59,35 @@ public class QnaServiceImpl implements QnaService {
 	        
 			return map;
 		}
-
+	
+	//전체조회(가맹점)
 	@Override
 	public List<QnaVO> qnaListShop() {
-		return mapper.qnaListShop();
+		String mcode = SecurityUtil.memberCode();//id
+		return mapper.qnaListShop(mcode);
+	}
+
+	//전체조회(가맹점 카운트)
+	@Override
+	public Map<String, Object> qnaListShopConut(QnaVO vo) {
+		String mcode = SecurityUtil.memberCode();//storeNumber
+		
+		Map<String, Object> map = new HashMap<>();
+		vo.setStoreNumber(mcode);
+		vo.setWriter("접수");
+		map.put("count1", mapper.qnaListShopConut(vo));
+		vo.setWriter("처리중");
+		map.put("count2", mapper.qnaListShopConut(vo));
+		vo.setWriter("완료");
+		map.put("count3", mapper.qnaListShopConut(vo));
+		return map;
+	}
+
+	//글 등록(가맹점)
+	@Override
+	public int qnaShopInsert(QnaVO qnaVO) {
+		int result = mapper.qnaShopInsert(qnaVO);
+		return result;
 	}
 }
 	
