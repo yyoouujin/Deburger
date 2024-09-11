@@ -23,74 +23,42 @@
 								<thead>
 									<tr>
 										<th>제품 이름</th>
-										<th>수량</th>
+										<th>카테코리</th>
+										<th>종류</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<th:block th:each="list:${StoreProSaleList}">
+										<tr>
+											<td style="display: none;" th:text=${list.productNumber} />
+											<td th:text=${list.productName} />
+											<td th:text=${list.category} />
+											<td th:text=${list.kind} />
+										</tr>
+									</th:block>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6">
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">Vertical Bar Chart</h5>
-
-							<!-- Vertical Bar Chart -->
-							<div id="verticalBarChart" style="min-height: 400px;"
-								class="echart"></div>
-
-							<script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#verticalBarChart")).setOption({
-                    title: {
-                      text: 'World Population'
-                    },
-                    tooltip: {
-                      trigger: 'axis',
-                      axisPointer: {
-                        type: 'shadow'
-                      }
-                    },
-                    legend: {},
-                    grid: {
-                      left: '3%',
-                      right: '4%',
-                      bottom: '3%',
-                      containLabel: true
-                    },
-                    xAxis: {
-                      type: 'value',
-                      boundaryGap: [0, 0.01]
-                    },
-                    yAxis: {
-                      type: 'category',
-                      data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
-                    },
-                    series: [{
-                        name: '2011',
-                        type: 'bar',
-                        data: [18203, 23489, 29034, 104970, 131744, 630230]
-                      },
-                      {
-                        name: '2012',
-                        type: 'bar',
-                        data: [19325, 23438, 31000, 121594, 134141, 681807]
-                      }
-                    ]
-                  });
-                });
-              </script>
-							<!-- End Vertical Bar Chart -->
-
-						</div>
-					</div>
+				<div class="col-lg-6" id="graph">
 				</div>
 			</div>
 		</section>
 	</main>
+	<script th:inline="javascript">
+	$('tbody > tr').on("click", function(event) {
+		let list = {};
+		
+		let productNumber = $(event.target).closest('tr').children().eq(0).html();
+
+		list = {productNumber};
+		
+		
+		$('#graph').load("StoreProSaleoneList?productNumber=" + productNumber);
+		
+	});
+	</script>
 </body>
 
 </html>

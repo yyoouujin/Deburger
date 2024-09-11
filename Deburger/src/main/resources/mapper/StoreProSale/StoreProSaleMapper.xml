@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.deburger.app.shop.StoreProSale.mapper.StoreProSaleMapper">
+
+	<select id="StoreProSaleList" resultType="StoreProSaleVO">
+		select product_name
+		,category
+		,product_number
+		,kind
+		from product
+	</select>
+
+	<select id="StoreProSaleoneList" resultType="StoreProSaleVO">
+		select product_date
+		       ,count
+		from   store_product_sale
+		where  store_number =  #{storeNumber}
+		       AND PRODUCT_NUMBER =  #{productNumber}
+		order by product_date DESC
+		
+	</select>
+</mapper>
