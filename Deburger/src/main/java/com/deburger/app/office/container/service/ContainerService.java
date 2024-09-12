@@ -34,6 +34,9 @@ public interface ContainerService {
 	// 물류 창고 출고 상세 조회
 	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
 
+	// 물류 창고 프로시저
+	public List<ContainerVO> containerOutprocedure(ContainerVO containerVO);
+
 	// 모달
 	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
 }
