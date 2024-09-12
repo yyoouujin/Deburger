@@ -14,7 +14,7 @@ public interface QnaService {
 	public  Map<String, Object> qnaListOfficeConut(QnaVO qnaVO); 
 	
 	//전체조회(전체 조회에서 상태 update)
-	public Map<String, Object> qnaListWriterUpdate(QnaVO qnaVO);
+	public Map<String, Object> statusUpdate(QnaVO qnaVO);
 	
 	//전체조회(가맹점)
 	public List<QnaVO> qnaListShop();
@@ -27,6 +27,12 @@ public interface QnaService {
 	
 	//QnA상세 조회(가맹점) 
 	public Map<String, Object> qnaListInfoShop(QnaVO qnaVO);
+	
+	//가맹점 QnA수정 
+	public Map<String, Object> qnaShopUpdate(QnaVO qnaVO);
+	  
+	//가맹점 QnA삭제 
+	public int qnaShopDelete(int qnaNumber);
 
 	
 	

@@ -44,11 +44,11 @@ public class QnaServiceImpl implements QnaService {
 
 	//QnA 전체 조회(전체 조회에서 상태 update)
 	@Override
-	public Map<String, Object> qnaListWriterUpdate(QnaVO qnaVO) {
+	public Map<String, Object> statusUpdate(QnaVO qnaVO) {
 		 Map<String, Object> map = new HashMap<>();
 	        boolean isSuccessed = false;
 	        
-	        int result = mapper.qnaListWriterUpdate(qnaVO);
+	        int result = mapper.statusUpdate(qnaVO);
 	        
 	        if(result == 1) {
 	        	isSuccessed = true;
@@ -106,6 +106,30 @@ public class QnaServiceImpl implements QnaService {
 	    resultMap.put("comments", comments);
 	    
 	    return resultMap;
+	}
+    
+	//가맹점 QnA수정 
+	@Override
+	public Map<String, Object> qnaShopUpdate(QnaVO qnaVO) {
+        Map<String, Object> map = new HashMap<>();
+        boolean isSuccessed = false;
+        
+        int result = mapper.qnaShopUpdate(qnaVO);
+
+        if(result == 1) {
+        	isSuccessed = true;
+        }
+        
+        map.put("result", isSuccessed);
+        map.put("target", qnaVO);
+        
+		return map;
+	}
+
+	//가맹점 QnA삭제 
+	@Override
+	public int qnaShopDelete(int qnaNumber) {
+		return mapper.qnaShopDelete(qnaNumber);
 	}
 
 

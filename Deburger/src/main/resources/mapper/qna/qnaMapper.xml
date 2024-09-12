@@ -39,6 +39,7 @@ select  qna_number
        ,writer_day
 from qna
 where store_number = #{storeNumber}
+order by qna_number desc
 </select>
 
 <!-- 전체 조회 카운트(가맹점) 오류 생길수도?-->
@@ -72,17 +73,39 @@ select   qna_number
         ,title
         ,writer
         ,writer_day
+        , content
 from qna
 where qna_number=#{qnaNumber}
 </select>
 
 <!-- QnA상세 조회(가맹점 댓글 조회) -->
 <select id="qnaListInfoShopComment" resultType="QnaVO">
-select   c.com_content
-from comments c JOIN qna q
-on (c.qna_number = q.qna_number)
-where q.store_number = #{storeNumber}
-  AND c.comments_number=#{commentsNumber}
+select com_content
+from comments
+where qna_number=#{qnaNumber}
 </select>
+
+<!-- 가맹점 QnA수정  -->
+<update id= "qnaShopUpdate">
+UPDATE qna 
+   SET   title=#{title}
+       , content=#{content}
+       , writer_day=sysdate
+ WHERE qna_number=#{qnaNumber}
+</update>
+
+<!-- 가맹점 QnA삭제 -->
+<delete id="qnaShopDelete">
+DELETE
+FROM qna
+WHERE qna_number=#{qnaNumber}
+</delete>
+
+<!-- 상태 변경 -->
+<update id= "statusUpdate">
+UPDATE qna
+   SET writer = #{writer}
+ WHERE qna_number=#{qnaNumber}
+ </update>
 
 </mapper>

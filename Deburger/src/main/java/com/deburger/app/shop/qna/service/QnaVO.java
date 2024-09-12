@@ -19,4 +19,5 @@ public class QnaVO {
      private String comContent; //답변 내용
      private Date comWriterDay;//답변 일자
      private String comWriter; //답변 작성자
+     
 }

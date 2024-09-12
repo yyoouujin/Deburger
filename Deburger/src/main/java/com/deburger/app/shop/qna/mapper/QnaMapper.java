@@ -15,7 +15,7 @@ public interface QnaMapper {
 	public int qnaListOfficeConut(QnaVO qnaVO);
 
 	// 전체조회( 전체 조회에서 상태 변경(본사, 가맹점 공통))
-	public int qnaListWriterUpdate(QnaVO qnaVO);
+	public int statusUpdate(QnaVO qnaVO);
 	
 	//전체조회(가맹점) -완
 	public List<QnaVO> qnaListShop(String storeNumber);
@@ -35,15 +35,20 @@ public interface QnaMapper {
 	//QnA상세 조회(가맹점 댓글 조회)
 	public QnaVO qnaListInfoShopComment(QnaVO qnaVO);
 	  
-	//가맹점에서 QnA수정(접수 상태일때 활성화) public int qnaShopUpdate(QnaVO qnaVO);
+	//가맹점 QnA수정 
+	public int qnaShopUpdate(QnaVO qnaVO);
 	  
-	//가맹점에서 QnA삭제(접수 상태일때 활성화) public int qnaShopDelete(QnaVO qnaVO);
+	//가맹점 QnA삭제 
+	public int qnaShopDelete(int qnaVO);
 	  
-	//QnA상세 조회(본사) public QnaVO qnaListInfoOffice(QnaVO qnaVO);
+	//QnA상세 조회(본사) 
+	public QnaVO qnaListInfoOffice(QnaVO qnaVO);
 	  
-	//QnA 댓글 등록 public int qnaCommentInsert(QnaVO qnaVO);
+	//QnA 댓글 등록(본사) 
+	public int qnaCommentInsert(QnaVO qnaVO);
 	  
-	//QnA 댓글 수정 public int qnaCommertUpdate(QnaVO qnaVO);
+	//QnA 댓글 조회(본사)
+	public int qnaCommertSelect(QnaVO qnaVO);
 	  
 	 
 
