@@ -28,6 +28,24 @@ public class StoreSaleImpl implements StoreSaleService{
 		// TODO Auto-generated method stub
 		return storeSaleMapper.insertStoreSaleList(saleVO);
 	}
+
+	@Override
+	public void insertStoreSaleProcedure(StoreSaleVO saleVO) {
+		storeSaleMapper.insertStoreSaleProcedure(saleVO);
+		
+	}
+
+	@Override
+	public StoreSaleVO selectStoreSaleDate() {
+		// TODO Auto-generated method stub
+		return storeSaleMapper.selectStoreSaleDate();
+	}
+
+	@Override
+	public int insertStoreSaleStatistics(StoreSaleVO saleVO) {
+		// TODO Auto-generated method stub
+		return storeSaleMapper.insertStoreSaleStatistics(saleVO);
+	}
 	
 	
 		

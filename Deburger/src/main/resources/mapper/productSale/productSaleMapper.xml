@@ -18,7 +18,13 @@
 	ORDER BY CATEGORY
 	</select>
 	
+	<select id="selectStoreSaleDate">	
+	SELECT SYSDATE PRODUCT_DATE FROM dual	
+	</select>
+	
+	
 	<insert id="insertStoreSaleList">	
+	
 	INSERT INTO store_product_sale(
 			COUNT
 			,PRODUCT_DATE
@@ -26,9 +32,39 @@
 			,STORE_NUMBER
 			,PRODUCT_NUMBER)
 	VALUES (#{count}
-			, sysdate
+			, #{productDate}
 			, SP_SEQ.nextval
 			, #{storeNumber}
 			, #{productNumber})   	
 	</insert>
+	
+	
+	<select id="insertStoreSaleProcedure" statementType="CALLABLE" parameterType="com.deburger.app.shop.productSale.service.StoreSaleVO" >
+      {
+         call STORE_SALE_PRO(
+            #{storeNumber,      mode=IN,   jdbcType=VARCHAR},
+            #{productDate,      mode=IN,   jdbcType=VARCHAR}
+         )
+      }
+   </select>
+   
+   <insert id="insertStoreSaleStatistics">   
+	INSERT INTO store_sales_statistics(
+			PROFITS
+			,SPENDING
+			,STORE_NUMBER
+			,SEQ
+			,PRODUCT_DATE
+			)
+	VALUES(
+			#{profits}
+			,#{spending}
+			,#{storeNumber}
+			,STA_SEQ.nextval
+			,#{productDate}
+			)	   
+   </insert>
+   
+	
+	
 </mapper>
