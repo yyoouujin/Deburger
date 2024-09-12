@@ -30,7 +30,7 @@ th, td {
 									<tr>
 										<th>발주번호</th>
 											<td colspan='8'><input type="text" id="orderName"
-												name="pNumber" style="border: none; width: 100%;" th:text="${outList[0].orderNumber}"  readonly></td>
+												name="pNumber" style="border: none; width: 100%;" th:value="${outList[0].orderNumber}"  readonly></td>
 									</tr>
 									<tr>
 										<th>출고 일자</th>
@@ -39,7 +39,7 @@ th, td {
 									<tr>
 										<th>발신 업체 이름</th>
 										<td colspan='3'><input type="text" id="storeNumber"
-											name="storeNumber" value="FRC0000001" style="border: none;"
+											value="FRC0000001" style="border: none;"
 											 readonly></td>
 										<th>수신 업체 이름</th>
 										<td colspan='4'>디버거</td>
@@ -79,7 +79,7 @@ th, td {
 											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
-								            <td ><input type="text" ></td>
+								            <td ><input type="text" name="pOutOperation"></td>
 								            <td colspan='3'><input type="text"></td>
 										</tr>
 									</th:block>
@@ -172,7 +172,7 @@ th, td {
 	}
 	
 	$('#saveBtn').on('click', function(){
-		console.log('hello');
+		alert("정상적으로 저장이 완료 되었습니다.");
 	})
 	
 	

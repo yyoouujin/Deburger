@@ -298,7 +298,7 @@
 
 	<!-- 출고 프로 시저 -->
 	<select id="containerOutprocedure" statementType="CALLABLE"
-	parameterType="ContainerVO" resultMap="containersOut">
+	parameterType="ContainerVO">
 		{
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
@@ -306,10 +306,6 @@
 			)
 		}
 	</select>
-	<resultMap type="ContainerVO" id="containersOut">
-		<result property="pNumber" column="p_number"></result>
-		<result property="pOutOperation" column="p_out_operation"></result>
-	</resultMap>
 	
 
 

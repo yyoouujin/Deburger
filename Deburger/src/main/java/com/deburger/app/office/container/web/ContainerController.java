@@ -116,7 +116,7 @@ public class ContainerController {
 	// 프로시저 실행
 	@PostMapping("containerOutPd")
 	public String containerOutPds(ContainerVO containerVO, Model model) {
-		List<ContainerVO> list = containerService.containerOutprocedure(containerVO);
+		List<ContainerVO> list = containerService.containerOutpD(containerVO);
 		model.addAttribute("outPd", list);
 		return "redirect:containerOut";
 	}
