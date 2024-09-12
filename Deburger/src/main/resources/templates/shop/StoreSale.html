@@ -31,9 +31,7 @@
                   <input type="text" class="form-control" value="0 원" disabled id="total" />
                 </div>
                 <div class="col-sm-10 col-md-3">
-                  <button type="button" class="btn btn-primary" id="saveBtn">
-                    마감하기
-                  </button>
+                  <button type="button" class="btn btn-primary" id="saveBtn">마감하기</button>
                 </div>
               </div>
             </form>
@@ -127,7 +125,7 @@
                },
                // [Column-2] 판매금액
                {
-                 header: '판매금액', // [필수] 컬럼 이름
+                 header: '판매단가', // [필수] 컬럼 이름
                  name: 'saleUnitprice', // [필수] 컬럼 매핑 이름 값
                  sortable: true, // [선택] 컬럼의 정렬 여부
                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
@@ -149,7 +147,7 @@
                	  grid.setValue(ev.rowKey,'saleUnitpriceAll',grid.getData()[ev.rowKey].saleUnitprice * grid.getData()[ev.rowKey].count);
                	  document.getElementById('total').value = (grid.getSummaryValues('saleUnitpriceAll').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
                    },
-                   
+
                },
 
                // [Column-4] 매뉴별 판매금액
@@ -160,13 +158,13 @@
                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
                  align: 'center', // [선택] 텍스트 정렬 옵션
                  defaultValue : '0',
-                 
+
                },
 
              ],
              summary: {
                  height: 0,
-                 position: 'bottom', // or 'top'                 
+                 position: 'bottom', // or 'top'
                  columnContent: {
                 	 saleUnitpriceAll : {
                      template: function(valueMap) {
@@ -186,18 +184,22 @@
            return grid;
          };
          const saveBtn = document.getElementById('saveBtn');
-         
+
          saveBtn.addEventListener('click', () => {
+
+        	 let profits = grid.getSummaryValues('saleUnitpriceAll').sum;
+        	 let storeSale = {profits};
+
              if(grid.validate().length == 0 ){
-             
+
 
               $.ajax({
                   url: "/deburger/StoreSale",
                   method: "post",
                   contentType:"application/json",
-                  data  : JSON.stringify(grid.getData()),
+                  data  : JSON.stringify({"storeSaleList": grid.getData(), "storeSale": storeSale}),
                })
-               
+
 
              }else{
               alert("올바른 숫자를 입력해 주세요! \n확인후 다시저장해주세요")
