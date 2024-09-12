@@ -85,7 +85,7 @@ public class ContainerController {
 
 	// 폐기 처리
 	@PostMapping("containerIn")
-	public String disposeController(ContainerVO containerVO, Model model) {
+	public String disposeController(ContainerVO containerVO) {
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}
@@ -113,6 +113,12 @@ public class ContainerController {
 		return containerService.containerOutModalInfo(containerVO);
 	}
 
-	// 모달창 checkbox
+	// 프로시저 실행
+	@PostMapping("containerOutPd")
+	public String containerOutPds(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerOutprocedure(containerVO);
+		model.addAttribute("outPd", list);
+		return "redirect:containerOut";
+	}
 
 }

@@ -54,7 +54,7 @@
                       	<td th:text="${lists.inCount}-${lists.outCount}"></td>
                       	<td th:text="${lists.outCount}" style="display:none;"></td>
                       	<td th:text="${lists.logisticsSafetyStock}"></td>                     	
-                      	<td th:text="${lists.inspectionOperation}"></td>                     	
+                      	<td th:text="${lists.inspectionOperation} ? '승인': '불량'"></td>                     	
                       </tr>
                     </tbody>
                   </th:block>

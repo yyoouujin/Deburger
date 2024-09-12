@@ -104,7 +104,7 @@
 	
 	<!-- 입고 처리 조회 -->
 	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
-		select a.details_order_number,
+		select  a.details_order_number,
 		        a.count,
 		        a.unit,
 		        a.order_cost,
@@ -302,16 +302,12 @@
 		{
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
-				#{pOutCnt, mode=IN, jdbcType=INTEGER},
-				#{pInspection, mode=IN, jdbcType=VARCHAR},
 				#{pOutOperation, mode=IN, jdbcType=VARCHAR}				
 			)
 		}
 	</select>
 	<resultMap type="ContainerVO" id="containersOut">
 		<result property="pNumber" column="p_number"></result>
-		<result property="pOutCnt" column="p_out_cnt"></result>
-		<result property="pInspection" column="p_inspection"></result>
 		<result property="pOutOperation" column="p_out_operation"></result>
 	</resultMap>
 	

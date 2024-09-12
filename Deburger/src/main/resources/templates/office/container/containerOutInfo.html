@@ -21,7 +21,8 @@ th, td {
 		<!-- End Page Title -->
 		<section class="section">
 			<div class="row">
-				<div class="col-lg-12">
+			   <div class="col-lg-12">
+				 <form th:action="@{/containerOutPd}" method="post">
 					<div class="card">
 						<div class="card-body">
 							<table class="col-lg-12" style="text-align: center">
@@ -29,11 +30,11 @@ th, td {
 									<tr>
 										<th>발주번호</th>
 											<td colspan='8'><input type="text" id="orderName"
-												name="orderName" style="border: none; width: 100%;" th:text="${outList[0].orderNumber}" readonly></td>
+												name="pNumber" style="border: none; width: 100%;" th:text="${outList[0].orderNumber}"  readonly></td>
 									</tr>
 									<tr>
 										<th>출고 일자</th>
-										<td colspan='8'></td>
+										<td colspan='8'th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
@@ -77,21 +78,23 @@ th, td {
 											<td th:text="${lists.materialNumber}" style="display:none;"></td>
 											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
-								            <td ><input type="text"></td>
-								            <td ><input type="text"></td>
+								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+								            <td ><input type="text" ></td>
 								            <td colspan='3'><input type="text"></td>
 										</tr>
 									</th:block>
 								</tbody>
 							</table>
+						
 						</div>
 							<div style="text-align: right; margin: 0 0 10px 0;">
-								<a href=""><button type="button" class="btn btn-primary">목록</button></a>
+								<a href="containerOut"><button type="button" class="btn btn-primary">목록</button></a>
 								<button type="submit" class="btn btn-primary"
 									id="update">수정</button>
-								<button type="button" class="btn btn-primary" id="save">저장</button>
+								<button type="submit" class="btn btn-primary" id="saveBtn">저장</button>
 							</div>
 					</div>
+				</form>	
 				</div>
 			</div>
 			<form id="modalForm">
@@ -138,9 +141,7 @@ th, td {
 
 	function onModal(){
 		let list = [];
-		let materialNumber = $('tbody > tr').children().eq(9).text();	// 여기 확인 필요
-		console.log(materialNumber , "1111");	
-		
+		let materialNumber = $('tbody > tr').children().eq(9).text();	// 여기 확인 필요		
 		$.ajax({
 			url : "/deburger/containerModal",
 			method : "post",
@@ -170,8 +171,10 @@ th, td {
 		.fail(err => console.log(err));	
 	}
 	
+	$('#saveBtn').on('click', function(){
+		console.log('hello');
+	})
 	
-
 	
 	
 </script>
