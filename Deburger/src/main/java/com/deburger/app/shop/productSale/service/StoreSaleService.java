@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface StoreSaleService {
 	public List<StoreSaleVO> selectStoreSaleList();
+	public int insertStoreSaleList(StoreSaleVO saleVO);
 }

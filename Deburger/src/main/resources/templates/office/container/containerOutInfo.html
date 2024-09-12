@@ -66,28 +66,20 @@ th, td {
 										<th >품명</th>
 										<th >규격</th>
 										<th >수량</th>								
-										<th >단가</th>
 										<th >출고 수량</th>
-										<th >유통 기한</th>
-										<th >소비 기한</th>
 										<th >검수</th>
+										<th colspan='3'>비고</th>
 									</tr>
-									<th:block th:each="lists:${outList}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
-										<tr>
-											<td th:text="${lists.orderDetailsNumber}"></td>
-											<td th:text="${lists.materialName}"></td>
+									<th:block th:each="lists:${outList}">
+										<tr >
+											<td th:text="${lists.orderDetailsNumber}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+											<td th:text="${lists.materialName}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 											<td th:text="${lists.materialNumber}" style="display:none;"></td>
-											<td>
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
-								                Extra Large Modal
-								              </button>
-											</td>
-								            <td></td>
-								            <td></td>
-								            <td></td>
-								            <td></td>
-								            <td></td>
-								            <td></td>
+											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+								            <td ><input type="text"></td>
+								            <td ><input type="text"></td>
+								            <td colspan='3'><input type="text"></td>
 										</tr>
 									</th:block>
 								</tbody>
@@ -121,7 +113,7 @@ th, td {
 			                     		<th>입고 날짜</th>
 	                     			</tr>
 	                     		</thead>
-	                     		<tbody>
+	                     		<tbody id="modal">
 	                     		</tbody>
 	                     	</table>				
 	                     </div>
@@ -146,7 +138,9 @@ th, td {
 
 	function onModal(){
 		let list = [];
-		let materialNumber = $('tbody > tr').children().eq(11).text();	// 여기 확인 필요
+		let materialNumber = $('tbody > tr').children().eq(9).text();	// 여기 확인 필요
+		console.log(materialNumber , "1111");	
+		
 		$.ajax({
 			url : "/deburger/containerModal",
 			method : "post",
@@ -155,6 +149,7 @@ th, td {
 		})
 		.done(datas =>{
 			$('#name').html('재료 이름: ' +datas[0].materialName);
+			console.log(datas);
 			$(datas).each(function(index, item){
 				var lot = item.lot;
 				var inCount = item.inCount;
@@ -167,10 +162,9 @@ th, td {
      			</tr>`
      			
 				$('#modal').append(tr)
-				
-				$('#down').on('click',function(){					
-				$('#modal').html('');
-				})
+					$('#down').on('click',function(){					
+						$('#modal').html('');
+					})
 			});		
 		})
 		.fail(err => console.log(err));	

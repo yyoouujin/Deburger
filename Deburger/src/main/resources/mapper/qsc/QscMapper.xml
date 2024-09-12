@@ -11,7 +11,7 @@
 			,VERSION_INFORMATION
 			,FINAL_CHANGE_DAY
 			,LIST
-			FROM qsc_list
+	FROM qsc_list
 	WHERE version_information = (SELECT MAX(VERSION_INFORMATION)
 	                             FROM qsc_list)	
 	</select>

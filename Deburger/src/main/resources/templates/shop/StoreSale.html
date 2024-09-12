@@ -1,170 +1,209 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/shop_layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
 
-<body>
-	<main id="main" class="main">
-		<div class="pagetitle">
-			<h1>판매 리스트(마감)</h1><br>
-			<p>* 제출 후 해당 판매 리스트만큼 원재료와 부자재가 전산 차감됩니다</p><br>
-		</div>
-		<!-- End Page Title -->
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-12">
-					<form>
-						<div class="row mb-3">
-							<div class="col-sm-10 col-md-3">
-								<input type="text" class="form-control" value="디버거 감삼점" disabled>
-							</div>
-							<div class="col-sm-10 col-md-3">
-								<input type="text" class="form-control" value="2,000,000 원" disabled>
-							</div>
-							<div class="col-sm-10 col-md-3">
-								<button type="button" class="btn btn-primary" th:onclick="|location.href='@{qscListInfoShop}'|">작성하기</button>
-							</div>
-						</div>
-					</form>
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>판매 리스트(마감)</h1>
+        <br />
+        <p>* 제출 후 해당 판매 리스트만큼 원재료와 부자재가 전산 차감됩니다</p>
+        <br />
+      </div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <form>
+              <div class="row mb-3">
+                <div class="col-sm-10 col-md-3">
+                  <input type="text" class="form-control" th:value="${storeNumber}" disabled />
+                </div>
+                <div class="col-sm-10 col-md-3">
+                  <input type="text" class="form-control" value="0 원" disabled id="total" />
+                </div>
+                <div class="col-sm-10 col-md-3">
+                  <button type="button" class="btn btn-primary" id="saveBtn">
+                    마감하기
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="card">
+              <div class="card-body">
+                <div id="grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script th:inline="javascript">
+         let grid;
+         var detaList = [[${List}]];
+
+         $(document).ready(async () => {
+           // 2. HTML이 수행된 뒤 함수를 호출한다.
+           grid = await gridLoad();
 
 
-					<div class="card">
-						<div class="card-body">
-							
-							<div id="grid"></div>
-							
+         });
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-		
-		
-	</main>
-<script th:inline="javascript">
-      let grid;
-      var detaList = [[${List}]];
+         /**
+          *
+          * @return void
+          */
+         const gridLoad = () => {
+           // 3. 그리드 생성
+           const Grid = tui.Grid;
 
-      $(document).ready(async () => {
-        // 2. HTML이 수행된 뒤 함수를 호출한다.
-        grid = await gridLoad();
-        
-      
-      });
+           /**
+            * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+            *
+            * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+            * @reference https://seokbong.tistory.com/14
+            */
+           Grid.applyTheme('stripe');
 
-      /**
-       *
-       * @return void
-       */
-      const gridLoad = () => {
-        // 3. 그리드 생성
-        const Grid = tui.Grid;
+           /**
+            * [선택] Grid Confirm 메시지
+            */
 
-        /**
-         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
-         *
-         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
-         * @reference https://seokbong.tistory.com/14
-         */
-        Grid.applyTheme('stripe');
 
-        /**
-         * [선택] Grid Confirm 메시지
-         */
+           Grid.setLanguage('en'); // set Korean
+           const grid = new Grid({
+             // ================================== 공통 옵션 적용 ==============================
+             el: document.getElementById('grid'), // [필수] Container element
+             data: detaList, // [선택] 그리드 데이터 조회
+
+             /**
+              * [선택] 순번 기능
+              * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+              */
+             rowHeaders: ['rowNum'],
+
+      // 패이징
+             pageOptions: {
+           	useClient: true,
+               perPage: 10,
+             },
+
+             // ================================== 컬럼 옵션 적용 ==============================
+
+             columns: [
+
+           	  {
+                     header: '제품 번호', // [필수] 컬럼 이름
+                     name: 'productNumber', // [필수] 컬럼 매핑 이름 값
+                     hidden: true,
+                   },
+           	  // [Column-2] 구분
+                 {
+                   header: '구분', // [필수] 컬럼 이름
+                   name: 'category', // [필수] 컬럼 매핑 이름 값
+                   sortable: true, // [선택] 컬럼의 정렬 여부
+                   resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                   align: 'center', // [선택] 텍스트 정렬 옵션
+                   rowSpan : true,
+
+                 },
+               // [Column-2] 제품
+               {
+                 header: '제품', // [필수] 컬럼 이름
+                 name: 'productName', // [필수] 컬럼 매핑 이름 값
+                 sortable: true, // [선택] 컬럼의 정렬 여부
+                 resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                 align: 'center', // [선택] 텍스트 정렬 옵션
+
+               },
+               // [Column-2] 판매금액
+               {
+                 header: '판매금액', // [필수] 컬럼 이름
+                 name: 'saleUnitprice', // [필수] 컬럼 매핑 이름 값
+                 sortable: true, // [선택] 컬럼의 정렬 여부
+                 resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                 align: 'center', // [선택] 텍스트 정렬 옵션
+               },
+               // [Column-2] 판매수량
+               {
+                 header: '판매수량', // [필수] 컬럼 이름
+                 name: 'count', // [필수] 컬럼 매핑 이름 값
+                 sortable: true, // [선택] 컬럼의 정렬 여부
+                 resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                 align: 'center', // [선택] 텍스트 정렬 옵션
+                 editor: 'text', // [선택] 수정 옵션
+                 defaultValue : '0',
+                 validation: {
+                     regExp: /^[0-9]{0,10000}$/,
+                   },
+                 onAfterChange(ev) {
+               	  grid.setValue(ev.rowKey,'saleUnitpriceAll',grid.getData()[ev.rowKey].saleUnitprice * grid.getData()[ev.rowKey].count);
+               	  document.getElementById('total').value = (grid.getSummaryValues('saleUnitpriceAll').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
+                   },
+                   
+               },
+
+               // [Column-4] 매뉴별 판매금액
+               {
+                 header: '매뉴별 판매금액', // [필수] 컬럼 이름
+                 name: 'saleUnitpriceAll', // [필수] 컬럼 매핑 이름 값
+                 sortable: true, // [선택] 컬럼의 정렬 여부
+                 resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                 align: 'center', // [선택] 텍스트 정렬 옵션
+                 defaultValue : '0',
+                 
+               },
+
+             ],
+             summary: {
+                 height: 0,
+                 position: 'bottom', // or 'top'                 
+                 columnContent: {
+                	 saleUnitpriceAll : {
+                     template: function(valueMap) {
+                       return `합계: ${Math.round(((valueMap.sum)))} 원`;
+                     }
+                   }
+                 }
+             },
+
+           });
+
+           //  그리드 추가
+
+
+
+
+           return grid;
+         };
+         const saveBtn = document.getElementById('saveBtn');
          
-         
-        Grid.setLanguage('en'); // set Korean
-        const grid = new Grid({
-          // ================================== 공통 옵션 적용 ==============================
-          el: document.getElementById('grid'), // [필수] Container element
-          data: detaList, // [선택] 그리드 데이터 조회
+         saveBtn.addEventListener('click', () => {
+             if(grid.validate().length == 0 ){
+             
 
-          /**
-           * [선택] 순번 기능
-           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
-           */
-          rowHeaders: ['rowNum'],
-          
-			// 패이징			
-          pageOptions: {
-        	useClient: true,
-            perPage: 10,
-          },
+              $.ajax({
+                  url: "/deburger/StoreSale",
+                  method: "post",
+                  contentType:"application/json",
+                  data  : JSON.stringify(grid.getData()),
+               })
+               
 
-          // ================================== 컬럼 옵션 적용 ==============================
-        	  
-          columns: [
-        	  
-        	  {
-                  header: '제품 번호', // [필수] 컬럼 이름
-                  name: 'productNumber', // [필수] 컬럼 매핑 이름 값
-                  hidden: true,      
-                },
-        	  // [Column-2] 구분
-              {
-                header: '구분', // [필수] 컬럼 이름
-                name: 'category', // [필수] 컬럼 매핑 이름 값
-                sortable: true, // [선택] 컬럼의 정렬 여부
-                resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                align: 'center', // [선택] 텍스트 정렬 옵션
-                rowSpan : true,
-                
-              },
-            // [Column-2] 제품
-            {
-              header: '제품', // [필수] 컬럼 이름
-              name: 'productName', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              
-            },
-            // [Column-2] 판매금액
-            {
-              header: '판매금액', // [필수] 컬럼 이름
-              name: 'saleUnitprice', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-2] 판매수량 
-            {
-              header: '판매수량', // [필수] 컬럼 이름
-              name: 'qualityScore', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              editor: 'text', // [선택] 수정 옵션 
-              defaultValue : '1',
-            },
+             }else{
+              alert("올바른 숫자를 입력해 주세요! \n확인후 다시저장해주세요")
+             }
 
-            // [Column-4] 매뉴별 판매금액
-            {
-              header: '매뉴별 판매금액', // [필수] 컬럼 이름
-              name: 'serviceScore', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-
-          ],
-          
-        });
-
-        //  그리드 추가       
-      
-      	
-        return grid;
-      };
-
-    	
-    	
-
+            });
     </script>
-</body>
+  </body>
+</html>
