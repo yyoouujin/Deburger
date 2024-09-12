@@ -9,9 +9,14 @@
 </head>
 
 <body>
+
 	<main id="main" class="main">
 		<div class="pagetitle">
-		    <p><a>[[${qna.qnaDetail.writer}]]</a></p>
+	    <form style="margin-Left: 69% ; display: inline-block" id="btn1">
+			<button type="button" id="btnInsert" class="btn btn-primary">수정하기</button>
+			<button type="button" id="btnDelete" class="btn btn-primary">삭제하기</button>
+	    </form>	
+		    <p id="writer">[[${qna.qnaDetail.writer}]]</p>
 			<h2><b>[[ ${qna.qnaDetail.title} ]]</b></h2>
             <p><a>[[${#dates.format(qna.qnaDetail.writerDay,'yyyy-MM-dd')}]]</a></p>
 			<hr>
@@ -20,9 +25,9 @@
 			<br>
 			<hr>
 		    <div class="col-md-10">
-			     <div class="card">
-					<div class="card-body">
-					<p>[(${qna.comments.comContent})]<p>
+			     <div class="card" >
+					<div class="card-body" style="height: 150px">
+					<p th:if="${qna.comments} != null" th:text="${qna.comments.comContent}"><p>
 					</div>
 			     </div>
 			</div>			
@@ -31,20 +36,38 @@
 		</div>
      </main>
      	<script>
-     	$("#btnInsert").on("click", function(event) {
+     	toggleBtn() ;
+     	
+     	     function toggleBtn() {
+     		  // 토글 할 버튼 선택 (btn1)
+     		  const btn1 = document.getElementById('btn1');
+     		  // btn1 숨기기 (display: none)
+     		  if(writer.innerText !== '접수') {
+     		    btn1.style.display = 'none';
+     		  }
+     		  // btn1 보이기 (display: block)
+     		  else {
+     		    btn1.style.display = 'block';
+     		  }
+     		  
+     		}
+     	
+           $("#btnInsert").on("click", function(event) {
 			const urlParams = new URL(location.href).searchParams;
 			const qnaNumber = urlParams.get('qnaNumber');
-			//qnaCorrectOffice?qnaNumber=ANM0000061
-			let url = 'qnaCorrectOffice?qnaNumber='+ qnaNumber ;
+			let url = 'qnaShopUpdate?qnaNumber='+qnaNumber ;
 			location.href = url;
 		});    
 			
    		$("#btnDelete").on("click", function(event) {
 			const urlParams = new URL(location.href).searchParams;
 			const qnaNumber = urlParams.get('qnaNumber');
-			let url = 'qnaDeleteOffice?qnaNumber='+ qnaNumber;
+			let url = 'qnaShopDelete?qnaNumber='+qnaNumber;
 			location.href = url;
-		}); 
+			alert("정상적으로 삭제되었습니다!")
+		});
+   		
+   		
 		</script>
 </body>
 </html>

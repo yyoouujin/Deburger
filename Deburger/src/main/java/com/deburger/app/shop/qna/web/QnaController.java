@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.deburger.app.shop.notice.service.NoticeVO;
 import com.deburger.app.shop.qna.service.QnaService;
 import com.deburger.app.shop.qna.service.QnaVO;
 
@@ -43,8 +42,9 @@ public class QnaController {
 	//QnA 전체 조회(전체 조회에서 상태 update)
 	@PostMapping("qnaListWriterUpdate")
 	@ResponseBody
-    public Map<String, Object> qnaListWriterUpdate(@RequestBody QnaVO qnaVO) {
-    	return qnaService.qnaListWriterUpdate(qnaVO);
+    public Map<String, Object> statusUpdate(@RequestBody QnaVO qnaVO) {
+		System.out.println(qnaVO);
+    	return qnaService.statusUpdate(qnaVO);
     }
 	
 	//전체조회(가맹점)
@@ -77,12 +77,32 @@ public class QnaController {
     
     //상세 조회(가맹점)
     @GetMapping("qnaListInfoShop")
-    public String noticeListInfoShop(QnaVO qnaVO, Model model) {
+    public String qnaListInfoShop(QnaVO qnaVO, Model model) {
     	Map<String, Object> Info = qnaService.qnaListInfoShop(qnaVO);
     	model.addAttribute("qna", Info);
     	
     	return "shop/qnaListInfoShop";
     }
+    
+    //가맹점 QnA수정  
+    @GetMapping("qnaShopUpdate")
+    public String qnaShopUpdate(QnaVO qnaVO, Model model) {
+    	Map<String, Object> qnasVO = qnaService.qnaListInfoShop(qnaVO);
+    	model.addAttribute("qna",qnasVO);
+    	return "shop/qnaShopUpdate";
+    }    
+    
+    //가맹점 QnA수정 
+    @PostMapping("qnaShopUpdate")
+    @ResponseBody
+    public Map<String, Object> qnaShopUpdate(@RequestBody QnaVO qnaVO) {
+    	return qnaService.qnaShopUpdate(qnaVO);
+    }
         
-
+    //가맹점 QnA삭제
+    @GetMapping("qnaShopDelete")
+    public String qnaShopDelete(int qnaNumber) {
+    	qnaService.qnaShopDelete(qnaNumber);
+    	return "redirect:qnaListShop";
+    }
 }
