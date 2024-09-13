@@ -3,33 +3,47 @@
 <mapper namespace="com.deburger.app.office.material.mapper.MaterialMapper">
 	<select id="selectAllList" resultType="MaterialVO">
 		select
-	        material_number,
-	        material_name,
-	        unit,
-	        sale_unitprice,
-	        material_item,
-	        buy_unitprice,
-	        image,
-	        material_classification,
-	        logistics_safety_stock,
-	        cost        
-		from material
+		    a.material_number,
+		    a.material_name,
+		    a.unit,
+		    a.sale_unitprice,
+		    a.material_item,
+		    a.buy_unitprice,
+		    a.image,
+		    a.material_classification,
+		    a.logistics_safety_stock,
+		    a.cost,
+		    b.material_number,
+		    c.client_name
+		from material a 
+		    join company_material b
+		        on a.material_number = b.material_number
+		    join supplier c
+		      on  b.client_id = c.client_id
+		order by a.material_number      
+		    
 	</select>
 	
 	<select id="selectMaterial" resultType="MaterialVO">
 		select
-	        material_number,
-	        material_name,
-	        unit,
-	        sale_unitprice,
-	        material_item,
-	        buy_unitprice,
-	        image,
-	        material_classification,
-	        logistics_safety_stock,
-	        cost        
-		from material
-		where material_number = #{materialNumber}
+		    a.material_number,
+		    a.material_name,
+		    a.unit,
+		    a.sale_unitprice,
+		    a.material_item,
+		    a.buy_unitprice,
+		    a.image,
+		    a.material_classification,
+		    a.logistics_safety_stock,
+		    a.cost,
+		    b.material_number,
+		    c.client_name
+		from material a 
+		    join company_material b
+		        on a.material_number = b.material_number
+		    join supplier c
+		      on  b.client_id = c.client_id
+		where a.material_number = #{materialNumber}
 	</select>
 	
 	<insert id="insertMaterial" parameterType="MaterialVO">

@@ -15,5 +15,6 @@ public class MaterialVO {
 	public String materialClassification;
 	public int logisticsSafetyStock;
 	public int cost;
+	public String clientName;
 
 }

@@ -24,9 +24,9 @@ public class MaterialServiceImpl implements MaterialService {
 		return materialMapper.selectAllList();
 	}
 
-	// 단건 조회
+	// 상세 조회
 	@Override
-	public MaterialVO materialInfo(MaterialVO materialVO) {
+	public List<MaterialVO> materialInfo(MaterialVO materialVO) {
 		// TODO Auto-generated method stub
 		return materialMapper.selectMaterial(materialVO);
 	}
