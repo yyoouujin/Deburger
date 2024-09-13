@@ -48,7 +48,7 @@ public class StoreInVO {
 	private MultipartFile contractImageFile;
 	
 	//재고저장
-	private int stockNumber;
+	private String stockNumber;
 	private int stockCount;
 	private int safetyStock;
 	

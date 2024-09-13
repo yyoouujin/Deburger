@@ -1,58 +1,93 @@
+<div class="card">
+	<div class="card-body">
 
-			<div class="row">
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">Vertical Bar Chart</h5>
+		<h5 class="card-title">Column Chart</h5>
+		<!-- Column Chart -->
+		<div id="columnChart"></div>
+		<script th:inline="javascript">
+				var datas = [[${StoreProSaleoneList}]];
+				var list = [];
+				var listsub = [];
+				var catechorylist = [];
+				
+				var count = 0;
+				var listcount = 0;
+				
+				for(let i = 0; i<datas.length; i++){
+					if(count == 0){
+						list.push(datas[i].count);
+						
+						if(datas[i].dt.slice(-2)>datas[i+1].dt.slice(-2)){
+							count = 1;
+						}
+					}else{
+						listsub.push(datas[i].count);
+					}	
+				}
+				
+				if(list.length > listsub.length){
+					for(let i = 0; i<(list.length - listsub.length); i++){
+						listsub.push(0)
+					}
+				}else {
+					for(let i = 0; i<(listsub.length - list.length); i++){
+						list.push(0)
+					}
+				}
+					
+				console.log(list);
+				console.log(listsub);
 
-							<!-- Vertical Bar Chart -->
-							<div id="verticalBarChart" style="min-height: 400px;"
-								class="echart"></div>
+				
+			new ApexCharts(document.querySelector("#columnChart"), {
+				series : [ {
+					name : '지난달',
+					data :  list,
+				}, {
+					name : '최근',
+					data : listsub
+				}, ],
+				chart : {
+					type : 'bar',
+					height : 350
+				},
+				plotOptions : {
+					bar : {
+						horizontal : false,
+						columnWidth : '55%',
+						endingShape : 'rounded'
+					},
+				},
+				dataLabels : {
+					enabled : false
+				},
+				stroke : {
+					show : true,
+					width : 2,
+					colors : [ 'transparent' ]
+				},
+				xaxis : {
+					categories : catechorylist,
+				},
+				yaxis : {
+					title : {
+						text : '$ (thousands)'
+					}
+				},
+				fill : {
+					opacity : 1
+				},
+				tooltip : {
+					y : {
+						formatter : function(val) {
+							return "$ " + val + " thousands"
+						}
+					}
+				}
+			}).render();
+			//     });
+		</script>
+		<!-- End Column Chart -->
 
-							<script>
-							// ajax로 불러올경우 동작안함
-               // document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#verticalBarChart")).setOption({
-                    title: {
-                      text: 'World Population'
-                    },
-                    tooltip: {
-                      trigger: 'axis',
-                      axisPointer: {
-                        type: 'shadow'
-                      }
-                    },
-                    legend: {},
-                    grid: {
-                      left: '3%',
-                      right: '4%',
-                      bottom: '3%',
-                      containLabel: true
-                    },
-                    xAxis: {
-                      type: 'value',
-                      boundaryGap: [0, 0.01]
-                    },
-                    yAxis: {
-                      type: 'category',
-                      data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
-                    },
-                    series: [{
-                        name: '2011',
-                        type: 'bar',
-                        data: [18203, 23489, 29034, 104970, 131744, 630230]
-                      },
-                      {
-                        name: '2012',
-                        type: 'bar',
-                        data: [19325, 23438, 31000, 121594, 134141, 681807]
-                      }
-                    ]
-                  });
-              //  });
-              </script>
-							<!-- End Vertical Bar Chart -->
-
-						</div>
-					</div>
-				</div>
-
+	</div>
+</div>

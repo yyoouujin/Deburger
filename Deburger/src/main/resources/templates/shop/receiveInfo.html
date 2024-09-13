@@ -11,7 +11,7 @@
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>입고 관리</h1>
+			<h1>입고 상세 관리</h1>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -26,7 +26,7 @@
 									<div style="text-align: left; margin-left: 90%;">
 										<button type="button" class="btn btn-primary"
 											onclick="makeData()">저장</button>
-										<button type="button" class="btn btn-primary">취소</button>
+										<button type="button" class="btn btn-primary" onclick="location.href='storeInList'">취소</button>
 									</div>
 								</thead>
 								<tbody>
@@ -89,7 +89,7 @@
 			</div>
 		</section>
 	</main>
-	<script>
+	<script th:inline="javascript">
 		function makeData() {
 			
 			var formData = new FormData();
@@ -102,6 +102,8 @@
 
 						let tr = $(list).children()
 
+						formData.append(`StoreInList[${i}].storeNumber`,[[${#authentication.name}]]);
+						
 						// 재고 테이블
 						formData.append(`StoreInList[${i}].stockCount`,tr.eq(4).find('input').val());
 						formData.append(`StoreInList[${i}].safetyStock`,tr.eq(4).find('input').val());
@@ -137,8 +139,8 @@
 								.eq(0).html());
 
 					})
-
-			$.ajax({
+			
+			 $.ajax({
 				type : "POST",
 				//enctype : 'multipart/form-data', ajax에는 없음 대신 사용하는것이 processData,contentType 
 				url : 'insertStoreInList',
@@ -148,9 +150,9 @@
 				cache : false,
 				success : function(result) {
 				}
-			}).then((end) => {
+			}) .then((end) => {
 				location.href="storeInList"
-			});
+			}) ; 
 		}
 
 		$("input").on(

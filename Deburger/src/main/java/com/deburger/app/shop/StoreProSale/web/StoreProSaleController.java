@@ -32,9 +32,10 @@ public class StoreProSaleController {
 	}
 
 	@GetMapping("StoreProSaleoneList")
-	public String StoreProSaleoneList(String productNumber, Model model) {
+	public String StoreProSaleoneList(StoreProSaleVO storeProSaleVO, Model model) {
 		
-		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleoneList(productNumber);
+		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleoneList(storeProSaleVO);
+		
 		model.addAttribute("StoreProSaleoneList", list);
 		
 		return "shop/materialsGraph";

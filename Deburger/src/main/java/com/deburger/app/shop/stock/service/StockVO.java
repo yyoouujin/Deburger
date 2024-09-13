@@ -37,6 +37,7 @@ public class StockVO {
 	private Date expirationLimit;
 	private Integer remainStockCount;
 	private String disposalOperatioin;
+	private String note;
 	
 	//상세테이블
 	private String orderDetailsNumber;
