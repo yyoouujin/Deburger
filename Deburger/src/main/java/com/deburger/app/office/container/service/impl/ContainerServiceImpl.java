@@ -17,21 +17,22 @@ public class ContainerServiceImpl implements ContainerService {
 
 	public ContainerMapper containerMapper;
 
-	// 전체 조회
+	// 물류 창고 전체 조회
 	@Override
-	public List<ContainerVO> containerAllList() {
+	@Transactional
+	public List<ContainerVO> containerAllList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.selectAllList();
+		return containerMapper.selectAllList(containerVO);
 	}
 
-	// 상세 조회
+	// 물류 창고 상세 조회
 	@Override
 	public List<ContainerVO> containerInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.selectContainerInfo(containerVO);
 	}
 
-	//
+	// ?
 	@Override
 	public int containerInsert(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
@@ -41,9 +42,9 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 입고 list
 	@Override
-	public List<ContainerVO> containerAllInList() {
+	public List<ContainerVO> containerAllInList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.selectAllInList();
+		return containerMapper.selectAllInList(containerVO);
 	}
 
 	// 물류 창고 입고 list 조회
@@ -61,6 +62,7 @@ public class ContainerServiceImpl implements ContainerService {
 		for (ContainerVO vo : list) {
 			containerMapper.containerInInsert(vo);
 			containerMapper.containerInUpdate(vo);
+			containerMapper.logisticsStockin(vo);
 		}
 
 		return 1;
@@ -104,6 +106,12 @@ public class ContainerServiceImpl implements ContainerService {
 	public List<ContainerVO> containerOutpD(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.containerOutprocedure(containerVO);
+	}
+
+	@Override
+	public ContainerVO loginService(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.loginSession(containerVO);
 	}
 
 }

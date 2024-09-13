@@ -46,7 +46,9 @@ public class StoreInServiceImpl implements StoreInService {
 	public int insertStoreInList(ListVO listVO) {
 		// TODO Auto-generated method stub
 		//리스트를 하나식 뽑아서 반복하여 다시 넣음.
+
 		for(StoreInVO storein:  listVO.getStoreInList()) {
+			System.err.println(storein);
 			
 			storeInMapper.insertStoreInList(storein);
 	

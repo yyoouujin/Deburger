@@ -8,5 +8,5 @@ public interface StoreProSaleService {
 	public List<StoreProSaleVO> StoreProSaleList();
 	
 	//제품 조회
-	public List<StoreProSaleVO> StoreProSaleoneList(String productNumber);
+	public List<StoreProSaleVO> StoreProSaleoneList(StoreProSaleVO storeProSaleVO);
 }

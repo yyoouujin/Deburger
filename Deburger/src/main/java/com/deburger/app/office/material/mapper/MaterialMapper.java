@@ -10,7 +10,7 @@ public interface MaterialMapper {
 	public List<MaterialVO> selectAllList();
 
 	// 단건 조회
-	public MaterialVO selectMaterial(MaterialVO materialVO);
+	public List<MaterialVO> selectMaterial(MaterialVO materialVO);
 
 	// 등록
 	public int insertMaterialInfo(MaterialVO materialVO);

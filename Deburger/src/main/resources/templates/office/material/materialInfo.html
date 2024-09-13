@@ -1,21 +1,91 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
-  </head>
-  <body>
-    <main id="main" class="main">
-      <section class="section">
-	      <div class="row">
-				<h3>개별 목록</h3>
-	      </div>
-      </section>
-    </main>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/layout}"
+	  layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>재료 상세 page</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Blank</li>
+        </ol>
+      </nav>
+    </div>
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+	              <div>
+	              		<button class="btn btn-primary" id="mUpdate">제품 수정</button>
+	              </div>
+	              <div>
+              		<h2>Image Maps</h2>
+					<p>Click on the computer, the phone, or the cup of coffee to go to a new page and read more about the topic:</p>
+					
+					<img src="workplace.jpg" alt="Workplace" usemap="#workmap" width="400" height="379">
+					
+					<map name="workmap">
+					  <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
+					  <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
+					  <area shape="circle" coords="337,300,44" alt="Cup of coffee" href="coffee.htm">
+					</map>
+              	</div>
+              	<div>
+              		<table class="table">
+              			<th:block th:each="lists : ${material}">
+	              			<tbody>
+		              			<tr>
+		              				<td>재료 명</td>
+		              				<td th:text="${lists.materialName}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>규격 정보</td>
+		              				<td th:text="${lists.unit}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>안전 재고</td>
+		              				<td th:text="${lists.logisticsSafetyStock}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>상품 코드</td>
+		              				<td th:text="${lists.materialNumber}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>구분</td>
+		              				<td th:text="${lists.materialItem}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>거래처</td>
+		              				<td th:text="${lists.clientName}"></td>
+		              			</tr>
+		              			<tr>
+		              				<td>재료 설멍</td>
+		              				<td ></td>
+		              			</tr>
+	              			</tbody>
+              			</th:block>
+              		</table>
+              	</div>	
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+		$('#mUpdate').on('click', function(){
+			console.log('hello');
+		})
+</script>
 </html>

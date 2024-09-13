@@ -3,7 +3,7 @@
 <mapper
 	namespace="com.deburger.app.shop.stock.mapper.StockMapper">
 	<select id="selectStock" parameterType="StockVO">
-		select m.material_number
+        		select m.material_number
 		,m.material_name
 		,m.material_classification
 		,m.unit
@@ -47,7 +47,7 @@
 		store_Order o
 		on o.order_number = d.order_number
 		where i.Material_number	= #{materialNumber}
-		and store_number = #{storeNumber}
+		and i.store_number = #{storeNumber}
 		order by i.order_details_number
 	</select>
 
@@ -72,6 +72,7 @@
 			,seq
 			,store_number
 			,operation
+			,note
 		)
 		values(
 			#{materialNumber}
@@ -80,6 +81,7 @@
 			,SM_SEQ.NEXTVAL
 			,#{storeNumber}
 			,'M1'
+			,#{note}
 		)
 	</insert>
 

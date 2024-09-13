@@ -9,7 +9,7 @@ public interface MaterialService {
 	public List<MaterialVO> serviceAllList();
 
 	// 단건 조회
-	public MaterialVO materialInfo(MaterialVO materialVO);
+	public List<MaterialVO> materialInfo(MaterialVO materialVO);
 
 	// 등록
 	public int insertMaterial(MaterialVO materialVO);

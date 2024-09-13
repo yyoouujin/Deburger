@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+
+<head>
+<meta charset="UTF-8" />
+<title>QnA 문의 수정</title>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<!-- 작성 칸 영역 -->
+
+			<form class="row g-3" name="qnaShopUpdate"
+				th:action="@{qnaShopUpdate}" method="post"  th:object="${qna.qnaDetail}">
+				<div style="margin-Left: 8px">
+					<h1 style="display: inline-block">QnA 문의</h1>
+					<button type="button" id="btnInsert" class="btn btn-primary"
+						style="margin-left: 67%">수정하기</button>
+				</div>
+
+				<div class="col-md-10">
+					<div class="card">
+						<div class="card-body">
+
+							<!--제목 작성 칸-->
+							<div class="col-md-12" style="margin-top: 10px" >
+								<input type="text" class="form-control" name="title" th:value="${qna.qnaDetail.title}"
+									placeholder=" QnA 문의 제목을 작성해주세요." />
+							</div>
+
+							<!--내용 작성 칸-->
+							<div class="col-md-12"
+								style="height: 450px; margin-top: 10px; margin-bottom: 10px">
+								<div id="contentDiv" class="quill-editor-full">[(${qna.qnaDetail.content})]</div>
+							</div>
+
+
+							<br /> 
+							<input type="hidden" name="qnaNumber" th:value="${qna.qnaDetail.qnaNumber}">
+
+						</div>
+					</div>
+				</div>
+			</form>
+			<!-- 작성 칸 영역 끝 -->
+		</div>
+
+	</main>
+	<!-- End #main -->
+	<script>
+    //수정
+    function getNoticeInfo() {
+        let formData = $('form[name="qnaShopUpdate"]').serializeArray();
+        let boardObj = {};
+        $.each(formData, function(idx, keyVal) {
+           boardObj[keyVal.name] = keyVal.value;
+        });
+        return boardObj;
+     }
+	  
+   
+   //Ajax 파일 보내기
+   $('#btnInsert').on('click', updateAjax)
+   
+   function updateAjax(){
+       //에디터 내용 읽어서
+       let contentText = $("#contentDiv").text();
+       //텍스트 에어리어 안에 넣어서
+       let tArea = document.createElement("textarea");
+       tArea.innerText = contentText;
+       tArea.name = "content";
+
+       //어팬드 한다음 서브밋
+       $("form[name='qnaShopUpdate']").append(tArea);
+   
+  	 
+      //1) 보낼 데이터 가져오기 2) Ajax 보내기
+      let info = getNoticeInfo();
+      
+      $.ajax('qnaShopUpdate', {
+         type : 'post',
+         contentType : 'application/json',
+         data : JSON.stringify(info)
+      })
+      .done(result => {alert("정상적으로 수정되었습니다!");
+                        location.href="qnaListShop"}) 
+      .fail(err => alert("오류가 발생했습니다!"));
+   }
+	</script>
+</body>
+</html>

@@ -5,7 +5,7 @@ import java.util.List;
 public interface ContainerService {
 
 	// 전체 조회
-	public List<ContainerVO> containerAllList();
+	public List<ContainerVO> containerAllList(ContainerVO containerVO);
 
 	// 상세 조회
 	public List<ContainerVO> containerInfo(ContainerVO containerVO);
@@ -14,7 +14,7 @@ public interface ContainerService {
 	public int containerInsert(ContainerVO containerVO);
 
 	// 물류 창고 입고 조회
-	public List<ContainerVO> containerAllInList();
+	public List<ContainerVO> containerAllInList(ContainerVO containerVO);
 
 	// 물류 창고 입고 처리 조회
 	public List<ContainerVO> containerInInfo(ContainerVO containerVO);
@@ -39,4 +39,6 @@ public interface ContainerService {
 
 	// 모달
 	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
+
+	public ContainerVO loginService(ContainerVO containerVO);
 }

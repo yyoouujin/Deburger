@@ -59,6 +59,7 @@ public class StoreInController {
 	@PostMapping("insertStoreInList")
 	@ResponseBody
 	public String insertStoreInList(ListVO listVO) {
+		System.err.println(listVO);
 		for(StoreInVO storein:  listVO.getStoreInList()) {
 		
 			//파일이 업로드 하지 않아도 빈파일이 넘어오기 때문에 사이즈 체크를 해야함.
@@ -92,6 +93,7 @@ public class StoreInController {
 			}
 				
 		}
+		System.err.println(listVO);
 		storeInService.insertStoreInList(listVO);
 		return "1";
 	}

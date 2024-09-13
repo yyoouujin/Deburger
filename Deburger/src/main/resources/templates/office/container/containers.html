@@ -27,9 +27,7 @@
 	                      <option value="2">Two</option>
 	                      <option value="3">Three</option>
                     </select>
-
-                    <h3 th:text="${containers[0].logisticsName}"></h3>
-                    <h3 th:text="${containers[0].personId}"></h3>
+                    <h3 th:text="${persons.logisticsName}"></h3>
                   </div>
                 </div>
                 <!-- End Search Bar -->
@@ -42,7 +40,6 @@
                       <th>재료 명</th>
                       <th>총 재고</th>
                       <th>안전 재고</th>
-                      <th>검수</th>       
                     </tr>
                   </thead>
                   <th:block th:each="lists:${containers}">
@@ -51,10 +48,8 @@
                       	<td th:text="${lists.materialNumber}"></td>
                       	<td th:text="${lists.materialClassification}"></td>
                       	<td th:text="${lists.materialName}"></td>
-                      	<td th:text="${lists.inCount}-${lists.outCount}"></td>
-                      	<td th:text="${lists.outCount}" style="display:none;"></td>
-                      	<td th:text="${lists.logisticsSafetyStock}"></td>                     	
-                      	<td th:text="${lists.inspectionOperation} ? '승인': '불량'"></td>                     	
+                      	<td th:text="${lists.stockCount}"></td>
+                      	<td th:text="${lists.logisticsSafetyStock}"></td>  
                       </tr>
                     </tbody>
                   </th:block>
