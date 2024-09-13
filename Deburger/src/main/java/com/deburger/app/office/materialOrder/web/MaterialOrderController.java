@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.deburger.app.office.logistic.service.LogisticVO;
 import com.deburger.app.office.materialOrder.service.MaterialOrderService;
+import com.deburger.app.office.materialOrder.service.MaterialOrderVO;
 import com.deburger.app.office.supplier.service.SupplierVO;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 @AllArgsConstructor
@@ -32,6 +37,12 @@ public class MaterialOrderController {
 		model.addAttribute("logisticList", logisticList);		
 		
 		return "office/materialOrder/materialOrderInsert";
+	}
+	
+	@PostMapping("selectSupplierListOptions")
+	@ResponseBody
+	public List<MaterialOrderVO> selectSupplierListOptions(@RequestBody MaterialOrderVO meteMaterialOrderVO) {		
+		return materialOrderService.selectSupplierListOptions(meteMaterialOrderVO);
 	}
 	
 		

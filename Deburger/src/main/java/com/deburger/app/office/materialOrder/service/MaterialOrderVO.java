@@ -30,14 +30,15 @@ public class MaterialOrderVO {
 	
 	//재료
 	
-	public String materialName; // 품명
-	public int saleUnitprice;    //판매원가(본점이 가맹점에게 판매할떄 금액)
-	public String materialItem;
-	public int buyUnitprice;    //구매원가(본점이 공급처에게 살 때 금액)
-	public String image;
-	public String materialClassification;
-	public int logisticsSafetyStock;
-	public int cost;             //재료원가(공급처의 재료 원가) 단가
+	private String materialName; // 품명
+	private int saleUnitprice;    //판매원가(본점이 가맹점에게 판매할떄 금액)
+	private String materialItem;
+	private int buyUnitprice;    //구매원가(본점이 공급처에게 살 때 금액)
+	private String image;
+	private String materialClassification;
+	private int logisticsSafetyStock;
+	private int cost;             //재료원가(공급처의 재료 원가) 단가
 						
+	private String clientName;		
 	
 }

@@ -39,6 +39,12 @@ public class MaterialOrderServiceImpl implements MaterialOrderService {
 		return materialOrderMapper.selectLogisticsList();
 	}
 
+	@Override
+	public List<MaterialOrderVO> selectSupplierListOptions(MaterialOrderVO meteMaterialOrderVO) {
+		// TODO Auto-generated method stub
+		return materialOrderMapper.selectSupplierListOptions(meteMaterialOrderVO);
+	}
+
 	
 
 }

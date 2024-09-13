@@ -80,15 +80,15 @@
                     <tr height="50">
                       <th rowspan="2">연락처</th>
                       <th>전화번호</th>
-                      <td colspan="3">000-0000-0000</td>
+                      <td colspan="3" id="phone1">000-0000-0000</td>
 
                       <th rowspan="2">연락처</th>
                       <th>전화번호</th>
-                      <td colspan="3">000-0000-0000</td>
+                      <td colspan="3" id="phone2">000-0000-0000</td>
                     </tr>
                     <tr height="50">
                       <th>이메일</th>
-                      <td colspan="3"></td>
+                      <td colspan="3" id="email"></td>
                       <th>이메일</th>
                       <td colspan="3">info@deburger.com</td>
                     </tr>
@@ -114,17 +114,15 @@
     </main>
 
     <script th:inline="javascript">
+
       let grid;
       var detaList = [{ storeName: 'ddddddd' }];
+      let supplierList = [[${supplierList}]];
+      let logisticList = [[${logisticList}]];
+      let logisticId = '';
+      let SupplierListOptions = [];
 
-      let options = [
-        { text: '매장 내부', value: 'C1' },
-        { text: '매장 외부', value: 'C2' },
-        { text: '화장실', value: 'C3' },
-        { text: '주방', value: 'C4' },
-        { text: '홀 기기', value: 'C5' },
-        { text: '위생', value: 'C6' },
-      ];
+      let options = [];
 
       $(document).ready(async () => {
         // 2. HTML이 수행된 뒤 함수를 호출한다.
@@ -188,6 +186,16 @@
                   listItems: options,
                 },
               },
+              onAfterChange(ev) {
+                SupplierListOptions.forEach((ele)=>{
+                  if(ev.value == ele.materialNumber){
+                    grid.setValue(ev.rowKey,'unit',ele.unit);
+                    grid.setValue(ev.rowKey,'cost',ele.cost);
+                    grid.setValue(ev.rowKey,'buyUnitprice',ele.buyUnitprice);
+                  }
+
+                })
+                   },
             },
             // [Column-2] 규격
             {
@@ -204,6 +212,15 @@
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
+              editor: 'text', // [선택] 수정 옵션
+              validation: {
+                regExp: /^(.){1,100}$/,
+              },
+              onAfterChange(ev) {
+               	  grid.setValue(ev.rowKey,'tax',grid.getData()[ev.rowKey].buyUnitprice * 0.1);
+                  grid.setValue(ev.rowKey,'counts',grid.getData()[ev.rowKey].buyUnitprice * 1.1);
+               	  document.getElementById('allSum').value = (grid.getSummaryValues('counts').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                   },
             },
             // [Column-4] 단가
             {
@@ -221,12 +238,13 @@
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
+              defaultValue: logisticId,
             },
 
             // [Column-6] 공급가액
             {
               header: '공급가액', // [필수] 컬럼 이름
-              name: 'costs', // [필수] 컬럼 매핑 이름 값
+              name: 'buyUnitprice', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
@@ -248,6 +266,17 @@
               align: 'center', // [선택] 텍스트 정렬 옵션
             },
           ],
+          summary: {
+                 height: 0,
+                 position: 'counts', // or 'top'
+                 columnContent: {
+                	 saleUnitpriceAll : {
+                     template: function(valueMap) {
+                       return `합계: ${Math.round(((valueMap.sum)))} 원`;
+                     }
+                   }
+                 }
+             },
         });
 
         //  그리드 추가
@@ -258,6 +287,14 @@
       const appendBtn = document.getElementById('appendBtn');
       const deleteBtn = document.getElementById('deleteBtn');
       const clientSelect = document.getElementById('clientId');
+      const makeGrid = document.getElementById('grid');
+      const phone1 = document.getElementById('phone1');
+      const phone2 = document.getElementById('phone2');
+      const email = document.getElementById('email');
+
+      const logisticsSelect = document.getElementById('logisticsId');
+
+
 
       appendBtn.addEventListener('click', () => {
         grid.appendRow();
@@ -267,16 +304,48 @@
         grid.removeCheckedRows();
       });
 
-      clientSelect.addEventListener('change', () => {
-        options = [
-          { text: '케찹', value: 'C1' },
-          { text: '빵', value: 'C2' },
-          { text: '양상추', value: 'C3' },
-          { text: '토마토', value: 'C4' },
-          { text: '양파', value: 'C5' },
-          { text: '피클', value: 'C6' },
-        ];
-        gridLoad();
+      clientSelect.addEventListener('change', (e) => {
+
+
+        $.ajax({
+            url: "/deburger/selectSupplierListOptions",
+            method: "post",
+            contentType:"application/json",
+            data  : JSON.stringify({'clientId':e.target.value}),
+         })
+         .then(result =>{
+          makeGrid.innerHTML = '';
+          SupplierListOptions = result;
+
+          supplierList.forEach((ele)=>{
+          if(ele.clientId == e.target.value){
+            phone1.innerHTML = ele.personPhone;
+            email.innerHTML = ele.email;
+          }
+        })
+        options =[];
+        SupplierListOptions.forEach((ele)=>{
+          options.push({text: ele.materialName, value: ele.materialNumber})
+        })
+        grid = gridLoad();
+
+         })
+
+
+
+      });
+
+      logisticsSelect.addEventListener('change',(e) => {
+        makeGrid.innerHTML = '';
+        console.log(e.target.value);
+        logisticId = e.target.value;
+        logisticList.forEach((ele)=>{
+          if(ele.logisticsId == e.target.value){
+            phone2.innerHTML = ele.phone;
+          }
+        });
+
+        grid = gridLoad();
       });
     </script>
   </body>
