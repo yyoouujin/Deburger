@@ -263,7 +263,7 @@
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               editor: 'text', // [선택] 수정 옵션
               align: 'left', // [선택] 텍스트 정렬 옵션
-              width: 800,              
+              width: 800,
               validation: {
                 regExp: /^(.){1,100}$/,
               },
@@ -333,7 +333,10 @@
             contentType:"application/json",
             data  : JSON.stringify(qscDataList),
          })
-         
+         .then(result =>{
+          alert(result + "개 항목이 최신버전으로 등록되었습니다")
+         })
+
 
        }else{
         alert("붉은색으로 표시된 항목의 글자수가 잘못되었습니다. \n확인후 다시저장해주세요")

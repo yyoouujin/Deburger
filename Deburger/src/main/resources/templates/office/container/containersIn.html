@@ -27,8 +27,7 @@
                   <thead>
                     <tr>
                       <th>발주 번호</th>
-                      <th>전체 수량</th>
-                      <th>입고 수량</th>
+                      <th>발주 수량</th>
                       <th>입고 여부</th>
                       <th>담당자 ID</th>	
                       <th>거래처 이름</th>	
@@ -41,8 +40,7 @@
                       <tr >
                       	<td th:text="${lists.orderNumber}"></td>
                       	<td th:text="${lists.sum}"></td>
-                      	<td th:text="${lists.inCount}"></td>
-                      	<td th:text="${lists.inOperation}"></td>
+                      	<td th:text="${lists.inOperation} == 'f1' ? '입고 전' : '입고 완료'"></td>
                       	<td th:text="${lists.personId}"></td>
                       	<td th:text="${lists.clientName}"></td>
                       	<td th:text="${lists.note}"></td>

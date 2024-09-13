@@ -1,119 +1,283 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <style>
+      th,
+      td {
+        border: solid 1px black;
+      }
+    </style>
+  </head>
 
-#postnum {
-	margin-top: 31.994px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>발주 등록</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">발주/입고 관리</a></li>
-          <li class="breadcrumb-item active">발주 등록</li>
-        </ol>
-      </nav>
-    </div>
-
- 
-    <section class="section">
-      <div class="row">
-      
-		<div class="card">
-            <div class="card-body">
-             <h5 class="card-title"></h5>
-             
-              <!-- Multi Columns Form -->
-              <form class="row g-3">
-                
-                  <div class="text-center">
-	                  <button type="button" class="btn btn-primary">전체</button>
-	                  <button type="button" class="btn btn-secondary">물류창고</button>
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>구매 발주서</h1>
+        <nav>
+          <ol class="breadcrumb"></ol>
+        </nav>
+      </div>
+      <div class="pagetitle"></div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-10">
+                  <div class="col-sm-10 col-md-10">
+                    <div class="row col-md-10">
+                      <div class="col-sm-10 col-md-2">
+                        <button type="button" class="btn btn-info col-md-12" id="appendBtn">추가</button>
+                      </div>
+                      <div class="col-sm-10 col-md-2">
+                        <button type="button" class="btn btn-info col-md-12" id="deleteBtn">삭제</button>
+                      </div>
+                      <div class="col-sm-10 col-md-4">
+                        <button type="button" class="btn btn-primary col-md-12" id="insertBtn">발주하기</button>
+                      </div>
+                    </div>
                   </div>
-                
-	              <!-- Bordered Table -->
-	              <table class="table table-bordered">
-	                <thead>
-	                  <tr>
-	                    <th scope="col">#</th>
-	                    <th scope="col">Name</th>
-	                    <th scope="col">Position</th>
-	                    <th scope="col">Age</th>
-	                    <th scope="col">Start Date</th>
-	                  </tr>
-	                </thead>
-	                <tbody>
-	                  <tr>
-	                    <th scope="row">1</th>
-	                    <td>Brandon Jacob</td>
-	                    <td>Designer</td>
-	                    <td>28</td>
-	                    <td>2016-05-25</td>
-	                  </tr>
-	                  <tr>
-	                    <th scope="row">2</th>
-	                    <td>Bridie Kessler</td>
-	                    <td>Developer</td>
-	                    <td>35</td>
-	                    <td>2014-12-05</td>
-	                  </tr>
-	                  <tr>
-	                    <th scope="row">3</th>
-	                    <td>Ashleigh Langosh</td>
-	                    <td>Finance</td>
-	                    <td>45</td>
-	                    <td>2011-08-12</td>
-	                  </tr>
-	                  <tr>
-	                    <th scope="row">4</th>
-	                    <td>Angus Grady</td>
-	                    <td>HR</td>
-	                    <td>34</td>
-	                    <td>2012-06-11</td>
-	                  </tr>
-	                  <tr>
-	                    <th scope="row">5</th>
-	                    <td>Raheem Lehner</td>
-	                    <td>Dynamic Division Officer</td>
-	                    <td>47</td>
-	                    <td>2011-04-19</td>
-	                  </tr>
-	                </tbody>
-	              </table>
-	              
-	              <!-- End Bordered Table -->
-	              <div class="text-center">
-	                  <button type="submit" class="btn btn-primary">등록</button>
-	                  <button type="reset" class="btn btn-secondary">초기화</button>
-                  </div>
-              </form>
-              <!-- End Multi Columns Form -->
+                </div>
+                <div style="text-align: right; margin: 0 0 10px 0"></div>
+                <table class="col-lg-12" style="text-align: center">
+                  <thead>
+                    <tr height="50">
+                      <th>발주건명</th>
+                      <td colspan="9">정기발주</td>
+                    </tr>
+                    <tr height="50">
+                      <th>발주일자</th>
+                      <td colspan="9">[[${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}]]</td>
+                    </tr>
+                    <tr height="50">
+                      <th>발신 업체 이름</th>
+                      <td colspan="4">
+                        <select class="form-select" id="clientId" name="clientId">
+                          <option value="">거래처를 선택하세요</option>
+                          <th:block th:each="supplier : ${supplierList}">
+                            <option th:value="${supplier.clientId}">[[${supplier.clientName}]]</option>
+                          </th:block>
+                        </select>
+                      </td>
+                      <th>수신 업체 이름</th>
+                      <td colspan="4">
+                        <select class="form-select" id="logisticsId" name="logisticsId">
+                          <option value="">물류창고를 선택하세요</option>
+                          <th:block th:each="logistic : ${logisticList}">
+                            <option th:value="${logistic.logisticsId}">[[${logistic.logisticsName}]]</option>
+                          </th:block>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr height="50">
+                      <th rowspan="2">연락처</th>
+                      <th>전화번호</th>
+                      <td colspan="3">000-0000-0000</td>
 
+                      <th rowspan="2">연락처</th>
+                      <th>전화번호</th>
+                      <td colspan="3">000-0000-0000</td>
+                    </tr>
+                    <tr height="50">
+                      <th>이메일</th>
+                      <td colspan="3"></td>
+                      <th>이메일</th>
+                      <td colspan="3">info@deburger.com</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr height="50">
+                      <th>합계금액</th>
+                      <td style="text-align: center" colspan="9">
+                        일금 <input type="text" style="border: none; width: 200px" id="korSum" readonly /> 원정(
+                        <input type="text" style="border: none; width: 200px" id="allSum" readonly />
+                        )세액포함
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- 추가 삭제 버튼 -->
+                <div id="grid"></div>
+              </div>
             </div>
           </div>
-
-
         </div>
-        
-    </section>
+      </section>
+    </main>
 
-  </main>
+    <script th:inline="javascript">
+      let grid;
+      var detaList = [{ storeName: 'ddddddd' }];
 
-</body>
+      let options = [
+        { text: '매장 내부', value: 'C1' },
+        { text: '매장 외부', value: 'C2' },
+        { text: '화장실', value: 'C3' },
+        { text: '주방', value: 'C4' },
+        { text: '홀 기기', value: 'C5' },
+        { text: '위생', value: 'C6' },
+      ];
+
+      $(document).ready(async () => {
+        // 2. HTML이 수행된 뒤 함수를 호출한다.
+        grid = await gridLoad();
+      });
+
+      /**
+       *
+       * @return void
+       */
+      const gridLoad = () => {
+        // 3. 그리드 생성
+        const Grid = tui.Grid;
+
+        /**
+         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+         *
+         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+         * @reference https://seokbong.tistory.com/14
+         */
+        Grid.applyTheme('default');
+
+        /**
+         * [선택] Grid Confirm 메시지
+         */
+
+        Grid.setLanguage('en'); // set Korean
+        const grid = new Grid({
+          // ================================== 공통 옵션 적용 ==============================
+          el: document.getElementById('grid'), // [필수] Container element
+          data: detaList, // [선택] 그리드 데이터 조회
+
+          /**
+           * [선택] 순번 기능
+           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           */
+          rowHeaders: ['checkbox'],
+
+          // 패이징
+          pageOptions: {
+            useClient: true,
+            perPage: 10,
+          },
+
+          // ================================== 컬럼 옵션 적용 ==============================
+
+          columns: [
+            // [Column-1] 품명
+            {
+              header: '품명', // [필수] 컬럼 이름
+              name: 'materialName', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+              formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
+
+              // [Option] select 옵션
+              editor: {
+                type: 'select',
+                options: {
+                  listItems: options,
+                },
+              },
+            },
+            // [Column-2] 규격
+            {
+              header: '규격', // [필수] 컬럼 이름
+              name: 'unit', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-3] 수량
+            {
+              header: '수량', // [필수] 컬럼 이름
+              name: 'count', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-4] 단가
+            {
+              header: '단가', // [필수] 컬럼 이름
+              name: 'cost', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-5] 물류창고
+            {
+              header: '물류창고', // [필수] 컬럼 이름
+              name: 'logisticsId', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-6] 공급가액
+            {
+              header: '공급가액', // [필수] 컬럼 이름
+              name: 'costs', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-7] 세액
+            {
+              header: '세액', // [필수] 컬럼 이름
+              name: 'tax', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-8] 합계금액
+            {
+              header: '합계금액', // [필수] 컬럼 이름
+              name: 'counts', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+          ],
+        });
+
+        //  그리드 추가
+
+        return grid;
+      };
+
+      const appendBtn = document.getElementById('appendBtn');
+      const deleteBtn = document.getElementById('deleteBtn');
+      const clientSelect = document.getElementById('clientId');
+
+      appendBtn.addEventListener('click', () => {
+        grid.appendRow();
+      });
+
+      deleteBtn.addEventListener('click', () => {
+        grid.removeCheckedRows();
+      });
+
+      clientSelect.addEventListener('change', () => {
+        options = [
+          { text: '케찹', value: 'C1' },
+          { text: '빵', value: 'C2' },
+          { text: '양상추', value: 'C3' },
+          { text: '토마토', value: 'C4' },
+          { text: '양파', value: 'C5' },
+          { text: '피클', value: 'C6' },
+        ];
+        gridLoad();
+      });
+    </script>
+  </body>
 </html>

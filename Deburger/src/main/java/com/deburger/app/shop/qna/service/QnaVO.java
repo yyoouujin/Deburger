@@ -18,6 +18,5 @@ public class QnaVO {
      private Integer commentsNumber; //답변 번호
      private String comContent; //답변 내용
      private Date comWriterDay;//답변 일자
-     private String comWriter; //답변 작성자
      
 }

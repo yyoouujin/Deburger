@@ -51,7 +51,7 @@ public class StoreSaleController {
 	@PostMapping("StoreSale")
 	@ResponseBody
 	@Transactional	
-	public String postStoreSale(@RequestBody StoreSaleListVO storeSaleListVO){
+	public int postStoreSale(@RequestBody StoreSaleListVO storeSaleListVO){
 		
 		String mcode = SecurityUtil.memberCode();
 		StoreSaleVO today = storeSaleService.selectStoreSaleDate();
@@ -76,14 +76,7 @@ public class StoreSaleController {
 				break;
 			}
 		}
-		//가맹점 판매 통계 저장
-		storeSaleService.insertStoreSaleStatistics(storeSale);
-		
-		return "";
-	}
-	
-	
-
-	
-	
+		//가맹점 판매 통계 저장		
+		return storeSaleService.insertStoreSaleStatistics(storeSale);		
+	}		
 }
