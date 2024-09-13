@@ -13,7 +13,7 @@ public class StoreProSaleVO {
 	private int SEQ;
 	private int count;
 	private String storeNumber;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yy-MM-dd")
 	private Date productDate;
 	private String productNumber;
 	
@@ -21,5 +21,8 @@ public class StoreProSaleVO {
 	private String category;
 	private String kind;
 	private String productName;
+	
+	private String dt;
+	
 	
 }

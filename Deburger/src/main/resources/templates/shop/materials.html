@@ -41,21 +41,30 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6" id="graph">
+				<div class="col-lg-6">
+					<input type='date' id='currentDate' />
+					<div  id="graph">
+					</div>
+
 				</div>
 			</div>
 		</section>
 	</main>
 	<script th:inline="javascript">
+	
+	document.getElementById('currentDate').value = new Date()
+	.toISOString().substring(0, 10);
+	
 	$('tbody > tr').on("click", function(event) {
 		let list = {};
 		
 		let productNumber = $(event.target).closest('tr').children().eq(0).html();
-
+		let productdate = $('#currentDate').val();
+		
 		list = {productNumber};
+		let url = `StoreProSaleoneList?productNumber=${productNumber}&productDate=${productdate}`
 		
-		
-		$('#graph').load("StoreProSaleoneList?productNumber=" + productNumber);
+		$('#graph').load(url);
 		
 	});
 	</script>
