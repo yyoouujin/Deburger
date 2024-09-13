@@ -105,4 +105,45 @@ public class QnaController {
     	qnaService.qnaShopDelete(qnaNumber);
     	return "redirect:qnaListShop";
     }
+    
+    //QnA상세 조회,댓글조회(본사) 
+    @GetMapping("qnaListInfoOffice")
+    public String qnaListInfoOffice(QnaVO qnaVO, Model model) {
+    	Map<String, Object> Info = qnaService.qnaListInfoOffice(qnaVO);
+    	model.addAttribute("qna", Info);
+    	return "office/qna/qnaListInfoOffice";
+    }
+    
+    //QnA 답글 등록(본사)
+	@GetMapping("qnaCommentInsert")
+	public String qnaCommentInsert() {
+		return "office/qna/qnaCommentInsert";
+	}
+	
+	//QnA 답글 등록(본사)
+    @PostMapping("qnaCommentInsert")
+    public String qnaCommentInsert(QnaVO qnaVO) {
+    	qnaService.qnaCommentInsert(qnaVO);
+    	
+    	return "redirect:qnaListOffice";
+    }
+    
+    //QnA 답글 수정(본사)
+    @GetMapping("qnaCommentUpdate")
+    public String qnaCommentUpdate(QnaVO qnaVO, Model model) {
+    	Map<String, Object> qnasVO = qnaService.qnaCommentUpdate(qnaVO);
+    	model.addAttribute("qna",qnasVO);
+    	return "office/qna/qnaCommentUpdate";
+    }    
+    
+  //QnA 답글 수정(본사)
+    @PostMapping("qnaCommentUpdate")
+    @ResponseBody
+    public Map<String, Object> qnaCommentUpdate(@RequestBody QnaVO qnaVO) {
+    	return qnaService.qnaCommentUpdate(qnaVO);
+    }
+    
+    
 }
+    
+    

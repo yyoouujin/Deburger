@@ -59,7 +59,7 @@ INSERT INTO qna (qna_number
                 , writer_day
                 , writer)
 VALUES         (
-                QNA_SEQ.nextval
+                LPAD(QNA_SEQ.nextval, '7', '0')
                 ,#{storeNumber}
                 ,#{title}
                 ,#{content}
@@ -107,5 +107,48 @@ UPDATE qna
    SET writer = #{writer}
  WHERE qna_number=#{qnaNumber}
  </update>
+
+<!-- QnA상세 조회(본사) -->
+<select id="qnaCommentOffice" resultType="QnaVO">
+select   q.qna_number
+        ,q.title
+        ,q.content
+        ,s.store_name
+        ,q.writer
+        ,q.writer_day
+from qna q JOIN store s
+on (q.store_number = s.store_number)
+where  q.qna_number = #{qnaNumber}
+</select>
+
+<!-- QnA 문의답글 등록(본사) -->
+<insert id="qnaCommentInsert" parameterType ="QnaVO">
+INSERT INTO comments (comments_number
+                , qna_number
+                , com_content
+                , com_writer_day
+                )
+VALUES         (
+                LPAD(COM_SEQ.nextval, '7', '0')
+                ,#{qnaNumber}
+                ,#{comContent}
+                ,sysdate
+                )
+</insert>
+
+<!-- QnA 문의답글 수정(본사) -->
+<update id= "qnaCommentUpdate">
+UPDATE comments 
+   SET   com_content=#{comContent}
+        ,writer_day=sysdate
+ WHERE qna_number=#{qnaNumber}
+</update>
+
+<!-- QnA 문의답글 조회(본사) -->
+<select id="qnaCommertSelect" resultType="String">
+select   com_content
+from comments
+where qna_number=#{qnaNumber}
+</select>
 
 </mapper>

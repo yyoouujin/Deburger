@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.qna.mapper.QnaMapper;
@@ -132,7 +133,49 @@ public class QnaServiceImpl implements QnaService {
 		return mapper.qnaShopDelete(qnaNumber);
 	}
 
+	//QnA상세조회,댓글조회(본사) 
+	@Override
+	@Transactional
+	public Map<String, Object> qnaListInfoOffice(QnaVO qnaVO) {
+	    // QnA 상세 정보 조회
+	    QnaVO qnaDetail = mapper.qnaCommentOffice(qnaVO);
+	    // QnA 댓글 조회
+	    String comselect = mapper.qnaCommertSelect(qnaVO);
+	
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("qnaDetail", qnaDetail);
+	    resultMap.put("comselect", comselect);
+	    
+	    return resultMap;
+	}
+
+	//QnA 답글 수정(본사)
+	@Override
+	public Map<String, Object> qnaCommentUpdate(QnaVO qnaVO) {
+        Map<String, Object> map = new HashMap<>();
+        boolean isSuccessed = false;
+        
+        int result = mapper.qnaCommentUpdate(qnaVO);
+
+        if(result == 1) {
+        	isSuccessed = true;
+        }
+        
+        map.put("result", isSuccessed);
+        map.put("target", qnaVO);
+        
+		return map;
+	}
+
+	//답글 작성
+	@Override
+	public int qnaCommentInsert(QnaVO qnaVO) {
+		int result = mapper.qnaCommentInsert(qnaVO);
+		return result;
+	}
 
 	}
+
+	
 
 	

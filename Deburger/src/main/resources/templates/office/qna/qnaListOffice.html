@@ -17,9 +17,6 @@
 					09:00~18:00
 				</p>
 			</form>
-			<form style="margin: 5px; display: inline-block; value: right">
-				<button type="button" id="qnaInsert" class="btn btn-primary">문의하기</button>
-			</form>
 			<br>
 			<!--  -->
 			<div class="row">
@@ -197,6 +194,16 @@
 	       			}
 	     	});
    		}
+   		
+     	$('tbody > tr').on("click", function(event) {
+     		if(event.target.tagName=='SELECT'){
+     			return
+     		}
+     	    let num = $(event.currentTarget).children().eq(0).text();
+     	    event.preventDefault();
+     	    let url = 'qnaListInfoOffice?qnaNumber=' + num;
+     	    location.href = url;
+     	});
      </script>
 </body>
 </html>
