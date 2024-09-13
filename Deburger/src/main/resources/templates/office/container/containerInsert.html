@@ -32,8 +32,8 @@ th, td {
 												name="orderName" style="border: none; width: 100%;" th:text="${list[0].orderNumber}" readonly></td>
 									</tr>
 									<tr>
-										<th>발주일자</th>
-										<td colspan='8'></td>
+										<th>등록일자</th>
+										<td colspan='8' th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}" id = "sysdate"></td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
@@ -75,7 +75,8 @@ th, td {
 									<th:block th:each="container : ${list}">
 									<tr>
 										<td  th:text="${container.detailsOrderNumber}"></td>
-										<td  th:text="${container.materialName}"></td>	
+										<td th:text="${container.materialName}"></td>	
+											
 										<td th:text="${container.unit}"></td>	
 										<td th:text="${container.count}"></td>	
 										<td ><input type="text"
@@ -86,10 +87,23 @@ th, td {
 											name="allOrder" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td>	
 										<td ><input type="text"
 											name="allOrder" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}" ></td>	
-										<td ><input type="text"
-											name="allOrder"></td>	
+										<td >
+											 <div class="row mb-3">
+								                  <div class="col-sm-12">
+								                    <select class="form-select" aria-label="Default select example">
+								                      <option selected>선택</option>
+								                      <option value="e1">정상</option>
+								                      <option value="e2">폐기</option>
+								                    </select>
+								                  </div>
+							                </div>
+							            </td>	
 										<td th:text="${container.personId}" style="display:none;"></td>
+										<td th:text="${container.logisticsId}" style="display:none;"></td>
 										<td th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}" style="display:none;"></td>
+										<td th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}" style="display:none;"></td>
+										<td th:text="${container.materialNumber}" style="display:none;"></td>
+										<td th:text="f1" style="display:none;"></td>
 									</tr>
 									</th:block>
 								</tbody>
@@ -115,27 +129,32 @@ th, td {
   			let tds = $(item).children();
   			
   			let detailsOrderNumber = tds.eq(0).text(); 	
-  			let inDay = tds.eq(10).text();
+  			let inDay = tds.eq(11).text();	
   			let inCount = tds.eq(4).children().val(); 
   			let expirationLimit = tds.eq(5).children().val(); 
   			let consumptionLimit = tds.eq(6).children().val(); 
   			let manufactureDay = tds.eq(7).children().val(); 
-  			let inspectionOperation = tds.eq(8).children().val();
-  			let inOperation = tds.eq(8).children().val();
+  			let inspectionOperation = tds.eq(8).find('select').val();
   			let personId = tds.eq(9).text();
-
+			let logisticsId = tds.eq(10).text();
+  			
+  			let inOperation = tds.eq(14).text();
+  			let materialNumber = tds.eq(13).text();
+  			let stockCount = tds.eq(4).children().val();
+  			
+  			
 			list.push({detailsOrderNumber, inDay, inCount,//
-  					expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation});
+  				expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation, materialNumber, stockCount, logisticsId});
   		})
 		console.log(list);
   		console.log(JSON.stringify(list));
-  		$.ajax({
+		 $.ajax({
   			url: '/deburger/containerInsert',
   			method:'post',
   			contentType: 'application/json',
   			data:JSON.stringify(list),	
   			success : function(result){
-  				alert('성공하였습니다.');
+  				alert('정상적으로 등록 완료 되었습니다.');
   			},
   			error : function(){
   				alert('실패 하였습니다.');

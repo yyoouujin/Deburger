@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
 
@@ -26,9 +27,14 @@ public class ContainerController {
 
 	// 전체 조회
 	@GetMapping("container")
-	public String containerList(Model model) {
-		List<ContainerVO> list = containerService.containerAllList();
+	public String containerList(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerAllList(containerVO);
+		ContainerVO mid = new ContainerVO();
+		String mcode = SecurityUtil.memberCode(); // id
+		mid.setPersonId(mcode);
+		ContainerVO pid = containerService.loginService(mid);
 		model.addAttribute("containers", list);
+		model.addAttribute("persons", pid);
 
 		return "office/container/containers";
 	}
@@ -47,14 +53,16 @@ public class ContainerController {
 		return "office/container/containerInsert";
 	}
 
-	// 수정
-
-	// ----------------------------
 	// 물류 창고 입고 조회
 	@GetMapping("containerIn")
 	public String containerInList(Model model) {
-		List<ContainerVO> list = containerService.containerAllInList();
+		ContainerVO mid = new ContainerVO();
+		String mcode = SecurityUtil.memberCode(); // id
+		mid.setPersonId(mcode);
+		ContainerVO pid = containerService.loginService(mid);
+		List<ContainerVO> list = containerService.containerAllInList(mid);
 		model.addAttribute("containersIn", list);
+		model.addAttribute("persons", pid);
 		return "office/container/containersIn";
 	}
 
@@ -94,7 +102,12 @@ public class ContainerController {
 	@GetMapping("containerOut")
 	public String containerOutListAll(Model model) {
 		List<ContainerVO> list = containerService.containerOutAllList();
+		ContainerVO mid = new ContainerVO();
+		String mcode = SecurityUtil.memberCode(); // id
+		mid.setPersonId(mcode);
+		ContainerVO pid = containerService.loginService(mid);
 		model.addAttribute("out", list);
+		model.addAttribute("persons", pid);
 		return "office/container/containerOut";
 	}
 
