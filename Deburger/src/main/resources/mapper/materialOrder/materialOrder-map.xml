@@ -70,7 +70,21 @@
 	FROM   logistics	
 	</select>
 
-
+	<select id="selectSupplierListOptions">
+	SELECT  s.CLIENT_ID
+	        ,s.CLIENT_NAME
+	        ,c.material_number
+	        ,m.material_name
+	        ,m.cost
+	        ,m.sale_unitprice
+	        ,m.unit
+	        ,m.buy_unitprice
+	FROM supplier s JOIN company_material c
+	                ON s.client_id = c.client_id
+	                JOIN material m
+	                ON c.material_number = m.material_number
+	WHERE s.client_id = #{clientId}
+	</select>
 
 
 
