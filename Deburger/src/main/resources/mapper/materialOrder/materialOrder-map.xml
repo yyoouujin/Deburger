@@ -37,6 +37,45 @@
 <!-- 물류창고 발주 -> 물류창고 발주 상세 끝 -->
 
 
+	<select id="selectSupplierList">	
+	SELECT  CLIENT_ID
+	        ,CLIENT_NAME
+	        ,ADDRESS
+	        ,PHONE
+	        ,CONTRACT_DAY
+	        ,POSTAL
+	        ,ADDRESSSEC
+	        ,NOTE
+	        ,BUSINESSNUM
+	        ,BUSINESSTYPE
+	        ,EMAIL
+	        ,REPRESENTATIVE_NAME
+	        ,CONTRACT_PDF
+	        ,PERSON_NAME
+	        ,PERSON_PHONE
+	        ,PERSON_EMAIL 
+	FROM supplier
+	</select>
+	
+	<select id="selectLogisticsList">
+	SELECT  LOGISTICS_ID
+	        ,LOGISTICS_NAME
+	        ,BASICS_ADDRESS
+	        ,DETAILS_ADDRESS
+	        ,POSTAL
+	        ,PHONE
+	        ,PERMISSION_DAY
+	        ,PERSON_ID
+	        ,NOTE
+	FROM   logistics	
+	</select>
+
+
+
+
+
+
+
 <!-- 물류창고 발주 시작 -->
 
 </mapper>

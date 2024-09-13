@@ -67,10 +67,8 @@ public class QscShopController {
 	//QSC 작성(희창)
 	@PostMapping("qscListInfoShop")
 	@ResponseBody
-	public String qscListInfoInsert(@RequestBody QscListVO qscListVO) {
-		
-		qscService.insertQscDetails(qscListVO.getQscDataList(), qscListVO.getScores());		
-		return "qscListShop";
+	public int qscListInfoInsert(@RequestBody QscListVO qscListVO) {				
+		return qscService.insertQscDetails(qscListVO.getQscDataList(), qscListVO.getScores());
 	}
 	
 	
@@ -108,7 +106,7 @@ public class QscShopController {
 		return "office/qscListOffice";
 	}	
 	
-	//QSC결과 상세 조회(희창)
+	//QSC결과 상세 조회(희창)(가맹점)
 	@GetMapping("qscListInfoDetail")
 	public String qscListInfoDetail(QscResultVO qscResultVO, Model model) {
 		List<QscResultVO> list =  qscService.selectQscInfoDetail(qscResultVO);
@@ -117,6 +115,14 @@ public class QscShopController {
 		return "shop/qscListInfoDetail";
 	}
 	
+	//QSC결과 상세 조회(희창)
+		@GetMapping("qscListInfoDetailOffice")
+		public String qscListInfoDetailOffice(QscResultVO qscResultVO, Model model) {
+			List<QscResultVO> list =  qscService.selectQscInfoDetail(qscResultVO);
+			model.addAttribute("QscList", list);
+			model.addAttribute("qscDates", list.get(0));
+			return "shop/qscListInfoDetailOffice";
+		}
 	
 	
 }
