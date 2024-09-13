@@ -28,7 +28,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>재료 번호</th>
+                      <th>LOT 번호</th>
                       <th>재료 이름</th>
                       <th>주문 수량</th>
                       <th>발주 상태</th>
@@ -42,8 +42,7 @@
                   <th:block th:each="info:${container}">
                     <tbody>
                       <tr>
-                      	<td th:text="${info.lot}" style="display:none"></td>
-                      	<td th:text="${info.materialNumber}"></td>
+                      	<td th:text="${info.lot}"></td>
                       	<td th:text="${info.materialName}"></td>
                       	<td th:text="${info.count}"></td>
                       	<td th:text="${info.orderCondition} ? '완료' : '진행'"></td>

@@ -67,4 +67,19 @@ public class ContainerVO {
 	// 물류 창고 출고 조회
 	public String storeName;
 	public String orderDetailsNumber;
+
+	// 프로시저
+	public String pNumber;
+	public String pOutOperation;
+
+	// 로그인
+	public String name;
+	public String email;
+	public String phone;
+	public String area;
+	public String department;
+	public String position;
+
+	public String oderApp;
+
 }

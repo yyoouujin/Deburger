@@ -12,24 +12,28 @@ import lombok.Data;
 public class StoreSaleVO {	
 	
 	
-	public String productNumber;
-	public String productName;
-	public int saleUnitprice;
-	public String image;
-	public String recipePdf;
-	public int price;
-	public String category;
+	private String productNumber;
+	private String productName;
+	private int saleUnitprice;
+	private String image;
+	private String recipePdf;
+	private int price;
+	private String category;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date registrationDay;
-	public String kind;
-	public String note;
+	private Date registrationDay;
+	private String kind;
+	private String note;
 	
 	
-	public int count;
+	private int count;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date productDate;
-	public int seq;
-	public String storeNumber;
+	private Date productDate;
+	private int seq;
+	private String storeNumber;
+	
+	private int profits;
+	private int spending;
+	
 }

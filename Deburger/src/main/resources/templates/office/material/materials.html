@@ -7,6 +7,7 @@
 >
   <head>
     <meta charset="UTF-8" />
+    <meta name="contextPath" th:value="${contextPath}">
     <title>Insert title here</title>
   </head>
   <body>
@@ -41,8 +42,8 @@
                       <th>재료 코드</th>
                       <th>재료 명</th>
                       <th>재료 구분</th>
-                      <th>규격정보</th>
                       <th>단위</th>
+                      <th>구입 단가</th>
                       <th>거래처</th>
                       <th>안전재고</th>
                       <th>비고</th>
@@ -56,11 +57,14 @@
                         <td th:text="${list.materialName}"></td>
                         <td th:text="${list.materialClassification}"></td>
                         <td th:text="${list.unit}"></td>
-                        <td th:text="${list.buyUnitprice}"></td>
-                        <td th:text="${list.image}"></td>
-                        <td th:text="${list.cost}"></td>
+                        <td th:text="${#numbers.formatInteger(list.buyUnitprice, 3, 'COMMA') + '원'}"></td>
+                        <td th:text="${list.clientName}"></td>
                         <td th:text="${list.logisticsSafetyStock}"></td>
-                        <td th:text="${list.cost}"></td>
+                        <td ></td>
+                        <td onclick = "event.stopPropagation()" id="stop"><div class="icon">
+					          <i class="bx bx-x-circle fs-5" ></i>
+					        </div>
+					    </td>
                       </tr>
                     </tbody>
                   </th:block>
@@ -103,11 +107,12 @@
     </main>
   </body>
   <script>
+	const clc = $('meta[name="contextPath"]').attr('value');
     $("tbody > tr").on("click", function (event) {
         let tr = event.currentTarget;
         let did = $(tr).children().eq(0).text();
         console.log(did);
-        let url = "/materialInfo?materialNumber=" + did;
+        let url = clc + "/materialInfo?materialNumber=" + did;
         location.href = url;
     });
   </script>

@@ -1,6 +1,10 @@
 package com.deburger.app.office.materialOrder.mapper;
 
+import java.util.List;
+
+import com.deburger.app.office.logistic.service.LogisticVO;
 import com.deburger.app.office.materialOrder.service.MaterialOrderVO;
+import com.deburger.app.office.supplier.service.SupplierVO;
 
 public interface MaterialOrderMapper {
 	
@@ -18,6 +22,10 @@ public interface MaterialOrderMapper {
 	//물류창고 재료 발주 상세
 	public int insertLogisticOrderDetail(MaterialOrderVO materialOrderVO);
 	
-	
+	// 업체조회
+	public List<SupplierVO> selectSupplierList();
+	// 물류창고 조회
+	public List<LogisticVO> selectLogisticsList();
 
 }
+

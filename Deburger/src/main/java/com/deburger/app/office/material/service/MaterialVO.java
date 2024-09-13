@@ -8,12 +8,13 @@ public class MaterialVO {
 	public String materialNumber;
 	public String materialName;
 	public String unit;
-	public String saleUnitprice;
+	public int saleUnitprice;
 	public String materialItem;
-	public String buyUnitprice;
+	public int buyUnitprice;
 	public String image;
 	public String materialClassification;
-	public String logisticsSafetyStock;
-	public String cost;
+	public int logisticsSafetyStock;
+	public int cost;
+	public String clientName;
 
 }

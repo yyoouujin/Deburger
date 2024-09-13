@@ -4,43 +4,16 @@
 	
 	<!-- 전체 조회 -->
 	<select id="selectAllList" resultType="ContainerVO">
-			select distinct
-		        a.logistics_id,
-		        a.logistics_name,
-		        a.person_id,
-		        b.stock_number,
-		        b.stock_count,
-		        b.material_number,
-		        c.material_name,
-		        c.material_classification,
-		        c.logistics_safety_stock,
-		        d.person_id,
-		        e.inspection_operation,
-		        e.material_number,
-		        sum(e.in_count) as inCount,
-		        sum(e.out_count) as outCount     
-			from logistics a
-			join logistics_stock b
-			    on a.logistics_id = b.logistics_id
-			join material c
-			    on b.material_number = c.material_number
-			join logistics_order_details d
-			    on c.material_number = d.material_number
-			join logistics_in e
-			    on d.details_order_number = e.details_order_number
-			group by a.logistics_id,
-			        a.logistics_name,
-			        a.person_id,
-			        b.stock_number,
-			        b.stock_count,
-			        b.material_number,
-			        c.material_name,
-			        c.material_classification,
-			        c.logistics_safety_stock,
-			        d.person_id,
-			        e.inspection_operation,
-			        e.material_number    
-			order by b.stock_number
+			select a.material_number,
+			       a.stock_count,
+			       a.logistics_id,
+			       b.material_classification,
+			       b.logistics_safety_stock,
+			       b.material_name
+			from logistics_stock a
+  			  join material b
+       			 on a.material_number = b.material_number
+       		order by a.material_number
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
@@ -91,7 +64,8 @@
 			        on a.client_id = d.client_id
 			join logistics_in e
 			        on b.details_order_number = e.details_order_number
-			where  c.logistics_id = 'CTN0000013'        
+			where  c.logistics_id = #{logisticsId}
+			and b.in_operation = 'f1'        
 			group by a.order_number,
 			        a.note,
 			        a.client_id,
@@ -104,12 +78,13 @@
 	
 	<!-- 입고 처리 조회 -->
 	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
-		select a.details_order_number,
+		select  a.details_order_number,
 		        a.count,
 		        a.unit,
 		        a.order_cost,
 		        a.person_id,
 		        b.order_number,
+		        c.logistics_id,
 		        c.logistics_name,
 		        c.phone as logisticsPhone,
 		        d.material_name,
@@ -130,7 +105,7 @@
 		where b.order_number = #{orderNumber}
 	</select>
 	
-	<!-- 입고 처리 -->
+	<!-- 입고 처리 Transaction-->
 	<insert id="containerInInsert">
 		 insert into logistics_in(
 			        lot,
@@ -141,7 +116,9 @@
 			        consumption_limit,
 			        manufacture_day,
 			        inspection_operation,
-			        person_id
+			        person_id,
+			        logistics_id,
+			        material_number
 		 )values(
 		      'LOT' || LPAD(LOT_SEQ.nextval, '7', '0'), 
 		      #{detailsOrderNumber},
@@ -151,12 +128,17 @@
 	          #{consumptionLimit},
 	          #{manufactureDay},
 	          #{inspectionOperation},
-	          #{personId}	           
+	          #{personId},
+	          #{logisticsId},
+	          #{materialNumber}	           
 		 )
 	</insert>
 	
-	<update id="containerInDelete">
-		
+	<update id="logisticsStockin">
+		update logistics_stock
+		set stock_count = stock_count + #{stockCount}
+		where material_number = #{materialNumber}
+		and logistics_id = #{logisticsId}
 	</update>
 	
 	<update id="containerInUpdate">
@@ -220,22 +202,31 @@
 		where lot = #{lot}
 	</update>
 	
+	<update id="stockDelete">
+		update logistics_stock
+		set stock_count = stock_count - #{outCount}
+		where material_number = #{materialNumber}
+		and logistics_id = #{logisticsId}
+	</update>
+	
 	
 	<!-- 물류창고 출고 리스트 -->
 	<select id="containerOutList">
 		select a.order_number,
 		        sum(b.count) as count,
+		        a.oder_app,
 		        c.logistics_id,
-		        c.store_name
+		        c.store_name	      
 		from store_order a
 		join order_details b
 		    on a.order_number = b.order_number
 		join store c
 		    on a.store_number = c.store_number
 		group by a.order_number,
+		        a.oder_app,
 		        c.logistics_id,
 		        c.store_name
-		order by order_number
+		order by a.order_number
 	</select>
 	
 	<!-- 출고 상세 조회-->
@@ -298,23 +289,30 @@
 
 	<!-- 출고 프로 시저 -->
 	<select id="containerOutprocedure" statementType="CALLABLE"
-	parameterType="ContainerVO" resultMap="containersOut">
+	parameterType="ContainerVO">
 		{
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
-				#{pOutCnt, mode=IN, jdbcType=INTEGER},
-				#{pInspection, mode=IN, jdbcType=VARCHAR},
 				#{pOutOperation, mode=IN, jdbcType=VARCHAR}				
 			)
 		}
 	</select>
-	<resultMap type="ContainerVO" id="containersOut">
-		<result property="pNumber" column="p_number"></result>
-		<result property="pOutCnt" column="p_out_cnt"></result>
-		<result property="pInspection" column="p_inspection"></result>
-		<result property="pOutOperation" column="p_out_operation"></result>
-	</resultMap>
 	
-
+	<!-- 로그인 session -->
+	<select id="loginSession" resultType="ContainerVO">
+				select  a.person_id,
+		        a.name,
+		        a.email,
+		        a.phone,
+		        a.area,
+		        a.department,
+		        a.position,
+                b.logistics_name
+		from person a
+             join logistics b
+                on a.area = b.logistics_id
+		where a.person_id = #{personId}
+	</select>
+	
 
 </mapper>
