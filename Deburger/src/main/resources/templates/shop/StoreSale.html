@@ -199,6 +199,13 @@
                   contentType:"application/json",
                   data  : JSON.stringify({"storeSaleList": grid.getData(), "storeSale": storeSale}),
                })
+               .then(result =>{
+                if(result == 1){
+                  alert("정상 마감처리 되었습니다.")
+                }else{
+                  alert("마감처리 실패!")
+                }
+               })
 
 
              }else{
