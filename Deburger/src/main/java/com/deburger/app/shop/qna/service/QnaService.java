@@ -34,6 +34,14 @@ public interface QnaService {
 	//가맹점 QnA삭제 
 	public int qnaShopDelete(int qnaNumber);
 
+	//QnA상세 조회,댓글조회(본사) 
+	public Map<String, Object> qnaListInfoOffice(QnaVO qnaVO);
 	
+	//QnA 문의 답글 수정(본사)
+	public Map<String, Object> qnaCommentUpdate(QnaVO qnaVO);
+	
+	//QnA 문의 답글 작성(본사)
+	public int qnaCommentInsert(QnaVO qnaVO);
+		
 	
 }

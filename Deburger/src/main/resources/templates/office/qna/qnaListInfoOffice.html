@@ -1,49 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
 
 <head>
 <meta charset="UTF-8">
-<title>공지사항 상세</title>
+<title>QnA 상세</title>
 </head>
 
 <body>
+
 	<main id="main" class="main">
 		<div class="pagetitle">
-	    <form style="margin: 0px ; width: 75%; display: inline-block ; value: Left">
-		<th:block th:if="${notice.division =='업데이트'}"> <p><a href="noticeListShopUpdate">[[ ${notice.division} ]]</a></p></th:block>
-		<th:block th:if="${notice.division =='서비스'}"> <p><a href="noticeListShopService">[[ ${notice.division} ]]</a></p></th:block>
-		<th:block th:if="${notice.division =='이벤트'}"> <p><a href="noticeListShopEvent">[[ ${notice.division} ]]</a></p></th:block>
-		<th:block th:if="${notice.division =='작업'}"> <p><a href="noticeListShopWork">[[ ${notice.division} ]]</a></p></th:block>
-		<th:block th:if="${notice.division =='공고'}"> <p><a href="noticeListShopAnnouncement">[[ ${notice.division} ]]</a></p></th:block>
-		</form>
-			<h2><b>[[ ${notice.title} ]]</b></h2>
-            <p><a>[[${#dates.format(notice.writerDate,'yyyy-MM-dd')}]]</a></p>
-			<hr>
+
+			<div class="col-md-10">
+				<div class="card">
+					<div class="card-body" style="height: 84px">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>문의번호</th>
+									<th>문의매장</th>
+									<th>작성일자</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>[[${qna.qnaDetail.qnaNumber}]]</td>
+									<td>[[${qna.qnaDetail.storeName}]]</td>
+									<td>[[${#dates.format(qna.qnaDetail.writerDay,'yyyy-MM-dd')}]]</td>
+									<td><select onchange="updateState()"
+										th:data-qnanumber="${qna.qnaDetail.qnaNumber}">
+											<th:block th:if="${qna.qnaDetail.writer =='접수'}">
+												<option value="접수" selected>접수</option>
+												<option value="처리중">처리중</option>
+												<option value="완료">완료</option>
+											</th:block>
+											<th:block th:if="${qna.qnaDetail.writer =='처리중'}">
+												<option value="접수">접수</option>
+												<option value="처리중" selected>처리중</option>
+												<option value="완료">완료</option>
+											</th:block>
+											<th:block th:if="${qna.qnaDetail.writer =='완료'}">
+												<option value="접수">접수</option>
+												<option value="처리중">처리중</option>
+												<option value="완료" selected>완료</option>
+											</th:block>
+									</select></td>
+								</tr>
+
+							</tbody>
+
+						</table>
+
+					</div>
+				</div>
+			</div>
+	        <form style="margin: 0px ; width: 75%; display: inline-block ; value: Left">
+            <h2><b>[[ ${qna.qnaDetail.title} ]]</b></h2>
+			</form>
+			<form style="margin: 5px ; display: inline-block ; value: right">
+				<button th:if="${qna.comselect} == null" type="button"
+					id="btnInsert" class="btn btn-primary">답변 저장</button>
+				<button th:if="${qna.comselect} != null" type="button"
+					id="btnUpdate" class="btn btn-primary">답변 수정</button>
+			</form>
+			<hr class="col-md-10">
 			<br>
-			<p>[(${notice.content})]<p>
-			<br>
-			<hr>
-			<p><a href="noticeListShop">목록으로</a>
-       			
+			<p>[[${qna.qnaDetail.content}]]
+			</p>
+				<br>
+			<hr class="col-md-10">
+			<div class="col-md-10">
+				<div class="card">
+					<div class="card-body" style="height: 150px">
+ 						<textarea th:text="${qna.comselect}" class="form-control" style="height: 150px; width:100%;">
+						</textarea>
+                       </div>
+				</div>
+			</div>
+			<p>
+				<a href="qnaListOffice">목록으로</a>
 		</div>
-     </main>
-     	<script>
-     	$("#btnInsert").on("click", function(event) {
+	</main>
+	<script>
+ 		//상태 변경 어떤 이벤트를 발생 시킬거냐면?
+ 	function updateState() {
+ 		let qnaNumber = $(event.target).data("qnanumber"); 
+ 		let writer = $(event.target).val();              
+ 
+ 		let data = {qnaNumber, writer};
+ 		console.log(data)
+     	$.ajax({
+       		method: "post",
+       		url:"/deburger/qnaListWriterUpdate", 
+       		contentType: "application/json",
+       		data: JSON.stringify(data),
+     	})
+     		.then(result =>{
+       			console.log(result);
+    	 		if (result.result) {
+           			console.log(result.target.qnaNumber + "상태 업데이트 성공")
+       			} else {
+           			console.log(result.target.qnaNumber + "상태 업데이트 실패")
+       			}
+     	});
+		}
+	
+		
+		$("#btnInsert").on("click", function(event) {
 			const urlParams = new URL(location.href).searchParams;
-			const noticeNumber = urlParams.get('noticeNumber');
-			//noticeCorrectOffice?noticeNumber=ANM0000061
-			let url = 'noticeCorrectOffice?noticeNumber='+ noticeNumber ;
+			const qnaNumber = urlParams.get('qnaNumber');
+			let url = 'qnaCommentInsert?qnaNumber=' + qnaNumber;
 			location.href = url;
-		});    
-			
-   		$("#btnDelete").on("click", function(event) {
+			alert("정상적으로 작성되었습니다!")
+		});
+		
+		$("#btnUpdate").on("click", function(event) {
 			const urlParams = new URL(location.href).searchParams;
-			const noticeNumber = urlParams.get('noticeNumber');
-			let url = 'noticeDeleteOffice?noticeNumber='+ noticeNumber;
+			const qnaNumber = urlParams.get('qnaNumber');
+			let url = 'qnaCommentUpdate?qnaNumber=' + qnaNumber;
 			location.href = url;
-		}); 
-		</script>
+			alert("정상적으로 작성되었습니다!")
+		});
+
+	</script>
 </body>
 </html>
