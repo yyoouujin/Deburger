@@ -7,13 +7,16 @@
 
 <head>
 <meta charset="UTF-8" />
-<title>재고 리스트</title>
+<title>재고 관리</title>
 </head>
 
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>재고 관리</h1>
+			<button type="button" class="btn btn-primary btn-sm"
+								style="padding: 5px 20px 5px 20px; margin-left: 80%;"
+								onClick="location.href='selectOrderCart'">발주 신청</button>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -23,16 +26,19 @@
 						<div class="card-body">
 							<!-- Table with stripped rows -->
 							<!-- <table class="table datatable"> -->
-							<button type="button" class="btn btn-primary btn-sm"
-								style="padding: 5px 20px 5px 20px; margin-left: 80%;"
-								onClick="location.href='selectOrderCart'">발주 신청</button>
+							
 							<form>
 								<table class="table">
 									<thead>
 										<tr>
 											<th>품목 코드</th>
 											<th>품목 이름</th>
-											<th>품목 구분</th>
+											<th>
+											<select id="stockC">
+												<option value="main">품목 구분</option>
+												<option th:each="stockCList : ${stockC}" th:value="${stockCList.materialClassification}" th:text="${stockCList.materialClassification}"></option>
+											</select>
+											</th>
 											<th>규격</th>
 											<th>단가</th>
 											<th>현재 재고</th>
@@ -43,7 +49,7 @@
 									<tbody>
 										<th:block th:each="list:${stockList}">
 											<tr>
-												<td th:text="${list.materialNumber}" />
+												<td th:text="${list.materialNumber}" id="number"/>
 												<td th:text="${list.materialName}" />
 												<td th:text="${list.materialClassification}" />
 												<td th:text="${list.unit}" />
@@ -80,6 +86,31 @@
 			let url = 'shopStockInfo?materialNumber=' + num;
 			location.href = url;
 		});
+		
+		$("#stockC").on("change", function(event) {		
+			let materialClassification = $('#stockC').val();
+			let list = {materialClassification};
+			$.ajax({
+				
+				url : "classificationList",
+				method : "Post",
+				contentType:"application/JSON",
+				data : JSON.stringify(list),
+				
+			})
+			
+			.then((result) => {
+				console.log(result);
+				console.log(result[0]);
+				console.log(result[0].materialClassification);
+				
+				for(let i in result){
+					$('#number').html()=result[i].materialClassification;
+				}
+			})
+			
+		});
+
 	</script>
 </body>
 </html>

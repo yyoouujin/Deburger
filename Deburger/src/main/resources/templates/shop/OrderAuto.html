@@ -12,7 +12,10 @@
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>발주 리스트</h1>
-			<h6><a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동 발주</a></h6>
+			<h6>
+				<a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동
+					발주</a>
+			</h6>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -27,20 +30,34 @@
 								<thead>
 									<tr>
 										<th>발주 코드</th>
-										<th>품목 코드</th>
 										<th>품목 이름</th>
 										<th>품목 구분</th>
-										<th>규격</th>
 										<th>단위</th>
-										<th>단가</th>
+										<th>수량</th>
+										<th>금액</th>
 										<th>현재 재고</th>
 										<th>적정 재고</th>
-										<th>발주 기준량</th>
-										<th>삭제</th>
+										<th>기준</th>
+										<th>조건</th>
+										<th>발주 취소</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<th:block th:each="list:${ShopAutoOrderList}">
+										<tr>
+											<td th:text="${list.orderDetailsNumber}" />
+											<td th:text="${list.materialName}" />
+											<td th:text="${list.materialItem}" />
+											<td th:text="${list.unit}" />
+											<td th:text="${list.count}" />
+											<td th:text="${list.saleUnitprice}" />
+											<td th:text="${list.stockCount}" />
+											<td th:text="${list.safetyStock}" />
+											<td></td>
+											<td th:text="${list.note}" />
+											<td><button type="button" class="btn btn-primary btn-sm">자동 발주 취소</button></td>
+										</tr>
+									</th:block>
 								</tbody>
 							</table>
 							<!-- End Table with stripped rows -->
@@ -52,6 +69,13 @@
 			</div>
 		</section>
 	</main>
-</body>
+		<script>
+		$("td > button").on("click", function(event) {
+			
+			let url = 'Delauto?orderDetailsNumber=' + $(event.target).closest('tr').children().eq(0).html();
+			location.href = url;
+		});
 
+	</script>
+</body>
 </html>

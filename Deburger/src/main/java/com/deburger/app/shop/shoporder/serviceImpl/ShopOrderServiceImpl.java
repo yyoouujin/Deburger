@@ -33,7 +33,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		String mcode = SecurityUtil.memberCode();
 		ShopOrderVO shopOrderVO = new ShopOrderVO();
 		shopOrderVO.setStoreNumber(mcode);
-		
+
 		return shopOrderMapper.selectShopOrder(shopOrderVO);
 	}
 
@@ -69,11 +69,11 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	public int updateOrderCancel(ShopOrderVO shopOrderVO) {
 		// TODO Auto-generated method stub
-		
+
 		shopOrderMapper.updateOrderCancel(shopOrderVO);
 		return 1;
 	}
-	
+
 	// 발주 상세 조회
 	@Override
 	public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO) {
@@ -81,4 +81,20 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		return shopOrderMapper.orderInfo(shopOrderVO);
 	}
 
+	// 자동 발주 조회
+	@Override
+	public List<ShopOrderVO> autoOrderInfo() {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		ShopOrderVO shopOrderVO = new ShopOrderVO();
+		shopOrderVO.setStoreNumber(mcode);
+		return shopOrderMapper.autoOrderInfo(shopOrderVO);
+	}
+	
+	//삭제
+	@Override
+	public int deleteAuto(String orderDetailsNumber) {
+		// TODO Auto-generated method stub
+		return shopOrderMapper.deleteAuto(orderDetailsNumber);
+	}
 }

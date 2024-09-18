@@ -28,7 +28,7 @@ public class StoreProSaleController {
 		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleList();
 		model.addAttribute("StoreProSaleList", list);
 
-		return "shop/materials";
+		return "shop/product";
 	}
 
 	@GetMapping("StoreProSaleoneList")
@@ -38,7 +38,7 @@ public class StoreProSaleController {
 		
 		model.addAttribute("StoreProSaleoneList", list);
 		
-		return "shop/materialsGraph";
+		return "shop/productGraph";
 	}
 	
 	

@@ -60,6 +60,7 @@ public class ShopOderController {
 	  return shopOrderService.updateOrderCancel(shopOrderVO);
 	}
 	
+	
 	@GetMapping("ShopOrderInfo")
 	public String ShopOrderInfo(ShopOrderVO shopOrderVO,Model model) {
 		List<ShopOrderVO> list = shopOrderService.orderInfo(shopOrderVO);
@@ -67,5 +68,20 @@ public class ShopOderController {
 		return "shop/Orderinfo";
 	}
 	
+	@GetMapping("ShopAutoOrderList")
+	public String ShopAutoOrderList(Model model) {
+		List<ShopOrderVO> list = shopOrderService.autoOrderInfo();
+		
+		model.addAttribute("ShopAutoOrderList", list);
+		
+		return "shop/OrderAuto";
+	}
+	
+	//삭제
+	@GetMapping("Delauto")
+	public String Delauto(String orderDetailsNumber) {
+		shopOrderService.deleteAuto(orderDetailsNumber);		
+		return "redirect:ShopAutoOrderList";
+	}
 	
 }

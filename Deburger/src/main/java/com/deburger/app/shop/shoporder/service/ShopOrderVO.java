@@ -42,6 +42,10 @@ public class ShopOrderVO {
 	private String email;
 	private String phone;
 	
+	//store_stock
+	private int stockCount;
+	private int safetyStock;
+	
 	List<ShopOrderDetailsVO> detList;
 	List<ShopOrderCartVO> cartList;
 	

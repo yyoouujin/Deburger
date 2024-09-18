@@ -1,0 +1,53 @@
+
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">월간 수익</h5>
+
+		<!-- Line Chart -->
+		<div id="lineChart"></div>
+
+		<script  th:inline="javascript">
+		 var datas = [[${shopSellG}]];
+         var list =[];
+         var datelist = [];
+                  
+         for(let i = 0; i<datas.length; i++){
+       	  list.push(datas[i].profits);
+       	  datelist.push(i);
+         }
+         
+         
+                  new ApexCharts(document.querySelector("#lineChart"), {
+                    series: [{
+                      name: "수익",
+                      data: list
+                    }],
+                    chart: {
+                      height: 350,
+                      type: 'line',
+                      zoom: {
+                        enabled: false
+                      }
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    stroke: {
+                      curve: 'straight'
+                    },
+                    grid: {
+                      row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                      },
+                    },
+                    xaxis: {
+                      categories: datelist,
+                    }
+                  }).render();
+
+              </script>
+		<!-- End Line Chart -->
+
+	</div>
+</div>

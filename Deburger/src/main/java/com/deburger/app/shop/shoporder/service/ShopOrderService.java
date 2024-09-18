@@ -19,5 +19,11 @@ public interface ShopOrderService {
 	
 	//발주 상세 조회
 	public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO);
+	
+	//자동발주 상세조회
+	public List<ShopOrderVO> autoOrderInfo();
+	
+	//자동발주 취소
+	public int deleteAuto(String orderDetailsNumber);
 		
 }

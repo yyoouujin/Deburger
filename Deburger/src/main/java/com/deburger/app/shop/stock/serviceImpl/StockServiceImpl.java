@@ -68,4 +68,17 @@ public class StockServiceImpl implements StockService {
 		return 1;
 	}
 
+	@Override
+	public List<StockVO> stockClassification() {
+		// TODO Auto-generated method stub
+		return stockMapper.stockClassification();
+	}
+	
+	@Override
+	public List<StockVO> classificationList(StockVO stockVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
+		return stockMapper.classificationList(stockVO);
+	}
 }

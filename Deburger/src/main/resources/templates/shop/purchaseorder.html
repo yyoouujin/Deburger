@@ -43,12 +43,14 @@ th, td {
 						<span>* 자동 발주 조건을 선택해주세요.</span>
 						<div>
 							<div>
-								<input type="radio" name="option" value="1" />재고 수량 <input
-									class="form-control" style="width: 200px;" type="number" />
+								<input type="radio" name="option" value="counts" />재고 수량 <input
+									class="form-control" style="width: 200px;" type="number"
+									id="countNumber" />
 							</div>
 							<div>
-								<input type="radio" name="option" value="2" />일별 주문 <input
-									class="form-control" style="width: 200px;" type="number" />
+								<input type="radio" name="option" value="dates" />일별 주문(거리) <input
+									class="form-control" style="width: 200px;" type="number"
+									id="dateNumber" />
 							</div>
 						</div>
 					</div>
@@ -64,10 +66,10 @@ th, td {
 							<div style="text-align: right; margin: 0 0 10px 0;">
 								<button type="button" class="btn btn-primary" id="save">발주
 									저장</button>
-								<button type="submit" class="btn btn-primary"
-									onclick="makeData()">발주 신청</button>
-								<button type="button" class="btn btn-primary" id="cancel" onclick="location.href='shopStock'">발주
-									취소</button>
+								<button type="submit" class="btn btn-primary" id="orderbtn">발주
+									신청</button>
+								<button type="button" class="btn btn-primary" id="cancel"
+									onclick="location.href='shopStock'">발주 취소</button>
 							</div>
 							<table class="col-lg-12" style="text-align: center">
 								<thead>
@@ -129,7 +131,8 @@ th, td {
 										<tr>
 											<td style="display: none;"><input type="text"
 												th:value="${list.materialNumber}" /></td>
-											<td><input type="checkbox" name="checkOrder" class="checkOrder"/></td>
+											<td><input type="checkbox" name="checkOrder"
+												class="checkOrder" /></td>
 											<td th:text=${index.index+1} />
 											<td th:text="${list.materialName}" />
 											<td th:text="${list.unit}" />
@@ -154,6 +157,23 @@ th, td {
 		</section>
 	</main>
 	<script>
+	let num = 0;
+	
+	$('#orderbtn').on('click',function(){
+		num = 1;
+		makeData()
+	})
+	
+	$('#save').on('click',function(){
+		num = 2;
+		if($("[name='option']:checked").length == 0){
+			alert("자동주문을 선택해주세요.");
+			return;
+		}else {
+			
+			makeData();
+		}
+	})
 
 	allOrder.addEventListener('click', function(){
 			const isChecked = allOrder.checked;
@@ -177,22 +197,37 @@ th, td {
 	
 		
 		function makeData(){
+		if($("[name='checkOrder']:checked").length == 0){
+			alert("주문할 재료를 선택해주세요.");
+			return;
+		}
 			let list = {};
 			let detList = [];
 			let cartList = [];
 			
 			//발주
 			let orderName = $('#orderName').get(0).value;
-			let storeNumber = $('#storeNumber').html();				
-			let autoOrderOperation = 'i1';
+			let storeNumber = $('#storeNumber').html();
+			let autoOrderOperation ='';
+			let note = '';
+			if(num == 1 ){
+				autoOrderOperation = 'i1';				
+			}else {
+				let value = $("input:radio[name=option]:checked").val();
+				if(value == 'counts'){
+					autoOrderOperation = 'i2';
+					note = $('#countNumber').val();
+				}else{
+					autoOrderOperation = 'i3';
+					note = $('#dateNumber').val();
+				}
+				
+			}
 			let cancelOperation = 'J1';
 			let oderApp = 'L1';
 			let allprice = $('#allSum').get(0).value;
 				
-			if($("[name='checkOrder']:checked").length == 0){
-				alert("주문할 재료를 선택해주세요.");
-				return;
-			}
+
 			
 			
 			$("[name='checkOrder']:checked").each(function(i,checkbox){
@@ -211,7 +246,7 @@ th, td {
 				
 			})
 			
-			list= {oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
+			list= {note,oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
 			
 			$.ajax({
 				url : "insertShopOrder",
