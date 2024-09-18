@@ -17,6 +17,10 @@ public interface MaterialOrderService {
 	public List<LogisticVO> selectLogisticsList();
 	// 업체별 제료 목록
 	public List<MaterialOrderVO> selectSupplierListOptions(MaterialOrderVO meteMaterialOrderVO);
+	
+	//물류창고 재료 발주
+	public int insertLogisticOrder(MaterialOrderListVO materialOrderListVO);
+	
 }
 
 

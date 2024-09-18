@@ -33,8 +33,9 @@
               <div class="card-body">
                 <div class="row mb-10">
                   <div class="col-sm-10 col-md-10">
-                    <div class="row col-md-10">
-                      <div class="col-sm-10 col-md-2">
+                  <br>
+                    <div class="row col-md-10">                    
+                      <div class="col-sm-10 col-md-2">                      	
                         <button type="button" class="btn btn-info col-md-12" id="appendBtn">추가</button>
                       </div>
                       <div class="col-sm-10 col-md-2">
@@ -55,7 +56,7 @@
                     </tr>
                     <tr height="50">
                       <th>발주일자</th>
-                      <td colspan="9">[[${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm')}]]</td>
+                      <td colspan="9" id="orderDay">[[${#calendars.format(#calendars.createNow(), 'yyyy년 MM월 dd일 HH시 mm분')}]]</td>
                     </tr>
                     <tr height="50">
                       <th>발신 업체 이름</th>
@@ -67,7 +68,7 @@
                           </th:block>
                         </select>
                       </td>
-                      <th>수신 업체 이름</th>
+                      <th>수신 창고 이름</th>
                       <td colspan="4">
                         <select class="form-select" id="logisticsId" name="logisticsId">
                           <option value="">물류창고를 선택하세요</option>
@@ -98,7 +99,7 @@
                       <th>합계금액</th>
                       <td style="text-align: center" colspan="9">
                         일금 <input type="text" style="border: none; width: 200px" id="korSum" readonly /> 원정(
-                        <input type="text" style="border: none; width: 200px" id="allSum" readonly />
+                        <input type="text" style="border: none; width: 200px" id="allSum" readonly  />
                         )세액포함
                       </td>
                     </tr>
@@ -116,7 +117,7 @@
     <script th:inline="javascript">
 
       let grid;
-      var detaList = [{ storeName: 'ddddddd' }];
+      var detaList = [];
       let supplierList = [[${supplierList}]];
       let logisticList = [[${logisticList}]];
       let logisticId = '';
@@ -173,12 +174,14 @@
             // [Column-1] 품명
             {
               header: '품명', // [필수] 컬럼 이름
-              name: 'materialName', // [필수] 컬럼 매핑 이름 값
+              name: 'materialNumber', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
               formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
-
+              validation: {
+                regExp: /^(.){1,100}$/,
+              },
               // [Option] select 옵션
               editor: {
                 type: 'select',
@@ -214,12 +217,14 @@
               align: 'center', // [선택] 텍스트 정렬 옵션
               editor: 'text', // [선택] 수정 옵션
               validation: {
-                regExp: /^(.){1,100}$/,
+                regExp: /^[0-9]{1,100}$/,
               },
               onAfterChange(ev) {
-               	  grid.setValue(ev.rowKey,'tax',grid.getData()[ev.rowKey].buyUnitprice * 0.1);
-                  grid.setValue(ev.rowKey,'counts',grid.getData()[ev.rowKey].buyUnitprice * 1.1);
-               	  document.getElementById('allSum').value = (grid.getSummaryValues('counts').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+               	  grid.setValue(ev.rowKey,'tax', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 0.1 * grid.getData()[ev.rowKey].count));
+                  grid.setValue(ev.rowKey,'orderCost', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 1.1 * grid.getData()[ev.rowKey].count));
+               	  document.getElementById('allSum').value = (grid.getSummaryValues('orderCost').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
+               	  
+               	  document.getElementById('korSum').value = geKoreanNumber(grid.getSummaryValues('orderCost').sum);
                    },
             },
             // [Column-4] 단가
@@ -260,7 +265,7 @@
             // [Column-8] 합계금액
             {
               header: '합계금액', // [필수] 컬럼 이름
-              name: 'counts', // [필수] 컬럼 매핑 이름 값
+              name: 'orderCost', // [필수] 컬럼 매핑 이름 값
               sortable: true, // [선택] 컬럼의 정렬 여부
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               align: 'center', // [선택] 텍스트 정렬 옵션
@@ -268,9 +273,9 @@
           ],
           summary: {
                  height: 0,
-                 position: 'counts', // or 'top'
+                 position: 'top', // or 'top'
                  columnContent: {
-                	 saleUnitpriceAll : {
+                	 orderCost : {
                      template: function(valueMap) {
                        return `합계: ${Math.round(((valueMap.sum)))} 원`;
                      }
@@ -291,14 +296,22 @@
       const phone1 = document.getElementById('phone1');
       const phone2 = document.getElementById('phone2');
       const email = document.getElementById('email');
+      const insertBtn = document.getElementById('insertBtn');
 
       const logisticsSelect = document.getElementById('logisticsId');
 
 
 
       appendBtn.addEventListener('click', () => {
-        grid.appendRow();
-      });
+        
+        if(document.getElementById('clientId').value == ''){
+                  alert('업체를 선택해주세요')
+                }else if(document.getElementById('logisticsId').value == ''){
+                  alert('물류창고를 선택해주세요')
+                }else{
+                  grid.appendRow();
+                }
+              });
 
       deleteBtn.addEventListener('click', () => {
         grid.removeCheckedRows();
@@ -337,7 +350,6 @@
 
       logisticsSelect.addEventListener('change',(e) => {
         makeGrid.innerHTML = '';
-        console.log(e.target.value);
         logisticId = e.target.value;
         logisticList.forEach((ele)=>{
           if(ele.logisticsId == e.target.value){
@@ -347,6 +359,68 @@
 
         grid = gridLoad();
       });
+
+      
+      insertBtn.addEventListener('click', (e) => {
+        if(grid.validate().length == 0){
+
+          let clientId = document.getElementById('clientId').value;
+          let logisticsId = document.getElementById('logisticsId').value;
+
+          if(grid.getData().length = 0){
+            alert('발주할 정보가 없습니다.');
+          }else{
+            $.ajax({
+                url: "/deburger/materialOrder",
+                method: "post",
+                contentType:"application/json",
+                data  : JSON.stringify({'materialOrder':{clientId,logisticsId}, 'materialOrderList': grid.getData()}),
+             })
+             .then(result =>{
+               if(result > 0){
+                   alert(result + '개 발주 완료했습니다.')        		   
+               }else{
+                 alert('발주할 정보가 없습니다.')  
+               }
+            })
+          }
+        }else{
+          alert('수량을 정확히 입력해 주세요')
+        }
+        
+        
+      });
+
+
+      
+      
+      function geKoreanNumber(number) {
+		  const koreanNumber = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+		  const tenUnit = ['', '십', '백', '천'];
+		  const tenThousandUnit = ['조', '억', '만', ''];
+		  const unit = 10000;
+
+		  let answer = '';
+
+		  while (number > 0) {
+		    const mod = number % unit;
+		    const modToArray = mod.toString().split('');
+		    const length = modToArray.length - 1;
+
+		     const modToKorean = modToArray.reduce((acc, value, index) => {
+		      const valueToNumber = +value;
+		      if (!valueToNumber) return acc;
+
+		      const numberToKorean = index < length && valueToNumber === 1 ? '' : koreanNumber[valueToNumber];
+		      return `${acc}${numberToKorean}${tenUnit[length - index]}`;
+		    }, '');
+
+		    answer = `${modToKorean}${tenThousandUnit.pop()} ${answer}`;
+		    number = Math.floor(number / unit);
+		  }
+
+		  return answer.replace();
+		}
     </script>
   </body>
 </html>
