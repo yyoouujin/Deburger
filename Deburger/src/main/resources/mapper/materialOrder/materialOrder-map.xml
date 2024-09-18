@@ -4,35 +4,47 @@
 
 <!-- 물류창고 발주 -> 물류창고 발주 상세 시작 -->
 	<insert id="insertLogisticOrder" parameterType="MaterialOrderVO">
-		INSERT INTO logistics_order (order_number
-		                            , order_day
-		                            , logistics_id
-		                            , note
-		                            , client_id)
-		VALUES( 'OD' || LPAD(OD_SEQ.nextval, '7', '0')
-		        , sysdate
-		        , #{logisticsId}
-		        , #{note}
-		        , #{clientId})
+		<selectKey keyProperty="orderNumber" resultType="MaterialOrderVO" order="BEFORE">
+			SELECT  'OD' || LPAD(OD_SEQ.nextval, '7', '0') ORDER_NUMBER
+			from dual
+		</selectKey>
+		INSERT INTO logistics_order(
+				ORDER_NUMBER
+				,ORDER_DAY
+				,LOGISTICS_ID
+				,CLIENT_ID)
+		VALUES(
+				#{orderNumber}
+				,SYSDATE
+				,#{logisticsId}
+				,#{clientId}
+				)	
 	</insert>
 	
-	<insert id="insertLogisticOrderDetail" parameterType="MaterialOrderVO">
-		INSERT INTO logistics_order_details (details_order_number
-		                                    , count
-		                                    , unit
-		                                    , material_number
-		                                    , order_number
-		                                    , person_id
-		                                    , order_cost
-		                                    , order_condition)
-		VALUES ( 'DOD' || LPAD(DOD_SEQ.nextval, '7', '0')
-		        , #{count}
-		        , #{unit}
-		        , #{materialNumber}
-		        , #{orderNumber}
-		        , #{personId}
-		        , #{orderCost}
-		        , #{orderCondition} )
+	<insert id="insertLogisticOrderDetail">
+	INSERT INTO logistics_order_details
+	            (
+				DETAILS_ORDER_NUMBER
+				,COUNT
+				,UNIT
+				,MATERIAL_NUMBER
+				,ORDER_NUMBER
+				,PERSON_ID
+				,IN_OPERATION
+				,ORDER_COST
+				,ORDER_CONDITION
+				)
+		VALUES (
+				 'DOD' || LPAD(DOD_SEQ.nextval, '7', '0')
+				,#{count}
+				,#{unit}
+				,#{materialNumber}
+				,#{orderNumber}
+				,#{personId}
+				,'f1'
+				,#{orderCost}
+				,'c1'			
+				)		
 	</insert>
 <!-- 물류창고 발주 -> 물류창고 발주 상세 끝 -->
 
@@ -85,6 +97,8 @@
 	                ON c.material_number = m.material_number
 	WHERE s.client_id = #{clientId}
 	</select>
+	
+	
 
 
 
