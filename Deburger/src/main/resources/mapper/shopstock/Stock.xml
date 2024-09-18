@@ -80,9 +80,28 @@
 			,sysdate
 			,SM_SEQ.NEXTVAL
 			,#{storeNumber}
-			,'M1'
+			,'M2'
 			,#{note}
 		)
 	</insert>
+	
+	<select id="stockClassification" parameterType="StockVO">
+	        select DISTINCT 
+               material_classification
+        from material
+	</select>
 
+	<select id="classificationList" parameterType="StockVO">
+	        		select m.material_number
+		,m.material_name
+		,m.material_classification
+		,m.unit
+		,m.sale_unitprice
+		,NVL(s.stock_count,0) AS stock_Count
+		,NVL(s.safety_stock,0) AS safety_Stock
+		from (select * from store_stock where store_number = #{storeNumber} ) s 
+		RIGHT OUTER JOIN material m  on	s.material_number =	m.material_number
+		where material_classification = #{materialClassification}
+		order by STOCK_COUNT DESC
+	</select>
 </mapper>

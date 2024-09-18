@@ -24,4 +24,10 @@ public interface StockMapper {
 	  
 	//가맹점 store_in 테이블
 	  public int updqtestoreIn(StockVO stockVO);
+	  
+	//분류
+	  public List<StockVO> stockClassification();
+	  
+	//조건 조회
+	  public List<StockVO> classificationList(StockVO stockVO);
 }

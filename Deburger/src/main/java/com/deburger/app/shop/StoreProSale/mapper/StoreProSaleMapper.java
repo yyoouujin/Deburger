@@ -9,6 +9,6 @@ public interface StoreProSaleMapper {
 	//목록 표시
 	public List<StoreProSaleVO> StoreProSaleList(StoreProSaleVO storeProSaleVO);
 	
-	//제품 조회
+	//제품 그래프 조회
 	public List<StoreProSaleVO> StoreProSaleoneList(StoreProSaleVO storeProSaleVO);
 }

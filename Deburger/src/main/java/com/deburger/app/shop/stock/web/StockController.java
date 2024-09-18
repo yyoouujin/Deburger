@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.shop.stock.service.StockService;
 import com.deburger.app.shop.stock.service.StockVO;
@@ -27,7 +28,11 @@ public class StockController {
 	public String selectStock(Model model) {
 		
 		List<StockVO> list = stockService.selectStock();
+		List<StockVO> list2 = stockService.stockClassification();
+		
 		model.addAttribute("stockList", list);
+		model.addAttribute("stockC", list2);
+		
 		return "shop/stocklist";
 		
 	}
@@ -60,5 +65,12 @@ public class StockController {
 		stockService.updqtestoreStock(stockVO);
 		
 		return "redirect:shopStock";
+	}
+	
+	@PostMapping("classificationList")
+	@ResponseBody
+	public List<StockVO> classificationList(@RequestBody StockVO stockVO,Model model) {		
+		List<StockVO> list = stockService.classificationList(stockVO);
+		return list;
 	}
 }

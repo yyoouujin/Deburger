@@ -1,0 +1,66 @@
+
+<div class="card">
+	<div class="card-body">
+		<h5 class="card-title">월간 주문</h5>
+
+		<!-- Area Chart -->
+		<div id="areaChart" style="min-height: 400px;" class="echart"></div>
+
+		<script th:inline="javascript">
+              
+            var datas = [[${shopOrderG}]];
+      		var list = [];
+      		var datelist = [];
+      		var sum = 0;
+      		
+
+      		
+      		for(let i = 0; i<datas.length; i++){		
+      			
+          		if(i == datas.length-1){
+          			if(datas[i].dt.slice(-2) == datas[i-1].dt.slice(-2)){
+          				sum += datas[i].count;
+          				list.push(sum);
+          			}else{
+          				list.push(datas[i].count);
+          			}
+          		}else{
+          			if(datas[i].dt.slice(-2) != datas[i+1].dt.slice(-2)){
+          				sum += datas[i].count;
+          				list.push(sum);
+          				sum = 0;
+          			}else if (datas[i].dt.slice(-2) == datas[i+1].dt.slice(-2)){
+          				sum += datas[i].count; 
+          			}else{
+          				list.push(0);
+          			}
+          		}
+      		}
+
+      		for(let i = 1; i<=list.length; i++){
+      			datelist.push(i);
+      		}
+      		
+      		
+      		
+                  echarts.init(document.querySelector("#areaChart")).setOption({
+                    xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: datelist
+                    },
+                    yAxis: {
+                      type: 'value'
+                    },
+                    series: [{
+                      data: list,
+                      type: 'line',
+                      smooth: true,
+                      areaStyle: {}
+                    }]
+                  });
+              </script>
+		<!-- End Area Chart -->
+
+	</div>
+</div>
