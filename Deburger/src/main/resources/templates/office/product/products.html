@@ -20,72 +20,70 @@
               <h5 class="card-title"></h5>
               <p>제품 관리</p>
                 <div class="row mb-3">
-                  <div class="col-sm-2">
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>전체</option>
-                      <option value="1">버거</option>
-                      <option value="2">세트</option>
-                      <option value="3">음료</option>
-                    </select>
+                  <div class="col-sm-2" id="choice">
+	                    <select class="form-select" aria-label="Default select example" id="selected" name="selected">
+	                      <option value="버거" id="burger">버거</option>
+	                      <option value="사이드" id="side">사이드</option>
+	                      <option value="음료" id="drink">음료</option>
+	                    </select>
                   </div>
-                </div>
+                  <!--  시작  -->
+		          <div class="row" id = "app">
+				  <div class="col-md-4" th:each="lists:${products}">
+				    <div class="thumbnail">
+				      <a href="/w3images/lights.jpg">
+				        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+				        <div class="caption">
+				          <p th:text="${lists.productName}" style="margin-bottom: 0;"></p>
+				          <p th:text="${#numbers.formatInteger(lists.saleUnitprice, 0, 'COMMA')} + '원'"></p>
+				        </div>
+				      </a>
+				    </div>
+				  </div>
+				</div>
+              </div>
             </div>
           </div>
         </div>        
       </div>
-	    <div>
-	    <!-- 시작 -->
-			     <div class="row">
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="/w3images/lights.jpg">
-		        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
-		        <div class="caption">
-		          <p>Lorem ipsum...</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="/w3images/nature.jpg">
-		        <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
-		        <div class="caption">
-		          <p>Lorem ipsum...</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="/w3images/fjords.jpg">
-		        <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
-		        <div class="caption">
-		          <p>Lorem ipsum...</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
-		</div>
-	    	<table>
-		    	<thead>
-		    		<tr>
-			    		<th>이름</th>				
-		    		</tr>
-		    	</thead>
-		    	<tbody>
-		    		<th:block th:each="lists:${products}">
-		    			<tr>
-		    				<td th:text="${lists.productName}"></td>
-		    			</tr>
-		    		</th:block>
-		    	</tbody>
-	    	</table>
-	    </div>
     </section>
     </main>
 </body>
 <script>
-	
+	$('#selected').on('change', function(){
+		let category = $(this).val();
+			console.log(category);
+		$.ajax({
+			 url : '/deburger/products',
+		     method : 'post',
+		     contentType : "application/json",
+		     data : JSON.stringify({category}),  
+		     success : function(result){
+		     		console.log('성공 하였습니다.');
+			}
+		})
+		.done(data =>{
+			$(data).each(function(index, item){
+				let lists = item.products;
+				$('#app').html('');
+				$(lists).each(function(index, item){
+					let devs = `<div class="col-md-4">
+					    <div class="thumbnail">
+					      <a href="/w3images/lights.jpg">
+					        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+					        <div class="caption">
+					          <p style="margin-bottom:0">${item.productName} </p>
+					          <p >${item.saleUnitprice}</p>
+					        </div>
+					      </a>
+					    </div>
+					  </div>
+					</div>`
+					$('#app').append(devs)
+				})
+			})
+		})
+		
+	})
 </script>
 </html>

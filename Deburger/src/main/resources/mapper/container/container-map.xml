@@ -222,6 +222,7 @@
 		    on a.order_number = b.order_number
 		join store c
 		    on a.store_number = c.store_number
+		where a.oder_app = 'L1'       
 		group by a.order_number,
 		        a.oder_app,
 		        c.logistics_id,

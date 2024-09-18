@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface ProductService {
 
-	public List<ProductVO> serviceAllList();
+	public List<ProductVO> serviceAllList(ProductVO productVO);
 
-	public ProductVO productInfo(ProductVO productVO);
+	public List<ProductVO> productInfo(ProductVO productVO);
 
 	public int productInsert(ProductVO productVO);
 

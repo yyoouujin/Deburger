@@ -19,17 +19,21 @@
               <div class="card-body">
                 <h5 class="card-title">물류 창고 재고 리스트</h5>
                 <!-- 여기 검색 등록 -->
-				 <div class="row mb-3">
-                    <div class="col-sm-4">
-                     <select class="form-select" aria-label="Default select example">
-	                      <option selected>Open this select menu</option>
-	                      <option value="1">One</option>
-	                      <option value="2">Two</option>
-	                      <option value="3">Three</option>
-                    </select>
-                    <h3 th:text="${persons.logisticsName}"></h3>
-                  </div>
-                </div>
+				<div class="row mb-12">
+				  <div class="d-flex justify-content-between align-items-center">
+				    <div class="col-sm-4">
+				      <select class="form-select" aria-label="Default select example">
+				        <option selected>전체</option>
+				        <option value="1">채소</option>
+				        <option value="2">패티</option>
+				        <option value="3">제빵</option>
+				      </select>
+				    </div>
+				    <div>
+				      <h5 th:text="${persons.logisticsName}"></h5>
+				    </div>
+				  </div>
+				</div>
                 <!-- End Search Bar -->
                 <!-- Default Table -->
                 <table class="table">
@@ -59,7 +63,7 @@
                   <div class="card-body">
                     <!-- Pagination with icons -->
                     <nav aria-label="Page navigation example">
-                      <ul class="pagination">
+                      <ul class="pagination" style="justify-content: center;">
                         <li class="page-item">
                           <a class="page-link" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>

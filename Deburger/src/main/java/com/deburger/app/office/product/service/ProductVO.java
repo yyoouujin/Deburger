@@ -15,5 +15,9 @@ public class ProductVO {
 	public String kind;
 	public String registrationDay;
 	public String Note;
+	
+    private String id;
+    
+    
 
 }

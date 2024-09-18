@@ -7,10 +7,10 @@ import com.deburger.app.office.product.service.ProductVO;
 public interface ProductMapper {
 
 	// 전체 조회
-	public List<ProductVO> selectAllList();
+	public List<ProductVO> selectAllList(ProductVO productVO);
 
 	// 단건 조회
-	public ProductVO selectProductInfo(ProductVO productVO);
+	public List<ProductVO> selectProductInfo(ProductVO productVO);
 
 	// 등록
 	public int insertProductInfo(ProductVO productVO);
