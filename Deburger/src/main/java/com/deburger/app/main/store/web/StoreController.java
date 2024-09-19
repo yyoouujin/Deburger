@@ -1,6 +1,5 @@
 package com.deburger.app.main.store.web;
 
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,18 +14,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.deburger.app.main.login.service.LoginService;
 import com.deburger.app.main.login.service.UserVO;
+import com.deburger.app.main.store.service.StoreSalesVO;
 import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
+import com.deburger.app.shop.notice.service.NoticeService;
+import com.deburger.app.shop.notice.service.NoticeVO;
+import com.deburger.app.shop.productSale.service.StoreSaleVO;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,11 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 public class StoreController {
 
 	private StoreService storeService;
+	private NoticeService noticeService;
 	
 
 	@Autowired
-	public StoreController(StoreService storeService) {
+	public StoreController(StoreService storeService, NoticeService noticeService) {
 		this.storeService = storeService;
+		this.noticeService = noticeService;
 	}
 
 	// application.properties 에서 불러와 필드에 담음
@@ -120,12 +120,10 @@ public class StoreController {
 		storeVO.setBusinessLicenseImage(setImagePath(uploadFileName2));
 		
 		UserVO userVO = new UserVO();
-		userVO.setId("frc" + storeVO.getBusinessRegistrationNumber());
 		userVO.setPassword(storeVO.getPhone());
 		userVO.setAuthority("4");
 		userVO.setPasswordChangeOpertation("N");
 		
-		storeVO.setStoreNumber("frc" + storeVO.getBusinessRegistrationNumber());
 		storeService.insertStore(storeVO, userVO);
 
 		return "main/store/insertStore";
@@ -167,7 +165,21 @@ public class StoreController {
 
 	// 가맹점 현황
 	@GetMapping("StoreStatistics")
-	public String StoreStatistics() {
+	public String StoreStatistics(Model model) {
+		
+		List<NoticeVO> list = noticeService.noticeListShop();
+		List<StoreSalesVO>  StoreSales = storeService.selectStoreSalesMonth();
+		List<StoreSalesVO>  StoreProduct = storeService.selectStoreProductMonth();
+		List<StoreSalesVO>  StoreOrder = storeService.selectStoreOrderMonth();
+		
+    	model.addAttribute("notices", list);
+    	//월별 가맹점 매출
+    	model.addAttribute("StoreSales", StoreSales);
+    	//전체메뉴 월별 판매량
+    	model.addAttribute("StoreProduct", StoreProduct);
+    	//월별 발주 원가
+    	model.addAttribute("StoreOrder", StoreOrder);
+    	
 		return "main/store/StoreStatistics";
 	}
 

@@ -10,10 +10,11 @@ import lombok.Data;
 public class MaterialOrderVO {
 	
 	//물류창고 발주
-	private String orderNumber;
+	private String orderNumber; // 발주번호
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date orderDay;
+	private Date orderDay; // 발주 일자
 	private String logisticsId; //물류창고
+	private String logisticsName; // 물류창고 이름
 	private String note;
 	private String clientId;
 	
@@ -22,10 +23,11 @@ public class MaterialOrderVO {
 	private int count;  // 수량
 	private String unit;  //규격
 	private String materialNumber;
-	private String personId;
+	private String personId; //담당자 id
+	private String name; // 담당자 이름
 	private int orderCost;
 	private String orderCondition; 	
-	private String inOperation;
+	private String inOperation; // 입고여부
 	
 	
 	//재료
@@ -39,6 +41,6 @@ public class MaterialOrderVO {
 	private int logisticsSafetyStock;
 	private int cost;             //재료원가(공급처의 재료 원가) 단가
 						
-	private String clientName;		
+	private String clientName; // 거래처 이름		
 	
 }
