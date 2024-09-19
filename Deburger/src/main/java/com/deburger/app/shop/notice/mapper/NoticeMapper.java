@@ -7,7 +7,10 @@ import com.deburger.app.shop.notice.service.NoticeVO;
 public interface NoticeMapper {
 	
 	//전체조회(전체)
-	public List<NoticeVO> noticeListShop();
+	public List<NoticeVO> noticeListShop(NoticeVO noticeVO);
+	
+	//카운트
+	public int countNotice(NoticeVO noticeVO);
 	
 	//전체조회(업데이트, 서비스, 이벤트, 작업, 공고)
 	public List<NoticeVO> noticeListShopE(NoticeVO noticeVO);
