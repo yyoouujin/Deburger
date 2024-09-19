@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deburger.app.main.login.service.LoginService;
 import com.deburger.app.main.login.service.UserVO;
 import com.deburger.app.main.store.mapper.StoreMapper;
+import com.deburger.app.main.store.service.StoreSalesVO;
 import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
 
@@ -26,9 +27,9 @@ public class StoreServiceImpl implements StoreService{
 	public int insertStore(StoreVO storeVO, UserVO userVO) {
 		String password = passwordEncoder.encode(userVO.getPassword());
 		userVO.setPassword(password);
-		
-		loginService.insertUserInfo(userVO);		
-		return storeMapper.insertStore(storeVO);
+		storeMapper.insertStore(storeVO);
+		userVO.setId(storeVO.getStoreNumber());
+		return loginService.insertUserInfo(userVO);
 	}
 
 	@Override
@@ -40,6 +41,24 @@ public class StoreServiceImpl implements StoreService{
 	public String selectStoreInfoNumber(String id) {
 		// TODO Auto-generated method stub
 		return storeMapper.selectStoreInfoNumber(id);
+	}
+
+	@Override
+	public List<StoreSalesVO> selectStoreSalesMonth() {
+		// TODO Auto-generated method stub
+		return storeMapper.selectStoreSalesMonth();
+	}
+
+	@Override
+	public List<StoreSalesVO> selectStoreProductMonth() {
+		// TODO Auto-generated method stub
+		return storeMapper.selectStoreProductMonth();
+	}
+
+	@Override
+	public List<StoreSalesVO> selectStoreOrderMonth() {
+		// TODO Auto-generated method stub
+		return storeMapper.selectStoreOrderMonth();
 	}
 
 }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>발주 조회</h1>
+      </div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <form>
+              <div class="row mb-3">
+                <div class="col-sm-10 col-md-3">
+                  <input type="text" class="form-control" value="디버거 감삼점" />
+                </div>
+                <div class="col-sm-10 col-md-3">
+                  <input type="date" class="form-control" />
+                </div>
+                <div class="col-sm-10 col-md-3">
+                  <button type="button" class="btn btn-primary" >
+                    검색
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="card">
+              <div class="card-body">
+                <div id="grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script th:inline="javascript">
+
+        	var StoreList = [[${StoreList}]];
+
+        	 let grid;   	
+
+
+
+          $(document).ready(async () => {
+            // 2. HTML이 수행된 뒤 함수를 호출한다.
+            grid = await gridLoad();
+
+          });
+
+
+          /**
+           *
+           * @return void
+           */
+          const gridLoad = () => {
+            // 3. 그리드 생성
+            const Grid = tui.Grid;
+
+            /**
+             * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+             *
+             * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+             * @reference https://seokbong.tistory.com/14
+             */
+
+
+            /**
+             * [선택] Grid Confirm 메시지
+             */
+            Grid.setLanguage('en'); // set Korean
+            const grid = new Grid({
+              // ================================== 공통 옵션 적용 ==============================
+              el: document.getElementById('grid'), // [필수] Container element
+              data: StoreList, // [선택] 그리드 데이터 조회
+
+
+              /**
+               * [선택] 순번 기능
+               * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+               */
+              rowHeaders: ['rowNum'],
+
+      	// 패이징
+              pageOptions: {
+            	  useClient: true,
+                perPage: 10,
+              },
+
+              // ================================== 컬럼 옵션 적용 ==============================
+              columns: [
+                // [Column-1] 발주일자
+                {
+                  header: '발주일자', // [필수] 컬럼 이름
+                  name: 'orderDay', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+
+                },
+                // [Column-2] 발주번호
+                {
+                  header: '발주번호', // [필수] 컬럼 이름
+                  name: 'orderNumber', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+
+                // [Column-4] 담당자ID
+                {
+                  header: '담당자ID', // [필수] 컬럼 이름
+                  name: 'personId', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+
+                // [Column-5] 담당자명
+                {
+                  header: '담당자명', // [필수] 컬럼 이름
+                  name: 'name', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-6] 거래처명
+                {
+                  header: '거래처명', // [필수] 컬럼 이름
+                  name: 'clientName', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-7] 수량
+                {
+                  header: '수량', // [필수] 컬럼 이름
+                  name: 'count', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-8] 창고번호
+                {
+                  header: '창고번호', // [필수] 컬럼 이름
+                  name: 'logisticsId', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-9] 창고명
+                {
+                  header: '창고명', // [필수] 컬럼 이름
+                  name: 'logisticsName', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-10] 진행상태
+                {
+                  header: '진행상태', // [필수] 컬럼 이름
+                  name: 'inOperation', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+              ],
+            });
+
+            //  그리드 추가
+
+           grid.on('dblclick', (ev) => {
+          	let url ='officeStoreInfo?storeNumber=' + grid.getData()[ev.rowKey].storeNumber;
+      location.href = url;
+          	})
+			
+            
+            return grid;
+          };
+    </script>
+  </body>
+</html>

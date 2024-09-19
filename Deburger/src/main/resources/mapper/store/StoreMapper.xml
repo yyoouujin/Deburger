@@ -27,6 +27,10 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="com.deburger.app.main.store.service.StoreVO">
+	<selectKey keyProperty="storeNumber" resultType="com.deburger.app.main.store.service.StoreVO" order="BEFORE">
+		SELECT 'FRC' || LPAD(FRC_SEQ.nextval, '10', '0') STORE_NUMBER
+		from dual
+	</selectKey>
 	INSERT INTO store(
 	                  STORE_NUMBER
 	                 ,SHOPKEEPER
@@ -67,6 +71,70 @@
 	<select id="selectStoreInfoNumber">
 	SELECT store_name FROM store 
 	WHERE store_number = #{id}
+	</select>
+	
+	<!-- 월별 가맹점 매출 -->
+	<select id="selectStoreSalesMonth" >
+	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
+     , NVL(SUM(PROFITS),0) SUM_cnt
+	FROM ( SELECT TO_CHAR(PRODUCT_DATE, 'YYYY-MM-DD') AS PRODUCT_DATE
+	              , PROFITS
+	       FROM store_sales_statistics
+	       WHERE PRODUCT_DATE BETWEEN TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD')
+	                              AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')
+	        ) a 
+	   RIGHT OUTER JOIN 
+	    ( SELECT TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD') + LEVEL - 1 AS dt
+	      FROM dual 
+	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD') 
+	      - TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD') + 1)
+	      ) b
+	   ON b.dt = a.product_date 
+	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
+	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')
+	</select>
+	
+	<!-- 전체메뉴 월별 판매량 -->
+	<select id="selectStoreProductMonth" >
+	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
+     , NVL(SUM(count),0) SUM_cnt
+	FROM ( SELECT TO_CHAR(PRODUCT_DATE, 'YYYY-MM-DD') AS PRODUCT_DATE
+	              , count
+	       FROM store_product_sale
+	       WHERE PRODUCT_DATE BETWEEN TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD')
+	                              AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')
+	        ) a 
+	   RIGHT OUTER JOIN 
+	    ( SELECT TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+	      FROM dual 
+	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE('2024-12-31','YYYY-MM-DD') 
+	      - TO_DATE('2024-01-01','YYYY-MM-DD') + 1)
+	      ) b
+	   ON b.dt = a.product_date 
+	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
+	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')	
+	</select>
+	
+	<!-- 월별 발주 원가 -->
+	<select id="selectStoreOrderMonth" >
+	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
+     , NVL(SUM(order_cost),0) SUM_cnt
+	FROM ( SELECT TO_CHAR(order_day, 'YYYY-MM-DD') AS order_day
+	              , d.order_cost order_cost
+	       FROM logistics_order_details d JOIN logistics_order o
+	       ON d.order_number = o.order_number
+	       WHERE o.order_day BETWEEN TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD')
+	                   AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')       
+	        ) a 
+	RIGHT OUTER JOIN 
+	    ( SELECT TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+	      FROM dual 
+	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE('2024-12-31','YYYY-MM-DD') 
+	      - TO_DATE('2024-01-01','YYYY-MM-DD') + 1)
+	      ) b
+	   ON b.dt = a.order_day 
+	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
+	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')
 	</select>
 	
 	
