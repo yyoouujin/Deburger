@@ -154,13 +154,13 @@ public class QnaServiceImpl implements QnaService {
 	public Map<String, Object> qnaCommentUpdate(QnaVO qnaVO) {
         Map<String, Object> map = new HashMap<>();
         boolean isSuccessed = false;
-        
+        System.out.println(qnaVO);  
         int result = mapper.qnaCommentUpdate(qnaVO);
 
         if(result == 1) {
         	isSuccessed = true;
         }
-        
+              
         map.put("result", isSuccessed);
         map.put("target", qnaVO);
         
@@ -170,6 +170,7 @@ public class QnaServiceImpl implements QnaService {
 	//답글 작성
 	@Override
 	public int qnaCommentInsert(QnaVO qnaVO) {
+		System.err.println(qnaVO);
 		int result = mapper.qnaCommentInsert(qnaVO);
 		return result;
 	}

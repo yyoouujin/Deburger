@@ -126,13 +126,11 @@ where  q.qna_number = #{qnaNumber}
 INSERT INTO comments (comments_number
                 , qna_number
                 , com_content
-                , com_writer_day
                 )
 VALUES         (
                 LPAD(COM_SEQ.nextval, '7', '0')
                 ,#{qnaNumber}
                 ,#{comContent}
-                ,sysdate
                 )
 </insert>
 
@@ -140,7 +138,6 @@ VALUES         (
 <update id= "qnaCommentUpdate">
 UPDATE comments 
    SET   com_content=#{comContent}
-        ,writer_day=sysdate
  WHERE qna_number=#{qnaNumber}
 </update>
 
