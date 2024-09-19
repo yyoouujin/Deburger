@@ -2,6 +2,8 @@ package com.deburger.app.shop.shopmain.service;
 
 import java.util.List;
 
+import com.deburger.app.shop.stock.service.StockVO;
+
 public interface ShopMainService {
 
 	//조회
@@ -15,4 +17,7 @@ public interface ShopMainService {
 	
 	//유통기한 초과
 	public List<ShopMainVO> limitList();
+	
+	// 공지사항 단건조회
+	public List<ShopMainVO> noticeList();
 }

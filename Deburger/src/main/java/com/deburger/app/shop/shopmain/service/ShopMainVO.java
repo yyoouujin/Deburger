@@ -35,6 +35,8 @@ public class ShopMainVO {
 	
 	private String orderDetailsNumber;
 	private String materialNumber;
-	
-	
+
+    private String title;
+
+    
 }

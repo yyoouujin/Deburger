@@ -84,7 +84,7 @@
 		store_product_sale
 		WHERE product_date BETWEEN TRUNC(to_DATE(#{productDate}), 'MM') AND
 		LAST_DAY(#{productDate})
-		AND store_NUMBEr = #{storeNumber}
+		AND store_Number = #{storeNumber}
 		)
 		SELECT b.dt
 		, a.count
@@ -110,4 +110,15 @@
         where si.store_number = #{storeNumber}
 	</select>
 
+	<select id="shopcountMaterial" resultType ="int">
+		select count(*) from material
+	</select>
+	
+		<select id="noticeList" resultType ="ShopMainVO">
+		        select title
+        from (select title
+              from notice
+              order by Notice_number DESC)
+        where rownum = 1
+	</select>
 </mapper>

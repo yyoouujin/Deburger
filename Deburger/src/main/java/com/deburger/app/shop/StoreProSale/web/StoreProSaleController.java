@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,6 +27,9 @@ public class StoreProSaleController {
 	public String StoreProSaleList(Model model) {
 
 		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleList();
+		List<StoreProSaleVO> list2 = storeProSaleService.stockClassification();
+		
+		model.addAttribute("stockC", list2);
 		model.addAttribute("StoreProSaleList", list);
 
 		return "shop/product";
@@ -41,5 +45,12 @@ public class StoreProSaleController {
 		return "shop/productGraph";
 	}
 	
+	
+	@PostMapping("classificationListpro")
+	@ResponseBody
+	public List<StoreProSaleVO> classificationListpro(@RequestBody StoreProSaleVO storeProSaleVO,Model model) {		
+		List<StoreProSaleVO> list = storeProSaleService.classificationListpro(storeProSaleVO);
+	return list;
+	}
 	
 }

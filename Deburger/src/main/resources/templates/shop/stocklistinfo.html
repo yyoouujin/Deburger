@@ -35,18 +35,20 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block th:each="list:${shopStockInfo}">
-										<tr id = list>
+									<th:block th:each="list:${viewAll}">
+										<tr id=list>
 											<td>[[${#dates.format(list.orderDay,'yyyy/MM/dd')}]]</td>
 											<td th:text="${list.materialName}" />
 											<td>본사</td>
 											<td th:text="${list.count}" />
 											<td th:text="${list.remainStockCount}" />
 											<td>[[${#dates.format(list.expirationLimit,'yyyy/MM/dd')}]]</td>
-											<td><button type="button" class="btn btn-primary btn-sm btnStock"
+											<td><button type="button"
+													class="btn btn-primary btn-sm btnStock"
 													data-bs-toggle="modal" data-bs-target="#disablebackdrop">재고
 													조정</button></td>
-											<td style="display: none;" th:text="${list.orderDetailsNumber}" />
+											<td style="display: none;"
+												th:text="${list.orderDetailsNumber}" />
 											<td style="display: none;" th:text="${list.materialNumber}" />
 											<!-- End Disabled Backdrop Modal-->
 										</tr>
@@ -56,11 +58,43 @@
 							<!-- End Table with stripped rows -->
 						</div>
 					</div>
-
+					<div style="display: block; text-align: center;" id="pagelist" th:if="${paging.total == 0}">
+					 <span>발주 내역이 없습니다.</span>
+					</div>
+						<div style="display: block; text-align: center;" id="pagelist" th:if="${paging.total >0}">
+							<nav aria-label="Page navigation">
+								<ul class="pagination justify-content-center">
+									<!-- Previous button -->
+									<li class="page-item"
+										th:classappend="${paging.startPage == 1} ? 'disabled'"><a
+										class="page-link"
+										th:href="@{/shopStockInfo?(materialNumber=${param.materialNumber},nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+										aria-disabled="true">&lt;</a></li>
+									<!-- Page numbers -->
+									<li class="page-item"
+										th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+										th:classappend="${p == paging.nowPage} ? 'active'"><span
+										th:if="${p == paging.nowPage}"> <a class="page-link"
+											th:text="${p}"></a>
+									</span> <span th:if="${p != paging.nowPage}"> <a
+											class="page-link"
+											th:href="@{/shopStockInfo?(materialNumber=${param.materialNumber},nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+											th:text="${p}"></a>
+									</span></li>
+									<!-- Next button -->
+									<li class="page-item"
+										th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+										<a class="page-link"
+										th:href="@{/shopStockInfo?(materialNumber=${param.materialNumber},nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+									</li>
+								</ul>
+							</nav>
+					</div>
 				</div>
 			</div>
 		</section>
 	</main>
+
 	<form>
 		<div class="modal fade" id="disablebackdrop" tabindex="-1"
 			data-bs-backdrop="false">
@@ -90,10 +124,10 @@
 									<td id="limitDay"></td>
 									<td id="materialName"></td>
 									<td id="remainStockCount"></td>
-									<td><input type="number" value="0" id="StockCount" th:min="-${shopStockInfo[0].remainStockCount}"></td>
+									<td><input type="number" value="0" id="StockCount"></td>
 									<td><input type="text" id="out"></td>
 									<td><input type="checkbox" name="checkOrder"></td>
-									
+
 									<td style="display: none;" id="orderDetails"></td>
 									<td style="display: none;" id="material"></td>
 								</tr>
@@ -109,6 +143,7 @@
 			</div>
 		</div>
 	</form>
+
 	<script>
 	$(".btnStock").on("click", function(event) {
 		document.getElementById('orderDay').innerHTML=$(event.target).closest('tr').children().eq(0).text();
@@ -117,6 +152,8 @@
 		document.getElementById('remainStockCount').innerHTML=$(event.target).closest('tr').children().eq(4).text();
 		document.getElementById('orderDetails').innerHTML=$(event.target).closest('tr').children().eq(7).text();
 		document.getElementById('material').innerHTML=$(event.target).closest('tr').children().eq(8).text();
+		let mins = '-'+$(event.target).closest('tr').children().eq(4).text();
+		document.getElementById('StockCount').setAttribute('min',mins);
 	});
 	
 	$("#savebtn").on("click", function(event) {

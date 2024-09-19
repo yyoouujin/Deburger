@@ -15,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deburger.app.main.login.service.UserVO;
+import com.deburger.app.shop.stock.service.StockVO;
 import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInService;
 import com.deburger.app.shop.storein.service.StoreInVO;
@@ -35,10 +37,29 @@ public class StoreInController {
 	
 	//입고 승인 전체 조회
 	@GetMapping("storeInList")
-	public String storeInList(Model model) {
+	public String storeInList(StoreInVO storeInVO, Model model, 
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		
-		List<StoreInVO> list = storeInService.StoreInList();
-		model.addAttribute("storeInList", list);
+		int total = storeInService.shopincoun();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		storeInVO = new StoreInVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		//List<StockVO> list = stockService.selectStock(stockVO);
+
+		//model.addAttribute("stockList", list);
+		model.addAttribute("paging", storeInVO);
+		model.addAttribute("viewAll", storeInService.StoreInList(storeInVO));
+		
+		
+		
 		return "shop/receivesList";
 		
 	}

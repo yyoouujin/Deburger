@@ -13,21 +13,42 @@
 
 	<select id="StoreProSaleoneList" resultType="StoreProSaleVO">
 		with b as (
-		        SELECT TO_CHAR(ADD_MONTHS(TRUNC(#{productDate},'MM'),	-1) + LEVEL - 1,'yy-MM-dd') AS dt
-				FROM dual
-				CONNECT BY LEVEL  <![CDATA[<=]]> LAST_DAY(#{productDate})- ADD_MONTHS(TRUNC(#{productDate}, 'MM'),-1) + 1
-				)
+		SELECT TO_CHAR(ADD_MONTHS(TRUNC(#{productDate},'MM'), -1) + LEVEL -
+		1,'yy-MM-dd') AS dt
+		FROM dual
+		CONNECT BY LEVEL  <![CDATA[<=]]>
+		LAST_DAY(#{productDate})- ADD_MONTHS(TRUNC(#{productDate}, 'MM'),-1) +
+		1
+		)
 		, a as (
-		       SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
-					   ,count
-				FROM store_product_sale
-				WHERE product_date BETWEEN ADD_MONTHS(#{productDate}, -1)	AND LAST_DAY(#{productDate})
-				AND store_NUMBEr = #{storeNumber}
-				AND product_number = #{productNumber}
+		SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
+		,count
+		FROM store_product_sale
+		WHERE product_date BETWEEN ADD_MONTHS(#{productDate}, -1) AND
+		LAST_DAY(#{productDate})
+		AND store_NUMBEr = #{storeNumber}
+		AND product_number = #{productNumber}
 		)
 		SELECT b.dt , a.count
-		FROM a full outer join b
+		FROM a full
+		outer join b
 		on a.dt = b.dt
 		ORDER BY b.dt
+	</select>
+
+	<select id="stockClassification" resultType="StoreProSaleVO">
+		select DISTINCT category
+		from product
+	</select>
+	
+		<select id="classificationListpro" resultType="StoreProSaleVO">
+		select 
+		product_Number
+		,product_name
+		,category
+		,product_number
+		,kind
+		from product
+		where category = #{category}
 	</select>
 </mapper>
