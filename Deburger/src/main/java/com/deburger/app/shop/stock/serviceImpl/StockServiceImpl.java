@@ -28,7 +28,7 @@ public class StockServiceImpl implements StockService {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
 		StockVO stockVO = new StockVO();
-		stockVO.setStockNumber(mcode);
+		stockVO.setStoreNumber(mcode);
 		return stockMapper.selectStock(stockVO);
 	}
 
@@ -49,6 +49,8 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public List<StockVO> selectStockinfo(StockVO stockVO) {
 		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
 		return stockMapper.selectStockinfo(stockVO);
 	}
 
@@ -56,11 +58,27 @@ public class StockServiceImpl implements StockService {
 	@Transactional
 	public int updqtestoreStock(StockVO stockVO) {
 		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
 		
+		System.err.println(stockVO);
 		stockMapper.updqtestoreIn(stockVO);
 		stockMapper.updqtestoreStock(stockVO);
 		stockMapper.insertstoreProductSale(stockVO);
 		return 1;
 	}
 
+	@Override
+	public List<StockVO> stockClassification() {
+		// TODO Auto-generated method stub
+		return stockMapper.stockClassification();
+	}
+	
+	@Override
+	public List<StockVO> classificationList(StockVO stockVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
+		return stockMapper.classificationList(stockVO);
+	}
 }

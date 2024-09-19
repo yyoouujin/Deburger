@@ -3,14 +3,21 @@ package com.deburger.app.office.materialOrder.web;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.deburger.app.office.logistic.service.LogisticVO;
+import com.deburger.app.office.materialOrder.service.MaterialOrderListVO;
 import com.deburger.app.office.materialOrder.service.MaterialOrderService;
+import com.deburger.app.office.materialOrder.service.MaterialOrderVO;
 import com.deburger.app.office.supplier.service.SupplierVO;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 @AllArgsConstructor
@@ -18,7 +25,7 @@ public class MaterialOrderController {
 	
 	
 	private MaterialOrderService materialOrderService;
-	//물류창고 발주 -> 발주 상세(트랜잭션)
+	
 	
 	
 	//물류창고 발주 등록 페이지
@@ -33,6 +40,23 @@ public class MaterialOrderController {
 		
 		return "office/materialOrder/materialOrderInsert";
 	}
+	
+	//물류창고 발주 -> 발주 상세(트랜잭션)
+	@PostMapping("materialOrder")
+	@ResponseBody
+	public int postmaterialOrder(@RequestBody MaterialOrderListVO list) {
+		return materialOrderService.insertLogisticOrder(list);
+	}
+	
+	
+	// 업체별 판매상품 검색
+	@PostMapping("selectSupplierListOptions")
+	@ResponseBody
+	public List<MaterialOrderVO> selectSupplierListOptions(@RequestBody MaterialOrderVO meteMaterialOrderVO) {		
+		return materialOrderService.selectSupplierListOptions(meteMaterialOrderVO);
+	}
+	
+	
 	
 		
 }

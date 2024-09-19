@@ -28,16 +28,17 @@ public class StoreProSaleController {
 		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleList();
 		model.addAttribute("StoreProSaleList", list);
 
-		return "shop/materials";
+		return "shop/product";
 	}
 
 	@GetMapping("StoreProSaleoneList")
-	public String StoreProSaleoneList(String productNumber, Model model) {
+	public String StoreProSaleoneList(StoreProSaleVO storeProSaleVO, Model model) {
 		
-		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleoneList(productNumber);
+		List<StoreProSaleVO> list = storeProSaleService.StoreProSaleoneList(storeProSaleVO);
+		
 		model.addAttribute("StoreProSaleoneList", list);
 		
-		return "shop/materialsGraph";
+		return "shop/productGraph";
 	}
 	
 	

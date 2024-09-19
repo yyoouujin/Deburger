@@ -17,4 +17,9 @@ public interface StockService {
 	// 재고 조정
 	public int updqtestoreStock(StockVO stockVO);
 
+	// 분류
+	public List<StockVO> stockClassification();
+
+	// 조건 조회
+	public List<StockVO> classificationList(StockVO stockVO);
 }

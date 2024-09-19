@@ -5,13 +5,13 @@
 	layout:fragment="Content">
 <head>
 <meta charset="UTF-8" />
-<title>재료 판매</title>
+<title>제품 판매</title>
 </head>
 
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
-			<h1>재료 판매 통계</h1>
+			<h1>제품 판매 통계</h1>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -41,23 +41,38 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6" id="graph">
+				<div class="col-lg-6">
+					<input type='date' id='currentDate' />
+					<div id="graph"></div>
+
 				</div>
 			</div>
 		</section>
 	</main>
 	<script th:inline="javascript">
-	$('tbody > tr').on("click", function(event) {
-		let list = {};
-		
-		let productNumber = $(event.target).closest('tr').children().eq(0).html();
+		document.getElementById('currentDate').value = new Date().toISOString()
+				.substring(0, 10);
 
-		list = {productNumber};
+		var num = '';
+		$('tbody > tr').on("click", function(event) {
+			num = $(event.target).closest('tr').children().eq(0).html();
+			regr();					
+		});
 		
-		
-		$('#graph').load("StoreProSaleoneList?productNumber=" + productNumber);
-		
-	});
+		$('#currentDate').on("change", function(event) {
+			regr();
+		});
+
+		function regr() {
+			let list = {};
+
+			let productNumber = num;
+			let productdate = $('#currentDate').val();
+
+			let url = `StoreProSaleoneList?productNumber=${productNumber}&productDate=${productdate}`
+
+			$('#graph').load(url);
+		}
 	</script>
 </body>
 

@@ -6,7 +6,7 @@ import java.util.Map;
 public interface MaterialService {
 
 	// 전체 조회
-	public List<MaterialVO> serviceAllList();
+	public List<MaterialVO> serviceAllList(MaterialVO materialVO);
 
 	// 단건 조회
 	public List<MaterialVO> materialInfo(MaterialVO materialVO);
@@ -18,6 +18,10 @@ public interface MaterialService {
 	public Map<String, Object> updateMaterial(MaterialVO materialVO);
 
 	// 삭제
-	public int deleteMaterial(String materialNumber);
+	public int deleteMaterialService(MaterialVO materialVO);
+	
+	// Material 총 갯수
+	public int countMaterialService();
+		
 
 }

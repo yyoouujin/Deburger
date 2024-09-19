@@ -19,12 +19,16 @@ public class ProductServiceImpl implements ProductService {
 	public ProductMapper productMapper;
 
 	@Override
-	public List<ProductVO> serviceAllList() {
-		return productMapper.selectAllList();
+	public List<ProductVO> serviceAllList(ProductVO productVO) {
+
+		List<ProductVO> list =productMapper.selectAllList(productVO);
+		System.out.println(list);
+		return list;
+		
 	}
 
 	@Override
-	public ProductVO productInfo(ProductVO productVO) {
+	public List<ProductVO> productInfo(ProductVO productVO) {
 		// TODO Auto-generated method stub
 		return productMapper.selectProductInfo(productVO);
 	}

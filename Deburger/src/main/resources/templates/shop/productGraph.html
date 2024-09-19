@@ -1,0 +1,91 @@
+<div class="card">
+	<div class="card-body">
+
+		<h5 class="card-title">제품 판매 </h5>
+		<!-- Column Chart -->
+		<div id="columnChart"></div>
+		<script th:inline="javascript">
+				var datas = [[${StoreProSaleoneList}]];
+				var list = [];
+				var listsub = [];
+				var catechorylist = [];
+				
+				var count = 0;
+				var listcount = 0;
+				
+				for(let i = 0; i<datas.length; i++){
+					if(count == 0){
+						list.push(datas[i].count);
+						
+						if(datas[i].dt.slice(-2)>datas[i+1].dt.slice(-2)){
+							count = 1;
+						}
+					}else{
+						listsub.push(datas[i].count);
+					}	
+				}
+				
+				if(list.length > listsub.length){
+					for(let i = 0; i<(list.length - listsub.length); i++){
+						listsub.push(0)
+					}
+				}else {
+					for(let i = 0; i<(listsub.length - list.length); i++){
+						list.push(0)
+					}
+				}
+					
+
+				
+			new ApexCharts(document.querySelector("#columnChart"), {
+				series : [ {
+					name : '지난달',
+					data :  list,
+				}, {
+					name : '최근',
+					data : listsub
+				}, ],
+				chart : {
+					type : 'bar',
+					height : 350
+				},
+				plotOptions : {
+					bar : {
+						horizontal : false,
+						columnWidth : '55%',
+						endingShape : 'rounded'
+					},
+				},
+				dataLabels : {
+					enabled : false
+				},
+				stroke : {
+					show : true,
+					width : 2,
+					colors : [ 'transparent' ]
+				},
+				xaxis : {
+					categories : catechorylist,
+				},
+				yaxis : {
+					title : {
+						text : '$ (thousands)'
+					}
+				},
+				fill : {
+					opacity : 1
+				},
+				tooltip : {
+					y : {
+						formatter : function(val) {
+							return "$ " + val + " thousands"
+						}
+					}
+				}
+			}).render();
+			//     });
+		</script>
+		<!-- End Column Chart -->
+
+	</div>
+</div>

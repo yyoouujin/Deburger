@@ -64,7 +64,7 @@
 	<form>
 		<div class="modal fade" id="disablebackdrop" tabindex="-1"
 			data-bs-backdrop="false">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-xl">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">재고 조정</h5>
@@ -80,6 +80,7 @@
 									<th>이름</th>
 									<th>현재 재고</th>
 									<th>조정 재고</th>
+									<th>비고</th>
 									<th>폐기</th>
 								</tr>
 							</thead>
@@ -89,8 +90,10 @@
 									<td id="limitDay"></td>
 									<td id="materialName"></td>
 									<td id="remainStockCount"></td>
-									<td><input type="number" value="0" id="StockCount"></td>
+									<td><input type="number" value="0" id="StockCount" th:min="-${shopStockInfo[0].remainStockCount}"></td>
+									<td><input type="text" id="out"></td>
 									<td><input type="checkbox" name="checkOrder"></td>
+									
 									<td style="display: none;" id="orderDetails"></td>
 									<td style="display: none;" id="material"></td>
 								</tr>
@@ -111,7 +114,7 @@
 		document.getElementById('orderDay').innerHTML=$(event.target).closest('tr').children().eq(0).text();
 		document.getElementById('limitDay').innerHTML=$(event.target).closest('tr').children().eq(5).text();
 		document.getElementById('materialName').innerHTML=$(event.target).closest('tr').children().eq(1).text();
-		document.getElementById('remainStockCount').innerHTML=$(event.target).closest('tr').children().eq(3).text();
+		document.getElementById('remainStockCount').innerHTML=$(event.target).closest('tr').children().eq(4).text();
 		document.getElementById('orderDetails').innerHTML=$(event.target).closest('tr').children().eq(7).text();
 		document.getElementById('material').innerHTML=$(event.target).closest('tr').children().eq(8).text();
 	});
@@ -124,23 +127,25 @@
 		if($("[name='checkOrder']:checked").length == 0){
 			var orderDetailsNumber = $('#orderDetails').html();
 			var stockCount = $('#StockCount').val();
-			var remainStockCount = $('#StockCount').val();
 			var materialNumber = $('#material').html();
 			var amountcon =  $('#StockCount').val();
+			var remainStockCount = $('#StockCount').val();
+			var note = $('#out').val();
 			var disposalOperation = 'F1';
 			
 			
 		}else{
 			var orderDetailsNumber = $('#orderDetails').html();
-			var stockCount = 0;
+			var stockCount = $('#remainStockCount').html();
 			var materialNumber = $('#material').html();
-			var remainStockCount = 0;
-			var amountcon =  0;
+			var remainStockCount = $('#remainStockCount').html();
+			var amountcon =  $('#remainStockCount').html();
+			var note = $('#out').val();
 			var disposalOperation = 'F2';
 
 			
 		}
-		list = {orderDetailsNumber,remainStockCount,stockCount,materialNumber,amountcon,disposalOperation};
+		list = {remainStockCount,note,orderDetailsNumber,remainStockCount,stockCount,materialNumber,amountcon,disposalOperation};
 
 		console.log(list)
 		

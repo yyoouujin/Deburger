@@ -3,34 +3,35 @@
 <mapper namespace="com.deburger.app.office.product.mapper.ProductMapper">
 	<select id="selectAllList" resultType="ProductVO">
 		select
-	        PRODUCT_NUMBER,
-	        PRODUCT_NAME,
-	        SALE_UNITPRICE,
-	        IMAGE,
-	        Recipe_PDF,
-	        Price,
-	        Category,
+	        product_number,
+	        product_name,
+	        sale_unitprice,
+	        image,
+	        recipe_pdf,
+	        price,
+	        category,
 	        kind,
-	        REGISTRATION_DAY,
-	        Note
+	        registration_day,
+	        note
 		from product
-		order by PRODUCT_NUMBER desc
+        where category = #{category}
+		order by product_number
 	</select>
 	
 	<select id="selectProductInfo" resultType="ProductVO">
 		select
-	        PRODUCT_NUMBER,
-	        PRODUCT_NAME,
-	        SALE_UNITPRICE,
-	        IMAGE,
-	        Recipe_PDF,
-	        Price,
-	        Category,
+	        product_number,
+	        product_name,
+	        sale_unitprice,
+	        image,
+	        recipe_pdf,
+	        price,
+	        category,
 	        kind,
-	        REGISTRATION_DAY,
-	        Note
+	        registration_day,
+	        note
 		from product
-		where PRODUCT_NUMBER = #{productNumber}
+		where product_number = #{productNumber}
 	</select>
 	
 	<insert id="insertProductInfo" parameterType="ProductVO">

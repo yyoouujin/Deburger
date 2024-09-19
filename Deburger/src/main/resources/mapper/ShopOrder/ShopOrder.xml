@@ -42,7 +42,7 @@
 		,#{storeNumber}
 		,#{autoOrderOperation}
 		,#{cancelOperation}
-		,''
+		,#{note}
 		,''
 		,#{allprice}
 		,#{oderApp})
@@ -122,5 +122,31 @@ from order_details o join store_order s
        where o.order_number = #{orderNumber}
 	
 	</select>
+	
+	<select id="autoOrderInfo" parameterType="ShopOrderVO"> 
+	select od.order_details_number
+               ,m.material_name
+               ,m.material_item
+               ,m.unit
+               ,od.count
+               ,m.sale_unitprice
+               ,ss.stock_count
+               ,ss.safety_stock
+               ,so.note
+        from order_Details od join store_order so
+             on od.order_number = so.order_number
+             join Material m
+             on m.material_number = od.material_number
+             join store_stock ss
+             on ss.store_number = so.store_number
+        where auto_order_operation != 'i1'
+        and ss.store_number = #{storeNumber}
+        Order by order_details_number DESC
+	</select>
+	
+	<delete id="deleteAuto" parameterType="String">
+		DELETE FROM order_details
+		WHERE order_details_number = #{orderDetailsNumber}
+	</delete>
 
 </mapper>

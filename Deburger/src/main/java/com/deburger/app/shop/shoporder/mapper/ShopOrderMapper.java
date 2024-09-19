@@ -30,4 +30,10 @@ public interface ShopOrderMapper {
 		
 		//발주 상세 조회
 		public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO);
+		
+		//자동발주 상세조회
+		public List<ShopOrderVO> autoOrderInfo(ShopOrderVO shopOrderVO);
+		
+		//자동발주 취소
+		public int deleteAuto(String orderDetailsNumber);
 }

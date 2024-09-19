@@ -18,7 +18,7 @@
 		LEFT OUTER JOIN store_in i
 		on d.order_details_number = i.order_details_number
 		where oder_app='L3'
-		and store_number = #{storeNumber}
+		and o.store_number = #{storeNumber}
 		ORDER by ORDER_NUMBER DESC
 	</select>
 
@@ -59,6 +59,7 @@
 			,IN_OPERATION
 			,COUNT
 			,MATERIAL_NUMBER
+			,store_number
 			)
 		values (
 			SI_SEQ.NEXTVAL
@@ -74,6 +75,7 @@
 			,#{inOperation}
 			,#{count}
 			,#{materialNumber}
+			,#{storeNumber}
 		)
 
 	</insert>

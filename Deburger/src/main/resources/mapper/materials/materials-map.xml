@@ -2,26 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.office.material.mapper.MaterialMapper">
 	<select id="selectAllList" resultType="MaterialVO">
-		select
-		    a.material_number,
-		    a.material_name,
-		    a.unit,
-		    a.sale_unitprice,
-		    a.material_item,
-		    a.buy_unitprice,
-		    a.image,
-		    a.material_classification,
-		    a.logistics_safety_stock,
-		    a.cost,
-		    b.material_number,
-		    c.client_name
-		from material a 
-		    join company_material b
-		        on a.material_number = b.material_number
-		    join supplier c
-		      on  b.client_id = c.client_id
-		order by a.material_number      
-		    
+		 	SELECT * 
+				FROM (
+				    SELECT ROWNUM RN, A.* 
+				    FROM (
+			            SELECT
+			                a.material_number,
+			                a.material_name,
+			                a.unit,
+			                a.sale_unitprice,
+			                a.material_item,
+			                a.buy_unitprice,
+			                a.image,
+			                a.material_classification,
+			                a.logistics_safety_stock,
+			                a.cost,
+			                c.client_name
+			            FROM material a 
+			            JOIN company_material b
+			                ON a.material_number = b.material_number
+			            JOIN supplier c
+			                ON b.client_id = c.client_id
+			            ORDER BY a.material_number   
+			        ) A
+			)
+			WHERE RN BETWEEN #{start} AND #{end}  
 	</select>
 	
 	<select id="selectMaterial" resultType="MaterialVO">
@@ -96,5 +101,10 @@
 		from material
 		where material_number = #{materialNumber}
 	</delete>
+
+	<select id="countMaterial" resultType ="int">
+		select count(*) from material
+	</select>
+
 
 </mapper>

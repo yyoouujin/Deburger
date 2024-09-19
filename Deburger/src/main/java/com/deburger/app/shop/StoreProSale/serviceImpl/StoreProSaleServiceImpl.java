@@ -32,15 +32,12 @@ public class StoreProSaleServiceImpl implements StoreProSaleService {
 	}
 
 	@Override
-	public List<StoreProSaleVO> StoreProSaleoneList(String productNumber) {
+	public List<StoreProSaleVO> StoreProSaleoneList(StoreProSaleVO storeProSaleVO) {
 		// TODO Auto-generated method stub
 
 		String mcode = SecurityUtil.memberCode();
-		StoreProSaleVO storeProSaleVO = new StoreProSaleVO();
-		storeProSaleVO.setProductNumber(productNumber);
 		storeProSaleVO.setStoreNumber(mcode);
 		
-		System.err.println(storeProSaleVO);
-		return null;
+		return storeProSaleMapper.StoreProSaleoneList(storeProSaleVO);
 	}
 }
