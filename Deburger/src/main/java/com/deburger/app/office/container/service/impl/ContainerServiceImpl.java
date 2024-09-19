@@ -19,10 +19,17 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 전체 조회
 	@Override
-	@Transactional
+	// @Transactional
 	public List<ContainerVO> containerAllList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.selectAllList(containerVO);
+	}
+
+	// 물류 창고 페이징
+	@Override
+	public int containerAllCount() {
+		// TODO Auto-generated method stub
+		return containerMapper.selectAllListcount();
 	}
 
 	// 물류 창고 상세 조회
@@ -40,14 +47,14 @@ public class ContainerServiceImpl implements ContainerService {
 		return result == 1 ? Integer.parseInt(containerVO.getMaterialNumber()) : -1;
 	}
 
-	// 물류 창고 입고 list
+	// 물류 창고 발주 승인건 미입고 list
 	@Override
 	public List<ContainerVO> containerAllInList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.selectAllInList(containerVO);
 	}
 
-	// 물류 창고 입고 list 조회
+	// 물류 창고 입고 상세 조회
 	@Override
 	public List<ContainerVO> containerInInfo(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
@@ -103,9 +110,9 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 프로시저 처리
 	@Override
-	public List<ContainerVO> containerOutpD(ContainerVO containerVO) {
+	public void containerOutpD(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.containerOutprocedure(containerVO);
+		containerMapper.containerOutprocedure(containerVO);
 	}
 
 	@Override

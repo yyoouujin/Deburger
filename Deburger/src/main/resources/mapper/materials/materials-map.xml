@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.office.material.mapper.MaterialMapper">
+	
 	<select id="selectAllList" resultType="MaterialVO">
 		 	SELECT * 
 				FROM (
@@ -29,6 +30,10 @@
 			WHERE RN BETWEEN #{start} AND #{end}  
 	</select>
 	
+	<select id="countMaterial" resultType ="int">
+		select count(*) from material
+	</select>
+	
 	<select id="selectMaterial" resultType="MaterialVO">
 		select
 		    a.material_number,
@@ -52,10 +57,6 @@
 	</select>
 	
 	<insert id="insertMaterial" parameterType="MaterialVO">
-		<selectKey keyProperty="materialNumber" resultType="MaterialVO" order="BEFORE">
-			select nvl(max(material_number),0)+1
-			from material
-		</selectKey>
 			insert into material(
 		            material_number,
 		            material_name,
@@ -68,7 +69,7 @@
 		            logistics_safety_stock,
 		            cost        
 				)values(
-				    #{materialNumber}
+				    'IGD' || LPAD(IGD_SEQ.nextval, '7', '0'), 
 				    #{materialName},
 				    #{unit},
 				    #{saleUnitprice},
@@ -102,9 +103,7 @@
 		where material_number = #{materialNumber}
 	</delete>
 
-	<select id="countMaterial" resultType ="int">
-		select count(*) from material
-	</select>
+
 
 
 </mapper>

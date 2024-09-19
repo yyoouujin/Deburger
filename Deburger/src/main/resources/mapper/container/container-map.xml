@@ -13,12 +13,18 @@
 			from logistics_stock a
   			  join material b
        			 on a.material_number = b.material_number
+       		  join logistics c
+       		  	 on a.logistics_id = c.logistics_id
+       		<![CDATA[ 
+                	where stock_count >= 0
+                ]]>
+            and c.person_id = #{personId}
        		order by a.material_number
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
 	<select id="selectContainerInfo" resultType="ContainerVO">
-			select distinct
+						select distinct
 			         a.details_order_number,
 			         a.count,
 			         a.order_condition,
@@ -27,6 +33,7 @@
 			         b.lot,
 			     	 b.in_day,
 				     b.in_count,
+                     b.out_count,
 				     b.expiration_limit,
 				     c.material_number,
 				     c.material_name,
@@ -40,6 +47,7 @@
 			join logistics_order d
 				on a.order_number = d.order_number
 			where c.material_number = #{materialNumber}
+            and b.in_count - b.out_count != 0
 			order by b.expiration_limit
 	</select>
 	
@@ -51,9 +59,9 @@
 			        b.order_condition,
 			        b.person_id,
 			        b.in_operation,
-			        sum(b.count) as sum,
 			        c.logistics_id,
 			        d.client_name,
+			        sum(b.count) as sum,
 			        sum(e.in_count) as inCount
 			from logistics_order a
 			join logistics_order_details b
@@ -159,6 +167,7 @@
 			         b.lot,
 			     	 b.in_day,
 				     b.in_count,
+				     b.out_count,
 				     c.material_number,
 				     c.material_name,
 			         d.logistics_id,
@@ -255,6 +264,7 @@
 	<select id="containerOutModal">
 		select a.lot,
 		       a.in_count,
+		       a.out_count,
 			   a.in_day,
 			   b.details_order_number,
 			   c.material_number,
@@ -264,7 +274,8 @@
 			on a.details_order_number = b.details_order_number
 			join material c
 			on b.material_number = c.material_number
-		where c.material_number = #{materialNumber}		
+		where c.material_number = #{materialNumber}
+		and a.in_count - a.out_count != 0		
 	</select>
 
 	<insert id="containerOutDB">
@@ -289,26 +300,28 @@
 	</update>
 
 	<!-- 출고 프로 시저 -->
-	<select id="containerOutprocedure" statementType="CALLABLE"
+	<insert id="containerOutprocedure" statementType="CALLABLE"
 	parameterType="ContainerVO">
 		{
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
-				#{pOutOperation, mode=IN, jdbcType=VARCHAR}				
+				#{pOutOperation, mode=IN, jdbcType=VARCHAR},
+				#{pInspection, mode=IN, jdbcType=VARCHAR}					
 			)
 		}
-	</select>
+	</insert>
 	
 	<!-- 로그인 session -->
 	<select id="loginSession" resultType="ContainerVO">
-				select  a.person_id,
+		select  a.person_id,
 		        a.name,
 		        a.email,
 		        a.phone,
 		        a.area,
 		        a.department,
 		        a.position,
-                b.logistics_name
+                b.logistics_name,
+                b.logistics_id
 		from person a
              join logistics b
                 on a.area = b.logistics_id
