@@ -109,7 +109,6 @@
 		WHERE	client_id = #{clientId}
 	</update>
 	
-	
 <!-- 삭제 -->
 	<delete id="deleteSupplierInfo" parameterType="SupplierVO">
 		DELETE supplier
