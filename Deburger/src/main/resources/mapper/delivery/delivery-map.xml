@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deburger.app.office.delivery.mapper.DeliveryMapper">
+
+<!-- 가맹점 발주 전체조회 -->
+
+	<select id="selectDeliveryAll" resultType="DeliveryVO">
+		SELECT DISTINCT o.order_day
+					    , o.order_number
+					    , s.store_name
+					    , o.store_number
+					    , o.cancel_operation
+					    , l.logistics_name
+					    , s.logistics_id
+		FROM store_order o JOIN order_details d ON (o.order_number = d.order_number)
+		                   JOIN store s ON (s.store_number = o.store_number)
+		                   JOIN logistics l ON (s.logistics_id = l.logistics_id)
+		ORDER BY o.order_day
+	</select>
+
+
+<!-- 주문번호별 담당 물류창고의 전체재고 -->
+	<select id="selectAllLogisticStock" resultType="DeliveryVO">
+		select sum(stock_count) as all_stock_logistic
+		from logistics_stock 
+		where logistics_id=(select logistics_id
+		                    from store s join store_order o on (s.store_number = o.store_number)
+		                    where o.order_number = #{orderNumber})
+	</select>
+
+
+<!-- 주문번호별 전체 발주수량 -->
+	<select id="selectAllOrderStock" resultType="DeliveryVO">
+		select sum(count) as all_stock_order
+		from order_details
+		where order_number=#{orderNumber}
+	</select>
+
+
+<!-- 주문번호 상세조회 -->
+	<select id="selectDeliveryInfo" resultType="DeliveryVO">
+		SELECT DISTINCT o.order_number
+						, o.store_number
+		      			, o.cancel_operation
+		      			, s.store_name
+		      			, s.phone
+		      			, s.shopkeeper
+		      			, s.email
+		      			, d.material_number
+		      			, m.material_name
+		      			, d.count
+		      			, m.unit
+		FROM store_order o JOIN order_details d ON (o.order_number = d.order_number)
+		                   JOIN store s ON (s.store_number = o.store_number)
+		                   JOIN material m ON (m.material_number = d.material_number)
+		                   LEFT OUTER JOIN logistics_stock l ON (l.material_number = d.material_number)
+		WHERE o.order_number = #{orderNumber}
+	</select>
+
+
+<!-- 주문번호의 담당 물류창고 전체재고 -->
+	<select id="selectLogisticStock" resultType="Integer">
+		select nvl(sum(stock_count), -1)
+		from logistics_stock 
+		where logistics_id=(select logistics_id
+		                    from store s join store_order o on (s.store_number = o.store_number)
+		                    where o.order_number=#{orderNumber})
+	</select>
+	
+
+<!-- 주문번호의 전체 발주수량 -->
+	<select id="selectOrderStock" resultType="Integer">
+		SELECT NVL(SUM(count), -1)
+		FROM order_details
+		WHERE order_number=#{orderNumber}
+	</select>
+	
+
+<!-- 발주수량 이상의 창고 조회 -->
+	<select id="logisticsStockInfo" resultType="DeliveryVO">
+		SELECT SUM(s.stock_count) as "all_stock_order"
+		      , s.logistics_id
+		      , l.logistics_name
+		      , l.basics_address
+		FROM logistics_stock s join logistics l on (s.logistics_id = l.logistics_id)
+		<![CDATA[
+		WHERE 1 < (select nvl(sum(count), -1)
+		           from order_details
+		           where order_number=#{orderNumber})
+		]]>
+		GROUP BY s.logistics_id, l.logistics_name, l.basics_address
+	</select>
+
+</mapper>
+
+
+

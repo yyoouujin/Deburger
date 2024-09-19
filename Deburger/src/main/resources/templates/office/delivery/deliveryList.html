@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+
+</head>
+<body>
+
+<main id="main" class="main">
+
+		<div class="pagetitle">
+			<h1>납품 조회</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">물류 관리</a></li>
+					<li class="breadcrumb-item active">납품 지시</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- End Page Title -->
+
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Default Table</h5>
+							<!-- Default Table -->
+							<table class="table">
+								<!-- Table with stripped rows -->
+								<thead>
+									<tr>
+										<th>NO</th>
+										<th>발주일자</th>
+										<th>발주번호</th>
+										<th>가맹점명</th>
+										<th>가맹점번호</th>
+										<th>취소진행상태</th>
+										<th>재고가능여부</th>
+										<th>물류창고</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="info, stats : ${deliveries}">
+										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId} data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+											<td>[[ ${stats.count} ]]</td>
+											<td>[[ ${#dates.format(info.orderDay, 'yyyy-MM-dd')} ]] <br>
+												[[ ${#dates.format(info.orderDay, 'HH:mm:ss')} ]] </td>
+											<td>[[ ${info.orderNumber} ]]</td>
+											<td>[[ ${info.storeName} ]]</td>
+											<td>[[ ${info.storeNumber} ]]</td>
+											<td th:text="${info.cancelOperation} == 'J2' ? '취소요청' : '-' "></td>
+											<td>재고조회</td>
+											
+											
+											<td class="selectLogistics">[[ ${info.logisticsName} ]]</td>
+											
+					
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+							<!-- End Default Table Example -->
+
+							
+							<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+				                <div class="modal-dialog modal-dialog-scrollable">
+				                  <div class="modal-content">
+				                  
+				                    <div class="modal-header">
+				                      <h3 class="modal-title">발주번호 : </h3>
+				                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				                    </div>
+				
+				                    <div class="modal-body">
+				                    
+				                    <div id="top-tag">
+				                    	<h5><b>가맹점번호 : </b><span id=store_id></span></h5>
+				                    	<h5><b>가맹점명 : </b><span id=store_name></span></h5>
+				                    	<h5><b>전화번호 : </b><span id=store_tel></span></h5>
+				                    	<h5><b>점주 : </b><span id=shop_keeper></span></h5>
+				                    	<h5><b>이메일 : </b><span id=shop_email></span></h5>
+				                    </div>
+									
+						              <!-- Small tables -->
+						              <table class="table table-sm">
+						                <thead>
+						                  <tr>
+						                    <th scope="col">재료번호</th>
+						                    <th scope="col">재료명</th>
+						                    <th scope="col">발주수량</th>
+						                    <th scope="col">용량</th>
+						                  </tr>
+						                </thead>
+						                <tbody class="order_detail">
+						                </tbody>
+						              </table>
+						              <!-- End small tables -->
+				                    </div>
+				                    
+				                    <div class="modal-footer">
+				                      <div id="cancleBtn"></div>
+				                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div><!-- End Modal Dialog Scrollable-->
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<!-- End #main -->
+</body>
+</html>
+
+
+<script type="text/javascript" src="assets/js/cyj/delivery/deliveryList.js"></script>
