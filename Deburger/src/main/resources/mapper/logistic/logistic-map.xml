@@ -139,7 +139,7 @@
 	<select id="selectLogisticPersonId" resultType="LogisticVO">
 		SELECT person_id
 		FROM person
-		WHERE department = '물류관리팀'
+		WHERE department = '물류담당자'
 	</select>
 
 
