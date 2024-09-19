@@ -13,8 +13,9 @@
 		<div class="pagetitle">
 			<h1>발주 리스트</h1>
 			<h6>
-				<a href="Order">수동 발주</a><span> | </span><a href="OrderAuto">자동
-					발주</a>
+				<a href="ShopOrderList" class="badge border-dark border-1 text-dark">수동
+					발주</a><span> | </span><a href="ShopAutoOrderList"
+					class="badge border-dark border-1 text-dark">자동 발주</a>
 			</h6>
 		</div>
 		<!-- End Page Title -->
@@ -43,7 +44,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block th:each="list:${ShopAutoOrderList}">
+									<th:block th:each="list:${viewAll}">
 										<tr>
 											<td th:text="${list.orderDetailsNumber}" />
 											<td th:text="${list.materialName}" />
@@ -51,11 +52,14 @@
 											<td th:text="${list.unit}" />
 											<td th:text="${list.count}" />
 											<td th:text="${list.saleUnitprice}" />
-											<td th:text="${list.stockCount}" />
+											<td th:if="${list.stockCount >= 0} "
+												th:text="${list.stockCount}" />
+											<td th:if="${list.stockCount < 0} ">0</td>
 											<td th:text="${list.safetyStock}" />
 											<td></td>
 											<td th:text="${list.note}" />
-											<td><button type="button" class="btn btn-primary btn-sm">자동 발주 취소</button></td>
+											<td><button type="button" class="btn btn-primary btn-sm">자동
+													발주 취소</button></td>
 										</tr>
 									</th:block>
 								</tbody>
@@ -64,18 +68,49 @@
 
 						</div>
 					</div>
-
+					<div style="display: block; text-align: center;" id="pagelist">
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<!-- Previous button -->
+								<li class="page-item"
+									th:classappend="${paging.startPage == 1} ? 'disabled'"><a
+									class="page-link"
+									th:href="@{/ShopOrderList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+									aria-disabled="true">&lt;</a></li>
+								<!-- Page numbers -->
+								<li class="page-item"
+									th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+									th:classappend="${p == paging.nowPage} ? 'active'"><span
+									th:if="${p == paging.nowPage}"> <a class="page-link"
+										th:text="${p}"></a>
+								</span> <span th:if="${p != paging.nowPage}"> <a
+										class="page-link"
+										th:href="@{/ShopOrderList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+										th:text="${p}"></a>
+								</span></li>
+								<!-- Next button -->
+								<li class="page-item"
+									th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+									<a class="page-link"
+									th:href="@{/ShopOrderList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</section>
 	</main>
-		<script>
-		$("td > button").on("click", function(event) {
-			
-			let url = 'Delauto?orderDetailsNumber=' + $(event.target).closest('tr').children().eq(0).html();
-			location.href = url;
-		});
+	<script>
+		$("td > button").on(
+				"click",
+				function(event) {
 
+					let url = 'Delauto?orderDetailsNumber='
+							+ $(event.target).closest('tr').children().eq(0)
+									.html();
+					location.href = url;
+				});
 	</script>
 </body>
 </html>

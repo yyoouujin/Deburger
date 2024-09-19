@@ -25,12 +25,17 @@ public class StoreInServiceImpl implements StoreInService {
 	
 	//입고 승인 전체 조회
 	@Override
-	public List<StoreInVO> StoreInList() {
+	public List<StoreInVO> StoreInList(StoreInVO storeInVO) {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
-		StoreInVO storeInVO = new StoreInVO();
 		storeInVO.setStoreNumber(mcode);
 		return storeInMapper.StoreInList(storeInVO);
+	}
+	
+	@Override
+	public int shopincoun() {
+		// TODO Auto-generated method stub
+		return storeInMapper.shopincoun();
 	}
 	
 	//입고 재고 상세 조회

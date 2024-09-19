@@ -18,4 +18,7 @@ public interface StoreInMapper {
 	
 	//재고 저장
 	public int storeStock(StoreInVO storeInVO);
+	
+	// store in 
+	public int shopincoun();
 }

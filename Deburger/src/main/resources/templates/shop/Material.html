@@ -24,11 +24,15 @@
 									<tr>
 										<th>재료 이름</th>
 										<th>카테고리</th>
-										<th>재고량</th>
-										<th>종류</th>
+										<th><select id="stockC">
+												<option value="main">품목 구분</option>
+												<option th:each="stockCList : ${stockC}"
+													th:value="${stockCList.materialClassification}"
+													th:text="${stockCList.materialClassification}"></option>
+										</select></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="list">
 									<th:block th:each="list:${StoreMaterialConList}">
 										<tr>
 											<td style="display: none;" th:text=${list.materialNumber} />
@@ -41,48 +45,95 @@
 							</table>
 						</div>
 					</div>
-					
+
 				</div>
 				<div class="col-lg-6">
 					<input type='date' id='currentDate' />
 					<div id="graphs"></div>
-					
-					
-			
-					
-					
+
+
+
+
+
 				</div>
-				
+
 			</div>
 		</section>
 	</main>
 	<script th:inline="javascript">
-	
-	document.getElementById('currentDate').value = new Date()
-	.toISOString().substring(0, 10);
-	
-	
-	var num = '';
-	$('tbody > tr').on("click", function(event) {
-		num =  $(event.target).closest('tr').children().eq(0).html();
-		regr();
-	});
-	
-	$('#currentDate').on("change", function(event) {
-		regr();
-	});
-	
-	function regr(){
-		let list = {};
-		
-		let materialNumber = num;
-		let productdate = $('#currentDate').val();
-		
+		document.getElementById('currentDate').value = new Date().toISOString()
+				.substring(0, 10);
 
-		let url = `StoreMaterialoneList?materialNumber=${materialNumber}&productDate=${productdate}`
+		var num = '';
+		$('tbody > tr').on("click", function(event) {
+			num = $(event.target).closest('tr').children().eq(0).html();
+			regr();
+		});
+
+		$('#currentDate').on("change", function(event) {
+			regr();
+		});
+
+		function regr() {
+			let list = {};
+
+			let materialNumber = num;
+			let productdate = $('#currentDate').val();
+
+			let url = `StoreMaterialoneList?materialNumber=${materialNumber}&productDate=${productdate}`
+
+			$('#graphs').load(url);
+		}
 		
-		$('#graphs').load(url);
-	}
+		$("#stockC").on("change", function() {
+						
+			let materialClassification = $('#stockC').val();
+
+			if(materialClassification == 'main'){
+				location.href="StoreMaterialConList"
+				
+			}else{
+				let list = {materialClassification};
+				$.ajax({
+					
+					url : "classificationListMa",
+					method : "Post",
+					contentType:"application/JSON",
+					data : JSON.stringify(list),
+					
+				}).then((result) => {
+					$('#list').html('');
+					
+					$(result).each(function(index, item){
+						
+						console.log(item);
+						
+						let tr = `<tr>
+						<td style="display: none;" >${item.materialNumber}</td>
+						<td>${item.materialName }</td>
+						<td>${item.materialItem }</td>
+						<td>${item.materialClassification }</td>
+						</tr>`
+						
+						$('#list').append(tr)
+						
+						
+					})
+					
+
+					$('tbody > tr').on("click", function(event) {
+						num = $(event.target).closest('tr').children().eq(0).html();
+						regr();
+					});
+
+					$('#currentDate').on("change", function(event) {
+						regr();
+					});
+					
+				})
+			}
+		
+		});
 	</script>
 </body>
 

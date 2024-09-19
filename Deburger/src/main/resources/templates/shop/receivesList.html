@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+t<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{common/layouts/shop_layout}"
@@ -35,7 +35,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<th:block th:each="list:${storeInList}">
+									<th:block th:each="list:${viewAll}">
 										<tr>
 											<td th:text="${#dates.format(list.orderDay,'yyyy/MM/dd')}" />
 											<td th:text="${#dates.format(list.inDay,'yyyy/MM/dd')}" />
@@ -53,7 +53,9 @@
 												완료</td>
 											<td th:text="${list.orderName}" />
 											<td th:text="${list.note}" />
-											<td th:if="${list.inOperation == null and list.oderApp == 'L3'}"><button type="button" class="btn btn-primary btn-sm"
+											<td
+												th:if="${list.inOperation == null and list.oderApp == 'L3'}"><button
+													type="button" class="btn btn-primary btn-sm"
 													onclick="infobtn()" th:id="${list.orderNumber}">입고</button></td>
 
 										</tr>
@@ -64,7 +66,35 @@
 
 						</div>
 					</div>
-
+					<div style="display: block; text-align: center;" id="pagelist">
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<!-- Previous button -->
+								<li class="page-item"
+									th:classappend="${paging.startPage == 1} ? 'disabled'"><a
+									class="page-link"
+									th:href="@{/shopStock(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+									aria-disabled="true">&lt;</a></li>
+								<!-- Page numbers -->
+								<li class="page-item"
+									th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+									th:classappend="${p == paging.nowPage} ? 'active'"><span
+									th:if="${p == paging.nowPage}"> <a class="page-link"
+										th:text="${p}"></a>
+								</span> <span th:if="${p != paging.nowPage}"> <a
+										class="page-link"
+										th:href="@{/shopStock(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+										th:text="${p}"></a>
+								</span></li>
+								<!-- Next button -->
+								<li class="page-item"
+									th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+									<a class="page-link"
+									th:href="@{/shopStock(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</div>
 		</section>

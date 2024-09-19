@@ -57,12 +57,17 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 
 	// 발주 리스트
 	@Override
-	public List<ShopOrderVO> ShopOrderList() {
+	public List<ShopOrderVO> ShopOrderList(ShopOrderVO shopOrderVO) {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
-		ShopOrderVO shopOrderVO = new ShopOrderVO();
 		shopOrderVO.setStoreNumber(mcode);
 		return shopOrderMapper.ShopOrderList(shopOrderVO);
+	}
+	
+	@Override
+	public int OrdercountMaterial() {
+		// TODO Auto-generated method stub
+		return shopOrderMapper.OrdercountMaterial();
 	}
 
 	// 발주 취소 설정
@@ -83,10 +88,9 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 
 	// 자동 발주 조회
 	@Override
-	public List<ShopOrderVO> autoOrderInfo() {
+	public List<ShopOrderVO> autoOrderInfo(ShopOrderVO shopOrderVO) {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
-		ShopOrderVO shopOrderVO = new ShopOrderVO();
 		shopOrderVO.setStoreNumber(mcode);
 		return shopOrderMapper.autoOrderInfo(shopOrderVO);
 	}
@@ -96,5 +100,11 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	public int deleteAuto(String orderDetailsNumber) {
 		// TODO Auto-generated method stub
 		return shopOrderMapper.deleteAuto(orderDetailsNumber);
+	}
+	
+	@Override
+	public int AutoOrdercountMaterial() {
+		// TODO Auto-generated method stub
+		return shopOrderMapper.AutoOrdercountMaterial();
 	}
 }

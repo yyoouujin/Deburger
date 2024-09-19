@@ -35,4 +35,20 @@ public class StoreMatConServiceImpl implements StoreMatConService {
 		storeMatConVO.setStoreNumber(mcode);
 		return storeMatConMapper.StoreMaterialoneList(storeMatConVO);
 	}
+	
+	@Override
+	public List<StoreMatConVO> stockClassificationMa() {
+		// TODO Auto-generated method stub
+		
+		return storeMatConMapper.stockClassificationMa();
+	}
+	
+	@Override
+	public List<StoreMatConVO> classificationListMa(StoreMatConVO storeMatConVO) {
+		// TODO Auto-generated method stub
+		
+		String mcode = SecurityUtil.memberCode();
+		storeMatConVO.setStoreNumber(mcode);
+		return storeMatConMapper.classificationListMa(storeMatConVO);
+	}
 }

@@ -23,11 +23,16 @@
 								<thead>
 									<tr>
 										<th>제품 이름</th>
-										<th>카테코리</th>
+										<th><select id="stockC">
+												<option value="main">품목 구분</option>
+												<option th:each="stockCList : ${stockC}"
+													th:value="${stockCList.category}"
+													th:text="${stockCList.category}"></option>
+										</select></th>
 										<th>종류</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="list">
 									<th:block th:each="list:${StoreProSaleList}">
 										<tr>
 											<td style="display: none;" th:text=${list.productNumber} />
@@ -56,9 +61,9 @@
 		var num = '';
 		$('tbody > tr').on("click", function(event) {
 			num = $(event.target).closest('tr').children().eq(0).html();
-			regr();					
+			regr();
 		});
-		
+
 		$('#currentDate').on("change", function(event) {
 			regr();
 		});
@@ -73,6 +78,57 @@
 
 			$('#graph').load(url);
 		}
+		
+		$("#stockC").on("change", function() {		
+			let category = $('#stockC').val();
+			
+			if(category == 'main'){
+				location.href="StoreProSaleList"
+			}else{
+
+				let list = {category};
+				$.ajax({
+					
+					url : "classificationListpro",
+					method : "Post",
+					contentType:"application/JSON",
+					data : JSON.stringify(list),
+					
+				}).then((result) => {
+					$('#list').html('');
+					
+					$(result).each(function(index, item){
+						
+						console.log(item);
+						
+						let tr = `<tr>
+						<td style="display: none;" >${item.productNumber}</td>
+						<td>${item.productName}</td>
+						<td>${item.category}</td>
+						<td>${item.kind}</td>
+						</tr>`
+						
+						$('#list').append(tr)
+						
+						
+					})
+					
+					num = '';
+					$('tbody > tr').on("click", function(event) {
+						num = $(event.target).closest('tr').children().eq(0).html();
+						regr();
+					});
+
+					$('#currentDate').on("change", function(event) {
+						regr();
+					});
+					
+					
+				})
+			}
+			
+			
+		});
 	</script>
 </body>
 

@@ -25,6 +25,9 @@ public interface ShopOrderMapper {
 		//발주 전체 조회
 		public List<ShopOrderVO> ShopOrderList(ShopOrderVO shopOrderVO);
 		
+		// Material 총 갯수
+		public int OrdercountMaterial();
+		
 		//발주 취소 저장
 		public int updateOrderCancel(ShopOrderVO shopOrderVO);
 		
@@ -36,4 +39,7 @@ public interface ShopOrderMapper {
 		
 		//자동발주 취소
 		public int deleteAuto(String orderDetailsNumber);
+		
+		// autoMaterial 총 갯수
+		public int AutoOrdercountMaterial();
 }

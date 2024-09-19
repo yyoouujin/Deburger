@@ -5,6 +5,7 @@
 
 	<!-- 발주 전체 조회 -->
 	<select id="selectShopOrder" parameterType="ShopOrderVO">
+		
 		select
 		m.material_number
 		,m.material_name
@@ -75,6 +76,10 @@
 
 	<!-- 발주 내역 -->
 	<select id="ShopOrderList" parameterType="ShopOrderVO">
+			SELECT *
+		FROM (
+			SELECT ROWNUM RN, A.*
+			FROM (
 		select s.order_number
 		,s.order_day
 		,s.cancel_operation
@@ -89,7 +94,16 @@
 		where auto_order_operation = 'i1'
 		AND	store_number=#{storeNumber}
 		ORDER by s.order_number DESC
+		) A
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
+	
+		<select id="OrdercountMaterial" resultType="int">
+		select count(*) from
+		store_order
+	</select>
+	
 
 	<!-- 발주 취소 -->
 	<update id="updateOrderCancel">
@@ -123,7 +137,14 @@ from order_details o join store_order s
 	
 	</select>
 	
+	
+	
 	<select id="autoOrderInfo" parameterType="ShopOrderVO"> 
+			SELECT *
+		FROM (
+			SELECT ROWNUM RN, A.*
+			FROM (
+	
 	select od.order_details_number
                ,m.material_name
                ,m.material_item
@@ -142,6 +163,14 @@ from order_details o join store_order s
         where auto_order_operation != 'i1'
         and ss.store_number = #{storeNumber}
         Order by order_details_number DESC
+        ) A
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="AutoOrdercountMaterial" resultType="int">
+		select count(*) from
+		store_stock
 	</select>
 	
 	<delete id="deleteAuto" parameterType="String">

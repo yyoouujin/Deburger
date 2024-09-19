@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.deburger.app.main.login.config.SecurityUtil;
+import com.deburger.app.office.logistic.mapper.LogisticMapper;
 import com.deburger.app.shop.stock.mapper.StockMapper;
 import com.deburger.app.shop.stock.service.StockService;
 import com.deburger.app.shop.stock.service.StockVO;
@@ -22,12 +23,17 @@ public class StockServiceImpl implements StockService {
 		this.stockMapper = stockMapper;
 	}
 
+	@Override
+	public int shopcountMaterial() {
+		// TODO Auto-generated method stub
+		return stockMapper.shopcountMaterial();
+	}
+
 	// 전체 조회
 	@Override
-	public List<StockVO> selectStock() {
+	public List<StockVO> selectStock(StockVO stockVO) {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
-		StockVO stockVO = new StockVO();
 		stockVO.setStoreNumber(mcode);
 		return stockMapper.selectStock(stockVO);
 	}
@@ -39,7 +45,7 @@ public class StockServiceImpl implements StockService {
 
 		String mcode = SecurityUtil.memberCode();
 		stockVO.setStoreNumber(mcode);
-		
+
 		int result = stockMapper.insertCart(stockVO);
 
 		return result == 1 ? 1 : -1;
@@ -60,8 +66,7 @@ public class StockServiceImpl implements StockService {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
 		stockVO.setStoreNumber(mcode);
-		
-		System.err.println(stockVO);
+
 		stockMapper.updqtestoreIn(stockVO);
 		stockMapper.updqtestoreStock(stockVO);
 		stockMapper.insertstoreProductSale(stockVO);
@@ -73,12 +78,20 @@ public class StockServiceImpl implements StockService {
 		// TODO Auto-generated method stub
 		return stockMapper.stockClassification();
 	}
-	
+
 	@Override
 	public List<StockVO> classificationList(StockVO stockVO) {
 		// TODO Auto-generated method stub
 		String mcode = SecurityUtil.memberCode();
 		stockVO.setStoreNumber(mcode);
 		return stockMapper.classificationList(stockVO);
+	}
+	
+	@Override
+	public int shopinfo(StockVO stockVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		stockVO.setStoreNumber(mcode);
+		return stockMapper.shopinfo(stockVO);
 	}
 }

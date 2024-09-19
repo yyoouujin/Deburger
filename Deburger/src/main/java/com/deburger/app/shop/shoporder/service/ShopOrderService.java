@@ -12,7 +12,10 @@ public interface ShopOrderService {
 	public int insertShopOrder(ShopOrderVO shopOrderVO);
 	
 	//발주 전체 조회
-	public List<ShopOrderVO> ShopOrderList();
+	public List<ShopOrderVO> ShopOrderList(ShopOrderVO shopOrderVO);
+	
+
+	
 
 	//발주 취소 업데이트
 	public int updateOrderCancel(ShopOrderVO shopOrderVO);
@@ -20,10 +23,16 @@ public interface ShopOrderService {
 	//발주 상세 조회
 	public List<ShopOrderVO> orderInfo(ShopOrderVO shopOrderVO);
 	
+	// Material 총 갯수
+	public int OrdercountMaterial();
+	
 	//자동발주 상세조회
-	public List<ShopOrderVO> autoOrderInfo();
+	public List<ShopOrderVO> autoOrderInfo(ShopOrderVO shopOrderVO);
 	
 	//자동발주 취소
 	public int deleteAuto(String orderDetailsNumber);
+	
+	// autoMaterial 총 갯수
+	public int AutoOrdercountMaterial();
 		
 }

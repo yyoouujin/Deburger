@@ -9,6 +9,7 @@ import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.shopmain.mapper.ShopMainMapper;
 import com.deburger.app.shop.shopmain.service.ShopMainService;
 import com.deburger.app.shop.shopmain.service.ShopMainVO;
+import com.deburger.app.shop.stock.service.StockVO;
 
 @Service
 public class ShopMainServiceImpl implements ShopMainService {
@@ -28,6 +29,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 		String mcode = SecurityUtil.memberCode();
 		ShopMainVO shopMainVO = new ShopMainVO();
 		shopMainVO.setStoreNumber(mcode);
+		shopMainMapper.noticeList();
 		
 		return shopMainMapper.listCount(shopMainVO);
 	}
@@ -58,5 +60,11 @@ public class ShopMainServiceImpl implements ShopMainService {
 		String mcode = SecurityUtil.memberCode();
 		shopMainVO.setStoreNumber(mcode);
 		return shopMainMapper.limitList(shopMainVO);
+	}
+	
+	@Override
+	public List<ShopMainVO> noticeList() {
+		// TODO Auto-generated method stub
+		return shopMainMapper.noticeList();
 	}
 }

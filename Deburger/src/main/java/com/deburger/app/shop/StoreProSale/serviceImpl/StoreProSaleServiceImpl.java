@@ -40,4 +40,19 @@ public class StoreProSaleServiceImpl implements StoreProSaleService {
 		
 		return storeProSaleMapper.StoreProSaleoneList(storeProSaleVO);
 	}
+	
+	@Override
+	public List<StoreProSaleVO> stockClassification() {
+		// TODO Auto-generated method stub
+		return storeProSaleMapper.stockClassification();
+	}
+	
+	@Override
+	public List<StoreProSaleVO> classificationListpro(StoreProSaleVO storeProSaleVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		storeProSaleVO.setStoreNumber(mcode);
+		
+		return storeProSaleMapper.classificationListpro(storeProSaleVO);
+	}
 }

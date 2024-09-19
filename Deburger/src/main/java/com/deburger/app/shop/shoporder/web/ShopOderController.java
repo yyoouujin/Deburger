@@ -9,11 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.shoporder.service.ShopOrderService;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
+import com.deburger.app.shop.stock.service.StockVO;
 
 @Controller
 public class ShopOderController {
@@ -45,10 +47,26 @@ public class ShopOderController {
 	
 	//발주 리스트
 	@GetMapping("ShopOrderList")
-	public String ShopOrderList(Model model) {
-		List<ShopOrderVO> list = shopOrderService.ShopOrderList();
+	public String ShopOrderList(ShopOrderVO shopOrderVO, Model model,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		
-		model.addAttribute("ShopOrderList", list);
+		int total = shopOrderService.OrdercountMaterial();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		
+		shopOrderVO = new ShopOrderVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		model.addAttribute("paging", shopOrderVO);
+		model.addAttribute("viewAll", shopOrderService.ShopOrderList(shopOrderVO));
+		
+
 		
 		return "shop/Order";
 	}
@@ -69,10 +87,25 @@ public class ShopOderController {
 	}
 	
 	@GetMapping("ShopAutoOrderList")
-	public String ShopAutoOrderList(Model model) {
-		List<ShopOrderVO> list = shopOrderService.autoOrderInfo();
+	public String ShopAutoOrderList(ShopOrderVO shopOrderVO, Model model,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		
-		model.addAttribute("ShopAutoOrderList", list);
+		int total = shopOrderService.AutoOrdercountMaterial();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		
+		shopOrderVO = new ShopOrderVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		model.addAttribute("paging", shopOrderVO);
+		model.addAttribute("viewAll", shopOrderService.autoOrderInfo(shopOrderVO));
+		
 		
 		return "shop/OrderAuto";
 	}

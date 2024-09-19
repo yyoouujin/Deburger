@@ -24,7 +24,13 @@ public class ShopMainController {
 	public String shop(Model model) {
 		
 		List<ShopMainVO> list = shopMainService.listCount();
+		List<ShopMainVO> list2 = shopMainService.noticeList();
+		
+		
 		model.addAttribute("shop", list);
+		model.addAttribute("notice", list2);
+		
+		
 		
 		return "shop/main";
 	}
