@@ -4,27 +4,50 @@
 
 <!--  전체조회  -->
 <select id = "noticeListShop" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-order by notice_number desc
+    SELECT * 
+	  FROM (
+		    SELECT ROWNUM RN, A.* 
+	      FROM (
+			   SELECT 	notice_number
+                       ,division
+	                   ,writer_date
+	                   ,writer
+	                   ,title 
+	                   ,content
+               FROM notice
+               ORDER BY notice_number desc   
+		    	) A
+			)
+			WHERE RN BETWEEN #{start} AND #{end}
 </select>
+
+	<select id="countNotice" resultType ="int">
+		select count(*) from notice
+		<where>
+		 <if test="division != null and division != '' ">
+		division = #{division}
+		 </if>
+		</where> 
+	</select>
 
 <!-- 전체조회(업데이트, 서비스, 이벤트, 작업, 공고) -->
 <select id = "noticeListShopE" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where division =#{division}
-order by notice_number desc
+   SELECT * 
+	  FROM (
+		    SELECT ROWNUM RN, A.* 
+	      FROM (
+             select  notice_number
+                    ,division
+	                ,writer_date
+	                ,writer
+	                ,title 
+	                ,content
+             from notice
+             where division = #{division}
+             order by notice_number desc
+		    	) A
+			)
+			WHERE RN BETWEEN #{start} AND #{end}
 </select>
 
 <!-- 상세조회 -->

@@ -61,7 +61,6 @@
   	$('tbody > tr').on('click', function(event){
   		let tr = event.currentTarget;
   		let did = $(tr).children().eq(0).text();
-  		console.log(did);
   		let url = clc + '/containerOutInfo?orderNumber='+did;
   		location.href = url;
   	});

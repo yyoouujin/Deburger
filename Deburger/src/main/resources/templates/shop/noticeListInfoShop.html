@@ -36,6 +36,7 @@
 			//noticeCorrectOffice?noticeNumber=ANM0000061
 			let url = 'noticeCorrectOffice?noticeNumber='+ noticeNumber ;
 			location.href = url;
+			alert("저장 되었습니다.");
 		});    
 			
    		$("#btnDelete").on("click", function(event) {
@@ -43,6 +44,7 @@
 			const noticeNumber = urlParams.get('noticeNumber');
 			let url = 'noticeDeleteOffice?noticeNumber='+ noticeNumber;
 			location.href = url;
+			alert("삭제 되었습니다.");
 		}); 
 		</script>
 </body>

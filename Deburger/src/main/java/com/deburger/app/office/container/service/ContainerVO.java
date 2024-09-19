@@ -71,6 +71,7 @@ public class ContainerVO {
 	// 프로시저
 	public String pNumber;
 	public String pOutOperation;
+	public String pInspection;
 
 	// 로그인
 	public String name;
@@ -81,5 +82,4 @@ public class ContainerVO {
 	public String position;
 
 	public String oderApp;
-
 }
