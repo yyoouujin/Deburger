@@ -12,16 +12,15 @@ public interface MaterialService {
 	public List<MaterialVO> materialInfo(MaterialVO materialVO);
 
 	// 등록
-	public int insertMaterial(MaterialVO materialVO);
+	public int insertMaterialService(MaterialVO materialVO);
 
 	// 수정
 	public Map<String, Object> updateMaterial(MaterialVO materialVO);
 
 	// 삭제
 	public int deleteMaterialService(MaterialVO materialVO);
-	
+
 	// Material 총 갯수
 	public int countMaterialService();
-		
 
 }

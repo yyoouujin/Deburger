@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.deburger.app.office.material.mapper.MaterialMapper;
 import com.deburger.app.office.material.service.MaterialService;
 import com.deburger.app.office.material.service.MaterialVO;
-import com.deburger.app.office.material.service.PagingVO;
 
 import lombok.AllArgsConstructor;
 
@@ -34,10 +33,10 @@ public class MaterialServiceImpl implements MaterialService {
 
 	// 등록
 	@Override
-	public int insertMaterial(MaterialVO materialVO) {
+	public int insertMaterialService(MaterialVO materialVO) {
 		// TODO Auto-generated method stub
-		int result = materialMapper.insertMaterialInfo(materialVO);
-		return 1;
+		int result = materialMapper.insertMaterial(materialVO);
+		return result;
 		// return result == 1 ? materialVO.getMaterialNumber() : -1;
 	}
 
@@ -72,6 +71,5 @@ public class MaterialServiceImpl implements MaterialService {
 		// TODO Auto-generated method stub
 		return materialMapper.countMaterial();
 	}
-
 
 }

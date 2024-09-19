@@ -36,14 +36,8 @@
                   </form>
                 </div>
 			    <div id="outter">
-			    <div style="float: right;">
-					<select id="cntPerPage" name="sel" onchange="selChange()">
-						<option value="5" th:if="${paging.cntPerPage == 5}">5줄 보기</option>
-						<option value="10" th:if="${paging.cntPerPage == 10}">10줄 보기</option>
-						<option value="15" th:if="${paging.cntPerPage == 15}">15줄 보기</option>
-						<option value="20" th:if="${paging.cntPerPage == 20}">20줄 보기</option>
-					</select>
-				</div> <!-- 옵션선택 끝 -->
+			    <a href="materialInsert"><button style="float: right;" class='btn btn-danger'>재료 등록
+				</button></a> <!-- 옵션선택 끝 -->
 				</div>
                 <!-- End Search Bar -->
                 <!-- Default Table -->

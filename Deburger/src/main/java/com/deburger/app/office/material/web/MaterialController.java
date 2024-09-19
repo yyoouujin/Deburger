@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deburger.app.main.login.service.UserVO;
@@ -25,7 +23,6 @@ import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
 import com.deburger.app.office.material.service.MaterialService;
 import com.deburger.app.office.material.service.MaterialVO;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,16 +40,16 @@ public class MaterialController {
 
 	// 재료 전체 페이지
 	@GetMapping("materials")
-	public String materialList(MaterialVO materialVO, Model model
-			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+	public String materialList(MaterialVO materialVO, Model model,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		int total = materialService.countMaterialService();
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
 		} else if (nowPage == null) {
 			nowPage = "1";
-		} else if (cntPerPage == null) { 
+		} else if (cntPerPage == null) {
 			cntPerPage = "10";
 		}
 		materialVO = new MaterialVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
@@ -61,26 +58,33 @@ public class MaterialController {
 		return "office/material/materials";
 	}
 
-	// 재료 전체 페이지 삭제 -- 안됨 
-	//@GetMapping("materialDelete")
-	public String materialDelete(MaterialVO materialVO) {
-		 materialService.deleteMaterialService(materialVO);
-		 return "redirect:materials";
-	}
-	
-	
-	// 재료 상세 페이지 
+	// 재료 상세 페이지
 	@GetMapping("materialInfo")
 	public String materialInfo(MaterialVO materialVO, Model model) {
 		List<MaterialVO> list = materialService.materialInfo(materialVO);
 		model.addAttribute("material", list);
 		return "office/material/materialInfo";
 	}
-	
-	
-	
-	
-	
+
+	// insert 보여주기
+	@GetMapping("materialInsert")
+	public String materialInsert(MaterialVO materialVO) {
+		return "office/material/materialInsert";
+	}
+
+	// insert 처리
+	@PostMapping("materialInserts")
+	public String materialInsertProcess(MaterialVO materialVO) {
+		int mId = materialService.insertMaterialService(materialVO);
+		String url = null;
+		if (mId > -1) {
+			url = "redirect:materialInsert";
+		} else {
+			url = "redirect:materials";
+		}
+		return url;
+	}
+
 	// application.properties 에서 불러와 필드에 담음
 	@Value("${file.upload.path}")
 	private String uploadPath;
@@ -90,7 +94,7 @@ public class MaterialController {
 	public void formUploadPage() {
 	}
 
-	@PostMapping("insertMaterial")
+	@PostMapping("")
 	public String postMethodName(StoreVO storeVO, MultipartFile contractImageFile,
 			MultipartFile businessLicenseImageFile) {
 
@@ -121,27 +125,25 @@ public class MaterialController {
 		// DB에 해당 경로 저장
 		// 1) 사용자가 업로드할 때 사용한 파일명
 		// 2) 실제 서버에 업로드할 때 사용한 경로
-		
+
 		storeVO.setContractImage(setImagePath(uploadFileName));
-		
-		
+
 		UserVO userVO = new UserVO();
 		userVO.setId("frc" + storeVO.getBusinessRegistrationNumber());
 		userVO.setPassword(storeVO.getPhone());
 		userVO.setAuthority("4");
 		userVO.setPasswordChangeOpertation("N");
-		
+
 		storeVO.setStoreNumber("frc" + storeVO.getBusinessRegistrationNumber());
 		storeService.insertStore(storeVO, userVO);
 
-		return "main/store/insertStore";
+		return "office/material/materialInsert";
 	}
-	
+
 	private String setImagePath(String uploadFileName) {
 		return uploadFileName.replace(File.separator, "/");
 	}
 
-	
 	private String makeFolder() {
 		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		// LocalDate를 문자열로 포멧
@@ -156,7 +158,5 @@ public class MaterialController {
 		}
 		return folderPath;
 	}
-	
 
 }
-

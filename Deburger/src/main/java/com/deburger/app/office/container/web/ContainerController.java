@@ -18,7 +18,6 @@ import com.deburger.app.office.container.service.ContainerVO;
 public class ContainerController {
 
 	public ContainerService containerService;
-	private List<ContainerVO> testList;
 
 	@Autowired
 	ContainerController(ContainerService containerService) {
@@ -27,12 +26,16 @@ public class ContainerController {
 
 	// 전체 조회
 	@GetMapping("container")
-	public String containerList(ContainerVO containerVO, Model model) {
-		List<ContainerVO> list = containerService.containerAllList(containerVO);
+	public String containerList(Model model) {
+		// 담당 물류 창고 이름
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
+
+		// 해당 물
+		List<ContainerVO> list = containerService.containerAllList(mid);
 		ContainerVO pid = containerService.loginService(mid);
+
 		model.addAttribute("containers", list);
 		model.addAttribute("persons", pid);
 
@@ -56,11 +59,13 @@ public class ContainerController {
 	// 물류 창고 입고 조회
 	@GetMapping("containerIn")
 	public String containerInList(Model model) {
+		// 세션 처리 해보기
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
 		ContainerVO pid = containerService.loginService(mid);
-		List<ContainerVO> list = containerService.containerAllInList(mid);
+
+		List<ContainerVO> list = containerService.containerAllInList(pid);
 		model.addAttribute("containersIn", list);
 		model.addAttribute("persons", pid);
 		return "office/container/containersIn";
@@ -119,18 +124,17 @@ public class ContainerController {
 		return "office/container/containerOutInfo";
 	}
 
-	// 모달창 input lot 리스트
+	// 모달창 input 자재별 유효 재고 lot 리스트
 	@PostMapping("containerModal")
 	@ResponseBody
 	public List<ContainerVO> containerModalInfo(@RequestBody ContainerVO containerVO) {
 		return containerService.containerOutModalInfo(containerVO);
 	}
 
-	// 프로시저 실행
+	// 출고 처리
 	@PostMapping("containerOutPd")
-	public String containerOutPds(ContainerVO containerVO, Model model) {
-		List<ContainerVO> list = containerService.containerOutpD(containerVO);
-		model.addAttribute("outPd", list);
+	public String containerOutPds(ContainerVO containerVO) {
+		containerService.containerOutpD(containerVO);
 		return "redirect:containerOut";
 	}
 
