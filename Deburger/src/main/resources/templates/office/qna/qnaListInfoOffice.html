@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}"
+	layout:decorate="~{common/layouts/layout}"
 	layout:fragment="Content">
 
 <head>
@@ -27,7 +27,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<th:blick tr="list:${qnas}">
 									<td>[[${qna.qnaDetail.qnaNumber}]]</td>
 									<td>[[${qna.qnaDetail.storeName}]]</td>
 									<td>[[${#dates.format(qna.qnaDetail.writerDay,'yyyy-MM-dd')}]]</td>
@@ -69,14 +69,14 @@
 			</form>
 			<hr class="col-md-10">
 			<br>
-			<p>[[${qna.qnaDetail.content}]]
+			<p >[[${qna.qnaDetail.content}]]
 			</p>
 				<br>
 			<hr class="col-md-10">
 			<div class="col-md-10">
 				<div class="card">
 					<div class="card-body" style="height: 150px">
- 						<textarea th:text="${qna.comselect}" class="form-control" style="height: 150px; width:100%;">
+ 						<textarea th:text="${qna.comselect}" class="form-control" style="height: 150px; width:100%;" id="comContent">
 						</textarea>
                        </div>
 				</div>
@@ -110,20 +110,58 @@
 		}
 	
 		
-		$("#btnInsert").on("click", function(event) {
+		 $("#btnInsert").on("click", function(event) {
+			let list = {};
+			
+		    var comContent = document.getElementById('comContent').value;
 			const urlParams = new URL(location.href).searchParams;
 			const qnaNumber = urlParams.get('qnaNumber');
-			let url = 'qnaCommentInsert?qnaNumber=' + qnaNumber;
-			location.href = url;
-			alert("정상적으로 작성되었습니다!")
+			
+			list = {qnaNumber,comContent}
+			console.log(list)
+			
+			$.ajax({
+				url : "qnaCommentInsert",
+				method : "POST",
+				contentType:"application/JSON",
+				data : JSON.stringify(list),
+				
+			})
+			
+			.then((end) => {
+				 location.href="qnaListOffice" 
+				
+				alert("정상적으로 작성되었습니다!")
+			})
+		
+			
 		});
 		
 		$("#btnUpdate").on("click", function(event) {
+			let list = {};
+	
+			var comContent = document.getElementById('comContent').value;
 			const urlParams = new URL(location.href).searchParams;
 			const qnaNumber = urlParams.get('qnaNumber');
-			let url = 'qnaCommentUpdate?qnaNumber=' + qnaNumber;
-			location.href = url;
-			alert("정상적으로 작성되었습니다!")
+			
+			list = {qnaNumber,comContent}
+			console.log(list)
+			
+			$.ajax({
+				url : "qnaCommentUpdate",
+				method : "POST",
+				contentType:"application/JSON",
+				data : JSON.stringify(list),
+				
+			})
+			
+			.then((end) => {
+				 location.href="qnaListOffice" 
+				
+				alert("정상적으로 작성되었습니다!")
+			})
+		
+			
 		});
 
 	</script>

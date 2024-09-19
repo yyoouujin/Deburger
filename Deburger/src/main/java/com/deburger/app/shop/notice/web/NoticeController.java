@@ -27,59 +27,142 @@ public class NoticeController {
     
     //전체조회(본점)
     @GetMapping("noticeListOffice")
-    public String noticeListOffice(Model model) {
-    	List<NoticeVO> list = noticeService.noticeListShop();
-    	model.addAttribute("notices", list);
+    public String noticeListOffice(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+    	int total = noticeService.countNoticeService(null);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", noticeVO);
+		model.addAttribute("viewAll", noticeService.noticeListShop(noticeVO));
     	
     	return "office/notice/noticeListOffice";
     }
         
     //전체조회(본점-업데이트)
     @GetMapping("noticeListOfficeUpdate")
-    public String noticeListOfficeUpdate(Model model,NoticeVO noticeVO) {
+    public String noticeListOfficeUpdate(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+    	
     	noticeVO.setDivision("업데이트");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("업데이트");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "office/notice/noticeListOffice";
     }    
     
     //전체조회(본점-서비스)
     @GetMapping("noticeListOfficeService")
-    public String noticeListOfficeService(Model model,NoticeVO noticeVO) {
+    public String noticeListOfficeService(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+    	
     	noticeVO.setDivision("서비스");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("서비스");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "office/notice/noticeListOffice";
     }    
     
     //전체조회(본점-이벤트 )
     @GetMapping("noticeListOfficeEvent")
-    public String noticeListOfficeEvent(Model model,NoticeVO noticeVO) {
+    public String noticeListOfficeEvent(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
     	noticeVO.setDivision("이벤트");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("이벤트");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "office/notice/noticeListOffice";
     }
     
     //전체조회(본점-작업 )
     @GetMapping("noticeListOfficeWork")
-    public String noticeListOfficeWork(Model model,NoticeVO noticeVO) {
-       	noticeVO.setDivision("작업");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    public String noticeListOfficeWork(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+    	
+    	noticeVO.setDivision("작업");
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("작업");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "office/notice/noticeListOffice";
     }
     
     //전체조회(본점-공고 )
     @GetMapping("noticeListOfficeAnnouncement")
-    public String noticeListOfficeAnnouncement(Model model,NoticeVO noticeVO) {
-       	noticeVO.setDivision("공고");   	
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    public String noticeListOfficeAnnouncement(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+    	
+    	noticeVO.setDivision("공고");
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("공고");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
+    	
     	
     	return "office/notice/noticeListOffice";
     }
@@ -96,9 +179,21 @@ public class NoticeController {
     
     //전체조회(가맹점-전체)
     @GetMapping("noticeListShop")
-    public String noticeListShop(Model model) {
-    	List<NoticeVO> list = noticeService.noticeListShop();
-    	model.addAttribute("notices", list);
+    public String noticeListShop(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+		int total = noticeService.countNoticeService(null);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", noticeVO);
+		model.addAttribute("viewAll", noticeService.noticeListShop(noticeVO));
     	
     	return "shop/noticeListShop";
     }
@@ -106,50 +201,120 @@ public class NoticeController {
     
     //전체조회(가맹점-업데이트 )
     @GetMapping("noticeListShopUpdate")
-    public String noticeListShopUpdate(Model model,NoticeVO noticeVO) {
+    public String noticeListShopUpdate(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
     	noticeVO.setDivision("업데이트");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("업데이트");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "shop/noticeListShop";
     }
     
     //전체조회(가맹점-서비스 )
     @GetMapping("noticeListShopService")
-    public String noticeListShopService(Model model,NoticeVO noticeVO) {
+    public String noticeListShopService(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
     	noticeVO.setDivision("서비스");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("서비스");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "shop/noticeListShop";
     }
     
     //전체조회(가맹점-이벤트 )
     @GetMapping("noticeListShopEvent")
-    public String noticeListShopEvent(Model model,NoticeVO noticeVO) {
+    public String noticeListShopEvent(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
     	noticeVO.setDivision("이벤트");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("이벤트");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "shop/noticeListShop";
     }
     
     //전체조회(가맹점-작업 )
     @GetMapping("noticeListShopWork")
-    public String noticeListShopWork(Model model,NoticeVO noticeVO) {
-       	noticeVO.setDivision("작업");
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    public String noticeListShopWork(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
+    	noticeVO.setDivision("작업");
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("작업");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "shop/noticeListShop";
     }
     
     //전체조회(가맹점-공고 )
     @GetMapping("noticeListShopAnnouncement")
-    public String noticeListShopAnnouncement(Model model,NoticeVO noticeVO) {
-       	noticeVO.setDivision("공고");   	
-    	List<NoticeVO> list = noticeService.noticeListShopE(noticeVO);
-    	model.addAttribute("notices", list);
+    public String noticeListShopAnnouncement(NoticeVO noticeVO, Model model
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+
+    	noticeVO.setDivision("공고");
+    	int total = noticeService.countNoticeService(noticeVO);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		noticeVO = new NoticeVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		noticeVO.setDivision("공고");
+		model.addAttribute("paging", noticeVO);		
+    	model.addAttribute("viewAll", noticeService.noticeListShopE(noticeVO));
     	
     	return "shop/noticeListShop";
     }

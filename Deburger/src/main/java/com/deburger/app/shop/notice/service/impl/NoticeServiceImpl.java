@@ -23,8 +23,8 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	//공지사항 전체 조회(전체)
 	@Override
-	public List<NoticeVO> noticeListShop() {
-		return mapper.noticeListShop();
+	public List<NoticeVO> noticeListShop(NoticeVO noticeVO) {
+		return mapper.noticeListShop(noticeVO);
 	}
 
 	//전체조회(업데이트, 서비스, 이벤트, 작업, 공고)
@@ -68,6 +68,13 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int noticeDeleteOffice(String noticeNumber) {
 		return mapper.noticeDeleteOffice(noticeNumber);
+	}
+
+	//카운트
+	@Override
+	public int countNoticeService(NoticeVO noticeVO) {
+		// TODO Auto-generated method stub
+		return mapper.countNotice(noticeVO);
 	}
 
 
