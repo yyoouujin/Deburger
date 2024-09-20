@@ -25,4 +25,7 @@ public interface NoticeService {
 	
 	//공지사항 삭제
 	public int noticeDeleteOffice(String noticeNumber);
+	
+	//전체조회(메인페이지)
+	public List<NoticeVO> noticeListShopList();
 }
