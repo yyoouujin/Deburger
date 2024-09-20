@@ -29,6 +29,11 @@ public interface MaterialOrderMapper {
 	// 업체별 제료 목록
 	public List<MaterialOrderVO> selectSupplierListOptions(MaterialOrderVO meteMaterialOrderVO);
 	
+	// 발주 조회
+	public List<MaterialOrderVO> selectMaterialOrder();
+	
+	// 발주 상세 조회
+	public List<MaterialOrderVO> selectMaterialOrderInfo(MaterialOrderVO meteMaterialOrderVO);
 	
 }
 

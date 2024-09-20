@@ -66,6 +66,18 @@ public class MaterialOrderServiceImpl implements MaterialOrderService {
 		return cnt;
 	}
 
+	@Override
+	public List<MaterialOrderVO> selectMaterialOrder() {
+		// TODO Auto-generated method stub
+		return materialOrderMapper.selectMaterialOrder();
+	}
+
+	@Override
+	public List<MaterialOrderVO> selectMaterialOrderInfo(MaterialOrderVO meteMaterialOrderVO) {
+		// TODO Auto-generated method stub
+		return materialOrderMapper.selectMaterialOrderInfo(meteMaterialOrderVO);
+	}
+
 
 	
 

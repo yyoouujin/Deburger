@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <style>
+      th,
+      td {
+        border: solid 1px black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>발주 상세</h1>
+        <nav>
+          <ol class="breadcrumb"></ol>
+        </nav>
+      </div>
+      <div class="pagetitle"></div>
+      <!-- End Page Title -->
+      <section class="section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-10">
+                  <div class="col-sm-10 col-md-10">
+                    <br />
+                  </div>
+                </div>
+                <div style="text-align: right; margin: 0 0 10px 0"></div>
+                <table class="col-lg-12" style="text-align: center">
+                  <thead>
+                    <tr height="50">
+                      <th>발주건명</th>
+                      <td colspan="9">정기발주</td>
+                    </tr>
+                    <tr height="50">
+                      <th>발주일자</th>
+                      <td colspan="9" id="orderDay">[[${#dates.format(Info.orderDay, 'yyyy년 MM월 dd 일')}]]</td>
+                    </tr>
+                    <tr height="50">
+                      <th>수신 업체 이름</th>
+                      <td colspan="4">[[${Info.clientName}]]</td>
+                      <th>발주 창고 이름</th>
+                      <td colspan="4">[[${Info.logisticsName}]]</td>
+                    </tr>
+                    <tr height="50">
+                      <th rowspan="2">연락처</th>
+                      <th>전화번호</th>
+                      <td colspan="3" id="phone1">[[${Info.phone}]]</td>
+
+                      <th rowspan="2">연락처</th>
+                      <th>전화번호</th>
+                      <td colspan="3" id="phone2">[[${Info.phoneLog}]]</td>
+                    </tr>
+                    <tr height="50">
+                      <th>이메일</th>
+                      <td colspan="3" id="email">[[${Info.email}]]</td>
+                      <th>이메일</th>
+                      <td colspan="3">info@deburger.com</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr height="50">
+                      <th>합계금액</th>
+                      <td style="text-align: center" colspan="9">
+                        일금 <input type="text" style="border: none; width: 200px" id="korSum" readonly /> 원정(
+                        <input type="text" style="border: none; width: 200px" id="allSum" readonly />
+                        )세액포함
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- 추가 삭제 버튼 -->
+                <div id="grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script th:inline="javascript">
+
+      let grid;
+      var detaList = [[${Order}]];
+
+      $(document).ready(async () => {
+        // 2. HTML이 수행된 뒤 함수를 호출한다.
+        grid = await gridLoad();
+      });
+
+      /**
+       *
+       * @return void
+       */
+      const gridLoad = () => {
+        // 3. 그리드 생성
+        const Grid = tui.Grid;
+
+        /**
+         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+         *
+         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+         * @reference https://seokbong.tistory.com/14
+         */
+        Grid.applyTheme('default');
+
+        /**
+         * [선택] Grid Confirm 메시지
+         */
+
+        Grid.setLanguage('en'); // set Korean
+        const grid = new Grid({
+          // ================================== 공통 옵션 적용 ==============================
+          el: document.getElementById('grid'), // [필수] Container element
+          data: detaList, // [선택] 그리드 데이터 조회
+
+          /**
+           * [선택] 순번 기능
+           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           */
+          rowHeaders: ['rowNum'],
+
+          // 패이징
+          pageOptions: {
+            useClient: true,
+            perPage: 10,
+          },
+
+          // ================================== 컬럼 옵션 적용 ==============================
+
+          columns: [
+            // [Column-1] 품명
+            {
+              header: '품명', // [필수] 컬럼 이름
+              name: 'materialName', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-2] 규격
+            {
+              header: '규격', // [필수] 컬럼 이름
+              name: 'unit', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-3] 수량
+            {
+              header: '수량', // [필수] 컬럼 이름
+              name: 'count', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-4] 단가
+            {
+              header: '단가', // [필수] 컬럼 이름
+              name: 'buyUnitprice', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-5] 물류창고
+            {
+              header: '물류창고', // [필수] 컬럼 이름
+              name: 'logisticsId', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+
+            // [Column-6] 공급가액
+            {
+              header: '공급가액', // [필수] 컬럼 이름
+              name: 'buyUnitprice', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-7] 세액
+            {
+              header: '세액', // [필수] 컬럼 이름
+              name: 'tax', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+            // [Column-8] 합계금액
+            {
+              header: '합계금액', // [필수] 컬럼 이름
+              name: 'cost', // [필수] 컬럼 매핑 이름 값
+              sortable: true, // [선택] 컬럼의 정렬 여부
+              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+              align: 'center', // [선택] 텍스트 정렬 옵션
+            },
+          ],
+          summary: {
+                 height: 0,
+                 position: 'top', // or 'top'
+                 columnContent: {
+                	 cost : {
+                     template: function(valueMap) {
+                       return `합계: ${Math.round(((valueMap.sum)))} 원`;
+                     }
+                   }
+                 }
+             },
+        });
+        //  그리드 추가
+        document.getElementById('korSum').value = geKoreanNumber(grid.getSummaryValues('cost').sum);
+      	document.getElementById('allSum').value = (grid.getSummaryValues('cost').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
+        
+        return grid;
+      };
+      
+
+
+      function geKoreanNumber(number) {
+          const koreanNumber = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+          const tenUnit = ['', '십', '백', '천'];
+          const tenThousandUnit = ['조', '억', '만', ''];
+          const unit = 10000;
+
+          let answer = '';
+
+          while (number > 0) {
+            const mod = number % unit;
+            const modToArray = mod.toString().split('');
+            const length = modToArray.length - 1;
+
+             const modToKorean = modToArray.reduce((acc, value, index) => {
+              const valueToNumber = +value;
+              if (!valueToNumber) return acc;
+
+              const numberToKorean = index < length && valueToNumber === 1 ? '' : koreanNumber[valueToNumber];
+              return `${acc}${numberToKorean}${tenUnit[length - index]}`;
+            }, '');
+
+            answer = `${modToKorean}${tenThousandUnit.pop()} ${answer}`;
+            number = Math.floor(number / unit);
+          }
+
+          return answer.replace();
+        }
+      
+      
+      
+    </script>
+  </body>
+</html>
