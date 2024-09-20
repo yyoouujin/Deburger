@@ -33,9 +33,9 @@
               <div class="card-body">
                 <div class="row mb-10">
                   <div class="col-sm-10 col-md-10">
-                  <br>
-                    <div class="row col-md-10">                    
-                      <div class="col-sm-10 col-md-2">                      	
+                    <br />
+                    <div class="row col-md-10">
+                      <div class="col-sm-10 col-md-2">
                         <button type="button" class="btn btn-info col-md-12" id="appendBtn">추가</button>
                       </div>
                       <div class="col-sm-10 col-md-2">
@@ -56,10 +56,12 @@
                     </tr>
                     <tr height="50">
                       <th>발주일자</th>
-                      <td colspan="9" id="orderDay">[[${#calendars.format(#calendars.createNow(), 'yyyy년 MM월 dd일 HH시 mm분')}]]</td>
+                      <td colspan="9" id="orderDay">
+                        [[${#calendars.format(#calendars.createNow(), 'yyyy년 MM월 dd일 HH시 mm분')}]]
+                      </td>
                     </tr>
                     <tr height="50">
-                      <th>발신 업체 이름</th>
+                      <th>수신 업체 이름</th>
                       <td colspan="4">
                         <select class="form-select" id="clientId" name="clientId">
                           <option value="">거래처를 선택하세요</option>
@@ -68,7 +70,7 @@
                           </th:block>
                         </select>
                       </td>
-                      <th>수신 창고 이름</th>
+                      <th>발주 창고 이름</th>
                       <td colspan="4">
                         <select class="form-select" id="logisticsId" name="logisticsId">
                           <option value="">물류창고를 선택하세요</option>
@@ -99,7 +101,7 @@
                       <th>합계금액</th>
                       <td style="text-align: center" colspan="9">
                         일금 <input type="text" style="border: none; width: 200px" id="korSum" readonly /> 원정(
-                        <input type="text" style="border: none; width: 200px" id="allSum" readonly  />
+                        <input type="text" style="border: none; width: 200px" id="allSum" readonly />
                         )세액포함
                       </td>
                     </tr>
@@ -116,311 +118,311 @@
 
     <script th:inline="javascript">
 
-      let grid;
-      var detaList = [];
-      let supplierList = [[${supplierList}]];
-      let logisticList = [[${logisticList}]];
-      let logisticId = '';
-      let SupplierListOptions = [];
+          let grid;
+          var detaList = [];
+          let supplierList = [[${supplierList}]];
+          let logisticList = [[${logisticList}]];
+          let logisticId = '';
+          let SupplierListOptions = [];
 
-      let options = [];
+          let options = [];
 
-      $(document).ready(async () => {
-        // 2. HTML이 수행된 뒤 함수를 호출한다.
-        grid = await gridLoad();
-      });
-
-      /**
-       *
-       * @return void
-       */
-      const gridLoad = () => {
-        // 3. 그리드 생성
-        const Grid = tui.Grid;
-
-        /**
-         * [선택] 그리드 테마 적용하기 (clean, stripe, default)
-         *
-         * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
-         * @reference https://seokbong.tistory.com/14
-         */
-        Grid.applyTheme('default');
-
-        /**
-         * [선택] Grid Confirm 메시지
-         */
-
-        Grid.setLanguage('en'); // set Korean
-        const grid = new Grid({
-          // ================================== 공통 옵션 적용 ==============================
-          el: document.getElementById('grid'), // [필수] Container element
-          data: detaList, // [선택] 그리드 데이터 조회
+          $(document).ready(async () => {
+            // 2. HTML이 수행된 뒤 함수를 호출한다.
+            grid = await gridLoad();
+          });
 
           /**
-           * [선택] 순번 기능
-           * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+           *
+           * @return void
            */
-          rowHeaders: ['checkbox'],
+          const gridLoad = () => {
+            // 3. 그리드 생성
+            const Grid = tui.Grid;
 
-          // 패이징
-          pageOptions: {
-            useClient: true,
-            perPage: 10,
-          },
+            /**
+             * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+             *
+             * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+             * @reference https://seokbong.tistory.com/14
+             */
+            Grid.applyTheme('default');
 
-          // ================================== 컬럼 옵션 적용 ==============================
+            /**
+             * [선택] Grid Confirm 메시지
+             */
 
-          columns: [
-            // [Column-1] 품명
-            {
-              header: '품명', // [필수] 컬럼 이름
-              name: 'materialNumber', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
-              validation: {
-                regExp: /^(.){1,100}$/,
+            Grid.setLanguage('en'); // set Korean
+            const grid = new Grid({
+              // ================================== 공통 옵션 적용 ==============================
+              el: document.getElementById('grid'), // [필수] Container element
+              data: detaList, // [선택] 그리드 데이터 조회
+
+              /**
+               * [선택] 순번 기능
+               * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+               */
+              rowHeaders: ['checkbox'],
+
+              // 패이징
+              pageOptions: {
+                useClient: true,
+                perPage: 10,
               },
-              // [Option] select 옵션
-              editor: {
-                type: 'select',
-                options: {
-                  listItems: options,
+
+              // ================================== 컬럼 옵션 적용 ==============================
+
+              columns: [
+                // [Column-1] 품명
+                {
+                  header: '품명', // [필수] 컬럼 이름
+                  name: 'materialNumber', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                  formatter: 'listItemText', // [선택] 값을 기반으로 select box 옵션
+                  validation: {
+                    regExp: /^(.){1,100}$/,
+                  },
+                  // [Option] select 옵션
+                  editor: {
+                    type: 'select',
+                    options: {
+                      listItems: options,
+                    },
+                  },
+                  onAfterChange(ev) {
+                    SupplierListOptions.forEach((ele)=>{
+                      if(ev.value == ele.materialNumber){
+                        grid.setValue(ev.rowKey,'unit',ele.unit);
+                        grid.setValue(ev.rowKey,'cost',ele.cost);
+                        grid.setValue(ev.rowKey,'buyUnitprice',ele.buyUnitprice);
+                      }
+
+                    })
+                       },
                 },
-              },
-              onAfterChange(ev) {
-                SupplierListOptions.forEach((ele)=>{
-                  if(ev.value == ele.materialNumber){
-                    grid.setValue(ev.rowKey,'unit',ele.unit);
-                    grid.setValue(ev.rowKey,'cost',ele.cost);
-                    grid.setValue(ev.rowKey,'buyUnitprice',ele.buyUnitprice);
-                  }
+                // [Column-2] 규격
+                {
+                  header: '규격', // [필수] 컬럼 이름
+                  name: 'unit', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-3] 수량
+                {
+                  header: '수량', // [필수] 컬럼 이름
+                  name: 'count', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                  editor: 'text', // [선택] 수정 옵션
+                  validation: {
+                    regExp: /^[0-9]{1,100}$/,
+                  },
+                  onAfterChange(ev) {
+                   	  grid.setValue(ev.rowKey,'tax', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 0.1 * grid.getData()[ev.rowKey].count));
+                      grid.setValue(ev.rowKey,'orderCost', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 1.1 * grid.getData()[ev.rowKey].count));
+                   	  document.getElementById('allSum').value = (grid.getSummaryValues('orderCost').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
 
-                })
-                   },
-            },
-            // [Column-2] 규격
-            {
-              header: '규격', // [필수] 컬럼 이름
-              name: 'unit', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-3] 수량
-            {
-              header: '수량', // [필수] 컬럼 이름
-              name: 'count', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              editor: 'text', // [선택] 수정 옵션
-              validation: {
-                regExp: /^[0-9]{1,100}$/,
-              },
-              onAfterChange(ev) {
-               	  grid.setValue(ev.rowKey,'tax', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 0.1 * grid.getData()[ev.rowKey].count));
-                  grid.setValue(ev.rowKey,'orderCost', Math.round(grid.getData()[ev.rowKey].buyUnitprice * 1.1 * grid.getData()[ev.rowKey].count));
-               	  document.getElementById('allSum').value = (grid.getSummaryValues('orderCost').sum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원';
-               	  
-               	  document.getElementById('korSum').value = geKoreanNumber(grid.getSummaryValues('orderCost').sum);
-                   },
-            },
-            // [Column-4] 단가
-            {
-              header: '단가', // [필수] 컬럼 이름
-              name: 'cost', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
+                   	  document.getElementById('korSum').value = geKoreanNumber(grid.getSummaryValues('orderCost').sum);
+                       },
+                },
+                // [Column-4] 단가
+                {
+                  header: '단가', // [필수] 컬럼 이름
+                  name: 'cost', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
 
-            // [Column-5] 물류창고
-            {
-              header: '물류창고', // [필수] 컬럼 이름
-              name: 'logisticsId', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-              defaultValue: logisticId,
-            },
+                // [Column-5] 물류창고
+                {
+                  header: '물류창고', // [필수] 컬럼 이름
+                  name: 'logisticsId', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                  defaultValue: logisticId,
+                },
 
-            // [Column-6] 공급가액
-            {
-              header: '공급가액', // [필수] 컬럼 이름
-              name: 'buyUnitprice', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-7] 세액
-            {
-              header: '세액', // [필수] 컬럼 이름
-              name: 'tax', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-            // [Column-8] 합계금액
-            {
-              header: '합계금액', // [필수] 컬럼 이름
-              name: 'orderCost', // [필수] 컬럼 매핑 이름 값
-              sortable: true, // [선택] 컬럼의 정렬 여부
-              resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-              align: 'center', // [선택] 텍스트 정렬 옵션
-            },
-          ],
-          summary: {
-                 height: 0,
-                 position: 'top', // or 'top'
-                 columnContent: {
-                	 orderCost : {
-                     template: function(valueMap) {
-                       return `합계: ${Math.round(((valueMap.sum)))} 원`;
+                // [Column-6] 공급가액
+                {
+                  header: '공급가액', // [필수] 컬럼 이름
+                  name: 'buyUnitprice', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-7] 세액
+                {
+                  header: '세액', // [필수] 컬럼 이름
+                  name: 'tax', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+                // [Column-8] 합계금액
+                {
+                  header: '합계금액', // [필수] 컬럼 이름
+                  name: 'orderCost', // [필수] 컬럼 매핑 이름 값
+                  sortable: true, // [선택] 컬럼의 정렬 여부
+                  resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                  align: 'center', // [선택] 텍스트 정렬 옵션
+                },
+              ],
+              summary: {
+                     height: 0,
+                     position: 'top', // or 'top'
+                     columnContent: {
+                    	 orderCost : {
+                         template: function(valueMap) {
+                           return `합계: ${Math.round(((valueMap.sum)))} 원`;
+                         }
+                       }
                      }
-                   }
-                 }
-             },
-        });
+                 },
+            });
 
-        //  그리드 추가
+            //  그리드 추가
 
-        return grid;
-      };
+            return grid;
+          };
 
-      const appendBtn = document.getElementById('appendBtn');
-      const deleteBtn = document.getElementById('deleteBtn');
-      const clientSelect = document.getElementById('clientId');
-      const makeGrid = document.getElementById('grid');
-      const phone1 = document.getElementById('phone1');
-      const phone2 = document.getElementById('phone2');
-      const email = document.getElementById('email');
-      const insertBtn = document.getElementById('insertBtn');
+          const appendBtn = document.getElementById('appendBtn');
+          const deleteBtn = document.getElementById('deleteBtn');
+          const clientSelect = document.getElementById('clientId');
+          const makeGrid = document.getElementById('grid');
+          const phone1 = document.getElementById('phone1');
+          const phone2 = document.getElementById('phone2');
+          const email = document.getElementById('email');
+          const insertBtn = document.getElementById('insertBtn');
 
-      const logisticsSelect = document.getElementById('logisticsId');
+          const logisticsSelect = document.getElementById('logisticsId');
 
 
 
-      appendBtn.addEventListener('click', () => {
-        
-        if(document.getElementById('clientId').value == ''){
-                  alert('업체를 선택해주세요')
-                }else if(document.getElementById('logisticsId').value == ''){
-                  alert('물류창고를 선택해주세요')
-                }else{
-                  grid.appendRow();
-                }
-              });
+          appendBtn.addEventListener('click', () => {
 
-      deleteBtn.addEventListener('click', () => {
-        grid.removeCheckedRows();
-      });
+            if(document.getElementById('clientId').value == ''){
+                      alert('업체를 선택해주세요')
+                    }else if(document.getElementById('logisticsId').value == ''){
+                      alert('물류창고를 선택해주세요')
+                    }else{
+                      grid.appendRow();
+                    }
+                  });
 
-      clientSelect.addEventListener('change', (e) => {
+          deleteBtn.addEventListener('click', () => {
+            grid.removeCheckedRows();
+          });
 
-
-        $.ajax({
-            url: "/deburger/selectSupplierListOptions",
-            method: "post",
-            contentType:"application/json",
-            data  : JSON.stringify({'clientId':e.target.value}),
-         })
-         .then(result =>{
-          makeGrid.innerHTML = '';
-          SupplierListOptions = result;
-
-          supplierList.forEach((ele)=>{
-          if(ele.clientId == e.target.value){
-            phone1.innerHTML = ele.personPhone;
-            email.innerHTML = ele.email;
-          }
-        })
-        options =[];
-        SupplierListOptions.forEach((ele)=>{
-          options.push({text: ele.materialName, value: ele.materialNumber})
-        })
-        grid = gridLoad();
-
-         })
+          clientSelect.addEventListener('change', (e) => {
 
 
-
-      });
-
-      logisticsSelect.addEventListener('change',(e) => {
-        makeGrid.innerHTML = '';
-        logisticId = e.target.value;
-        logisticList.forEach((ele)=>{
-          if(ele.logisticsId == e.target.value){
-            phone2.innerHTML = ele.phone;
-          }
-        });
-
-        grid = gridLoad();
-      });
-
-      
-      insertBtn.addEventListener('click', (e) => {
-        if(grid.validate().length == 0){
-
-          let clientId = document.getElementById('clientId').value;
-          let logisticsId = document.getElementById('logisticsId').value;
-
-          if(grid.getData().length = 0){
-            alert('발주할 정보가 없습니다.');
-          }else{
             $.ajax({
-                url: "/deburger/materialOrder",
+                url: "/deburger/selectSupplierListOptions",
                 method: "post",
                 contentType:"application/json",
-                data  : JSON.stringify({'materialOrder':{clientId,logisticsId}, 'materialOrderList': grid.getData()}),
+                data  : JSON.stringify({'clientId':e.target.value}),
              })
              .then(result =>{
-               if(result > 0){
-                   alert(result + '개 발주 완료했습니다.')        		   
-               }else{
-                 alert('발주할 정보가 없습니다.')  
-               }
+              makeGrid.innerHTML = '';
+              SupplierListOptions = result;
+
+              supplierList.forEach((ele)=>{
+              if(ele.clientId == e.target.value){
+                phone1.innerHTML = ele.personPhone;
+                email.innerHTML = ele.email;
+              }
             })
-          }
-        }else{
-          alert('수량을 정확히 입력해 주세요')
+            options =[];
+            SupplierListOptions.forEach((ele)=>{
+              options.push({text: ele.materialName, value: ele.materialNumber})
+            })
+            grid = gridLoad();
+
+             })
+
+
+
+          });
+
+          logisticsSelect.addEventListener('change',(e) => {
+            makeGrid.innerHTML = '';
+            logisticId = e.target.value;
+            logisticList.forEach((ele)=>{
+              if(ele.logisticsId == e.target.value){
+                phone2.innerHTML = ele.phone;
+              }
+            });
+
+            grid = gridLoad();
+          });
+
+
+          insertBtn.addEventListener('click', (e) => {
+            if(grid.validate().length == 0){
+
+              let clientId = document.getElementById('clientId').value;
+              let logisticsId = document.getElementById('logisticsId').value;
+
+              if(grid.getData().length = 0){
+                alert('발주할 정보가 없습니다.');
+              }else{
+                $.ajax({
+                    url: "/deburger/materialOrder",
+                    method: "post",
+                    contentType:"application/json",
+                    data  : JSON.stringify({'materialOrder':{clientId,logisticsId}, 'materialOrderList': grid.getData()}),
+                 })
+                 .then(result =>{
+                   if(result > 0){
+                       alert(result + '개 발주 완료했습니다.')
+                   }else{
+                     alert('발주할 정보가 없습니다.')
+                   }
+                })
+              }
+            }else{
+              alert('수량을 정확히 입력해 주세요')
+            }
+
+
+          });
+
+
+
+
+          function geKoreanNumber(number) {
+        const koreanNumber = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+        const tenUnit = ['', '십', '백', '천'];
+        const tenThousandUnit = ['조', '억', '만', ''];
+        const unit = 10000;
+
+        let answer = '';
+
+        while (number > 0) {
+          const mod = number % unit;
+          const modToArray = mod.toString().split('');
+          const length = modToArray.length - 1;
+
+           const modToKorean = modToArray.reduce((acc, value, index) => {
+            const valueToNumber = +value;
+            if (!valueToNumber) return acc;
+
+            const numberToKorean = index < length && valueToNumber === 1 ? '' : koreanNumber[valueToNumber];
+            return `${acc}${numberToKorean}${tenUnit[length - index]}`;
+          }, '');
+
+          answer = `${modToKorean}${tenThousandUnit.pop()} ${answer}`;
+          number = Math.floor(number / unit);
         }
-        
-        
-      });
 
-
-      
-      
-      function geKoreanNumber(number) {
-		  const koreanNumber = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
-		  const tenUnit = ['', '십', '백', '천'];
-		  const tenThousandUnit = ['조', '억', '만', ''];
-		  const unit = 10000;
-
-		  let answer = '';
-
-		  while (number > 0) {
-		    const mod = number % unit;
-		    const modToArray = mod.toString().split('');
-		    const length = modToArray.length - 1;
-
-		     const modToKorean = modToArray.reduce((acc, value, index) => {
-		      const valueToNumber = +value;
-		      if (!valueToNumber) return acc;
-
-		      const numberToKorean = index < length && valueToNumber === 1 ? '' : koreanNumber[valueToNumber];
-		      return `${acc}${numberToKorean}${tenUnit[length - index]}`;
-		    }, '');
-
-		    answer = `${modToKorean}${tenThousandUnit.pop()} ${answer}`;
-		    number = Math.floor(number / unit);
-		  }
-
-		  return answer.replace();
-		}
+        return answer.replace();
+      }
     </script>
   </body>
 </html>
