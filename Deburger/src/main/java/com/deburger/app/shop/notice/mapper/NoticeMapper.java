@@ -29,4 +29,5 @@ public interface NoticeMapper {
 	
 	//전체조회(메인페이지)
 	public List<NoticeVO> noticeListShopList();
+	
 }

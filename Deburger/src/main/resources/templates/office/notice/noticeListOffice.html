@@ -33,10 +33,11 @@
 						</ul>
 
 
-						<form class="d-flex" role="search">
+						<form class="d-flex" role="search" id="searchForm">
 							<input class="form-control me-3" type="search"
-								placeholder="Search" aria-label="Search">
-							<button class="btn btn-outline-success" type="submit">Search</button>
+								placeholder="Search" aria-label="Search" name="keyword"
+								aria-label="Search" placeholder="Search"/>
+							<button class="btn btn-outline-success" id="keywordBtn">Search</button>
 						</form>
 						<form style="margin: 5px">
 							<button type="button" id="btnInsert" class="btn btn-primary">작성하기</button>
@@ -128,5 +129,9 @@
 			let url = 'noticeListInfoOffice?noticeNumber=' + num;
 			location.href = url;
 		});
+
+		
+		
+		
 	</script>
 </body>

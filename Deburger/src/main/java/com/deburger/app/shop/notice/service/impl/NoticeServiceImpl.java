@@ -73,15 +73,17 @@ public class NoticeServiceImpl implements NoticeService {
 	//카운트
 	@Override
 	public int countNoticeService(NoticeVO noticeVO) {
-		// TODO Auto-generated method stub
 		return mapper.countNotice(noticeVO);
 	}
-
+    
+	//전체조회(메인페이지)
 	@Override
 	public List<NoticeVO> noticeListShopList() {
-		// TODO Auto-generated method stub
 		return mapper.noticeListShopList();
 	}
+
+
+
 
 
 	

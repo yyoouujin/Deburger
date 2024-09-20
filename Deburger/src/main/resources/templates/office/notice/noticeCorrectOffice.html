@@ -61,7 +61,7 @@
               <!--내용 작성 칸-->
               <div class="col-md-12"
 								style="height: 450px; margin-top: 10px; margin-bottom: 10px">
-                <div id="contentDiv" class="quill-editor-full">[(${notice.content})]</div>
+                <div id="contentDiv" >[(${notice.content})]</div>
               </div>
 
               <br />
@@ -76,6 +76,58 @@
     </main>
     <!-- End #main -->
     <script>
+    let quill;
+	quilljsediterInit();
+	
+    function quilljsediterInit(){
+
+
+        quill =   new Quill("#contentDiv", {
+            modules: {
+              toolbar: [
+                [{
+                  font: []
+                }, {
+                  size: []
+                }],
+                ["bold", "italic", "underline", "strike"],
+                [{
+                    color: []
+                  },
+                  {
+                    background: []
+                  }
+                ],
+                [{
+                    script: "super"
+                  },
+                  {
+                    script: "sub"
+                  }
+                ],
+                [{
+                    list: "ordered"
+                  },
+                  {
+                    list: "bullet"
+                  },
+                  {
+                    indent: "-1"
+                  },
+                  {
+                    indent: "+1"
+                  }
+                ],
+                ["direction", {
+                  align: []
+                }],
+                ["link", "image", "video"],
+                ["clean"]
+              ]
+            },
+            theme: "snow"
+          });
+    }
           //수정
           function getNoticeInfo() {
               let formData = $('form[name="noticeCorrectOffice"]').serializeArray();
@@ -92,7 +144,7 @@
          
          function updateAjax(){
              //에디터 내용 읽어서
-             let contentText = $("#contentDiv").text();
+             let contentText = quill.getSemanticHTML(0, 300);
              //텍스트 에어리어 안에 넣어서
              let tArea = document.createElement("textarea");
              tArea.innerText = contentText;
@@ -111,7 +163,7 @@
                data : JSON.stringify(info)
             })
             .done(result => {alert("정상적으로 수정되었습니다!");
-                              location.href="noticeListShop"}) 
+                              location.href="noticeListOffice"}) 
             .fail(err => alert("오류가 발생했습니다!"));
          }
 

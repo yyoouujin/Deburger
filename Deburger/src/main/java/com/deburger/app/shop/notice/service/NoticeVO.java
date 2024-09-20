@@ -62,5 +62,8 @@ public class NoticeVO {
 		setEnd(nowPage * cntPerPage);
 		setStart(getEnd() - cntPerPage + 1);
 	}
+	
+    //검색
+	private String keyword;
 
 }
