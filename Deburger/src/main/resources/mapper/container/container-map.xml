@@ -24,7 +24,7 @@
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
 	<select id="selectContainerInfo" resultType="ContainerVO">
-						select distinct
+				select distinct
 			         a.details_order_number,
 			         a.count,
 			         a.order_condition,
@@ -61,8 +61,7 @@
 			        b.in_operation,
 			        c.logistics_id,
 			        d.client_name,
-			        sum(b.count) as sum,
-			        sum(e.in_count) as inCount
+			        sum(b.count) as sum
 			from logistics_order a
 			join logistics_order_details b
 			        on a.order_number = b.order_number
@@ -70,8 +69,6 @@
 			        on a.logistics_id  = c.logistics_id
 			join supplier d
 			        on a.client_id = d.client_id
-			join logistics_in e
-			        on b.details_order_number = e.details_order_number
 			where  c.logistics_id = #{logisticsId}
 			and b.in_operation = 'f1'        
 			group by a.order_number,
@@ -86,7 +83,8 @@
 	
 	<!-- 입고 처리 조회 -->
 	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
-		select  a.details_order_number,
+		select  distinct
+				a.details_order_number,
 		        a.count,
 		        a.unit,
 		        a.order_cost,
@@ -96,9 +94,7 @@
 		        c.logistics_name,
 		        c.phone as logisticsPhone,
 		        d.material_name,
-		        e.material_number,
-		        f.client_id,
-		        f.client_name
+        		e.material_number
 		from  logistics_order_details a
 		join logistics_order b
 		        on a.order_number = b.order_number
@@ -107,9 +103,7 @@
 		join material d
 		        on a.material_number = d.material_number
 		join company_material e
-		         on d.material_number = e.material_number
-		join supplier f
-		       on e.client_id = f.client_id
+         		on d.material_number = e.material_number
 		where b.order_number = #{orderNumber}
 	</select>
 	
@@ -126,7 +120,8 @@
 			        inspection_operation,
 			        person_id,
 			        logistics_id,
-			        material_number
+			        material_number,
+			        out_count
 		 )values(
 		      'LOT' || LPAD(LOT_SEQ.nextval, '7', '0'), 
 		      #{detailsOrderNumber},
@@ -138,15 +133,31 @@
 	          #{inspectionOperation},
 	          #{personId},
 	          #{logisticsId},
-	          #{materialNumber}	           
+	          #{materialNumber}, 
+	          0          
 		 )
 	</insert>
-	
+	<!--  머지 있으면 update, 없으면 insert -->
 	<update id="logisticsStockin">
-		update logistics_stock
-		set stock_count = stock_count + #{stockCount}
-		where material_number = #{materialNumber}
-		and logistics_id = #{logisticsId}
+		merge
+		    into logistics_stock a
+		    using dual
+		        on (a.material_number = #{materialNumber} and a.logistics_id = #{logisticsId}) 
+		    when matched then
+		        update 
+				set a.stock_count = a.stock_count + #{stockCount}
+		    when not matched then
+		        insert(
+		            a.stock_number,
+		            a.stock_count,
+		            a.logistics_id,
+		            a.material_number
+		        )values(
+		            'INV' || LPAD(INV_SEQ.nextval, 7, '0'),
+		            #{stockCount},
+		           	#{logisticsId},
+		          	#{materialNumber}
+		        )
 	</update>
 	
 	<update id="containerInUpdate">
@@ -231,7 +242,7 @@
 		    on a.order_number = b.order_number
 		join store c
 		    on a.store_number = c.store_number
-		where a.oder_app = 'L1'       
+		where a.oder_app = 'L2'       
 		group by a.order_number,
 		        a.oder_app,
 		        c.logistics_id,
@@ -260,7 +271,7 @@
 		where a.order_number = #{orderNumber}
 	
 	</select>
-	
+	<!-- 출고 상세 조회 모달 -->
 	<select id="containerOutModal">
 		select a.lot,
 		       a.in_count,
@@ -306,7 +317,7 @@
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
 				#{pOutOperation, mode=IN, jdbcType=VARCHAR},
-				#{pInspection, mode=IN, jdbcType=VARCHAR}					
+				#{pInspection, mode=IN, jdbcType=VARCHAR}
 			)
 		}
 	</insert>
