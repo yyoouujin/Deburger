@@ -24,4 +24,7 @@ public interface DeliveryMapper {
 	//발주승인(oderapp : 'L1' -> 'L2')
 	public int updateOderapp(DeliveryVO deliveryVO);
 	
+	//취소승인(cancel_operation : 'J2' -> 'J3'(취소승인) 또는 'J1'(취소거부 = 진행)
+	public int updateCancelOperation(DeliveryVO deliveryVO);
+	
 }

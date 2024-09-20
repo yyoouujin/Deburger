@@ -1,6 +1,7 @@
 package com.deburger.app.office.delivery.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,12 +68,17 @@ public class DeliveryController {
 	
 	//발주상태수정
 	@PostMapping("oderappUpdate")
-	public String oderappUpdate(DeliveryVO deliveryVO) {
-		deliveryService.updateOderapp(deliveryVO);
-		return "redirect:deliveryList";
+	@ResponseBody
+	public Map<String, Object> oderappUpdate(DeliveryVO deliveryVO) {
+		return deliveryService.updateOderapp(deliveryVO);
 	}
 	
-	
+	//취소상태수정
+	@PostMapping("canceloperationUpdate")
+	@ResponseBody
+	public Map<String, Object> canceloperationUpdate(DeliveryVO deliveryVO) {
+		return deliveryService.updateCancelOperation(deliveryVO);
+	}
 	
 	
 	

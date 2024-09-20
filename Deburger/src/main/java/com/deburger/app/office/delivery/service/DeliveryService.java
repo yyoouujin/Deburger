@@ -23,4 +23,7 @@ public interface DeliveryService {
 	//발주상태 수정
 	public Map<String, Object> updateOderapp(DeliveryVO deliveryVO);
 	
+	//취소상태 수정
+	public Map<String, Object> updateCancelOperation(DeliveryVO deliveryVO);
+	
 }

@@ -65,5 +65,26 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return map;
 		
 	}
+	
+	
+	@Override
+	public Map<String, Object> updateCancelOperation(DeliveryVO deliveryVO) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		boolean isSuccessed = false;
+		int result = deliveryMapper.updateCancelOperation(deliveryVO);
+		
+		if(result == 1) {
+			isSuccessed = true;
+		}
+		map.put("result", isSuccessed);
+		map.put("target", deliveryVO);
+		
+		return map;
+		
+		
+	}
+	
 
 }

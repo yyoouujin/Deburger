@@ -16,7 +16,8 @@
 		FROM store_order o JOIN order_details d ON (o.order_number = d.order_number)
 		                   JOIN store s ON (s.store_number = o.store_number)
 		                   JOIN logistics l ON (o.logistics_id = l.logistics_id)
-		ORDER BY o.order_day
+		WHERE o.auto_order_operation = 'i1'
+		ORDER BY o.order_day DESC
 	</select>
 
 
@@ -43,6 +44,7 @@
 		SELECT DISTINCT o.order_number
 						, o.store_number
 		      			, o.cancel_operation
+		      			, o.logistics_id
 		      			, s.store_name
 		      			, s.phone
 		      			, s.shopkeeper
@@ -97,6 +99,14 @@
 	UPDATE store_order
 	SET oder_app='L2', logistics_id=#{logisticsId}
 	WHERE order_number=#{orderNumber}
+</update>
+
+
+<!-- 취소 업데이트 -->
+<update id="updateCancelOperation" parameterType="DeliveryVO">
+	UPDATE store_order
+	SET cancel_operation='J3'
+	WHERE order_number = #{orderNumber}
 </update>
 
 </mapper>
