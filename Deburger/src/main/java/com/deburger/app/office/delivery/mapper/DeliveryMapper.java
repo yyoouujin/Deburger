@@ -21,5 +21,7 @@ public interface DeliveryMapper {
 	//창고선택
 	public List<DeliveryVO> selectLogistics(DeliveryVO deliveryVO);
 	
+	//발주승인(oderapp : 'L1' -> 'L2')
+	public int updateOderapp(DeliveryVO deliveryVO);
 	
 }

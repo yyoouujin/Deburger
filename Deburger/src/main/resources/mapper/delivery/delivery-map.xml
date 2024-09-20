@@ -7,36 +7,37 @@
 	<select id="selectDeliveryAll" resultType="DeliveryVO">
 		SELECT DISTINCT o.order_day
 					    , o.order_number
+					    , o.oder_app
 					    , s.store_name
 					    , o.store_number
 					    , o.cancel_operation
 					    , l.logistics_name
-					    , s.logistics_id
+					    , o.logistics_id
 		FROM store_order o JOIN order_details d ON (o.order_number = d.order_number)
 		                   JOIN store s ON (s.store_number = o.store_number)
-		                   JOIN logistics l ON (s.logistics_id = l.logistics_id)
+		                   JOIN logistics l ON (o.logistics_id = l.logistics_id)
 		ORDER BY o.order_day
 	</select>
 
 
-<!-- 주문번호별 담당 물류창고의 전체재고 -->
+<!-- 주문번호별 담당 물류창고의 전체재고
 	<select id="selectAllLogisticStock" resultType="DeliveryVO">
 		select sum(stock_count) as all_stock_logistic
 		from logistics_stock 
 		where logistics_id=(select logistics_id
-		                    from store s join store_order o on (s.store_number = o.store_number)
-		                    where o.order_number = #{orderNumber})
+		                    from store_order
+		                    where order_number = #{orderNumber})
 	</select>
 
 
-<!-- 주문번호별 전체 발주수량 -->
+주문번호별 전체 발주수량
 	<select id="selectAllOrderStock" resultType="DeliveryVO">
 		select sum(count) as all_stock_order
 		from order_details
 		where order_number=#{orderNumber}
 	</select>
 
-
+ -->
 <!-- 주문번호 상세조회 -->
 	<select id="selectDeliveryInfo" resultType="DeliveryVO">
 		SELECT DISTINCT o.order_number
@@ -60,11 +61,11 @@
 
 <!-- 주문번호의 담당 물류창고 전체재고 -->
 	<select id="selectLogisticStock" resultType="Integer">
-		select nvl(sum(stock_count), -1)
-		from logistics_stock 
-		where logistics_id=(select logistics_id
-		                    from store s join store_order o on (s.store_number = o.store_number)
-		                    where o.order_number=#{orderNumber})
+		SELECT NVL(SUM(stock_count), -1)
+		FROM logistics_stock
+		WHERE logistics_id=(SELECT logistics_id
+		                    FROM store_order
+		                    WHERE order_number=#{orderNumber})
 	</select>
 	
 
@@ -77,7 +78,7 @@
 	
 
 <!-- 발주수량 이상의 창고 조회 -->
-	<select id="logisticsStockInfo" resultType="DeliveryVO">
+	<select id="selectLogistics" resultType="DeliveryVO">
 		SELECT SUM(s.stock_count) as "all_stock_order"
 		      , s.logistics_id
 		      , l.logistics_name
@@ -90,6 +91,13 @@
 		]]>
 		GROUP BY s.logistics_id, l.logistics_name, l.basics_address
 	</select>
+
+<!-- 주문번호 발주 상태 업데이트 -->
+<update id="updateOderapp" parameterType="DeliveryVO">
+	UPDATE store_order
+	SET oder_app='L2', logistics_id=#{logisticsId}
+	WHERE order_number=#{orderNumber}
+</update>
 
 </mapper>
 

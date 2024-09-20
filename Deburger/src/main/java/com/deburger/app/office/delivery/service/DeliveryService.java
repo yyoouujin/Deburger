@@ -1,6 +1,7 @@
 package com.deburger.app.office.delivery.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DeliveryService {
 	
@@ -18,5 +19,8 @@ public interface DeliveryService {
 	
 	//창고선택
 	public List<DeliveryVO> logisticsStockInfo(DeliveryVO deliveryVO);
+	
+	//발주상태 수정
+	public Map<String, Object> updateOderapp(DeliveryVO deliveryVO);
 	
 }
