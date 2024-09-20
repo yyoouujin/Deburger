@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface ShopOrderService {
+	
+
 
 	//장바구니 전체 조회
 	public List<ShopOrderVO> selectShopOrder();

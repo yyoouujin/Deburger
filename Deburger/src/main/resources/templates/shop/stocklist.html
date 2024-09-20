@@ -170,7 +170,11 @@
 						location.href = url;
 					});
 					
-					
+					$('tbody > tr').on("click", function(event) {
+						let num = $(event.currentTarget).children().eq(0).text();
+						let url = 'shopStockInfo?materialNumber=' + num;
+						location.href = url;
+					});
 				})
 			}
 			

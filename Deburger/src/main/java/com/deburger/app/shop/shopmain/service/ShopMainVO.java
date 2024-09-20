@@ -37,6 +37,10 @@ public class ShopMainVO {
 	private String materialNumber;
 
     private String title;
+	@DateTimeFormat(pattern = "yy-MM-dd")
+	private Date writerDate;
+    private int datem;
+
 
     
 }

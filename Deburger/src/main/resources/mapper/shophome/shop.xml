@@ -50,7 +50,7 @@
 		, a
 		as (
 		SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
-		,profits
+		,sum(profits) profits
 		FROM
 		store_sales_statistics
 		WHERE product_date BETWEEN
@@ -58,6 +58,7 @@
 		LAST_DAY(#{productDate})
 		AND
 		store_NUMBEr = #{storeNumber}
+		 GROUP BY TO_CHAR(product_date, 'yy-MM-dd')
 		)
 		SELECT b.dt
 		, a.profits
@@ -79,12 +80,13 @@
 		, a
 		as (
 		SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
-		,count
+		,sum(count) count
 		FROM
 		store_product_sale
 		WHERE product_date BETWEEN TRUNC(to_DATE(#{productDate}), 'MM') AND
 		LAST_DAY(#{productDate})
 		AND store_Number = #{storeNumber}
+		 GROUP BY TO_CHAR(product_date, 'yy-MM-dd')
 		)
 		SELECT b.dt
 		, a.count
@@ -115,8 +117,10 @@
 	</select>
 	
 		<select id="noticeList" resultType ="ShopMainVO">
-		        select title
-        from (select title
+        select title
+               ,writer_date
+               ,CEIL(sysdate-writer_date) AS datem
+        from (select *
               from notice
               order by Notice_number DESC)
         where rownum = 1

@@ -38,6 +38,7 @@
 		<select id="shopincoun" resultType="int">
 		select count(*) from
 		store_order
+        where oder_app = 'L2'
 	</select>
 
 	<select id="StoreIninfoList" resultType="StoreInVO">
