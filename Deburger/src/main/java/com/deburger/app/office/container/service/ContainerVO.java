@@ -73,6 +73,7 @@ public class ContainerVO {
 	public String pOutOperation;
 	public String pInspection;
 	public String pOrderDetailsNumber;
+	public int result;
 
 	// 로그인
 	public String name;
