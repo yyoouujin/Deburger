@@ -33,6 +33,7 @@ public class ShopOrderVO {
 	private String orderName;
 	private int allprice;
 	private String oderApp;
+	private String  logisticsId;
 	
 	//상세 발주
 	private String orderDetailsNumber;

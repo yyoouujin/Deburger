@@ -43,24 +43,26 @@
 										<th>취소진행상태</th>
 										<th>재고가능여부</th>
 										<th>물류창고</th>
+										<th>발주상태</th>
 									</tr>
 								</thead>
 								<tbody>
 									<th:block th:each="info, stats : ${deliveries}">
-										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId} data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId}>
 											<td>[[ ${stats.count} ]]</td>
 											<td>[[ ${#dates.format(info.orderDay, 'yyyy-MM-dd')} ]] <br>
 												[[ ${#dates.format(info.orderDay, 'HH:mm:ss')} ]] </td>
-											<td>[[ ${info.orderNumber} ]]</td>
+											<td data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">[[ ${info.orderNumber} ]]</td>
 											<td>[[ ${info.storeName} ]]</td>
 											<td>[[ ${info.storeNumber} ]]</td>
-											<td th:text="${info.cancelOperation} == 'J2' ? '취소요청' : '-' "></td>
+											
+											<td th:if="${info.cancelOperation == 'J1'}">-</td>
+											<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
+											<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
+											
 											<td>재고조회</td>
-											
-											
 											<td class="selectLogistics">[[ ${info.logisticsName} ]]</td>
-											
-					
+											<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
 										</tr>
 									</th:block>
 								</tbody>
@@ -105,7 +107,8 @@
 				                    
 				                    <div class="modal-footer">
 				                      <div id="cancleBtn"></div>
-				                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+				                      <div id="deliveryRecognizeBtn"></div>
+				                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 				                    </div>
 				                  </div>
 				                </div>
@@ -125,3 +128,8 @@
 
 
 <script type="text/javascript" src="assets/js/cyj/delivery/deliveryList.js"></script>
+
+<!--/*
+
+<td th:text=" ${info.cancelOperation} == 'J2' ? '취소요청' : '-' "></td>
+*/-->

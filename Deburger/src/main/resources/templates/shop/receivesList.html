@@ -73,7 +73,7 @@ t<!DOCTYPE html>
 								<li class="page-item"
 									th:classappend="${paging.startPage == 1} ? 'disabled'"><a
 									class="page-link"
-									th:href="@{/shopStock(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+									th:href="@{/storeInList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
 									aria-disabled="true">&lt;</a></li>
 								<!-- Page numbers -->
 								<li class="page-item"
@@ -83,14 +83,14 @@ t<!DOCTYPE html>
 										th:text="${p}"></a>
 								</span> <span th:if="${p != paging.nowPage}"> <a
 										class="page-link"
-										th:href="@{/shopStock(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+										th:href="@{/storeInList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
 										th:text="${p}"></a>
 								</span></li>
 								<!-- Next button -->
 								<li class="page-item"
 									th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
 									<a class="page-link"
-									th:href="@{/shopStock(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+									th:href="@{/storeInList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
 								</li>
 							</ul>
 						</nav>

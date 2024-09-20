@@ -23,7 +23,7 @@
 		)
 		, a as (
 		SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
-		,amountcon
+		,sum(amountcon) amountcon
 		,operation
 		FROM store_Material_consumption
 		WHERE product_date BETWEEN
@@ -32,6 +32,7 @@
 		AND
 		store_NUMBEr = #{storeNumber}
 		AND material_number = #{materialNumber}
+		GROUP BY TO_CHAR(product_date, 'yy-MM-dd') ,operation
 		)
 		SELECT b.dt
 		, a.amountcon

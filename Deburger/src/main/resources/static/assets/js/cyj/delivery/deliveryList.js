@@ -1,14 +1,30 @@
+
+
 //발주상세 조회
 	$('tbody > tr').on('click', makeTag);
 	
-	function makeTag(){
+	function makeTag(event){
+		//console.log(event.target);
+		
+		//select 박스 선택 시 이벤트 막기
+		if (event.target.tagName == 'SELECT'){
+			return;
+		}
+		
+		//이미 선택되면 다시 그려지지 않게
+		if ($(event.target).closest('tr').find('SELECT').length > 0) {
+			return;
+		}
+		
+		//발주상태가 승인 완료이면 리턴(예정)
+		
 		
 		let checkText = $(event.currentTarget).children().eq(6);
 		let selectLogistic = $(event.currentTarget).children().eq(7);
-		console.log(selectLogistic);
 		let tr = event.currentTarget;
 		let odn = $(tr).data('odn');
 		let lid = $(tr).data('lid');
+		
 		checkStock();
 		
 		function checkStock() {
@@ -19,8 +35,7 @@
 	    		method:"GET"
 	    	})
 	    	.done(data => {
-				
-				console.log('창고재고',data);
+
 				let logisticStock = data;
 				
 		    	//해당 주문번호의 전체 발주수량 조회
@@ -30,8 +45,6 @@
 		    	})
 		    	.done(data => {
 					let orderStock = data;
-		    		console.log('주문발주수량',orderStock);
-		    		
 		    		//1) 재고확인 N 또는 Y 출력
 		    		if (logisticStock != -1) { //창고에 재고가 하나도 없는게 아니면~ 비교시작
 						if(orderStock > logisticStock) {
@@ -39,33 +52,65 @@
 						} else {
 							checkText.text("Y");
 						}
-					} else {
-						checkText.text("N");
+					}
+
+				//2) 'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
+				let selecttag = $(`<select class="selectBox"></select>`)
+				
+				if (checkText.text() == 'N'){
+					$.ajax({
+						url:"selectLogistics?orderNumber=" + odn,
+						method:"GET"
+					})
+					.done(data => {
+						
+						data.forEach( element => {
+							let tag = `<option value="${element.logisticsId}">${element.logisticsName}</option>`
+							$(selecttag).append(tag);
+						});
+						$(event.target).closest('tr').find('.selectLogistics').html(selecttag);
+						
+						//창고 선택 후 발주승인으로 넘어가기
+						const selectElement = document.querySelector(".selectBox");
+
+						selectElement.addEventListener("change", (event) => {
+							
+							const ctn = $(event.target).val(); //창고번호
+							console.log(ctn);
+							const odn = $(event.target).closest('tr').data('odn'); //주문번호
+							const dataObj = {"orderNumber":odn, "logisticsId":ctn};
+							
+							//발주상태 변경
+							$.ajax( 'oderappUpdate' ,{
+								type:'post',
+								data: dataObj
+								//contentType : 'application/json',
+							})
+							.done( result => {
+								if(confirm('발주 승인 하시겠습니까?')) {
+									location.href="/deburger/deliveryList";
+								}
+							})
+							.fail(err => console.log(err));
+						});
+
+						
+					})
+					.fail(err => console.log(err));
 					}
 					
-					//2) 'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
-					if (checkText.text() == 'N'){
-						
-						$.ajax({
-							url:"selectLogistics?orderNumber=" + odn,
-							method:"GET"
-						})
-						.done(data => {
-							console.log(data[0].logisticsName);
-						})
-						.fail(err => console.log(err));
-						
-						let tag = `<select><option>선택</option></select>`
-						selectLogistic.html(tag);
+					else { //'Y' 일 시 발주승인 버튼이 나올 수 있도록
+						let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal">발주승인</button>`
+						$('#deliveryRecognizeBtn').append(dbtn);
 					}
 					
 		    	})
 		    	.fail(err => console.log(err));
-	    		
 	    	})
 	    	.fail(err => console.log(err));
-	    	
 		} //checkStock 끝
+		
+		
 		
 		$.ajax({
 			url:"deliveryInfo?orderNumber=" + odn + "&logisticsId=" + lid,
@@ -83,7 +128,7 @@
                 	<h5><b>이메일 : </b><span id="shop_email">${data[0].email}</span></h5>
                 	`
 			$('#top-tag').html(tag);
-            console.log(`${data[0].cancelOperation}`);
+            
             data.forEach(element => {
             	let tr = document.createElement('tr');
             	$(tr).append(`<td>${element.materialNumber}</td>`);
@@ -102,7 +147,12 @@
 		.fail(err => console.log(err))
 		
 	} //maketag 끝
-	
+
+
+
+
+
+
 	
 	//모달 초기화
 	$('#modalDialogScrollable').on('hidden.bs.modal', function () {
@@ -110,5 +160,5 @@
 		document.querySelector('.modal-title').innerHTML="";
 		document.querySelector('#top-tag').innerHTML="";
 		document.querySelector('#cancleBtn').innerHTML="";
-		
+		document.querySelector('#deliveryRecognizeBtn').innerHTML="";
 	});
