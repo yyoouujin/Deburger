@@ -26,4 +26,7 @@ public interface NoticeMapper {
 	
 	//삭제하기
 	public int noticeDeleteOffice (String noticeNumber);
+	
+	//전체조회(메인페이지)
+	public List<NoticeVO> noticeListShopList();
 }

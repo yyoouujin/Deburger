@@ -104,4 +104,17 @@ FROM  notice
 WHERE notice_number=#{noticeNumber}
 </delete>
 
+<!--  전체조회 메인페이지 -->
+<select id = "noticeListShopList" >    
+SELECT 	notice_number
+	    ,division
+	    ,writer_date
+	    ,writer
+	    ,title 
+	    ,content
+FROM notice
+ORDER BY notice_number desc   
+</select>
+
+
 </mapper>  

@@ -77,6 +77,12 @@ public class NoticeServiceImpl implements NoticeService {
 		return mapper.countNotice(noticeVO);
 	}
 
+	@Override
+	public List<NoticeVO> noticeListShopList() {
+		// TODO Auto-generated method stub
+		return mapper.noticeListShopList();
+	}
+
 
 	
 

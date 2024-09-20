@@ -163,12 +163,12 @@ public class StoreController {
 	}
 	
 	
-	/*
+	
 	// 가맹점 현황
 	@GetMapping("StoreStatistics")
 	public String StoreStatistics(Model model) {
 		
-		List<NoticeVO> list = noticeService.noticeListShop();
+		List<NoticeVO> list = noticeService.noticeListShopList();
 		List<StoreSalesVO>  StoreSales = storeService.selectStoreSalesMonth();
 		List<StoreSalesVO>  StoreProduct = storeService.selectStoreProductMonth();
 		List<StoreSalesVO>  StoreOrder = storeService.selectStoreOrderMonth();
@@ -183,6 +183,6 @@ public class StoreController {
     	
 		return "main/store/StoreStatistics";
 	}
-	*/
+	
 
 }
