@@ -317,7 +317,8 @@
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
 				#{pOutOperation, mode=IN, jdbcType=VARCHAR},
-				#{pInspection, mode=IN, jdbcType=VARCHAR}
+				#{pInspection, mode=IN, jdbcType=VARCHAR},
+				#{result, mode=OUT, jdbcType=INTEGER}
 			)
 		}
 	</insert>

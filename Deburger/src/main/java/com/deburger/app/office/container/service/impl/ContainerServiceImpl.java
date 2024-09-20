@@ -113,6 +113,7 @@ public class ContainerServiceImpl implements ContainerService {
 	public void containerOutpD(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		containerMapper.containerOutprocedure(containerVO);
+		System.out.println(">>>>>>>>>>>>>>" + containerVO.getResult());
 	}
 
 	@Override
