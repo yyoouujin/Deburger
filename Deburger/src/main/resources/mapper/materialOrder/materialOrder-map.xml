@@ -98,6 +98,65 @@
 	WHERE s.client_id = #{clientId}
 	</select>
 	
+	<select id="selectMaterialOrder">
+	SELECT o.order_day
+	     , o.order_number
+	     , o.logistics_id
+	     , s.client_name
+	     , d.person_id
+	     , p.name
+	     , count(d.count) count
+	     , d.order_condition inOperation 
+	     , l.logistics_name
+	FROM logistics_order o JOIN logistics_order_details d
+	                         ON o.order_number = d.order_number
+	                       JOIN logistics l
+	                         ON o.logistics_id= l.logistics_id
+	                       JOIN supplier s
+	                         ON o.client_id = s.client_id
+	                       JOIN person p
+	                         ON d.person_id = p.person_id
+	GROUP BY o.order_day
+	     , o.order_number
+	     , o.logistics_id
+	     , s.client_name
+	     , d.person_id
+	     , p.name
+	     , d.order_condition  
+	     , l.logistics_name
+	ORDER BY o.order_number desc
+	</select>
+	
+	<select id="selectMaterialOrderInfo">
+	SELECT o.order_day
+	     , o.order_number
+	     , o.logistics_id
+	     , s.client_name
+	     , s.email
+	     , s.phone
+	     , d.person_id
+	     , p.name
+	     , d.count
+	     , d.order_condition inOperation 
+	     , d.unit
+	     , d.order_cost cost
+	     , l.logistics_name
+	     , l.phone phone_log
+	     , m.buy_unitprice
+	     , m.buy_unitprice * 0.1 tax
+	     , m.material_name
+	FROM logistics_order o JOIN logistics_order_details d
+	                         ON o.order_number = d.order_number
+	                       JOIN logistics l
+	                         ON o.logistics_id= l.logistics_id
+	                       JOIN supplier s
+	                         ON o.client_id = s.client_id
+	                       JOIN person p
+	                         ON d.person_id = p.person_id
+	                       JOIN material m
+	                         ON d.material_number = m.material_number
+	WHERE o.order_number = #{orderNumber}
+	</select>
 	
 
 

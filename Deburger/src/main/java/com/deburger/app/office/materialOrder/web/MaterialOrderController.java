@@ -59,11 +59,33 @@ public class MaterialOrderController {
 	}
 	
 	@GetMapping("selectMaterialOrder")
-	public String selectMaterialOrder() {
+	public String selectMaterialOrder(Model model) {
+		List<MaterialOrderVO> list = materialOrderService.selectMaterialOrder();
+		model.addAttribute("Orders", list);
 		return "office/materialOrder/selectMaterialOrder";
 	}
 	
-	
+	//물류창고 발주 등록 페이지
+	@GetMapping("materialOrderInfo")
+	public String materialOrderInfo(MaterialOrderVO inVO,Model model) {
+		MaterialOrderVO vo = new MaterialOrderVO();
+		
+		List<MaterialOrderVO> list = materialOrderService.selectMaterialOrderInfo(inVO);
+		
+		for(MaterialOrderVO materialOrderVO : list) {
+			vo.setLogisticsName(materialOrderVO.getLogisticsName());
+			vo.setPhone(materialOrderVO.getPhone());
+			vo.setClientName(materialOrderVO.getClientName());
+			vo.setEmail(materialOrderVO.getEmail());
+			vo.setPhoneLog(materialOrderVO.getPhoneLog());
+			vo.setOrderDay(materialOrderVO.getOrderDay());
+		}
+		
+		model.addAttribute("Info", vo);
+		model.addAttribute("Order", list);
+		
+		return "office/materialOrder/materialOrderInfo";
+	}
 		
 }
 
