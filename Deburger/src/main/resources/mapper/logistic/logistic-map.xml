@@ -50,7 +50,8 @@
 		      , m.logistics_safety_stock
 		      , s.stock_count
 		      ,(SELECT SUM(stock_count) 
-		        FROM logistics_stock) AS allstock
+		        FROM logistics_stock
+		        WHERE logistics_id=#{logisticsId}) AS allstock
 		FROM material m JOIN logistics_in i ON m.material_number = i.material_number
 		                JOIN logistics_stock s ON i.material_number = s.material_number
 		WHERE s.logistics_id= #{logisticsId} AND (i.in_count - i.out_count) > 0 AND  disposal_operation = 'd1'
