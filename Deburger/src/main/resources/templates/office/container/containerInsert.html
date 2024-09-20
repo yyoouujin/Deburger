@@ -90,7 +90,7 @@ th, td {
 										<td >
 											 <div class="row mb-3">
 								                  <div class="col-sm-12">
-								                    <select class="form-select" aria-label="Default select example">
+								                    <select class="form-select" aria-label="Default select example" name="disposalOperation">
 								                      <option selected>선택</option>
 								                      <option value="e1">정상</option>
 								                      <option value="e2">폐기</option>
@@ -127,7 +127,6 @@ th, td {
   		
   		$('tbody > tr').next().each(function(idx, item){
   			let tds = $(item).children();
-  			
   			let detailsOrderNumber = tds.eq(0).text(); 	
   			let inDay = tds.eq(11).text();	
   			let inCount = tds.eq(4).children().val(); 
@@ -141,10 +140,11 @@ th, td {
   			let inOperation = tds.eq(14).text();
   			let materialNumber = tds.eq(13).text();
   			let stockCount = tds.eq(4).children().val();
-  			
+  			let disposalOperation = tds.eq(9).find('select').val();
+			
   			
 			list.push({detailsOrderNumber, inDay, inCount,//
-  				expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation, materialNumber, stockCount, logisticsId});
+  				expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation, materialNumber, stockCount, logisticsId, disposalOperation});
   		})
 		console.log(list);
   		console.log(JSON.stringify(list));
