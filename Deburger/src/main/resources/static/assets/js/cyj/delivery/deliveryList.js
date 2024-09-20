@@ -1,5 +1,3 @@
-
-
 //발주상세 조회
 	$('tbody > tr').on('click', makeTag);
 	
