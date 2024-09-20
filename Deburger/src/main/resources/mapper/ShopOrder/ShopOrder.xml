@@ -3,9 +3,16 @@
 <mapper
 	namespace="com.deburger.app.shop.shoporder.mapper.ShopOrderMapper">
 
+	<select id="storelog" resultType="String">
+		select logistics_id
+		from store
+		where store_number = #{storeNumber}
+
+	</select>
+
 	<!-- 발주 전체 조회 -->
 	<select id="selectShopOrder" parameterType="ShopOrderVO">
-		
+
 		select
 		m.material_number
 		,m.material_name
@@ -35,7 +42,8 @@
 		,note
 		,person_id
 		,allprice
-		,oder_App)
+		,oder_App
+		,logistics_Id)
 		values (
 		#{orderNumber}
 		,#{orderName}
@@ -46,7 +54,8 @@
 		,#{note}
 		,''
 		,#{allprice}
-		,#{oderApp})
+		,#{oderApp}
+		,#{logisticsId})
 	</insert>
 
 	<!-- 가맹점 상세 발주 리스트 -->
@@ -76,10 +85,10 @@
 
 	<!-- 발주 내역 -->
 	<select id="ShopOrderList" parameterType="ShopOrderVO">
-			SELECT *
+		SELECT *
 		FROM (
-			SELECT ROWNUM RN, A.*
-			FROM (
+		SELECT ROWNUM RN, A.*
+		FROM (
 		select s.order_number
 		,s.order_day
 		,s.cancel_operation
@@ -89,21 +98,25 @@
 		,p.phone
 		,s.allprice
 		,s.oder_App
-		from store_order s LEFT OUTER join person p
+		from store_order s LEFT
+		OUTER join person p
 		on s.person_id = p.person_id
-		where auto_order_operation = 'i1'
-		AND	store_number=#{storeNumber}
-		ORDER by s.order_number DESC
+		where
+		auto_order_operation = 'i1'
+		AND store_number=#{storeNumber}
+		ORDER by
+		s.order_number DESC
 		) A
 		)
 		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
-	
-		<select id="OrdercountMaterial" resultType="int">
+
+	<select id="OrdercountMaterial" resultType="int">
 		select count(*) from
 		store_order
+        where auto_order_operation = 'i1'
 	</select>
-	
+
 
 	<!-- 발주 취소 -->
 	<update id="updateOrderCancel">
@@ -115,64 +128,65 @@
 
 	<!-- 발주 상세 내역 -->
 	<select id="orderInfo" parameterType="ShopOrderVO">
-	select o.count
-       ,s.order_day
-       ,s.store_number
-       ,s.order_name
-       ,m.material_name
-       ,m.unit
-       ,m.sale_unitprice
-       ,m.material_item
-       ,m.material_classification  
-       ,p.person_id
-       ,p.email
-       ,p.phone
-from order_details o join store_order s
-       on o.order_number = s.order_number
-       join material m
-       on o.material_number = m.material_number
-        LEFT OUTER JOIN person p
-       on p.person_id = s.person_id
-       where o.order_number = #{orderNumber}
-	
+		select o.count
+		,s.order_day
+		,s.store_number
+		,s.order_name
+		,m.material_name
+		,m.unit
+		,m.sale_unitprice
+		,m.material_item
+		,m.material_classification
+		,p.person_id
+		,p.email
+		,p.phone
+		from order_details o join store_order s
+		on o.order_number = s.order_number
+		join material m
+		on o.material_number = m.material_number
+		LEFT OUTER JOIN person p
+		on p.person_id = s.person_id
+		where o.order_number = #{orderNumber}
+
 	</select>
-	
-	
-	
-	<select id="autoOrderInfo" parameterType="ShopOrderVO"> 
-			SELECT *
+
+
+
+	<select id="autoOrderInfo" parameterType="ShopOrderVO">
+		SELECT *
 		FROM (
-			SELECT ROWNUM RN, A.*
-			FROM (
-	
-	select od.order_details_number
-               ,m.material_name
-               ,m.material_item
-               ,m.unit
-               ,od.count
-               ,m.sale_unitprice
-               ,ss.stock_count
-               ,ss.safety_stock
-               ,so.note
-        from order_Details od join store_order so
-             on od.order_number = so.order_number
-             join Material m
-             on m.material_number = od.material_number
-             join store_stock ss
-             on ss.store_number = so.store_number
-        where auto_order_operation != 'i1'
-        and ss.store_number = #{storeNumber}
-        Order by order_details_number DESC
-        ) A
+		SELECT ROWNUM RN, A.*
+		FROM (
+
+		select od.order_details_number
+		,m.material_name
+		,m.material_item
+		,m.unit
+		,od.count
+		,m.sale_unitprice
+		,ss.stock_count
+		,ss.safety_stock
+		,so.note
+		from order_Details od join store_order so
+		on od.order_number = so.order_number
+		join Material m
+		on m.material_number = od.material_number
+		join store_stock ss
+		on ss.store_number = so.store_number
+		where auto_order_operation != 'i1'
+		and ss.store_number = #{storeNumber}
+		Order by order_details_number DESC
+		) A
 		)
 		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
-	
+
 	<select id="AutoOrdercountMaterial" resultType="int">
 		select count(*) from
-		store_stock
+		store_order
+        where auto_order_operation = 'i2'
 	</select>
-	
+
 	<delete id="deleteAuto" parameterType="String">
 		DELETE FROM order_details
 		WHERE order_details_number = #{orderDetailsNumber}

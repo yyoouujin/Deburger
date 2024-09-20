@@ -68,7 +68,7 @@
 							on o.order_number = d.order_number
 						where i.Material_number	= #{materialNumber}
 							and i.store_number = #{storeNumber}
-					order by i.order_details_number
+					order by i.order_details_number DESC
 			) A
 		)
 		WHERE RN BETWEEN #{start} AND #{end}

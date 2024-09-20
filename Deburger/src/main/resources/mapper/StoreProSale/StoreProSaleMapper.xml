@@ -22,12 +22,14 @@
 		)
 		, a as (
 		SELECT TO_CHAR(product_date, 'yy-MM-dd') AS dt
-		,count
+		,sum(count) count
 		FROM store_product_sale
 		WHERE product_date BETWEEN ADD_MONTHS(#{productDate}, -1) AND
 		LAST_DAY(#{productDate})
 		AND store_NUMBEr = #{storeNumber}
 		AND product_number = #{productNumber}
+		GROUP BY TO_CHAR(product_date, 'yy-MM-dd')
+		
 		)
 		SELECT b.dt , a.count
 		FROM a full

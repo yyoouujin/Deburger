@@ -42,6 +42,11 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Transactional
 	public int insertShopOrder(ShopOrderVO shopOrderVO) {
 
+		String mcode = SecurityUtil.memberCode();
+		shopOrderVO.setStoreNumber(mcode);
+		
+		String imlog = shopOrderMapper.storelog(shopOrderVO);
+		shopOrderVO.setLogisticsId(imlog);
 		shopOrderMapper.insertShopOrder(shopOrderVO);
 
 		for (ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
@@ -51,6 +56,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		for (ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
 			shopOrderMapper.deleteOrderCart(shvo);
 		}
+		
 		return 1;
 
 	}
