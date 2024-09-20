@@ -1,120 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.deburger.app.shop.notice.mapper.NoticeMapper">   
+<mapper
+	namespace="com.deburger.app.shop.notice.mapper.NoticeMapper">
 
-<!--  전체조회  -->
-<select id = "noticeListShop" resultType="NoticeVO">
-    SELECT * 
-	  FROM (
-		    SELECT ROWNUM RN, A.* 
-	      FROM (
-			   SELECT 	notice_number
-                       ,division
-	                   ,writer_date
-	                   ,writer
-	                   ,title 
-	                   ,content
-               FROM notice
-               ORDER BY notice_number desc   
-		    	) A
-			)
-			WHERE RN BETWEEN #{start} AND #{end}
-</select>
+	<!-- 검색 기능 및 페이징 -->
+    <sql id = "searchPaging">
+    <if test="keyword != null and keyword != ''">
+        AND          (UPPER(title) Like '%' || UPPER(#{keyword}) 
+            || '%' or UPPER(content) Like '%' || UPPER(#{keyword}) 
+            || '%' or UPPER(division) Like '%' ||  UPPER(#{keyword}) 
+            || '%' or UPPER(noticeNumber) Like '%' || UPPER(#{keyword}) )
+    </if>
+    </sql>
 
-	<select id="countNotice" resultType ="int">
-		select count(*) from notice
-		<where>
-		 <if test="division != null and division != '' ">
-		division = #{division}
-		 </if>
-		</where> 
+	<!-- 전체조회 -->
+	<select id="noticeListShop" resultType="NoticeVO">
+		SELECT *
+		FROM (
+		SELECT
+		ROWNUM RN, A.*
+		FROM (
+		SELECT notice_number
+		,division
+		,writer_date
+		,writer
+		,title
+		,content
+		FROM notice
+		ORDER BY notice_number desc
+		) A
+		)
+		WHERE RN
+		BETWEEN #{start} AND #{end}
+		<include refid="searchPaging"></include>
 	</select>
 
-<!-- 전체조회(업데이트, 서비스, 이벤트, 작업, 공고) -->
-<select id = "noticeListShopE" resultType="NoticeVO">
-   SELECT * 
-	  FROM (
-		    SELECT ROWNUM RN, A.* 
-	      FROM (
-             select  notice_number
-                    ,division
-	                ,writer_date
-	                ,writer
-	                ,title 
-	                ,content
-             from notice
-             where division = #{division}
-             order by notice_number desc
-		    	) A
-			)
-			WHERE RN BETWEEN #{start} AND #{end}
-</select>
+	<select id="countNotice" resultType="int">
+		select count(*) from notice
+		<where>
+			<if test="division != null and division != '' ">
+				division = #{division}
+			</if>
+		</where>
+	</select>
 
-<!-- 상세조회 -->
-<select id="noticeListInfoShop" resultType="NoticeVO">
-select 	notice_number
-        ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-from notice
-where notice_number = #{noticeNumber}
-</select>
+	<!-- 전체조회(업데이트, 서비스, 이벤트, 작업, 공고) -->
+	<select id="noticeListShopE" resultType="NoticeVO">
+		SELECT *
+		FROM (
+		SELECT
+		ROWNUM RN, A.*
+		FROM (
+		select notice_number
+		,division
+		,writer_date
+		,writer
+		,title
+		,content
+		from notice
+		where division = #{division}
+		order by
+		notice_number desc
+		) A
+		)
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
 
-<!-- 등록 -->
-<insert id = "noticeInsertOffice" parameterType="NoticeVO">
-INSERT INTO notice	(notice_number
-	               ,division
-		           ,writer_date
-		           ,writer
-		           ,title 
-		           ,content)
-VALUES        ('ANM' || LPAD(ANM_SEQ.nextval, '7', '0')
-               ,#{division}
-               <choose>
-               <when test="writerDate != null">
-               ,#{writerDate}
-               </when>
-                  <otherwise>
-                  ,sysdate
-                  </otherwise>
-                </choose>
-               ,#{writer}
-               ,#{title}
-               ,#{content})              
-</insert>
+	<!-- 상세조회 -->
+	<select id="noticeListInfoShop" resultType="NoticeVO">
+		select notice_number
+		,division
+		,writer_date
+		,writer
+		,title
+		,content
+		from notice
+		where
+		notice_number = #{noticeNumber}
+	</select>
+
+	<!-- 등록 -->
+	<insert id="noticeInsertOffice" parameterType="NoticeVO">
+		INSERT INTO notice (notice_number
+		,division
+		,writer_date
+		,writer
+		,title
+		,content)
+		VALUES ('ANM' || LPAD(ANM_SEQ.nextval, '7', '0')
+		,#{division}
+		<choose>
+			<when test="writerDate != null">
+				,#{writerDate}
+			</when>
+			<otherwise>
+				,sysdate
+			</otherwise>
+		</choose>
+		,#{writer}
+		,#{title}
+		,#{content})
+	</insert>
 
 
-<!-- 수정 -->
-<update id = "noticeCorrectOffice">
-UPDATE notice
-   SET 
-       division=#{division}
-	   ,writer_date=sysdate
-	   ,title =#{title}
-	   ,content=#{content}
-   WHERE notice_number=#{noticeNumber}
-</update>
+	<!-- 수정 -->
+	<update id="noticeCorrectOffice">
+		UPDATE notice
+		SET
+		division=#{division}
+		,writer_date=sysdate
+		,title =#{title}
+		,content=#{content}
+		WHERE
+		notice_number=#{noticeNumber}
+	</update>
 
-<!-- 삭제 -->
-<delete id ="noticeDeleteOffice">
-DELETE 
-FROM  notice
-WHERE notice_number=#{noticeNumber}
-</delete>
+	<!-- 삭제 -->
+	<delete id="noticeDeleteOffice">
+		DELETE
+		FROM notice
+		WHERE notice_number=#{noticeNumber}
+	</delete>
 
-<!--  전체조회 메인페이지 -->
-<select id = "noticeListShopList" >    
-SELECT 	notice_number
-	    ,division
-	    ,writer_date
-	    ,writer
-	    ,title 
-	    ,content
-FROM notice
-ORDER BY notice_number desc   
-</select>
+	<!-- 전체조회 메인페이지 -->
+	<select id="noticeListShopList">
+		SELECT notice_number
+		,division
+		,writer_date
+		,writer
+		,title
+		,content
+		FROM notice
+		ORDER BY notice_number desc
+	</select>
+
 
 
 </mapper>  
