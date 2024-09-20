@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.office.delivery.service.DeliveryService;
@@ -61,6 +63,18 @@ public class DeliveryController {
 		List<DeliveryVO> infoVO = deliveryService.logisticsStockInfo(deliveryVO);
 		return infoVO;
 	}
+	
+	
+	//발주상태수정
+	@PostMapping("oderappUpdate")
+	public String oderappUpdate(DeliveryVO deliveryVO) {
+		deliveryService.updateOderapp(deliveryVO);
+		return "redirect:deliveryList";
+	}
+	
+	
+	
+	
 	
 	
 }
