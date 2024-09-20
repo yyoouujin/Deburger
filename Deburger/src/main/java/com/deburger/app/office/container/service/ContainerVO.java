@@ -19,7 +19,7 @@ public class ContainerVO {
 	public String logisticsName;
 	public String personId;
 	public String stockNumber;
-	public String stockCount;
+	public int stockCount;
 	public String logisticsSafetyStock;
 	public String inspectionOperation;
 	public String materialClassification;
@@ -72,6 +72,7 @@ public class ContainerVO {
 	public String pNumber;
 	public String pOutOperation;
 	public String pInspection;
+	public String pOrderDetailsNumber;
 
 	// 로그인
 	public String name;
