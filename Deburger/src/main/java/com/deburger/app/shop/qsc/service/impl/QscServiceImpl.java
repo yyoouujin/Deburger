@@ -43,8 +43,7 @@ public class QscServiceImpl implements QscService{
 		
 		// store id 찾기
 		String mcode = SecurityUtil.memberCode();//id
-		String id = storeMapper.selectStoreInfoNumber(mcode.substring(3));//찾아오는 스토어id
-		qscResultVO.setStoreNumber(id);
+		qscResultVO.setStoreNumber(mcode);
 		
 		System.out.println(qscResultVO);
 		qscMapper.insertQscDetails(qscResultVO);				
