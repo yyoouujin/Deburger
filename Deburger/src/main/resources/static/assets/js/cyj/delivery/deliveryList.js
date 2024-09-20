@@ -43,7 +43,6 @@
 						checkText.text("N");
 					}
 					
-					
 					//2) 'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
 					if (checkText.text() == 'N'){
 						
@@ -58,12 +57,7 @@
 						
 						let tag = `<select><option>선택</option></select>`
 						selectLogistic.html(tag);
-						
-						
 					}
-					
-					
-					
 					
 		    	})
 		    	.fail(err => console.log(err));
@@ -106,7 +100,8 @@
             }
 		})
 		.fail(err => console.log(err))
-	}
+		
+	} //maketag 끝
 	
 	
 	//모달 초기화

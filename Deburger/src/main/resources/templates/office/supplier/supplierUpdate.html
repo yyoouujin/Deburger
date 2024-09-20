@@ -41,7 +41,7 @@
 
 
               <form class="row g-3" name="updateForm" th:object="${supplier}" method="post">
-				
+				<input type="hidden" name="_csrf" th:value="${_csrf.token}">
 				<div class="col-md-12">
                   <label for="cname" class="form-label">상호명</label>
                   <input type="text" class="form-control" id="cname" name="clientName" th:field="*{clientName}">
