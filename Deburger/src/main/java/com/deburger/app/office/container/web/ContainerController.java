@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
+import com.deburger.app.office.material.service.MaterialVO;
 
 @Controller
 public class ContainerController {
@@ -26,7 +28,9 @@ public class ContainerController {
 
 	// 전체 조회
 	@GetMapping("container")
-	public String containerList(Model model) {
+	public String containerList(ContainerVO containerVO, Model model,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		// 담당 물류 창고 이름
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
@@ -133,9 +137,10 @@ public class ContainerController {
 
 	// 출고 처리
 	@PostMapping("containerOutPd")
-	public String containerOutPds(ContainerVO containerVO) {
-		containerService.containerOutpD(containerVO);
-		return "redirect:containerOut";
+	@ResponseBody
+	public String containerOutPds(@RequestBody List<ContainerVO> list) {
+		containerService.containerOutpD(list);
+		return "office/container/containerOutInfo";
 	}
 
 }

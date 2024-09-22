@@ -110,10 +110,10 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 프로시저 처리
 	@Override
-	public void containerOutpD(ContainerVO containerVO) {
-		// TODO Auto-generated method stub
-		containerMapper.containerOutprocedure(containerVO);
-		System.out.println(">>>>>>>>>>>>>>" + containerVO.getResult());
+	public void containerOutpD(List<ContainerVO> list) {
+		for (ContainerVO vo : list) {
+		containerMapper.containerOutprocedure(vo);
+		}
 	}
 
 	@Override

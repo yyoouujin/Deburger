@@ -4,22 +4,26 @@
 	
 	<!-- 전체 조회 -->
 	<select id="selectAllList" resultType="ContainerVO">
-			select a.material_number,
-			       a.stock_count,
-			       a.logistics_id,
-			       b.material_classification,
-			       b.logistics_safety_stock,
-			       b.material_name
-			from logistics_stock a
-  			  join material b
-       			 on a.material_number = b.material_number
-       		  join logistics c
-       		  	 on a.logistics_id = c.logistics_id
-       		<![CDATA[ 
-                	where stock_count >= 0
-                ]]>
-            and c.person_id = #{personId}
-       		order by a.material_number
+			            select a.material_number,
+						       a.stock_count,
+						       a.logistics_id,
+						       b.material_classification,
+						       b.logistics_safety_stock,
+						       b.material_name
+						from logistics_stock a
+			  			  join material b
+			       			 on a.material_number = b.material_number
+			       		  join logistics c
+			       		  	 on a.logistics_id = c.logistics_id
+			       		<![CDATA[ 
+			                	where stock_count >= 0
+			                ]]>
+			            and c.person_id = #{personId}
+			       		order by a.material_number			
+	</select>
+	
+	<select id="selectAllListcount">
+			select count(*) from logistics_stock
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
@@ -121,7 +125,8 @@
 			        person_id,
 			        logistics_id,
 			        material_number,
-			        out_count
+			        out_count,
+			        disposal_operation
 		 )values(
 		      'LOT' || LPAD(LOT_SEQ.nextval, '7', '0'), 
 		      #{detailsOrderNumber},
@@ -134,7 +139,8 @@
 	          #{personId},
 	          #{logisticsId},
 	          #{materialNumber}, 
-	          0          
+	          0,
+	          'd1'          
 		 )
 	</insert>
 	<!--  머지 있으면 update, 없으면 insert -->
@@ -247,7 +253,7 @@
 		        a.oder_app,
 		        c.logistics_id,
 		        c.store_name
-		order by a.order_number
+		order by a.order_number desc
 	</select>
 	
 	<!-- 출고 상세 조회-->

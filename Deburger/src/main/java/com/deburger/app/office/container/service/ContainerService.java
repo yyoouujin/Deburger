@@ -23,7 +23,7 @@ public interface ContainerService {
 	public List<ContainerVO> containerInInfo(ContainerVO containerVO);
 
 	// 물류 창고 입고 처리
-	public int containerInTreatment(List<ContainerVO> liSt);
+	public int containerInTreatment(List<ContainerVO> list);
 
 	// 물류 창고 폐기 조회
 	public List<ContainerVO> containerDtInfo(ContainerVO containerVO);
@@ -38,7 +38,7 @@ public interface ContainerService {
 	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
 
 	// 물류 창고 프로시저
-	public void containerOutpD(ContainerVO containerVO);
+	public void containerOutpD(List<ContainerVO> list);
 
 	// 모달
 	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
