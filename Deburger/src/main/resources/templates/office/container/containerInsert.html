@@ -80,7 +80,7 @@ th, td {
 										<td th:text="${container.unit}"></td>	
 										<td th:text="${container.count}"></td>	
 										<td ><input type="text"
-											name="allOrder"></td>	
+											name="allOrder" th:value="${container.count}"></td>	
 										<td ><input type="text"
 											name="allOrder" th:value="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td>	
 										<td ><input type="text"
@@ -111,8 +111,6 @@ th, td {
 						</div>
 							<div style="text-align: right; margin: 0 0 10px 0;">
 								<a href="containerIn"><button type="button" class="btn btn-primary">목록</button></a>
-								<button type="submit" class="btn btn-primary"
-									id="update">수정</button>
 								<button type="button" class="btn btn-primary" onclick="mkrData()"  id="save">저장</button>
 							</div>
 					</div>
@@ -140,11 +138,10 @@ th, td {
   			let inOperation = tds.eq(14).text();
   			let materialNumber = tds.eq(13).text();
   			let stockCount = tds.eq(4).children().val();
-  			let disposalOperation = tds.eq(9).find('select').val();
 			
   			
 			list.push({detailsOrderNumber, inDay, inCount,//
-  				expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation, materialNumber, stockCount, logisticsId, disposalOperation});
+  				expirationLimit, consumptionLimit, manufactureDay, inspectionOperation, personId, inOperation, materialNumber, stockCount, logisticsId});
   		})
 		console.log(list);
   		console.log(JSON.stringify(list));
