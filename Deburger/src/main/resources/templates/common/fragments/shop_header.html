@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<th:block xmlns:th="http://www.thymeleaf.org/"
+		  th:fragment="HeaderFrag">
+
+
+<!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a th:href="@{/shop}" class="logo d-flex align-items-center">
+        <img src="assets/img/디버거 로고.jpg" alt="">
+        <span class="d-none d-lg-block">DEBURGER</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+
+
+    <nav class="header-nav ms-auto">
+    
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-person-fill"></i>
+            마이페이지
+          </a><!-- End Messages Icon -->
+
+        </li><!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+					<button type="submit" class="btn btn-light btn-lg">로그아웃</button>
+				</form>
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
