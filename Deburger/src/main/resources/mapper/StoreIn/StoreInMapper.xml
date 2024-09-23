@@ -42,7 +42,8 @@
 	</select>
 
 	<select id="StoreIninfoList" resultType="StoreInVO">
-		select o.order_number
+		select DISTINCT
+		o.order_number
 		,o.order_day
 		,d.order_details_number
 		,m.material_name

@@ -38,8 +38,6 @@
 										<th>금액</th>
 										<th>현재 재고</th>
 										<th>적정 재고</th>
-										<th>기준</th>
-										<th>조건</th>
 										<th>발주 취소</th>
 									</tr>
 								</thead>
@@ -56,8 +54,6 @@
 												th:text="${list.stockCount}" />
 											<td th:if="${list.stockCount < 0} ">0</td>
 											<td th:text="${list.safetyStock}" />
-											<td></td>
-											<td th:text="${list.note}" />
 											<td><button type="button" class="btn btn-primary btn-sm">자동
 													발주 취소</button></td>
 										</tr>

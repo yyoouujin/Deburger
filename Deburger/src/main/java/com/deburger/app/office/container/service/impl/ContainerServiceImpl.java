@@ -112,6 +112,8 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	public void containerOutpD(List<ContainerVO> list) {
 		for (ContainerVO vo : list) {
+			System.err.println("-----------------2-------------------------");
+			System.err.println(list);
 		containerMapper.containerOutprocedure(vo);
 		}
 	}
