@@ -163,7 +163,9 @@ th, td {
 		if($("[name='option']:checked").length == 0){
 			alert("자동주문을 선택해주세요.");
 			return;
-		}else {
+		}else if($("[name='checkOrder']:checked").length != 1){
+			alert("자동 발주할 재료를 하나만 선택해주세요.");
+		}else{
 			
 			makeData();
 		}
@@ -237,6 +239,7 @@ th, td {
 				
 			})
 			
+			console.log(list);
 			list= {note,oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
 			
 			$.ajax({

@@ -158,7 +158,9 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select od.order_details_number
+		select 
+		
+		od.order_details_number
 		,m.material_name
 		,m.material_item
 		,m.unit
