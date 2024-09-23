@@ -116,12 +116,10 @@
 
           <div class="card">
             <div class="card-body">
-               
-              
+         
               <h5 class="card-title">전체재고 : 
-              	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic) > 0} ?  ${logistic[0].allStock} : '0'"></span>개
+              	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic)} > 0  and ${logistic[0].allStock} > 0  ?  ${logistic[0].allStock} : '0'"></span>개
               </h5>
-              
               
               <!-- Table with hoverable rows -->
               <table class="table table-hover">

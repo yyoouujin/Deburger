@@ -18,7 +18,11 @@ import com.deburger.app.office.logistic.service.PageDTO;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+/*
+작성자 : 채유진
+작성일자 : 2024-09-
+기능 : 물류창고 관리
+*/
 @Controller
 public class LogisticController {
 		
