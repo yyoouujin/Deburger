@@ -41,6 +41,7 @@ public class MaterialVO {
 		calcStartEndPage(getNowPage(), cntPage);
 		calcStartEnd(getNowPage(), getCntPerPage());
 	}
+	
 
 	// 제일 마지막 페이지 계산
 	public void calcLastPage(int total, int cntPerPage) {

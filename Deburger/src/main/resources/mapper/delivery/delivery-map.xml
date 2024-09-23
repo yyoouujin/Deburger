@@ -134,7 +134,7 @@
 <!-- 주문번호 발주 상태 업데이트 -->
 <update id="updateOderapp" parameterType="DeliveryVO">
 	UPDATE store_order
-	SET oder_app='L2', logistics_id=#{logisticsId}
+	SET oder_app='L2', logistics_id=#{logisticsId}, person_id=#{personId}
 	WHERE order_number=#{orderNumber}
 </update>
 

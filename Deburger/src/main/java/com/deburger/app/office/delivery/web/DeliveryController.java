@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.delivery.service.DeliveryService;
 import com.deburger.app.office.delivery.service.DeliveryVO;
 import com.deburger.app.office.logistic.service.Criteria;
@@ -78,6 +79,8 @@ public class DeliveryController {
 	@PostMapping("oderappUpdate")
 	@ResponseBody
 	public Map<String, Object> oderappUpdate(DeliveryVO deliveryVO) {
+		String mcode = SecurityUtil.memberCode();
+		deliveryVO.setPersonId(mcode);
 		return deliveryService.updateOderapp(deliveryVO);
 	}
 	
