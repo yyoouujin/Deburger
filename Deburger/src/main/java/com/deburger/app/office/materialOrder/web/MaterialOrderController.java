@@ -29,6 +29,9 @@ public class MaterialOrderController {
 	private MaterialOrderService materialOrderService;
 	
 	
+	/*
+	 * 물류창고 발주 등록, 업체별 판매상품검색, 물류창고 발주등록
+	*/ 
 	
 	//물류창고 발주 등록 페이지
 	@GetMapping("materialOrder")

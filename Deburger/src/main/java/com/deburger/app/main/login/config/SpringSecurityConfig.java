@@ -46,26 +46,4 @@ public class SpringSecurityConfig {
 		return http.build();
 	}
 	
-	// 메모리상 인증정보 등록 => 테스트 전용 방식
-//	@Bean
-//	InMemoryUserDetailsManager inMemoryUserDetailsService() {
-//		
-//		UserDetails user = User.builder()
-//				.username("user1")
-//				.password(passwordEncoder().encode("1234"))
-//				.roles("USER") // ROLE_USER
-////				.authorities("ROLE_USER")   // 사용하는 메서드에 따라 다르게 사용해야함 (같은의미에서 사용)
-//				.build();
-//		
-//		UserDetails admin = User.builder()
-//				.username("admin1")
-//				.password(passwordEncoder().encode("1234"))
-////				.roles("ADMIN") // ROLE_ADMIN
-//				.authorities("ROLE_ADMIN","ROLE_USER")
-//				.build();
-//		
-//		
-//		
-//		return new InMemoryUserDetailsManager(user,admin);
-//	}
 }
