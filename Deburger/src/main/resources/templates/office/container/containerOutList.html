@@ -11,7 +11,7 @@
 <body>
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>출고 처리 list</h1>
+      <h1>출고 list</h1>
       
       <nav>
         <ol class="breadcrumb">
@@ -37,12 +37,12 @@
               				<th>비고</th>
               			</tr>
               		</thead>
-              		<th:block th:each="lists:${out}">
+              		<th:block th:each="lists:${outs}">
 	              		<tbody>
 	              			<tr>
 	              				<td th:text="${lists.orderNumber}"></td>
 	              				<td th:text="${lists.storeName}"></td>
-	              				<td th:text="${lists.oderApp } == 'L3' ? '출고 완료' : '출고 전'"></td>
+	              				<td th:text="${lists.outOperation } == 'g2' ? '출고 완료' : '출고 전'"></td>
 	              				<td th:text="${lists.count}"></td>
 	              				<td ></td>
 	              			</tr>
@@ -57,12 +57,12 @@
   </main>
 </body>
 <script>
-	const clc = $('meta[name="contextPath"]').attr('value');
+	 const clc = $('meta[name="contextPath"]').attr('value');
   	$('tbody > tr').on('click', function(event){
   		let tr = event.currentTarget;
   		let did = $(tr).children().eq(0).text();
-  		let url = clc + '/containerOutInfo?orderNumber='+did;
+  		let url = clc + '/containerOutInfos?orderNumber='+did;
   		location.href = url;
-  	});
+  	}); 
 </script>
 </html>

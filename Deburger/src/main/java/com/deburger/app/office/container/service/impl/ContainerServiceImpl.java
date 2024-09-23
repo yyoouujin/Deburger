@@ -90,6 +90,14 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.containerOutInsert(containerVO);
 	}
 
+	// 물류창고 전체 조회
+	@Override
+	public List<ContainerVO> containerOutAll(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOuts(containerVO);
+	}
+
+	// 물류 창고 처리 조회 list
 	@Override
 	public List<ContainerVO> containerOutAllList() {
 		// TODO Auto-generated method stub
@@ -112,7 +120,7 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	public void containerOutpD(List<ContainerVO> list) {
 		for (ContainerVO vo : list) {
-		containerMapper.containerOutprocedure(vo);
+			containerMapper.containerOutprocedure(vo);
 		}
 	}
 
