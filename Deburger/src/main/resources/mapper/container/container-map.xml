@@ -235,8 +235,39 @@
 		and logistics_id = #{logisticsId}
 	</update>
 	
-	
 	<!-- 물류창고 출고 리스트 -->
+	<select id="containerOuts">
+		select a.order_number,
+		        sum(b.count) as count,
+		        a.oder_app,
+		        c.logistics_id,
+		        c.store_name,
+		        d.out_operation,
+                e.person_id
+		from store_order a
+		join order_details b
+		    on a.order_number = b.order_number
+		join store c
+		    on a.store_number = c.store_number
+		join logistics_out d
+		    on b.order_details_number = d.order_details_number
+        join logistics_in e
+            on d.lot = e.lot
+		where d.out_operation = 'g2'
+        and e.person_id = #{personId}
+		group by a.order_number,
+		        a.oder_app,
+		        c.logistics_id,
+		        c.store_name,
+		        d.out_operation,
+                e.person_id
+		order by a.order_number desc
+	</select>
+	
+	
+	
+	
+	<!-- 물류창고 출고 처리 리스트 -->
 	<select id="containerOutList">
 		select a.order_number,
 		        sum(b.count) as count,
@@ -258,7 +289,8 @@
 	
 	<!-- 출고 상세 조회-->
 	<select id="containerOutListInfo">
-		select a.order_details_number,
+		select distinct
+                a.order_details_number,
 		        a.material_number,
 		        a.order_number,
 		        a.count,
@@ -266,7 +298,8 @@
 		        b.unit,
 		        c.store_number,
 		        d.store_name,
-		        d.phone         
+		        d.phone,
+                e.inspection
 		from order_details a
 		join material b
 		    on a.material_number = b.material_number
@@ -274,6 +307,8 @@
 		    on  a.order_number = c.order_number
 		join store d
 		    on c.store_number = d.store_number
+        join logistics_out e
+            on a.order_details_number = e.order_details_number
 		where a.order_number = #{orderNumber}
 	
 	</select>

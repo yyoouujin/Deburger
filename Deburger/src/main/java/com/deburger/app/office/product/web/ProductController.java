@@ -1,6 +1,5 @@
 package com.deburger.app.office.product.web;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,29 +26,58 @@ public class ProductController {
 		this.productService = productService;
 	}
 
+	// 본사
 	@GetMapping("products")
-	public String productList(ProductVO productVO ,Model model, @RequestParam(value="category", required=false) String category) {
-		if(category == null) {
+	public String productList(ProductVO productVO, Model model,
+			@RequestParam(value = "category", required = false) String category) {
+		if (category == null) {
 			category = "버거";
 		}
 		productVO.setCategory(category);
-		
+
 		List<ProductVO> list = productService.serviceAllList(productVO);
 		model.addAttribute("products", list);
 		model.addAttribute("selcate", category);
 		return "office/product/products";
 	}
-	
+
 	@PostMapping("products")
 	@ResponseBody
 	public Map<String, Object> productList(@RequestBody ProductVO productVO) {
-	    Map<String, Object> map = new HashMap<>();
-	     productVO.getCategory();
-	   
-	    List<ProductVO> list = productService.serviceAllList(productVO);
-	    
-	    map.put("products", list);
-	    return map; 
+		Map<String, Object> map = new HashMap<>();
+		productVO.getCategory();
+
+		List<ProductVO> list = productService.serviceAllList(productVO);
+
+		map.put("products", list);
+		return map;
+	}
+
+	// shop product
+	@GetMapping("shopproducts")
+	public String shopproductList(ProductVO productVO, Model model,
+			@RequestParam(value = "category", required = false) String category) {
+		if (category == null) {
+			category = "버거";
+		}
+		productVO.setCategory(category);
+
+		List<ProductVO> list = productService.serviceAllList(productVO);
+		model.addAttribute("products", list);
+		model.addAttribute("selcate", category);
+		return "office/product/shopProducts";
+	}
+
+	@PostMapping("shopproducts")
+	@ResponseBody
+	public Map<String, Object> shopproductList(@RequestBody ProductVO productVO) {
+		Map<String, Object> map = new HashMap<>();
+		productVO.getCategory();
+
+		List<ProductVO> list = productService.serviceAllList(productVO);
+
+		map.put("products", list);
+		return map;
 	}
 
 	@GetMapping("productInfo")
