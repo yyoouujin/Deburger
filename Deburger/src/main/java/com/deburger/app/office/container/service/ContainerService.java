@@ -33,6 +33,9 @@ public interface ContainerService {
 
 	// 물류 창고 출고 조회
 	public List<ContainerVO> containerOutAll(ContainerVO containerVO);
+	
+	// 물류 창고 출고 count
+	public int containerOutAllCount(ContainerVO containerVO);
 
 	// 물류 창고 출고 처리 조회
 	public List<ContainerVO> containerOutAllList();
