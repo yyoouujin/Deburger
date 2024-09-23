@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
-import com.deburger.app.office.material.service.MaterialVO;
 
 @Controller
 public class ContainerController {
@@ -108,6 +107,29 @@ public class ContainerController {
 	}
 
 	// 출고 리스트
+	@GetMapping("containerOuts")
+	public String containerOutAll(Model model) {
+		ContainerVO mid = new ContainerVO();
+		String mcode = SecurityUtil.memberCode(); // id
+		mid.setPersonId(mcode);
+		ContainerVO pid = containerService.loginService(mid);
+
+		List<ContainerVO> list = containerService.containerOutAll(pid);
+		model.addAttribute("outs", list);
+		model.addAttribute("persons", pid);
+		return "office/container/containerOutList";
+
+	}
+
+	// 출고 상세 리스트
+	@GetMapping("containerOutInfos")
+	public String containerOutInfoLists(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerOutInfo(containerVO);
+		model.addAttribute("outList", list);
+		return "office/container/containerOutInfos";
+	}
+
+	// 출고 처리 리스트
 	@GetMapping("containerOut")
 	public String containerOutListAll(Model model) {
 		List<ContainerVO> list = containerService.containerOutAllList();
@@ -120,7 +142,7 @@ public class ContainerController {
 		return "office/container/containerOut";
 	}
 
-	// 출고 상세 리스트
+	// 출고 처리 상세 리스트
 	@GetMapping("containerOutInfo")
 	public String containerOutInfoList(ContainerVO containerVO, Model model) {
 		List<ContainerVO> list = containerService.containerOutInfo(containerVO);
@@ -139,6 +161,8 @@ public class ContainerController {
 	@PostMapping("containerOutPd")
 	@ResponseBody
 	public String containerOutPds(@RequestBody List<ContainerVO> list) {
+		System.err.println("-----------------1-------------------------");
+		System.err.println(list);
 		containerService.containerOutpD(list);
 		return "office/container/containerOutInfo";
 	}

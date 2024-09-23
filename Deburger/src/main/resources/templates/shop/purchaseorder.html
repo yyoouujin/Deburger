@@ -40,18 +40,12 @@ th, td {
 						role="tabpanel" aria-labelledby="home-tab"></div>
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel"
 						aria-labelledby="profile-tab">
-						<span>* 자동 발주 조건을 선택해주세요.</span>
+						<h5><span style="color:  red;">* 확인 *</span>
 						<div>
 							<div>
-								<input type="radio" name="option" value="counts" />재고 수량 <input
-									class="form-control" style="width: 200px;" type="number"
-									id="countNumber" />
+								<input type="radio" name="option" value="counts" />적정 재고 기준으로 주문이 자동으로 됩니다.
 							</div>
-							<div>
-								<input type="radio" name="option" value="dates" />일별 주문(거리) <input
-									class="form-control" style="width: 200px;" type="number"
-									id="dateNumber" />
-							</div>
+						</h5>
 						</div>
 					</div>
 				</div>
@@ -64,7 +58,7 @@ th, td {
 					<div class="card">
 						<div class="card-body">
 							<div style="text-align: right; margin: 0 0 10px 0;">
-								<button type="button" class="btn btn-primary" id="save">발주
+								<button type="button" class="btn btn-primary" id="save">자동 발주
 									저장</button>
 								<button type="submit" class="btn btn-primary" id="orderbtn">발주
 									신청</button>
@@ -217,9 +211,6 @@ th, td {
 				if(value == 'counts'){
 					autoOrderOperation = 'i2';
 					note = $('#countNumber').val();
-				}else{
-					autoOrderOperation = 'i3';
-					note = $('#dateNumber').val();
 				}
 				
 			}

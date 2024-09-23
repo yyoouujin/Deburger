@@ -23,7 +23,7 @@
       </nav>
     </div><!-- End Page Title -->
    <section class="section">
-    <form th:action="@{/materialInserts}" method="post">
+    <form th:action="@{/materialInserts}" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
@@ -64,13 +64,12 @@
             </div>
             <div>
             	<h5>이미지 업로드</h5>
-            	<input type="file" name="uploadFiles" multiple>
-				<button class="uploadBtn">upload</button>
+            	<input type="file" id="image" name="materialImage">
             </div>
           </div>
         </div>
       </div>
-      <button type="submit">등록</button>
+      <button type="button">등록</button>
      </form>
    </section>
   </main>
