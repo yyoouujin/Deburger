@@ -42,6 +42,7 @@ public class ShopOrderVO {
 	//담당자 id
 	private String email;
 	private String phone;
+	private String name;
 	
 	//store_stock
 	private int stockCount;

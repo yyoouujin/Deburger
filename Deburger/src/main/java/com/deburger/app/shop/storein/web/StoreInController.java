@@ -35,6 +35,9 @@ public class StoreInController {
 		this.storeInService = storeInService;
 	}
 	
+	@Value("${file.upload.path}")
+	private String uploadPath;
+	
 	//입고 승인 전체 조회
 	@GetMapping("storeInList")
 	public String storeInList(StoreInVO storeInVO, Model model, 
@@ -73,8 +76,7 @@ public class StoreInController {
 	}
 	
 	
-	@Value("${file.upload.path}")
-	private String uploadPath;
+
 	
 	//입고 저장
 	@PostMapping("insertStoreInList")

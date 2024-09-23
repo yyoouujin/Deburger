@@ -45,7 +45,7 @@ public class ShopOderController {
 		return shopOrderService.insertShopOrder(shopOrderVO);	
 	}
 	
-	//발주 리스트
+	//입고처리 안된 발주 리스트
 	@GetMapping("ShopOrderList")
 	public String ShopOrderList(ShopOrderVO shopOrderVO, Model model,
 			@RequestParam(value = "nowPage", required = false) String nowPage,

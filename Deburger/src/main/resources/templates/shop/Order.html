@@ -61,21 +61,24 @@
 											<td th:text="${list.orderNumber}" id="orderNumber" />
 											<td th:text="${list.orderName}" />
 											<td th:text="${list.allprice}" />
-											<td th:text="${list.personID}" />
+											<td th:text="${list.name}" />
 											<td th:text="${list.email}">
 											<td th:text="${list.phone}">
-											<td
-												th:if="${list.cancelOperation == 'J2' and list.oderApp == 'L1'}">취소
-												완료</td>
-											<td
+											<td>
+											  <span th:if="${list.cancelOperation == 'J2' and list.oderApp == 'L1'}">취소 요청</span>
+											  <span th:if="${list.cancelOperation == 'J3' and list.oderApp == 'L1'}">취소 완료</span>
+											<span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L1'}">발주
-												승인 전</td>
-											<td
+												승인 전</span>
+											<span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L2'}">발주
-												승인</td>
-											<td
+												승인</span>
+											<span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L3'}">출고
-												완료</td>
+												완료
+											</span>
+											</td>
+												
 											<td><button type="button"
 													class="btn btn-primary btn-sm" th:id="${list.orderNumber}"
 													onclick="orderInfo()">상세 내역</button></td>

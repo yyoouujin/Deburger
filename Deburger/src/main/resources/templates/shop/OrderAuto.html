@@ -71,7 +71,7 @@
 								<li class="page-item"
 									th:classappend="${paging.startPage == 1} ? 'disabled'"><a
 									class="page-link"
-									th:href="@{/ShopOrderList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+									th:href="@{/ShopAutoOrderList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
 									aria-disabled="true">&lt;</a></li>
 								<!-- Page numbers -->
 								<li class="page-item"
@@ -81,14 +81,14 @@
 										th:text="${p}"></a>
 								</span> <span th:if="${p != paging.nowPage}"> <a
 										class="page-link"
-										th:href="@{/ShopOrderList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+										th:href="@{/ShopAutoOrderList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
 										th:text="${p}"></a>
 								</span></li>
 								<!-- Next button -->
 								<li class="page-item"
 									th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
 									<a class="page-link"
-									th:href="@{/ShopOrderList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+									th:href="@{/ShopAutoOrderList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
 								</li>
 							</ul>
 						</nav>

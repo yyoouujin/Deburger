@@ -9,7 +9,7 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select 
+		select
 		o.order_day
 		,i.in_Day
 		,o.order_Number
@@ -20,7 +20,7 @@
 		,in_operation
 		From store_order o JOIN
 		order_details d
-		on o.order_number = d.order_number
+		on o.order_number = d.order_number 
 		LEFT OUTER JOIN
 		store_in i
 		on d.order_details_number = i.order_details_number
