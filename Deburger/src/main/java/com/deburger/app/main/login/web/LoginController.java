@@ -22,7 +22,7 @@ public class LoginController {
 	//로그인
 	@GetMapping("login")
 	public String officeMain() {
-		return "main/login/loginForm";
+		return "main/login/loginForm2";
 	}
 	
 	// 담당자 등록
