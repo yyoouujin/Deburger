@@ -9,7 +9,7 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select DISTINCT
+		select
 		o.order_day
 		,i.in_Day
 		,o.order_Number
@@ -42,7 +42,8 @@
 	</select>
 
 	<select id="StoreIninfoList" resultType="StoreInVO">
-		select o.order_number
+		select DISTINCT
+		o.order_number
 		,o.order_day
 		,d.order_details_number
 		,m.material_name

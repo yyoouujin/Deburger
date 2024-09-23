@@ -48,6 +48,7 @@ public interface ContainerMapper {
 	// 물류 창고 출고 처리 상세 조회
 	public List<ContainerVO> containerOutListInfo(ContainerVO containerVO);
 
+
 	// 물류 창고 출고 처리 프로시저
 	public void containerOutprocedure(ContainerVO vo);
 

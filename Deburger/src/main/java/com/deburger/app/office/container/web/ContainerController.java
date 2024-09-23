@@ -161,6 +161,8 @@ public class ContainerController {
 	@PostMapping("containerOutPd")
 	@ResponseBody
 	public String containerOutPds(@RequestBody List<ContainerVO> list) {
+		System.err.println("-----------------1-------------------------");
+		System.err.println(list);
 		containerService.containerOutpD(list);
 		return "office/container/containerOutInfo";
 	}
