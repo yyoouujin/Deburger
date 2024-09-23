@@ -8,12 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
+import com.deburger.app.office.logistic.service.Criteria;
+import com.deburger.app.office.logistic.service.PageDTO;
 
 @Controller
 public class ContainerController {
@@ -27,21 +28,22 @@ public class ContainerController {
 
 	// 전체 조회
 	@GetMapping("container")
-	public String containerList(ContainerVO containerVO, Model model,
-			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+	public String containerList(Criteria criteria, Model model) {
 		// 담당 물류 창고 이름
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
+		mid.setPageNum(criteria.getPageNum());
+		mid.setAmount(criteria.getAmount());
 
 		// 해당 물
 		List<ContainerVO> list = containerService.containerAllList(mid);
+		// list;
 		ContainerVO pid = containerService.loginService(mid);
 
 		model.addAttribute("containers", list);
 		model.addAttribute("persons", pid);
-
+		model.addAttribute("pageMaker", new PageDTO(containerService.containerAllCount(mid), 5, criteria));
 		return "office/container/containers";
 	}
 
@@ -161,8 +163,6 @@ public class ContainerController {
 	@PostMapping("containerOutPd")
 	@ResponseBody
 	public String containerOutPds(@RequestBody List<ContainerVO> list) {
-		System.err.println("-----------------1-------------------------");
-		System.err.println(list);
 		containerService.containerOutpD(list);
 		return "office/container/containerOutInfo";
 	}

@@ -4,26 +4,44 @@
 	
 	<!-- 전체 조회 -->
 	<select id="selectAllList" resultType="ContainerVO">
-			            select a.material_number,
-						       a.stock_count,
-						       a.logistics_id,
-						       b.material_classification,
-						       b.logistics_safety_stock,
-						       b.material_name
-						from logistics_stock a
-			  			  join material b
-			       			 on a.material_number = b.material_number
-			       		  join logistics c
-			       		  	 on a.logistics_id = c.logistics_id
-			       		<![CDATA[ 
-			                	where stock_count >= 0
-			                ]]>
-			            and c.person_id = #{personId}
-			       		order by a.material_number			
+			            <![CDATA[
+						      SELECT  b.* 
+						      FROM
+						          (    
+						            SELECT ROWNUM R, a.*    
+						            FROM (
+						
+						            select a.material_number,
+												       a.stock_count,
+												       a.logistics_id,
+												       b.material_classification,
+												       b.logistics_safety_stock,
+												       b.material_name,
+												       c.person_id	
+												from logistics_stock a
+									  			  join material b
+									       			 on a.material_number = b.material_number
+									       		  join logistics c
+									       		  	 on a.logistics_id = c.logistics_id			       		
+									                	where stock_count >=  0	
+									                	and c.person_id = #{personId}		
+									       		order by a.material_number
+												
+						                  ) a
+						        WHERE ROWNUM <= (#{pageNum} * #{amount})            
+						      ) b
+						      WHERE R > (#{pageNum}-1) * #{amount}
+							]]>	
 	</select>
 	
-	<select id="selectAllListcount">
-			select count(*) from logistics_stock
+	<select id="selectAllListcount">			
+			select NVL(count(a.stock_count), 0)
+			from logistics_stock a
+			    join logistics b
+			     on a.logistics_id = b.logistics_id			       		
+			        where stock_count <![CDATA[>=]]>  0
+			        and b.person_id = #{personId}
+			     group by b.person_id
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->

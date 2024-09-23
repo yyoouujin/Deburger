@@ -8,7 +8,7 @@ public interface ContainerService {
 	public List<ContainerVO> containerAllList(ContainerVO containerVO);
 
 	// 전체 조회 페이징 처리
-	public int containerAllCount();
+	public int containerAllCount(ContainerVO containerVO);
 
 	// 상세 조회
 	public List<ContainerVO> containerInfo(ContainerVO containerVO);
