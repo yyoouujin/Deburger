@@ -29,6 +29,13 @@ public class DeliveryController {
 	
 	
 	//가맹점 발주 전체조회
+	/**
+	 * 
+	 * @param criteria :
+	 * @param model
+	 * @return
+	 * @
+	 */
 	@GetMapping("deliveryList")
 	public String deliveryList(Criteria criteria, Model model) {
 		List<DeliveryVO> list = deliveryService.deliveryList(criteria);
@@ -80,9 +87,7 @@ public class DeliveryController {
 	@ResponseBody
 	public Map<String, Object> oderappUpdate(DeliveryVO deliveryVO) {
 		String mcode = SecurityUtil.memberCode();
-		
 		deliveryVO.setPersonId(mcode);
-		
 		return deliveryService.updateOderapp(deliveryVO);
 		
 	}
