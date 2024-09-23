@@ -116,8 +116,11 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">전체재고 : <span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic) > 0} ?  ${logistic[0].allStock} : '0'"></span>개</h5>
+               
               
+              <h5 class="card-title">전체재고 : 
+              	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic) > 0} ?  ${logistic[0].allStock} : '0'"></span>개
+              </h5>
               
               
               <!-- Table with hoverable rows -->
@@ -184,7 +187,7 @@
                     
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" id="orderBtn">발주요청</button>
+                      <button type="button" class="btn btn-primary" id="orderBtn" th:onClick="|location.href='@{/materialOrder}'|">발주요청</button>
                     </div>
                   </div>
                 </div>

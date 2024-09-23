@@ -167,10 +167,9 @@
 			});
             
 			//발주버튼 클릭 시 발주 페이지로 이동
-			$('#orderBtn').on('click', function () {
-				location.href="/deburger/orderMaterial?materialNumber=" + mid;	
-			});
-			
+			//$('#orderBtn').on('click', function () {
+				//location.href="/deburger/orderMaterial?materialNumber=" + mid;	
+			//});
             
 		})
 		.fail (err => console.log(err))

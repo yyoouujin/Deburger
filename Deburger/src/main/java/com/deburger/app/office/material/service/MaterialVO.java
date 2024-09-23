@@ -32,6 +32,7 @@ public class MaterialVO {
 
     public MaterialVO() {
 	}
+    
 	public MaterialVO(int total, int nowPage, int cntPerPage) {
 		setNowPage(nowPage);
 		setCntPerPage(cntPerPage);

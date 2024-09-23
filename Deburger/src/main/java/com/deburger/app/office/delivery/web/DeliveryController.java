@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deburger.app.office.delivery.service.DeliveryService;
 import com.deburger.app.office.delivery.service.DeliveryVO;
+import com.deburger.app.office.logistic.service.Criteria;
+import com.deburger.app.office.logistic.service.PageDTO;
 
 @Controller
 public class DeliveryController {
@@ -24,13 +25,20 @@ public class DeliveryController {
 		this.deliveryService = deliveryService;
 	}
 	
+	
+	
 	//가맹점 발주 전체조회
 	@GetMapping("deliveryList")
-	public String deliveryList(Model model) {
-		List<DeliveryVO> list = deliveryService.deliveryList();
+	public String deliveryList(Criteria criteria, Model model) {
+		List<DeliveryVO> list = deliveryService.deliveryList(criteria);
+		
 		model.addAttribute("deliveries", list);
+		
+		model.addAttribute("pageMaker", new PageDTO(deliveryService.getTotal(), 5, criteria));
+		
 		return "office/delivery/deliveryList";
 	}
+	
 	
 	//발주 상세조회
 	@GetMapping("deliveryInfo")
