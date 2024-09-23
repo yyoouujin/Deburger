@@ -27,9 +27,9 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 페이징
 	@Override
-	public int containerAllCount() {
+	public int containerAllCount(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.selectAllListcount();
+		return containerMapper.selectAllListcount(containerVO);
 	}
 
 	// 물류 창고 상세 조회
