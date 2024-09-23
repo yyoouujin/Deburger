@@ -80,8 +80,11 @@ public class DeliveryController {
 	@ResponseBody
 	public Map<String, Object> oderappUpdate(DeliveryVO deliveryVO) {
 		String mcode = SecurityUtil.memberCode();
+		
 		deliveryVO.setPersonId(mcode);
+		
 		return deliveryService.updateOderapp(deliveryVO);
+		
 	}
 	
 	//취소상태수정
