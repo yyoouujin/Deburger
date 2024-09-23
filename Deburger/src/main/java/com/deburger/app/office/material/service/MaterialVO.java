@@ -17,6 +17,8 @@ public class MaterialVO {
 	public int cost;
 	public String clientName;
 	public String materialImage;
+	
+	
 
 	//
 	private int nowPage;
