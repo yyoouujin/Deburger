@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deburger.app.office.delivery.mapper.DeliveryMapper">
 
-<!-- 가맹점 발주 전체조회 -->
+<!-- 가맹점 발주 전체조회
 
 	<select id="selectDeliveryAll" resultType="DeliveryVO">
 		SELECT DISTINCT o.order_day
@@ -19,7 +19,62 @@
 		WHERE o.auto_order_operation = 'i1'
 		ORDER BY o.order_day DESC
 	</select>
+-->
 
+<!-- 가맹점 발주 전체조회 (페이징)
+	<select id="selectDeliveryAll" resultType="DeliveryVO">
+		SELECT * 
+		    FROM (
+		        SELECT ROWNUM RN, A.* 
+		        FROM (SELECT DISTINCT o.order_day
+		                      , o.order_number
+		                      , o.oder_app
+		                      , s.store_name
+		                      , o.store_number
+		                      , o.cancel_operation
+		                      , l.logistics_name
+		                      , o.logistics_id
+		        FROM store_order o LEFT OUTER JOIN order_details d ON (o.order_number = d.order_number)
+		                           LEFT OUTER JOIN store s ON (s.store_number = o.store_number)
+		                           LEFT OUTER JOIN logistics l ON (o.logistics_id = l.logistics_id)
+		        WHERE o.auto_order_operation = 'i1'
+		        ORDER BY o.order_day DESC) A
+		    )
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+ -->
+ 
+<!-- 가맹점 발주 전체조회 (페이징 유진) -->
+	<select id="selectDeliveryAll" resultType="DeliveryVO">
+		<![CDATA[
+		SELECT  b.* 
+		FROM
+		    (    
+		      SELECT ROWNUM R, a.*    
+		      FROM (
+		              SELECT DISTINCT o.order_day
+		                            , o.order_number
+		                            , o.oder_app
+		                            , s.store_name
+		                            , o.store_number
+		                            , o.cancel_operation
+		                            , l.logistics_name
+		                            , o.logistics_id
+		              FROM store_order o LEFT OUTER JOIN order_details d ON (o.order_number = d.order_number)
+		                                 LEFT OUTER JOIN store s ON (s.store_number = o.store_number)
+		                                 LEFT OUTER JOIN logistics l ON (o.logistics_id = l.logistics_id)
+		              WHERE o.auto_order_operation = 'i1'
+		              ORDER BY o.order_day DESC
+		            ) a
+		  WHERE ROWNUM <= (#{pageNum} * #{amount})
+		) b
+		WHERE R > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+
+	<select id="getTotal" resultType="int">
+		select count(*) from store_order
+	</select>
 
 <!-- 주문번호 상세조회 -->
 	<select id="selectDeliveryInfo" resultType="DeliveryVO">
