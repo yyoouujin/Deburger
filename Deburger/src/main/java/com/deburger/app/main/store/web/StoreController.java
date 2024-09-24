@@ -181,7 +181,7 @@ public class StoreController {
     	//월별 발주 원가
     	model.addAttribute("StoreOrder", StoreOrder);
     	
-		return "main/store/StoreStatistics";
+		return "main/store/storeStatistics";
 	}
 	
 
