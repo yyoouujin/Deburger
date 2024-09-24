@@ -165,7 +165,7 @@ public class StoreController {
 	
 	
 	// 가맹점 현황
-	@GetMapping("StoreStatistics")
+	@GetMapping("storeStatistics")
 	public String StoreStatistics(Model model) {
 		
 		List<NoticeVO> list = noticeService.noticeListShopList();
@@ -181,7 +181,7 @@ public class StoreController {
     	//월별 발주 원가
     	model.addAttribute("StoreOrder", StoreOrder);
     	
-		return "main/store/StoreStatistics";
+		return "main/store/storeStatistics";
 	}
 	
 
