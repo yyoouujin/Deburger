@@ -134,7 +134,8 @@
 	
 	
 	$('#getdate').on("change",function(){
-		
+		$('#list').html('');
+		$('#pagelist').css('display', 'none');
 		
 		let startDate = $("#startDate").val();
 		let endDate =  $("#endDate").val();
@@ -148,47 +149,75 @@
 			data : JSON.stringify(list),
 			
 		}).then((result) => {
-			$('#list').html('');
+			
 			
 			$(result).each(function(index, item){
-
-				let tr = `<tr>
-				<td>${item.orderDay}</td>
-				<td>${item.orderNumber}</td>
-				<td>${item.orderName}</td>
-				<td>${item.allprice}</td>
-				<td>${item.name}</td>
-				<td>${item.email}</td>
-				<td>${item.phone}</td>
-				<td>
 				
-				if(${item.cancelOperation} == 'J2' && ${item.oderApp} == 'L1'){
-					<span>취소 요청</span>
-				}else if(${item.cancelOperation} == 'J3' && ${item.oderApp} == 'L1'){
-					<span>취소 완료</span>
-				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L1'){
-					<span>발주 승인 전</span>
-				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L2'){
-					<span >발주	승인</span>
-				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L3'){
-					<span >출고	완료	</span>
+				let spans = '';
+				if(item.cancelOperation == 'J2' && item.oderApp == 'L1'){
+					spans = "<span>취소 요청</span>";
+				}else if(item.cancelOperation == 'J3' && item.oderApp == 'L1'){
+					spans = "<span>취소 완료</span>";
+				}else if(item.cancelOperation == 'J1' && item.oderApp == 'L1'){
+					spans = "<span>발주 승인 전</span>";
+				}else if(item.cancelOperation == 'J1' && item.oderApp == 'L2'){
+					spans = "<span >발주	승인</span>";
+				}else if(item.cancelOperation == 'J1' && item.oderApp == 'L3'){
+					spans = "<span >출고	완료	</span>";
 				}
-				</td>
+				let btns = '';
+				if(item.cancelOperation == 'J1' && item.oderApp == 'L1'){
+					btns = '<button type="button" class="btn btn-primary btn-sm" id="canclebtn">취소	</button>';
+				}
+				
+				
+				let odnames = '';
+				if(item.orderName != null){
+					odnames = item.orderName;
+				}
+				
+				let names = '';
+				if(item.name != null){
+					names = item.name;
+				}
+				
+				let emails = '';
+				if(item.email != null){
+					emails = item.email;
+				}
+				
+				let phones = '';
+				if(item.phone != null){
+					phones = item.phone;
+				}
+				
+				
+				let dates = new Date(item.orderDay);
+				const year = dates.getFullYear(); 
+				const month = (dates.getMonth() + 1).toString().padStart(2, '0'); 
+				const day = dates.getDate().toString().padStart(2, '0');
+
+				const yyyymmdd = `${year}/${month}/${day}`;
+				
+				let tr = `<tr>
+				<td>${yyyymmdd}</td>
+				<td>${item.orderNumber}</td>
+				<td>${odnames}</td>
+				<td>${item.allprice}</td>
+				<td>${names}</td>
+				<td>${emails}</td>
+				<td>${phones}</td>
+				<td>${spans}</td>
 				<td><button type="button" class="btn btn-primary btn-sm" id="${item.orderNumber}"
-					onclick="orderInfo()">상세 내역</button></td>
-					
-				<td>
-				if(${item.cancelOperation == 'J1' && item.oderApp == 'L1'}){
-					<button type="button" class="btn btn-primary btn-sm" id="canclebtn">취소
-					</button>
-				}
-				</td>
+					onclick="orderInfo()">상세 내역</button></td>					
+				<td>${btns}</td>
 				</tr>`
 				
 				$('#list').append(tr)
 				
 				
 			})
+			
 			
 			$("#canclebtn").on("click",function(event){		
 				$.ajax({
@@ -209,8 +238,6 @@
 		})
 		
 	})
-		
-	
 	
 	
 	$("#canclebtn").on("click",function(event){		

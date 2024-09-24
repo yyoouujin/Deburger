@@ -186,7 +186,7 @@
               on a.order_number = c.order_number and c.auto_order_operation != 'i1') od 		
 		join (SELECT *
               FROM store_stock
-              WHERE store_number = 'frc0000000001') ss
+              WHERE store_number =  #{storeNumber}) ss
 		on ss.material_number = od.material_number		
 		Order by od.order_details_number DESC
 		) A
@@ -231,8 +231,8 @@
 		where
 		auto_order_operation = 'i1'
 		AND store_number= #{storeNumber}
-        AND order_day BETWEEN TO_DATE('24-09-20', 'YY-MM-DD') 
-                   AND TO_DATE('24-09-22', 'YY-MM-DD')
+        AND order_day BETWEEN #{startDate}
+                   AND #{endDate}
 		ORDER by
 		s.order_number DESC
 		</select>
