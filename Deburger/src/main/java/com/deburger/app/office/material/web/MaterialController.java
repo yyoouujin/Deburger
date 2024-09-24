@@ -83,11 +83,10 @@ public class MaterialController {
 
 	// insert 처리
 	@PostMapping("materialInserts")
-	public String materialInsertProcess(MaterialVO materialVO, MultipartFile materialImage) {
+	public String materialInsertProcess(MaterialVO materialVO,@RequestParam MultipartFile materialImage) {
 
 		String fileName = materialImage.getOriginalFilename();
-//      String fileName = originalName.substring(originalName.lastIndexOf("//")+1);
-
+		System.err.print(fileName + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		System.out.println("fileName : " + fileName);
 
 		// 날짜 폴더 생성
@@ -111,15 +110,9 @@ public class MaterialController {
 		}
 
 		materialVO.setImage(setImagePath(uploadFileName));
-
-		int mId = materialService.insertMaterialService(materialVO);
-		String url = null;
-		if (mId > -1) {
-			url = "redirect:materialInsert";
-		} else {
-			url = "redirect:materials";
-		}
-		return url;
+		System.err.print(materialVO);
+		materialService.insertMaterialService(materialVO);
+		return "office/material/materialInsert";
 	}
 
 	private String makeFolder() {
