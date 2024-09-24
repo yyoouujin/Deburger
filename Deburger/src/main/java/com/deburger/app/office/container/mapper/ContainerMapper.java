@@ -40,13 +40,17 @@ public interface ContainerMapper {
 	public int containerInupdate(ContainerVO containerVO);
 
 	// 물류 창고 출고 리스트
+	public List<ContainerVO> containerOuts(ContainerVO containerVO);
+
+	// 물류 창고 출고 처리 리스트
 	public List<ContainerVO> containerOutList();
 
-	// 물류 창고 출고 상세 조회
+	// 물류 창고 출고 처리 상세 조회
 	public List<ContainerVO> containerOutListInfo(ContainerVO containerVO);
 
-	// 물류 창고 출고 프로시저
-	public void containerOutprocedure(ContainerVO containerVO);
+
+	// 물류 창고 출고 처리 프로시저
+	public void containerOutprocedure(ContainerVO vo);
 
 	// 모달
 	public List<ContainerVO> containerOutModal(ContainerVO containerVO);

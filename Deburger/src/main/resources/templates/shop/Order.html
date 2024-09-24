@@ -39,6 +39,10 @@
 						<div class="card-body">
 							<!-- Table with stripped rows -->
 							<!-- <table class="table datatable"> -->
+							<div id="getdate">
+								<span><input type="date" id="startDate"> ~ <input
+									type="date" id="endDate"></span>
+							</div>
 							<table class="table ">
 								<thead>
 									<tr>
@@ -54,7 +58,7 @@
 										<th>취소여부</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="list">
 									<th:block th:each="list:${viewAll}">
 										<tr>
 											<td>[[${#dates.format(list.orderDay,'yyyy/MM/dd')}]]</td>
@@ -64,24 +68,21 @@
 											<td th:text="${list.name}" />
 											<td th:text="${list.email}">
 											<td th:text="${list.phone}">
-											<td>
-											  <span th:if="${list.cancelOperation == 'J2' and list.oderApp == 'L1'}">취소 요청</span>
-											  <span th:if="${list.cancelOperation == 'J3' and list.oderApp == 'L1'}">취소 완료</span>
-											<span
+											<td><span
+												th:if="${list.cancelOperation == 'J2' and list.oderApp == 'L1'}">취소
+													요청</span> <span
+												th:if="${list.cancelOperation == 'J3' and list.oderApp == 'L1'}">취소
+													완료</span> <span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L1'}">발주
-												승인 전</span>
-											<span
+													승인 전</span> <span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L2'}">발주
-												승인</span>
-											<span
+													승인</span> <span
 												th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L3'}">출고
-												완료
-											</span>
-											</td>
-												
-											<td><button type="button"
-													class="btn btn-primary btn-sm" th:id="${list.orderNumber}"
-													onclick="orderInfo()">상세 내역</button></td>
+													완료 </span></td>
+
+											<td><button type="button" class="btn btn-primary btn-sm"
+													th:id="${list.orderNumber}" onclick="orderInfo()">상세
+													내역</button></td>
 											<td><button type="button" class="btn btn-primary btn-sm"
 													id="canclebtn"
 													th:if="${list.cancelOperation == 'J1' and list.oderApp == 'L1'}">취소
@@ -127,8 +128,90 @@
 			</div>
 		</section>
 	</main>
-	<script>
+	<script th:inline="javascript">
+	document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
+	document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
+	
+	
+	$('#getdate').on("change",function(){
+		
+		
+		let startDate = $("#startDate").val();
+		let endDate =  $("#endDate").val();
+		let list = {startDate,endDate}
+		
+		$.ajax({
+			
+			url : "selectdate",
+			method : "Post",
+			contentType:"application/JSON",
+			data : JSON.stringify(list),
+			
+		}).then((result) => {
+			$('#list').html('');
+			
+			$(result).each(function(index, item){
 
+				let tr = `<tr>
+				<td>${item.orderDay}</td>
+				<td>${item.orderNumber}</td>
+				<td>${item.orderName}</td>
+				<td>${item.allprice}</td>
+				<td>${item.name}</td>
+				<td>${item.email}</td>
+				<td>${item.phone}</td>
+				<td>
+				
+				if(${item.cancelOperation} == 'J2' && ${item.oderApp} == 'L1'){
+					<span>취소 요청</span>
+				}else if(${item.cancelOperation} == 'J3' && ${item.oderApp} == 'L1'){
+					<span>취소 완료</span>
+				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L1'){
+					<span>발주 승인 전</span>
+				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L2'){
+					<span >발주	승인</span>
+				}else if(${item.cancelOperation} == 'J1' && ${item.oderApp} == 'L3'){
+					<span >출고	완료	</span>
+				}
+				</td>
+				<td><button type="button" class="btn btn-primary btn-sm" id="${item.orderNumber}"
+					onclick="orderInfo()">상세 내역</button></td>
+					
+				<td>
+				if(${item.cancelOperation == 'J1' && item.oderApp == 'L1'}){
+					<button type="button" class="btn btn-primary btn-sm" id="canclebtn">취소
+					</button>
+				}
+				</td>
+				</tr>`
+				
+				$('#list').append(tr)
+				
+				
+			})
+			
+			$("#canclebtn").on("click",function(event){		
+				$.ajax({
+					url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
+					method : "POST",
+					
+				}).then((end) => {
+					location.href="ShopOrderList"
+				})
+				
+			})
+			
+			function orderInfo(){
+				
+				let url ='ShopOrderInfo?orderNumber=' + event.target.id;
+				location.href = url;
+			}
+		})
+		
+	})
+		
+	
+	
 	
 	$("#canclebtn").on("click",function(event){		
 		$.ajax({

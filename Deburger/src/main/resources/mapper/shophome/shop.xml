@@ -96,7 +96,7 @@
 	</select>
 
 	<select id="limitList" parameterType="ShopMainVO">
-	  select so.order_Day
+  select so.order_Day
                ,m.material_name
                ,od.count
                ,si.remain_stock_count
@@ -110,6 +110,9 @@
                join material m
                on m.material_number = si.material_number
         where si.store_number = #{storeNumber}
+        AND si.remain_stock_count > 0
+        AND si.disposal_operation = 'k1'
+        order by order_day
 	</select>
 
 	<select id="shopcountMaterial" resultType ="int">

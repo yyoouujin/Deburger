@@ -14,8 +14,6 @@
 			return;
 		}
 		
-		//발주상태가 승인 완료이면 리턴(예정)
-		
 		
 		let checkText = $(event.currentTarget).children().eq(6);
 		let selectLogistic = $(event.currentTarget).children().eq(7);
@@ -24,6 +22,14 @@
 		let lid = $(tr).data('lid');
 		
 		checkStock();
+		
+		//발주상태가 승인 완료이면 리턴(예정)
+		let deliveryCondition = $(event.currentTarget).children().eq(8);
+		
+		if (deliveryCondition.text() == '승인 완료') {
+			checkText.text("Y");
+		}
+		
 		
 		function checkStock() {
 			
@@ -45,7 +51,7 @@
 					let orderStock = data;
 		    		//1) 재고확인 N 또는 Y 출력
 		    		if (logisticStock != -1) { //창고에 재고가 하나도 없는게 아니면~ 비교시작
-						if(orderStock > logisticStock) {
+						if(orderStock >= logisticStock) {
 							checkText.text("N");
 						} else {
 							checkText.text("Y");

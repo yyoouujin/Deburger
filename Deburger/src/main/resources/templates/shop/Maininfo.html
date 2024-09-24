@@ -114,12 +114,14 @@
 	<script>
 	
 	$(".btnStock").on("click", function(event) {
-		document.getElementById('#orderDay').innerHTML=$(event.target).closest('tr').children().eq(0).text();
+		document.getElementById('orderDay').innerHTML=$(event.target).closest('tr').children().eq(0).text();
 		document.getElementById('limitDay').innerHTML=$(event.target).closest('tr').children().eq(5).text();
 		document.getElementById('materialName').innerHTML=$(event.target).closest('tr').children().eq(1).text();
 		document.getElementById('remainStockCount').innerHTML=$(event.target).closest('tr').children().eq(4).text();
 		document.getElementById('orderDetails').innerHTML=$(event.target).closest('tr').children().eq(7).text();
-		 document.getElementById('material').innerHTML=$(event.target).closest('tr').children().eq(8).text();
+		document.getElementById('material').innerHTML=$(event.target).closest('tr').children().eq(8).text();
+		let mins = '-'+$(event.target).closest('tr').children().eq(4).text();
+		document.getElementById('StockCount').setAttribute('min',mins);
 	});
 	
 	 $("#savebtn").on("click", function(event) {
@@ -134,17 +136,17 @@
 			var amountcon =  $('#StockCount').val();
 			var remainStockCount = $('#StockCount').val();
 			var note = $('#out').val();
-			var disposalOperation = 'F1';
+			var disposalOperation = 'K1';
 			
 			
 		}else{
 			var orderDetailsNumber = $('#orderDetails').html();
 			var stockCount = $('#remainStockCount').html();
 			var materialNumber = $('#material').html();
-			var remainStockCount = $('#remainStockCount').html();
+			var remainStockCount = -$('#remainStockCount').html();
 			var amountcon =  $('#remainStockCount').html();
 			var note = $('#out').val();
-			var disposalOperation = 'F2';
+			var disposalOperation = 'K2';
 
 			
 		}

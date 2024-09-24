@@ -3,10 +3,17 @@ package com.deburger.app.office.delivery.service;
 import java.util.List;
 import java.util.Map;
 
+import com.deburger.app.office.logistic.service.Criteria;
+
 public interface DeliveryService {
 	
 	//가맹점 발주 전체조회
-	public List<DeliveryVO> deliveryList();
+	//public List<DeliveryVO> deliveryList(DeliveryVO deliveryVO);
+	
+	//가맹점 발주 전체조회(페이징)
+	public List<DeliveryVO> deliveryList(Criteria criteria);
+	//발주건 총 갯수(페이징)
+	public int getTotal();
 	
 	//가맹점 발주 상세조회
 	public List<DeliveryVO> deliveryInfo(DeliveryVO deliveryVO);

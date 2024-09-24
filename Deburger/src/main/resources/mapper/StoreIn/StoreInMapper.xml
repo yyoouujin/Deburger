@@ -9,26 +9,31 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select
-		o.order_day
-		,i.in_Day
-		,o.order_Number
-		,i.disposal_Operation
-		,o.order_Name
-		,i.note
-		,o.oder_App
-		,in_operation
-		From store_order o JOIN
-		order_details d
-		on o.order_number = d.order_number 
-		LEFT OUTER JOIN
-		store_in i
-		on d.order_details_number = i.order_details_number
-		where
-		oder_app='L3'
-		and o.store_number = #{storeNumber}
-		ORDER by ORDER_NUMBER
-		DESC
+			select
+			    o.order_day
+			    ,d.in_Day
+			    ,o.order_Number
+			    ,d.disposal_Operation
+			    ,o.order_Name
+			    ,d.note
+			    ,o.oder_App
+			    ,d.in_operation
+			From (SELECT *
+			      FROM store_order
+			      where oder_app='L3'
+			      and store_number = #{storeNumber}) o       
+			JOIN (SELECT in_Day
+			           , disposal_Operation
+			           , note
+			           , in_operation
+			           , order_number
+			           , ROW_NUMBER() OVER(PARTITION BY order_number ORDER BY a.order_number DESC) AS rn
+			      FROM order_details a LEFT OUTER JOIN store_in b
+			      on a.order_details_number = b.order_details_number) d
+			on o.order_number = d.order_number
+			WHERE d.rn = '1' 
+			ORDER by ORDER_NUMBER DESC
+
 		
 		) A
 		)

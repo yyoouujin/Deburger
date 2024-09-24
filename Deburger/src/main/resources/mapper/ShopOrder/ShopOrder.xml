@@ -205,5 +205,35 @@
 		WHERE order_details_number = #{orderDetailsNumber}
 	</delete>
 
-
+	<delete id="Alldel" parameterType="String">
+		delete store_order  
+		where order_number in(
+        		select order_number
+       			from store_order
+       			Minus
+       			select order_number
+        		from order_details ) 
+	</delete>
+	
+	<select id="selectdate"  parameterType="ShopOrderVO">
+			select s.order_number
+		,s.order_day
+		,s.cancel_operation
+		,s.order_name
+		,p.name
+		,p.email
+		,p.phone
+		,s.allprice
+		,s.oder_App
+		from store_order s LEFT
+		OUTER join person p
+		on s.person_id = p.person_id
+		where
+		auto_order_operation = 'i1'
+		AND store_number= #{storeNumber}
+        AND order_day BETWEEN TO_DATE('24-09-20', 'YY-MM-DD') 
+                   AND TO_DATE('24-09-22', 'YY-MM-DD')
+		ORDER by
+		s.order_number DESC
+		</select>
 </mapper>
