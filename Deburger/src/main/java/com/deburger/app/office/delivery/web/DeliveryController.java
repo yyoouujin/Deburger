@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.office.delivery.service.DeliveryService;
 import com.deburger.app.office.delivery.service.DeliveryVO;
 import com.deburger.app.office.logistic.service.Criteria;
@@ -28,6 +29,13 @@ public class DeliveryController {
 	
 	
 	//가맹점 발주 전체조회
+	/**
+	 * 
+	 * @param criteria :
+	 * @param model
+	 * @return
+	 * @
+	 */
 	@GetMapping("deliveryList")
 	public String deliveryList(Criteria criteria, Model model) {
 		List<DeliveryVO> list = deliveryService.deliveryList(criteria);
@@ -78,7 +86,10 @@ public class DeliveryController {
 	@PostMapping("oderappUpdate")
 	@ResponseBody
 	public Map<String, Object> oderappUpdate(DeliveryVO deliveryVO) {
+		String mcode = SecurityUtil.memberCode();
+		deliveryVO.setPersonId(mcode);
 		return deliveryService.updateOderapp(deliveryVO);
+		
 	}
 	
 	//취소상태수정
