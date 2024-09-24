@@ -165,7 +165,7 @@ public class StoreController {
 	
 	
 	// 가맹점 현황
-	@GetMapping("StoreStatistics")
+	@GetMapping("storeStatistics")
 	public String StoreStatistics(Model model) {
 		
 		List<NoticeVO> list = noticeService.noticeListShopList();
