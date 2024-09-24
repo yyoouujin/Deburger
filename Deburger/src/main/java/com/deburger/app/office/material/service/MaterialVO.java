@@ -16,7 +16,6 @@ public class MaterialVO {
 	public int logisticsSafetyStock;
 	public int cost;
 	public String clientName;
-	public String materialImage;
 	
 	
 
