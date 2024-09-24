@@ -158,7 +158,10 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select od.order_details_number
+
+		select 
+		od.order_number
+		,od.order_details_number
 		,od.material_name
 		,od.material_item
 		,od.unit
@@ -167,7 +170,9 @@
 		,ss.stock_count
 		,ss.safety_stock
 		,od.note
-		from (SELECT material_name
+		from (SELECT 
+		             c.order_number
+		           , material_name
                    , order_details_number
                    , material_item
                    , unit
@@ -181,7 +186,7 @@
               on a.order_number = c.order_number and c.auto_order_operation != 'i1') od 		
 		join (SELECT *
               FROM store_stock
-              WHERE store_number = 'frc0000000001') ss
+              WHERE store_number =  #{storeNumber}) ss
 		on ss.material_number = od.material_number		
 		Order by od.order_details_number DESC
 		) A
@@ -200,4 +205,35 @@
 		WHERE order_details_number = #{orderDetailsNumber}
 	</delete>
 
+	<delete id="Alldel" parameterType="String">
+		delete store_order  
+		where order_number in(
+        		select order_number
+       			from store_order
+       			Minus
+       			select order_number
+        		from order_details ) 
+	</delete>
+	
+	<select id="selectdate"  parameterType="ShopOrderVO">
+			select s.order_number
+		,s.order_day
+		,s.cancel_operation
+		,s.order_name
+		,p.name
+		,p.email
+		,p.phone
+		,s.allprice
+		,s.oder_App
+		from store_order s LEFT
+		OUTER join person p
+		on s.person_id = p.person_id
+		where
+		auto_order_operation = 'i1'
+		AND store_number= #{storeNumber}
+        AND order_day BETWEEN #{startDate}
+                   AND #{endDate}
+		ORDER by
+		s.order_number DESC
+		</select>
 </mapper>

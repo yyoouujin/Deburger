@@ -111,6 +111,17 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	public int AutoOrdercountMaterial() {
 		// TODO Auto-generated method stub
-		return shopOrderMapper.AutoOrdercountMaterial();
+		shopOrderMapper.AutoOrdercountMaterial();
+		return shopOrderMapper.Alldel();
+	}
+	
+	@Override
+	public List<ShopOrderVO> selectdate(ShopOrderVO shopOrderVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		shopOrderVO.setStoreNumber(mcode);
+		
+		return shopOrderMapper.selectdate(shopOrderVO);
+
 	}
 }

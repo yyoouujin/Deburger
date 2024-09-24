@@ -45,7 +45,7 @@ public class ShopOderController {
 		return shopOrderService.insertShopOrder(shopOrderVO);	
 	}
 	
-	//발주 리스트
+	//입고처리 안된 발주 리스트
 	@GetMapping("ShopOrderList")
 	public String ShopOrderList(ShopOrderVO shopOrderVO, Model model,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
@@ -78,7 +78,7 @@ public class ShopOderController {
 	  return shopOrderService.updateOrderCancel(shopOrderVO);
 	}
 	
-	
+	//발주 상세조회
 	@GetMapping("ShopOrderInfo")
 	public String ShopOrderInfo(ShopOrderVO shopOrderVO,Model model) {
 		List<ShopOrderVO> list = shopOrderService.orderInfo(shopOrderVO);
@@ -86,6 +86,7 @@ public class ShopOderController {
 		return "shop/Orderinfo";
 	}
 	
+	//자동 발주 리스트
 	@GetMapping("ShopAutoOrderList")
 	public String ShopAutoOrderList(ShopOrderVO shopOrderVO, Model model,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
@@ -117,4 +118,11 @@ public class ShopOderController {
 		return "redirect:ShopAutoOrderList";
 	}
 	
+	//조건 조회
+	@PostMapping("selectdate")
+	@ResponseBody
+	public List<ShopOrderVO> selectdate(@RequestBody ShopOrderVO shopOrderVO, Model model){
+		 List<ShopOrderVO> list = shopOrderService.selectdate(shopOrderVO);
+		return list;
+	}
 }

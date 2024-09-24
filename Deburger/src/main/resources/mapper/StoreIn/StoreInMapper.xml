@@ -33,6 +33,7 @@
 			on o.order_number = d.order_number
 			WHERE d.rn = '1' 
 			ORDER by ORDER_NUMBER DESC
+
 		
 		) A
 		)

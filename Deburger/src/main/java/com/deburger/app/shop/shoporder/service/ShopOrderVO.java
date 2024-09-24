@@ -9,6 +9,12 @@ import lombok.Data;
 
 @Data
 public class ShopOrderVO {
+	//조건조회
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
+	
 	
 	//장바구니
 	private String storeNumber;
@@ -42,6 +48,7 @@ public class ShopOrderVO {
 	//담당자 id
 	private String email;
 	private String phone;
+	private String name;
 	
 	//store_stock
 	private int stockCount;

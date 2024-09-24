@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.deburger.app.shop.shopmain.service.ShopMainService;
 import com.deburger.app.shop.shopmain.service.ShopMainVO;
 
+/*
+ * 2024/09/23 김도현 
+ */
 @Controller
 public class ShopMainController {
 
@@ -20,10 +23,13 @@ public class ShopMainController {
 		this.shopMainService = shopMainService;
 	}
 	
+	//메인페이지
 	@GetMapping("shop")
 	public String shop(Model model) {
 		
+		//작업 현황 갯수 표시
 		List<ShopMainVO> list = shopMainService.listCount();
+		//최근 공지 목록
 		List<ShopMainVO> list2 = shopMainService.noticeList();
 		
 		
@@ -35,6 +41,7 @@ public class ShopMainController {
 		return "shop/main";
 	}
 	
+	//매출액 그래프
 	@GetMapping("shopSell")
 	public String shopSellG(ShopMainVO shopMainVO,Model model) {
 		
@@ -44,6 +51,7 @@ public class ShopMainController {
 		return "shop/mainSellG";
 	}
 	
+	//매출 제품
 	@GetMapping("shopOrder")
 	public String shopOrderG(ShopMainVO shopMainVO,Model model) {
 		
@@ -53,6 +61,7 @@ public class ShopMainController {
 		return "shop/mainOderG";
 	}
 	
+	// 유통임박 재고 리스트
 	@GetMapping("limitList")
 	public String limitList(Model model) {
 		
