@@ -45,7 +45,6 @@ h6 {
 	font-family: "Noto Sans KR", sans-serif;
 }
 
-
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
@@ -53,6 +52,10 @@ h6 {
   margin-top: 60px;
   padding: 20px 30px;
   transition: all 0.3s;
+}
+
+.contentMain {
+	min-height : 600px;
 }
 
 @media (max-width: 1199px) {
@@ -480,6 +483,7 @@ h6 {
 --------------------------------------------------------------*/
 .header-nav ul {
   list-style: none;
+  
 }
 
 .header-nav>ul {
@@ -489,6 +493,7 @@ h6 {
 
 .header-nav .nav-icon {
   font-size: 22px;
+  
   color: #012970;
   margin-right: 25px;
   position: relative;
@@ -705,7 +710,7 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color:black;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -715,25 +720,25 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  color:black;
 }
 
 .sidebar-nav .nav-link.collapsed {
-  color: #012970;
+  color: #646464;
   background: #fff;
 }
 
 .sidebar-nav .nav-link.collapsed i {
-  color: #899bbd;
+  color: #646464;
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color:black;
   background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color:black;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -756,7 +761,7 @@ h6 {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #012970;
+  color: #646464;
   transition: 0.3;
   padding: 10px 0 10px 40px;
   transition: 0.3s;
@@ -771,11 +776,11 @@ h6 {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-  color: #4154f1;
+  color:black;
 }
 
 .sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+  background-color: black;
 }
 
 /*--------------------------------------------------------------
@@ -1235,15 +1240,52 @@ h6 {
 # Footer
 --------------------------------------------------------------*/
 .footer {
+  font-family: "Do Hyeon", sans-serif, Open Sans;
   padding: 20px 0;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.3s;
   border-top: 1px solid #cddfff;
   background-color: white;
-  font-weight: "Protest Guerrilla", sans-serif, Open Sans;
+  padding-top: 30px;
 }
 
-.footer .copyright {
+.footerRow {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-.5* var(--bs-gutter-x));
+    margin-left: calc(-.5* var(--bs-gutter-x));
+}
+
+.footerNav {
+    --bs-nav-link-padding-x: 1rem;
+    --bs-nav-link-padding-y: 0.5rem;
+    --bs-nav-link-font-weight: ;
+    --bs-nav-link-color: var(--bs-link-color);
+    --bs-nav-link-hover-color: var(--bs-link-hover-color);
+    --bs-nav-link-disabled-color: var(--bs-secondary-color);
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.footer p {
+  text-align: left;
+  color : black;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.footer ul {
+  text-align: left;
+  color:#6b6b6b;
+}
+
+.footer {
   text-align: center;
   color: #012970;
 }

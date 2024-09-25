@@ -13,7 +13,7 @@
             
       <li class="nav-item" sec:authorize="hasRole('ROLE_1')">
         <a class="nav-link collapsed" data-bs-target="#user" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-grid"></i><span>담당자관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-people-group"></i><span>담당자관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="user" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -27,7 +27,7 @@
 	<!-- 대운 물류관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_3')">
         <a class="nav-link collapsed" data-bs-target="#container" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box2-heart"></i><span>물류창고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-truck-ramp-box"></i><span>물류창고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="container" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -57,7 +57,7 @@
 	<!-- 유진 물류관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#logistics" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box-seam"></i><span>물류 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-box"></i><span>물류 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="logistics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -83,7 +83,7 @@
 	<!-- 발주입고관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-clipboard-check"></i><span>발주/입고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-truck"></i></i><span>발주/입고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -106,7 +106,7 @@
 	<!-- 공급업체관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#supplier" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-credit-card"></i><span>공급업체 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-regular fa-credit-card"></i></i><span>공급업체 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="supplier" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -128,7 +128,7 @@
 	<!-- 가맹점관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#store" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-houses"></i><span>가맹점 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-store"></i>가맹점 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="store" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -154,7 +154,8 @@
     <!-- 제품관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#product" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-cart"></i><span>제품</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-burger"></i><span>제품</span><i class="bi bi-chevron-down ms-auto"></i>
+          
         </a>
         <ul id="product" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -175,7 +176,7 @@
 	<!-- QSC 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#qsc" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-check-circle"></i><span>QSC관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-square-check"></i><span>QSC관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="qsc" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li sec:authorize="hasRole('ROLE_1')">
@@ -196,17 +197,18 @@
     <!-- 문의 시작 -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#notice" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-question-circle"></i><span>문의</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-circle-question"></i><span>문의</span><i class="bi bi-chevron-down ms-auto"></i>
+          
         </a>
         <ul id="notice" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a th:href="@{noticeListOffice}">
-              <i class="bi bi-check-circle"></i><span>공지사항</span>
+              <span>공지사항</span>
             </a>
           </li>
           <li>
             <a th:href="@{qnaListOffice}">
-              <i class="bi bi-circle"></i><span>Q&A</span>
+              <span>Q&A</span>
             </a>
           </li>
         </ul>

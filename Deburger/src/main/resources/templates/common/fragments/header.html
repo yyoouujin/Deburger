@@ -23,16 +23,14 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-person-fill"></i>
-            마이페이지
-          </a><!-- End Messages Icon -->
+            <i class="fa-solid fa-user"></i>마이페이지</a><!-- End Messages Icon -->
 
         </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
 
           <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-					<button type="submit" class="btn btn-light btn-lg">로그아웃</button>
+					<i class="fa-solid fa-arrow-right-from-bracket"></i><button type="submit" class="btn btn-light btn-lg">로그아웃</button>
 				</form>
         </li><!-- End Profile Nav -->
 
