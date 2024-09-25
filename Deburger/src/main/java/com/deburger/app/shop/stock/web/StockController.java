@@ -64,31 +64,31 @@ public class StockController {
 		if (id > -1) {
 			url = "redirect:shopStock";
 		} else {
-			url = "deburger/shop";
+			url = "redirect:shop";
 		}
 
 		return url;
 	}
 
 	@GetMapping("shopStockInfo")
-	public String shopStockInfo(StockVO stockVO, Model model, 
+	public String shopStockInfo(StockVO stockVO, Model model
+			/*, 
 			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
+			*/) {
 		
 		
 		int total = stockService.shopinfo(stockVO);
-		String im = stockVO.getMaterialNumber();
-		if (nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage = "10";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) { 
-			cntPerPage = "10";
-		}
+//		if (nowPage == null && cntPerPage == null) {
+//			nowPage = "1";
+//			cntPerPage = "10";
+//		} else if (nowPage == null) {
+//			nowPage = "1";
+//		} else if (cntPerPage == null) { 
+//			cntPerPage = "10";
+//		}
 		
-		stockVO = new StockVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		stockVO.setMaterialNumber(im);
+		stockVO.setTotal(total);
 
 		System.err.println(stockVO);
 		model.addAttribute("paging", stockVO);

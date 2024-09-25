@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.deburger.app.office.delivery.mapper.DeliveryMapper;
 import com.deburger.app.office.delivery.service.DeliveryService;
 import com.deburger.app.office.delivery.service.DeliveryVO;
+import com.deburger.app.office.logistic.service.Criteria;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
@@ -21,11 +22,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 		this.deliveryMapper = deliveryMapper;
 	}
 	
+	
 	@Override
-	public List<DeliveryVO> deliveryList() {
-		return deliveryMapper.selectDeliveryAll();
+	public List<DeliveryVO> deliveryList(Criteria criteria) {
+		return deliveryMapper.selectDeliveryAll(criteria);
 	}
-
+	
+	@Override
+	public int getTotal() {
+		return deliveryMapper.getTotal();
+	}
+	
 	@Override
 	public List<DeliveryVO> deliveryInfo(DeliveryVO deliveryVO) {
 		return deliveryMapper.selectDeliveryInfo(deliveryVO);
@@ -65,5 +72,26 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return map;
 		
 	}
+	
+	
+	@Override
+	public Map<String, Object> updateCancelOperation(DeliveryVO deliveryVO) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		boolean isSuccessed = false;
+		int result = deliveryMapper.updateCancelOperation(deliveryVO);
+		
+		if(result == 1) {
+			isSuccessed = true;
+		}
+		map.put("result", isSuccessed);
+		map.put("target", deliveryVO);
+		
+		return map;
+		
+		
+	}
+	
 
 }

@@ -43,11 +43,11 @@ public class StockVO {
 	private String orderDetailsNumber;
 
 	
-	private int nowPage; 
+	private int nowPage =1; 
 	private int startPage; 
 	private int endPage; 
 	private int total; 
-	private int cntPerPage; 
+	private int cntPerPage = 10; 
 	private int lastPage;
 	private int start; 
 	private int end;
@@ -57,6 +57,14 @@ public class StockVO {
 	
     public StockVO() {
 	}
+
+    public void setTotal(int total) {
+    	this.total=total;
+		calcLastPage(getTotal(), getCntPerPage());
+		calcStartEndPage(getNowPage(), cntPage);
+		calcStartEnd(getNowPage(), getCntPerPage());
+    }
+    
 	public StockVO(int total, int nowPage, int cntPerPage) {
 		setNowPage(nowPage);
 		setCntPerPage(cntPerPage);

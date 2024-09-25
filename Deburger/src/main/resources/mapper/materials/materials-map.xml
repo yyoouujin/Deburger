@@ -31,7 +31,7 @@
 	</select>
 	
 	<select id="countMaterial" resultType ="int">
-		select count(*) from material
+		select count(*) from company_material
 	</select>
 	
 	<select id="selectMaterial" resultType="MaterialVO">

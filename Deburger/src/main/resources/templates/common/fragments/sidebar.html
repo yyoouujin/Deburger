@@ -10,17 +10,24 @@
 	<!-- 
 		End Dashboard Nav
 	-->
-      <li class="nav-item">
-        <a class="nav-link " th:href="@{insertPerson}">
-          <i class="bi bi-grid"></i>
-          <span>담당자 등록</span>
+            
+      <li class="nav-item" sec:authorize="hasRole('ROLE_1')">
+        <a class="nav-link collapsed" data-bs-target="#user" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-grid"></i><span>담당자관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="user" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a th:href="@{insertPerson}">
+             <span>담당자 등록</span>
+            </a>
+          </li>
+        </ul>
       </li>
-
+	
 	<!-- 대운 물류관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_3')">
         <a class="nav-link collapsed" data-bs-target="#container" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box2-heart"></i><span>물류 관리(대운)</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-box2-heart"></i><span>물류창고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="container" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -34,8 +41,13 @@
             </a>
           </li>
           <li>
+            <a th:href="@{containerOuts}">
+             <span>창고 출고 조회</span>
+            </a>
+          </li>
+          <li>
             <a th:href="@{containerOut}">
-             <span>재료 출고 조회</span>
+             <span>창고 출고 처리</span>
             </a>
           </li>
         </ul>
@@ -43,9 +55,9 @@
     <!-- 대운 물류관리 끝 -->
       
 	<!-- 유진 물류관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#logistics" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box-seam"></i><span>물류 관리(유진)</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-box-seam"></i><span>물류 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="logistics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -69,7 +81,7 @@
     
     
 	<!-- 발주입고관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
           <i class="bi bi-clipboard-check"></i><span>발주/입고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -92,7 +104,7 @@
     
     
 	<!-- 공급업체관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#supplier" data-bs-toggle="collapse" href="#">
           <i class="bi bi-credit-card"></i><span>공급업체 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -102,7 +114,7 @@
             <span>업체 조회</span>
             </a>
           </li>
-          <li>
+          <li >
             <a th:href="@{supplierInsert}">
               <span>업체 등록</span>
             </a>
@@ -114,13 +126,13 @@
 
 
 	<!-- 가맹점관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#store" data-bs-toggle="collapse" href="#">
           <i class="bi bi-houses"></i><span>가맹점 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="store" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a th:href="@{StoreStatistics}">
+            <a th:href="@{storeStatistics}">
              <span>가맹점 현황</span>
             </a>
           </li>
@@ -129,9 +141,9 @@
              <span>가맹점 목록</span>
             </a>
           </li>
-          <li>
+          <li >
             <a th:href="@{insertStore}">
-              <span>가맹점 등록</span>
+              <span >가맹점 등록</span>
             </a>
           </li>
         </ul>
@@ -140,7 +152,7 @@
     
     
     <!-- 제품관리 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#product" data-bs-toggle="collapse" href="#">
           <i class="bi bi-cart"></i><span>제품</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -161,12 +173,12 @@
 
 	
 	<!-- QSC 시작 -->
-      <li class="nav-item">
+      <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#qsc" data-bs-toggle="collapse" href="#">
           <i class="bi bi-check-circle"></i><span>QSC관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="qsc" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+          <li sec:authorize="hasRole('ROLE_1')">
             <a th:href="@{qscInsertOffice}">
               <span>QSC항목관리</span>
             </a>

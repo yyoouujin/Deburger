@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>출고 처리</title>
+<style>
+th, td {
+	border: solid 1px black;
+}
+</style>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1 class="card-title">출고 처리</h1>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+			   <div class="col-lg-12">
+					<div class="card">
+						<div class="card-body">
+							<table class="col-lg-12" style="text-align: center">
+								<thead>
+									<tr>
+										<th>발주번호</th>
+											<td colspan='8'><input type="text" id="orderName"
+												name="pNumber" style="border: none; width: 100%; text-align: center;" th:value="${outList[0].orderNumber}"  readonly></td>
+									</tr>
+									<tr>
+										<th>출고 일자</th>
+										<td colspan='8'th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}"></td>
+									</tr>
+									<tr>
+										<th>발신 업체 이름</th>
+										<td colspan='3'><input type="text" id="storeNumber"
+											value="FRC0000001" style="border: none;"
+											 readonly></td>
+										<th>수신 업체 이름</th>
+										<td colspan='4'>디버거</td>
+									</tr>
+									<tr>
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='2'></td>
+
+										<th rowspan="2">연락처</th>
+										<th>전화번호</th>
+										<td colspan='3'>053-0000-0000</td>
+
+									</tr>
+									<tr>
+										<th>이메일</th>
+										<td colspan='2'></td>
+										<th>이메일</th>
+										<td colspan='3'>info@deburger.com</td>
+									</tr>
+								</thead>
+								<tbody id="outLists">
+									<tr>
+										<th >상세 발주번호</th>
+										<th >품명</th>
+										<th >규격</th>
+										<th >수량</th>								
+										<th >출고 수량</th>
+										<th >검수 결과</th>
+										<th colspan='3'>비고</th>
+									</tr>
+									<th:block th:each="lists:${outList}" id="outs">
+										<tr >
+											<td th:text="${lists.orderDetailsNumber}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+											<td th:text="${lists.materialName}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+											<td th:text="${lists.materialNumber}" style="display:none;" id="numb"></td>
+											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
+								            <td th:text="${lists.count}"></td>
+								            <td th:text="${lists.inspection} == 'h1' ?  '정상' : '폐기'" ></td>
+								            <td colspan='3'></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+							<div style="text-align: right; margin: 0 0 10px 0;">
+								<a href="containerOuts"><button type="button" class="btn btn-primary">목록</button></a>
+							</div>
+					</div>	
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+<script>
+</script>
+</html>

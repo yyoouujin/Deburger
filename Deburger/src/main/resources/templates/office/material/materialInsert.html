@@ -23,7 +23,7 @@
       </nav>
     </div><!-- End Page Title -->
    <section class="section">
-    <form th:action="@{/materialInserts}" method="post">
+    <form th:action="@{/materialInserts}" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
@@ -32,40 +32,39 @@
             </div>
             <div>
             	<h5>재료명 (필수)</h5>
-            	<input type="text" placeholder="15자 까지 작성해 주세요" name="materialName">
+            	<input type="text" placeholder="15자 까지 작성해 주세요" id="materialName" name="materialName">
             </div>
             <div>
             	<h5>구분 (필수)</h5>
-            	<input type="text" name="unit" placeholder="ex) 15kg" >
+            	<input type="text" id="unit" name="unit" placeholder="ex) 15kg" >
             </div>
             <div>
             	<h5>판매 단가 (필수)</h5>
-            	<input type="text" name="saleUnitprice" >
+            	<input type="text" id="saleUnitprice" name="saleUnitprice" >
             </div>
              <div>
             	<h5>규격정보 (필수)</h5>
-            	<input type="text" name="materialItem" placeholder="원재료, 부재료">
+            	<input type="text" id="materialItem" name="materialItem" placeholder="원재료, 부재료">
             </div>
             <div>
             	<h5>재료 구분 (필수)</h5>
-            	<input type="text" name="materialClassification" placeholder="ex)소스류, 채소, 음료">
+            	<input type="text" id="materialClassification" name="materialClassification" placeholder="ex)소스류, 채소, 음료">
             </div>            
             <div>
             	<h5>구매 단가 (필수)</h5>
-            	<input type="text" name="buyUnitprice">
+            	<input type="text" id="buyUnitprice" name="buyUnitprice">
             </div>     
             <div>
             	<h5>안전재고 (필수)</h5>
-            	<input type="text" name="logisticsSafetyStock">
+            	<input type="text" id="logisticsSafetyStock" name="logisticsSafetyStock">
             </div>
             <div>
             	<h5>가격 (필수)</h5>
-            	<input type="text" name ="cost">
+            	<input type="text" id ="cost" name ="cost">
             </div>
             <div>
             	<h5>이미지 업로드</h5>
-            	<input type="file" name="uploadFiles" multiple>
-				<button class="uploadBtn">upload</button>
+            	<input type="file" id="materialImage" name="materialImage">
             </div>
           </div>
         </div>

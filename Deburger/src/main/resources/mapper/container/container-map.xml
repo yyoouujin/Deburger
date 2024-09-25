@@ -4,22 +4,47 @@
 	
 	<!-- 전체 조회 -->
 	<select id="selectAllList" resultType="ContainerVO">
-			select a.material_number,
-			       a.stock_count,
-			       a.logistics_id,
-			       b.material_classification,
-			       b.logistics_safety_stock,
-			       b.material_name
-			from logistics_stock a
-  			  join material b
-       			 on a.material_number = b.material_number
-       		  join logistics c
-       		  	 on a.logistics_id = c.logistics_id
-       		<![CDATA[ 
-                	where stock_count >= 0
-                ]]>
-            and c.person_id = #{personId}
-       		order by a.material_number
+			            <![CDATA[
+						      SELECT  b.* 
+						      FROM
+						          (    
+						            SELECT ROWNUM R, a.*    
+						            FROM (
+						
+						            select a.material_number,
+												       a.stock_count,
+												       a.logistics_id,
+												       b.material_classification,
+												       b.logistics_safety_stock,
+												       b.material_name,
+												       c.person_id	
+												from logistics_stock a
+									  			  join material b
+									       			 on a.material_number = b.material_number
+									       		  join logistics c
+									       		  	 on a.logistics_id = c.logistics_id			       		
+									                	where stock_count >=  0	
+									                	and c.person_id = #{personId}		
+									       		order by a.material_number
+												
+						                  ) a
+						        WHERE ROWNUM <= (#{pageNum} * #{amount})            
+						      ) b
+						      WHERE R > (#{pageNum}-1) * #{amount}
+							]]>	
+	</select>
+	
+	<select id="selectAllListcount">	
+			     SELECT NVL(SUM(cnt), 0) AS cnt
+					FROM (
+					    SELECT COUNT(a.stock_count) AS cnt
+					    FROM logistics_stock a
+					    JOIN logistics b
+					      ON a.logistics_id = b.logistics_id
+					      where stock_count <![CDATA[>=]]>  0
+					    and b.person_id =  #{personId}
+					    GROUP BY b.person_id
+					)
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
@@ -121,7 +146,8 @@
 			        person_id,
 			        logistics_id,
 			        material_number,
-			        out_count
+			        out_count,
+			        disposal_operation
 		 )values(
 		      'LOT' || LPAD(LOT_SEQ.nextval, '7', '0'), 
 		      #{detailsOrderNumber},
@@ -134,7 +160,8 @@
 	          #{personId},
 	          #{logisticsId},
 	          #{materialNumber}, 
-	          0          
+	          0,
+	          'd1'          
 		 )
 	</insert>
 	<!--  머지 있으면 update, 없으면 insert -->
@@ -229,8 +256,54 @@
 		and logistics_id = #{logisticsId}
 	</update>
 	
-	
 	<!-- 물류창고 출고 리스트 -->
+	<select id="containerOuts">
+	
+			<![CDATA[
+			      SELECT  b.* 
+			      FROM
+			          (    
+			            SELECT ROWNUM R, a.*    
+			            FROM (
+							select a.order_number,
+							        sum(b.count) as count,
+							        a.oder_app,
+							        c.logistics_id,
+							        c.store_name,
+							        d.out_operation,
+					                e.person_id
+							from store_order a
+							join order_details b
+							    on a.order_number = b.order_number
+							join store c
+							    on a.store_number = c.store_number
+							join logistics_out d
+							    on b.order_details_number = d.order_details_number
+					        join logistics_in e
+					            on d.lot = e.lot
+							where d.out_operation = 'g2'
+					        and e.person_id = #{personId}
+							group by a.order_number,
+							        a.oder_app,
+							        c.logistics_id,
+							        c.store_name,
+							        d.out_operation,
+					                e.person_id
+							order by a.order_number desc
+			                  ) a
+			        WHERE ROWNUM <= (#{pageNum} * #{amount})            
+			      ) b
+			      WHERE R > (#{pageNum}-1) * #{amount}
+			]]>	
+	</select>
+	
+	<!-- count -->
+	<select id ="containerOutsCount">
+		  select count(*) from order_details
+	</select>
+	
+	
+	<!-- 물류창고 출고 처리 리스트 -->
 	<select id="containerOutList">
 		select a.order_number,
 		        sum(b.count) as count,
@@ -247,12 +320,14 @@
 		        a.oder_app,
 		        c.logistics_id,
 		        c.store_name
-		order by a.order_number
+		order by a.order_number desc
 	</select>
 	
 	<!-- 출고 상세 조회-->
 	<select id="containerOutListInfo">
-		select a.order_details_number,
+	
+		select distinct
+                a.order_details_number,
 		        a.material_number,
 		        a.order_number,
 		        a.count,
@@ -260,7 +335,8 @@
 		        b.unit,
 		        c.store_number,
 		        d.store_name,
-		        d.phone         
+		        d.phone,
+                e.inspection
 		from order_details a
 		join material b
 		    on a.material_number = b.material_number
@@ -268,6 +344,8 @@
 		    on  a.order_number = c.order_number
 		join store d
 		    on c.store_number = d.store_number
+        join logistics_out e
+            on a.order_details_number = e.order_details_number
 		where a.order_number = #{orderNumber}
 	
 	</select>
@@ -317,7 +395,8 @@
 			call logistics_out_p(
 				#{pNumber, mode=IN, jdbcType=VARCHAR},
 				#{pOutOperation, mode=IN, jdbcType=VARCHAR},
-				#{pInspection, mode=IN, jdbcType=VARCHAR}
+				#{pInspection, mode=IN, jdbcType=VARCHAR},
+				#{result, mode=OUT, jdbcType=INTEGER}
 			)
 		}
 	</insert>

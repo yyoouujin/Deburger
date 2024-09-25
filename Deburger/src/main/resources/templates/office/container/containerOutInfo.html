@@ -22,7 +22,6 @@ th, td {
 		<section class="section">
 			<div class="row">
 			   <div class="col-lg-12">
-				 <form th:action="@{/containerOutPd}" method="post">
 					<div class="card">
 						<div class="card-body">
 							<table class="col-lg-12" style="text-align: center">
@@ -71,7 +70,7 @@ th, td {
 										<th >검수</th>
 										<th colspan='3'>비고</th>
 									</tr>
-									<th:block th:each="lists:${outList}">
+									<th:block th:each="lists:${outList}" id="outs">
 										<tr >
 											<td th:text="${lists.orderDetailsNumber}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 											<td th:text="${lists.materialName}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
@@ -79,15 +78,16 @@ th, td {
 											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td ><input type="text" th:value="${lists.count}"></td>
-								            <td ><div class="row mb-3">
-								                  <div class="col-sm-10">
-								                    <select class="form-select" aria-label="Default select example" name="pInspection">
-								                      <option value="h1">정상</option>
-								                      <option value="h2">비정상</option>
-								                    </select>
-								                  </div>
-                								</div>
-                							</td>
+								            <td style="text-align: center;">
+											    <div class="row mb-3 justify-content-center align-items-center" style="height: 100%;">
+											        <div class="col-sm-10">
+											            <select class="form-select" aria-label="Default select example" name="pInspection">
+											                <option value="h1">정상</option>
+											                <option value="h2">비정상</option>
+											            </select>
+											        </div>
+											    </div>
+											</td>
 								            <td colspan='3'><input type="text"></td>
 										</tr>
 									</th:block>
@@ -97,12 +97,9 @@ th, td {
 						</div>
 							<div style="text-align: right; margin: 0 0 10px 0;">
 								<a href="containerOut"><button type="button" class="btn btn-primary">목록</button></a>
-								<button type="submit" class="btn btn-primary"
-									id="update">수정</button>
-								<a href="containerOut"><button type="submit" class="btn btn-primary" id="saveBtn">저장</button></a>
+								<a href="containerOut"><button type="button" class="btn btn-primary" onclick="saveBtn()">승인</button></a>
 							</div>
-					</div>
-				</form>	
+					</div>	
 				</div>
 			</div>
 			<form id="modalForm">
@@ -177,7 +174,31 @@ th, td {
 	}
 	
 	$('#saveBtn').on('click', function(){
-		alert("정상적으로 저장이 완료 되었습니다.");
+		alert("정상적으로 승인 되었습니다.");
 	})
+	
+	function saveBtn(){
+		let list = [];
+		let pNumber = $('#orderName').val();
+		$("#outLists").children().not(":first").each(function(index, value){
+			let pInspection = $(value).children().eq(6).find("select").val();
+			
+			list.push({pInspection, pNumber});
+		});	
+		console.log(list);
+		$.ajax({
+			url : "/deburger/containerOutPd",
+			method : "post",
+			contentType : "application/json",
+			data : JSON.stringify(list, {pNumber}),
+			success : function(result){
+  				alert('정상적으로 등록 완료 되었습니다.');
+			},
+			error : function(){
+  				alert('실패 하였습니다.');
+  			}
+		})
+		.then() 
+	}
 </script>
 </html>

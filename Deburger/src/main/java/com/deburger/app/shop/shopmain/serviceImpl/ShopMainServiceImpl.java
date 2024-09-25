@@ -22,6 +22,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 	}
 		
 	
+	//메인페이지 숫자 카운트
 	@Override
 	public List<ShopMainVO> listCount() {
 		// TODO Auto-generated method stub
@@ -34,6 +35,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 		return shopMainMapper.listCount(shopMainVO);
 	}
 	
+	//매출액 그래프
 	@Override
 	public List<ShopMainVO> shopSellG(ShopMainVO shopMainVO) {
 		// TODO Auto-generated method stub
@@ -42,6 +44,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 		return shopMainMapper.shopSellG(shopMainVO);
 	}
 	
+	//매출 제품
 	@Override
 	public List<ShopMainVO> shopOrderG(ShopMainVO shopMainVO) {
 		// TODO Auto-generated method stub
@@ -51,6 +54,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 		return shopMainMapper.shopOrderG(shopMainVO);
 	}
 	
+	// 유통임박 재고 리스트
 	@Override
 	public List<ShopMainVO> limitList( ) {
 		// TODO Auto-generated method stub
@@ -62,6 +66,7 @@ public class ShopMainServiceImpl implements ShopMainService {
 		return shopMainMapper.limitList(shopMainVO);
 	}
 	
+	// 공지사항 최근 1개
 	@Override
 	public List<ShopMainVO> noticeList() {
 		// TODO Auto-generated method stub

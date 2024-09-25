@@ -21,6 +21,11 @@ public interface MaterialOrderService {
 	//물류창고 재료 발주
 	public int insertLogisticOrder(MaterialOrderListVO materialOrderListVO);
 	
+	// 발주 조회
+	public List<MaterialOrderVO> selectMaterialOrder();
+	
+	// 발주 상세 조회
+	public List<MaterialOrderVO> selectMaterialOrderInfo(MaterialOrderVO meteMaterialOrderVO);
 }
 
 

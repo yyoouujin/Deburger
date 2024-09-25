@@ -27,9 +27,9 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 페이징
 	@Override
-	public int containerAllCount() {
+	public int containerAllCount(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.selectAllListcount();
+		return containerMapper.selectAllListcount(containerVO);
 	}
 
 	// 물류 창고 상세 조회
@@ -90,6 +90,21 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.containerOutInsert(containerVO);
 	}
 
+	// 물류창고 출고 조회
+	@Override
+	public List<ContainerVO> containerOutAll(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOuts(containerVO);
+	}
+	
+	// 물류창고 출고 count
+	@Override
+	public int containerOutAllCount(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutsCount(containerVO);
+	}
+
+	// 물류 창고 처리 조회 list
 	@Override
 	public List<ContainerVO> containerOutAllList() {
 		// TODO Auto-generated method stub
@@ -110,9 +125,10 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 프로시저 처리
 	@Override
-	public void containerOutpD(ContainerVO containerVO) {
-		// TODO Auto-generated method stub
-		containerMapper.containerOutprocedure(containerVO);
+	public void containerOutpD(List<ContainerVO> list) {
+		for (ContainerVO vo : list) {
+			containerMapper.containerOutprocedure(vo);
+		}
 	}
 
 	@Override
@@ -120,5 +136,7 @@ public class ContainerServiceImpl implements ContainerService {
 		// TODO Auto-generated method stub
 		return containerMapper.loginSession(containerVO);
 	}
+
+
 
 }

@@ -1,5 +1,3 @@
-
-
 //발주상세 조회
 	$('tbody > tr').on('click', makeTag);
 	
@@ -16,8 +14,6 @@
 			return;
 		}
 		
-		//발주상태가 승인 완료이면 리턴(예정)
-		
 		
 		let checkText = $(event.currentTarget).children().eq(6);
 		let selectLogistic = $(event.currentTarget).children().eq(7);
@@ -26,6 +22,14 @@
 		let lid = $(tr).data('lid');
 		
 		checkStock();
+		
+		//발주상태가 승인 완료이면 리턴(예정)
+		let deliveryCondition = $(event.currentTarget).children().eq(8);
+		
+		if (deliveryCondition.text() == '승인 완료') {
+			checkText.text("Y");
+		}
+		
 		
 		function checkStock() {
 			
@@ -47,7 +51,7 @@
 					let orderStock = data;
 		    		//1) 재고확인 N 또는 Y 출력
 		    		if (logisticStock != -1) { //창고에 재고가 하나도 없는게 아니면~ 비교시작
-						if(orderStock > logisticStock) {
+						if(orderStock >= logisticStock) {
 							checkText.text("N");
 						} else {
 							checkText.text("Y");
@@ -80,20 +84,20 @@
 							const odn = $(event.target).closest('tr').data('odn'); //주문번호
 							const dataObj = {"orderNumber":odn, "logisticsId":ctn};
 							
+							if(!confirm('발주 승인 하시겠습니까?')) {
+								return;
+							}
+							
 							//발주상태 변경
 							$.ajax( 'oderappUpdate' ,{
 								type:'post',
 								data: dataObj
-								//contentType : 'application/json',
 							})
 							.done( result => {
-								if(confirm('발주 승인 하시겠습니까?')) {
-									location.href="/deburger/deliveryList";
-								}
+								alert('승인완료');
 							})
 							.fail(err => console.log(err));
 						});
-
 						
 					})
 					.fail(err => console.log(err));
@@ -102,14 +106,35 @@
 					else { //'Y' 일 시 발주승인 버튼이 나올 수 있도록
 						let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal">발주승인</button>`
 						$('#deliveryRecognizeBtn').append(dbtn);
+						
+						//발주승인버튼 클릭 시 승인상태 변경
+						const deliveryRecognizeBtn = document.querySelector('#deliveryRecognizeBtn');
+						deliveryRecognizeBtn.addEventListener("click", (event) => {
+							
+							const findOdn = $('#findOdn').html();//주문번호
+							const findLogi = $('#shop_logi').html();//창고번호
+							const dataObj = {"orderNumber":findOdn, "logisticsId":findLogi};
+							
+							if(!confirm('발주 승인 하시겠습니까?')) {
+								return;
+							}
+							//발주상태 변경
+							$.ajax( 'oderappUpdate' ,{
+								type:'post',
+								data: dataObj
+							})
+							.done( result => {
+								alert('승인완료');
+								document.location.href = document.location.href;
+							})
+							.fail(err => console.log(err));
+						});
 					}
-					
 		    	})
 		    	.fail(err => console.log(err));
 	    	})
 	    	.fail(err => console.log(err));
 		} //checkStock 끝
-		
 		
 		
 		$.ajax({
@@ -119,6 +144,7 @@
 		.done(data => {
 			
 			$('.modal-title').append(`${data[0].orderNumber}`);
+			$('.modal-title').data('odn',`${data[0].orderNumber}`);
 			
 			let tag = `
 					<h5><b>가맹점번호 : </b><span id="store_id">${data[0].storeNumber}</span></h5>
@@ -126,6 +152,7 @@
                 	<h5><b>전화번호 : </b><span id="store_tel">${data[0].phone}</span></h5>
                 	<h5><b>점주 : </b><span id="shop_keeper">${data[0].shopkeeper}</span></h5>
                 	<h5><b>이메일 : </b><span id="shop_email">${data[0].email}</span></h5>
+                	<h5><b>담당창고 : </b><span id=shop_logi>${data[0].logisticsId}</span></h5>
                 	`
 			$('#top-tag').html(tag);
             
@@ -142,6 +169,34 @@
             let cbtn = `<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소승인</button>`
             if (`${data[0].cancelOperation}` == 'J2') {
             	$('#cancleBtn').append(cbtn);
+            	
+            	//취소승인 버튼 클릭 시 승인상태 변경
+            	const cancleBtn = document.querySelector('#cancleBtn');
+				cancleBtn.addEventListener("click", (event) => {
+					alert('취소테스트');
+					
+					const findOdn = $('#findOdn').html();//주문번호
+					const dataObj = {"orderNumber":findOdn};
+					
+					
+					if(!confirm('취소 승인 하시겠습니까?')) {
+						return;
+					}
+					
+					//취소상태 변경
+					$.ajax( 'canceloperationUpdate' ,{
+						type:'post',
+						data: dataObj
+					})
+					.done( result => {
+						alert('취소승인 완료');
+						document.location.href = document.location.href;
+					})
+					.fail(err => console.log(err));
+					
+				});
+            	
+            	
             }
 		})
 		.fail(err => console.log(err))

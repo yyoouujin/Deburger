@@ -45,4 +45,11 @@ public interface ShopOrderMapper {
 
 	// autoMaterial 총 갯수
 	public int AutoOrdercountMaterial();
+	
+	// 자동 발주시 details 모든 내용 삭제시 store_order 삭제
+	public int Alldel();
+	
+	//조건 조회
+	public List<ShopOrderVO> selectdate(ShopOrderVO shopOrderVO);
+	
 }

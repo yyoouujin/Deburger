@@ -38,8 +38,6 @@
 										<th>금액</th>
 										<th>현재 재고</th>
 										<th>적정 재고</th>
-										<th>기준</th>
-										<th>조건</th>
 										<th>발주 취소</th>
 									</tr>
 								</thead>
@@ -56,8 +54,6 @@
 												th:text="${list.stockCount}" />
 											<td th:if="${list.stockCount < 0} ">0</td>
 											<td th:text="${list.safetyStock}" />
-											<td></td>
-											<td th:text="${list.note}" />
 											<td><button type="button" class="btn btn-primary btn-sm">자동
 													발주 취소</button></td>
 										</tr>
@@ -75,7 +71,7 @@
 								<li class="page-item"
 									th:classappend="${paging.startPage == 1} ? 'disabled'"><a
 									class="page-link"
-									th:href="@{/ShopOrderList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
+									th:href="@{/ShopAutoOrderList(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}"
 									aria-disabled="true">&lt;</a></li>
 								<!-- Page numbers -->
 								<li class="page-item"
@@ -85,14 +81,14 @@
 										th:text="${p}"></a>
 								</span> <span th:if="${p != paging.nowPage}"> <a
 										class="page-link"
-										th:href="@{/ShopOrderList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+										th:href="@{/ShopAutoOrderList(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
 										th:text="${p}"></a>
 								</span></li>
 								<!-- Next button -->
 								<li class="page-item"
 									th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
 									<a class="page-link"
-									th:href="@{/ShopOrderList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+									th:href="@{/ShopAutoOrderList(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
 								</li>
 							</ul>
 						</nav>

@@ -36,5 +36,7 @@ public interface ShopOrderService {
 	
 	// autoMaterial 총 갯수
 	public int AutoOrdercountMaterial();
-		
+	
+	//조건 조회
+	public List<ShopOrderVO> selectdate(ShopOrderVO shopOrderVO);
 }

@@ -34,10 +34,9 @@ public class MaterialServiceImpl implements MaterialService {
 	// 등록
 	@Override
 	public int insertMaterialService(MaterialVO materialVO) {
-		// TODO Auto-generated method stub
-		int result = materialMapper.insertMaterial(materialVO);
-		return result;
-		// return result == 1 ? materialVO.getMaterialNumber() : -1;
+		// TODO Auto-generated method stub	 
+		//return materialMapper.insertMaterial(materialVO);
+		 return materialMapper.insertMaterial(materialVO);
 	}
 
 	// 수정

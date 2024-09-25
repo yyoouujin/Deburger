@@ -75,28 +75,68 @@
 	
 	<!-- 월별 가맹점 매출 -->
 	<select id="selectStoreSalesMonth" >
-	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
-     , NVL(SUM(PROFITS),0) SUM_cnt
-	FROM ( SELECT TO_CHAR(PRODUCT_DATE, 'YYYY-MM-DD') AS PRODUCT_DATE
-	              , PROFITS
-	       FROM store_sales_statistics
-	       WHERE PRODUCT_DATE BETWEEN TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD')
-	                              AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')
-	        ) a 
-	   RIGHT OUTER JOIN 
-	    ( SELECT TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD') + LEVEL - 1 AS dt
-	      FROM dual 
-	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD') 
-	      - TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-01-01', 'YYYY-MM-DD') + 1)
-	      ) b
-	   ON b.dt = a.product_date 
-	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
-	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')
+	SELECT notice_number
+			,division
+			,writer_date
+			,writer
+			,title
+		FROM notice
+		ORDER BY notice_number desc; 
+        
+        SELECT
+                     SUBSTR(b.dt,1,7) AS
+                     date_list,
+                     nvl(SUM(profits), 0)     sum_cnt
+                 FROM
+                     (
+                         SELECT
+                             to_char(product_date,
+                             'YYYY-MM-DD') AS
+                             product_date,
+                             profits
+                         FROM
+                             store_sales_statistics
+                         WHERE
+                             product_date BETWEEN
+                             to_date(to_char(
+                             sysdate, 'YYYY')
+                                          || '-01-01',
+                                          'YYYY-MM-DD')
+                                          AND
+                                          to_date(
+                                          to_char(
+                                          sysdate,
+                                          'YYYY')
+                                           ||
+                                           '-12-31',
+                                           'YYYY-MM-DD')
+                     ) a
+                     RIGHT OUTER JOIN (
+                         SELECT
+                            to_char(to_date(to_char(  sysdate, 'YYYY')  || '-01-01', 'YYYY-MM-DD') +  level - 1, 'YYYY-MM-DD')
+                                     AS dt
+                         FROM
+                             dual
+                         CONNECT BY
+                             level <![CDATA[<=]]> ( to_date(     to_char(sysdate, 'YYYY') || '-12-31',
+                                        'YYYY-MM-DD') -
+                                        to_date(
+                                        to_char(
+                                        sysdate,
+                                        'YYYY')
+                                         || '-01-01',
+                                         'YYYY-MM-DD') +
+                                         1 )
+                     ) b ON b.dt = a.product_date
+                 GROUP BY
+                     SUBSTR(b.dt,1,7)
+                 ORDER BY
+                     SUBSTR(b.dt,1,7)
 	</select>
 	
 	<!-- 전체메뉴 월별 판매량 -->
 	<select id="selectStoreProductMonth" >
-	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
+	SELECT SUBSTR(b.dt,1,7) AS date_list
      , NVL(SUM(count),0) SUM_cnt
 	FROM ( SELECT TO_CHAR(PRODUCT_DATE, 'YYYY-MM-DD') AS PRODUCT_DATE
 	              , count
@@ -105,19 +145,19 @@
 	                              AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')
 	        ) a 
 	   RIGHT OUTER JOIN 
-	    ( SELECT TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+	    ( SELECT TO_CHAR(TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1, 'YYYY-MM-DD') AS dt
 	      FROM dual 
 	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE('2024-12-31','YYYY-MM-DD') 
 	      - TO_DATE('2024-01-01','YYYY-MM-DD') + 1)
 	      ) b
 	   ON b.dt = a.product_date 
-	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
-	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')	
+	GROUP BY SUBSTR(b.dt,1,7)
+	ORDER BY SUBSTR(b.dt,1,7)	
 	</select>
 	
 	<!-- 월별 발주 원가 -->
 	<select id="selectStoreOrderMonth" >
-	SELECT TO_CHAR(b.dt, 'YYYY-MM') AS date_list
+	SELECT SUBSTR(b.dt,1,7) AS date_list
      , NVL(SUM(order_cost),0) SUM_cnt
 	FROM ( SELECT TO_CHAR(order_day, 'YYYY-MM-DD') AS order_day
 	              , d.order_cost order_cost
@@ -127,14 +167,14 @@
 	                   AND TO_DATE(TO_CHAR(SYSDATE,'YYYY') ||'-12-31', 'YYYY-MM-DD')       
 	        ) a 
 	RIGHT OUTER JOIN 
-	    ( SELECT TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+	    ( SELECT TO_CHAR(TO_DATE('2024-01-01','YYYY-MM-DD') + LEVEL - 1, 'YYYY-MM-DD') AS dt
 	      FROM dual 
 	      CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE('2024-12-31','YYYY-MM-DD') 
 	      - TO_DATE('2024-01-01','YYYY-MM-DD') + 1)
 	      ) b
 	   ON b.dt = a.order_day 
-	GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
-	ORDER BY TO_CHAR(b.dt, 'YYYY-MM')
+	GROUP BY SUBSTR(b.dt,1,7)
+	ORDER BY SUBSTR(b.dt,1,7)
 	</select>
 	
 	

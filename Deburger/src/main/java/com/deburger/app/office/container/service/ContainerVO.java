@@ -73,6 +73,7 @@ public class ContainerVO {
 	public String pOutOperation;
 	public String pInspection;
 	public String pOrderDetailsNumber;
+	public int result;
 
 	// 로그인
 	public String name;
@@ -83,4 +84,23 @@ public class ContainerVO {
 	public String position;
 
 	public String oderApp;
+
+	// 페이지 처리
+	private int nowPage;
+	private int startPage;
+	private int endPage;
+	private int total;
+	private int cntPerPage;
+	private int lastPage;
+	private int start;
+	private int end;
+	private int cntPage = 5;
+
+	private int rn; // 쿼리에서 ROWNUM으로 반환되는 값
+
+	private int pageNum;
+	private int amount;
+	private String type;
+	private String keyword;
+
 }

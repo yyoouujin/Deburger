@@ -158,24 +158,37 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-		select od.order_details_number
-		,m.material_name
-		,m.material_item
-		,m.unit
+
+		select 
+		od.order_number
+		,od.order_details_number
+		,od.material_name
+		,od.material_item
+		,od.unit
 		,od.count
-		,m.sale_unitprice
+		,od.sale_unitprice
 		,ss.stock_count
 		,ss.safety_stock
-		,so.note
-		from order_Details od join store_order so
-		on od.order_number = so.order_number
-		join Material m
-		on m.material_number = od.material_number
-		join store_stock ss
-		on ss.store_number = so.store_number
-		where auto_order_operation != 'i1'
-		and ss.store_number = #{storeNumber}
-		Order by order_details_number DESC
+		,od.note
+		from (SELECT 
+		             c.order_number
+		           , material_name
+                   , order_details_number
+                   , material_item
+                   , unit
+                   , count
+                   , sale_unitprice
+                   , b.material_number
+                   , note
+              FROM order_Details a INNER JOIN Material b
+              on a.material_number = b.material_number
+              JOIN store_order c
+              on a.order_number = c.order_number and c.auto_order_operation != 'i1') od 		
+		join (SELECT *
+              FROM store_stock
+              WHERE store_number =  #{storeNumber}) ss
+		on ss.material_number = od.material_number		
+		Order by od.order_details_number DESC
 		) A
 		)
 		WHERE RN BETWEEN #{start} AND #{end}
@@ -192,4 +205,35 @@
 		WHERE order_details_number = #{orderDetailsNumber}
 	</delete>
 
+	<delete id="Alldel" parameterType="String">
+		delete store_order  
+		where order_number in(
+        		select order_number
+       			from store_order
+       			Minus
+       			select order_number
+        		from order_details ) 
+	</delete>
+	
+	<select id="selectdate"  parameterType="ShopOrderVO">
+			select s.order_number
+		,s.order_day
+		,s.cancel_operation
+		,s.order_name
+		,p.name
+		,p.email
+		,p.phone
+		,s.allprice
+		,s.oder_App
+		from store_order s LEFT
+		OUTER join person p
+		on s.person_id = p.person_id
+		where
+		auto_order_operation = 'i1'
+		AND store_number= #{storeNumber}
+        AND order_day BETWEEN #{startDate}
+                   AND #{endDate}
+		ORDER by
+		s.order_number DESC
+		</select>
 </mapper>

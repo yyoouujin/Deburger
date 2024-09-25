@@ -11,13 +11,9 @@
   </head>
   <body>
     <main id="main" class="main">
-      <div class="pagetitle col-lg-11">
-        <h1>공지사항</h1>
-        <br />
-        <div id="grid"></div>
-        <br />
-      </div>
+      
       <!-- End Page Title -->
+      <br><br>
 
       <section class="section dashboard">
         <div class="row">
@@ -102,7 +98,7 @@
                   </div>
 
                   <div class="card-body">
-                    <h5 class="card-title">발주 원가 <span>| 이번달</span></h5>
+                    <h5 class="card-title">제료 발주 원가 <span>| 이번달</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -116,18 +112,25 @@
                 </div>
               </div>
               <!-- End Customers Card -->
-              
-
-              <!-- Reports -->
+              <!-- Chart -->
+              <br>
               <div class="col-12">
                 <div id="chart-area"></div>
-              <!-- End Reports -->
             </div>
+              <!-- End Chart -->
+			<div class="pagetitle col-lg-11">
+        <h1>공지사항</h1>
+        <br />
+        <div id="grid"></div>
+        <br />
+      </div>
+              
           </div>
           <!-- End Left side columns -->
         </div>
-      </section>
-      <script th:inline="javascript">
+      </section>      
+    </main>
+    <script th:inline="javascript">
 
         let salesCnt = document.getElementById('salesCnt');
         let salesPri = document.getElementById('salesPri');
@@ -138,7 +141,9 @@
         console.log(DayOfMonth);
 
         let StoreSales = [[${StoreSales}]];
+        
         let StoreProduct = [[${StoreProduct}]];
+        
         let StoreOrder = [[${StoreOrder}]];
 		
         /* 월별 가맹점 매출 */
@@ -151,24 +156,33 @@
         let dateData = [];
 
         StoreSales.forEach(element => {
+        	if(element.sumCnt != 0){
           salesData.push(element.sumCnt / 1000);
+        	}
           if(element.dateList == DayOfMonth){
-            salesPri.innerHTML = element.sumCnt + ' 원';
+            salesPri.innerHTML = element.sumCnt.toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
             
           }
         });
 
         StoreProduct.forEach(element => {
+        	if(element.sumCnt != 0){
           productsData.push(element.sumCnt);
+        	}
           if(element.dateList == DayOfMonth){            
             salesCnt.innerHTML = element.sumCnt + ' 개';
           }
         })
 
         StoreOrder.forEach(element => {
+        	if(element.sumCnt != 0){
           ordersData.push(element.sumCnt /1000);
+        		
+        	}
           if(element.dateList == DayOfMonth){
-            salesPro.innerHTML = element.sumCnt + ' 원';
+            salesPro.innerHTML = element.sumCnt.toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
           }
         })
 
@@ -213,9 +227,7 @@
         };
 
         const chart = toastui.Chart.lineChart({ el, data, options });
-      </script>
-
-      <script th:inline="javascript">
+        
                 let grid;
 
                 var detaList = [[${notices}]];
@@ -316,6 +328,5 @@
                   return grid;
                 };
       </script>
-    </main>
   </body>
 </html>

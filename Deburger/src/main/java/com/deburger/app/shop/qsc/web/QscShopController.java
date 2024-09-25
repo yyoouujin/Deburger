@@ -116,13 +116,13 @@ public class QscShopController {
 	}
 	
 	//QSC결과 상세 조회(희창)
-		@GetMapping("qscListInfoDetailOffice")
-		public String qscListInfoDetailOffice(QscResultVO qscResultVO, Model model) {
-			List<QscResultVO> list =  qscService.selectQscInfoDetail(qscResultVO);
-			model.addAttribute("QscList", list);
-			model.addAttribute("qscDates", list.get(0));
-			return "shop/qscListInfoDetailOffice";
-		}
+	@GetMapping("qscListInfoDetailOffice")
+	public String qscListInfoDetailOffice(QscResultVO qscResultVO, Model model) {
+		List<QscResultVO> list =  qscService.selectQscInfoDetail(qscResultVO);
+		model.addAttribute("QscList", list);
+		model.addAttribute("qscDates", list.get(0));
+		return "shop/qscListInfoDetailOffice";
+	}
 	
 	
 }
