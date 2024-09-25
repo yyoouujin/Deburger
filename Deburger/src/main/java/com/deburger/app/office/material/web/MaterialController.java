@@ -55,11 +55,11 @@ public class MaterialController {
 		int total = materialService.countMaterialService();
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
-			cntPerPage = "2";
+			cntPerPage = "1";
 		} else if (nowPage == null) {
 			nowPage = "1";
 		} else if (cntPerPage == null) {
-			cntPerPage = "2";
+			cntPerPage = "1";
 		}
 		materialVO = new MaterialVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", materialVO);
@@ -83,10 +83,9 @@ public class MaterialController {
 
 	// insert 처리
 	@PostMapping("materialInserts")
-	public String materialInsertProcess(MaterialVO materialVO,@RequestParam MultipartFile materialImage) {
+	public String materialInsertProcess(MaterialVO materialVO, @RequestParam MultipartFile materialImage) {
 
 		String fileName = materialImage.getOriginalFilename();
-		System.err.print(fileName + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		System.out.println("fileName : " + fileName);
 
 		// 날짜 폴더 생성
@@ -110,7 +109,6 @@ public class MaterialController {
 		}
 
 		materialVO.setImage(setImagePath(uploadFileName));
-		System.err.print(materialVO);
 		materialService.insertMaterialService(materialVO);
 		return "office/material/materialInsert";
 	}

@@ -53,6 +53,17 @@ public class ProductController {
 		return map;
 	}
 
+	@GetMapping("productInsert")
+	public String productInsert() {
+		return "office/product/productInsert";
+	}
+
+	// 제품 등록 처리
+	@PostMapping("productInsert")
+	public int productInsertprocess(ProductVO productVO) {
+		return productService.productInsert(productVO);
+	}
+
 	// shop product
 	@GetMapping("shopproducts")
 	public String shopproductList(ProductVO productVO, Model model,
