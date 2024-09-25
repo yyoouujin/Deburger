@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class LogisticController {
 		
-	
 		private LogisticService logisticService;
 		
 		@Autowired
@@ -34,26 +33,12 @@ public class LogisticController {
 				this.logisticService = logisticService;
 		}
 		
-		/*
-		//창고 전체조회
-		@GetMapping("logisticList")
-		public String logisticList(Model model) {
-				List<LogisticVO> list = logisticService.logisticList();
-				model.addAttribute("logistics", list);
-				return "office/logistic/logisticList";
-		}
-		*/
-		
-		
 		//창고 전체조회(페이징)
 		@GetMapping("logisticList")
 		public String logisticList(Criteria criteria, Model model) {
 				List<LogisticVO> list = logisticService.logistiList(criteria);
-				
 				model.addAttribute("logistics", list);
-				
 				model.addAttribute("pageMaker", new PageDTO(logisticService.getTotal(), 5, criteria));
-				
 				return "office/logistic/logisticList";
 		}
 		
@@ -112,7 +97,6 @@ public class LogisticController {
 			logisticService.updateLogisticInfo(logisticVO);
 			return "redirect:logisticList";
 		}
-		
 		
 		//창고 삭제
 		@GetMapping("logisticDelete")

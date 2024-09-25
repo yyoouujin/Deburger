@@ -173,7 +173,6 @@
             	//취소승인 버튼 클릭 시 승인상태 변경
             	const cancleBtn = document.querySelector('#cancleBtn');
 				cancleBtn.addEventListener("click", (event) => {
-					alert('취소테스트');
 					
 					const findOdn = $('#findOdn').html();//주문번호
 					const dataObj = {"orderNumber":findOdn};
