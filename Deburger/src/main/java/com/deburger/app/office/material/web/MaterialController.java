@@ -55,13 +55,14 @@ public class MaterialController {
 		int total = materialService.countMaterialService();
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
-			cntPerPage = "1";
+			cntPerPage = "10";
 		} else if (nowPage == null) {
 			nowPage = "1";
 		} else if (cntPerPage == null) {
-			cntPerPage = "1";
+			cntPerPage = "10";
 		}
 		materialVO = new MaterialVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		System.err.println(materialVO);
 		model.addAttribute("paging", materialVO);
 		model.addAttribute("viewAll", materialService.serviceAllList(materialVO));
 		return "office/material/materials";
