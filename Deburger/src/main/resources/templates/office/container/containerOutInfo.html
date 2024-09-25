@@ -97,7 +97,7 @@ th, td {
 						</div>
 							<div style="text-align: right; margin: 0 0 10px 0;">
 								<a href="containerOut"><button type="button" class="btn btn-primary">목록</button></a>
-								<a href="containerOut"><button type="button" class="btn btn-primary" onclick="saveBtn()">승인</button></a>
+								<button type="button" class="btn btn-primary" onclick="saveBtn()">승인</button>
 							</div>
 					</div>	
 				</div>
@@ -198,7 +198,10 @@ th, td {
   				alert('실패 하였습니다.');
   			}
 		})
-		.then() 
+		.done((ele) =>{
+			let url1 = '/deburger/containerOut';
+			location.href = url1;
+		}) 
 	}
 </script>
 </html>
