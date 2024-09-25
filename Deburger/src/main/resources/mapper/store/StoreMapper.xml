@@ -118,7 +118,7 @@
                          FROM
                              dual
                          CONNECT BY
-                             level <= ( to_date(     to_char(sysdate, 'YYYY') || '-12-31',
+                             level <![CDATA[<=]]> ( to_date(     to_char(sysdate, 'YYYY') || '-12-31',
                                         'YYYY-MM-DD') -
                                         to_date(
                                         to_char(
