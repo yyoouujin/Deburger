@@ -12,16 +12,19 @@
   </head>
   <body>
     <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>재료 관리</h1>      
+    </div>
       <section class="section">
       	<div>
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">재료 관리</h5>
+                <h5 class="card-title"></h5>
                 <!-- 여기 검색 등록 -->
                 <div class="search-bar ">
-                  <form
+<!--                   <form
                     class="search-form d-flex align-items-center"
                     method="POST"
                     action="#"
@@ -33,10 +36,10 @@
                       title="Enter search keyword"
                     />
                     <button type="submit" title="Search">검색</button>
-                  </form>
+                  </form> -->
                 </div>
 			    <div id="outter">
-			    <a href="materialInsert"><button style="float: right;" class='btn btn-danger'>재료 등록
+			    <a href="materialInsert"><button style="float: right;" class='btn btn-primary'>재료 등록
 				</button></a> <!-- 옵션선택 끝 -->
 				</div>
                 <!-- End Search Bar -->
@@ -73,36 +76,32 @@
                   </th:block>
                 </table>
                 <!-- End Default Table Example -->
-					<div style="display: block; text-align: center;">
-						<nav aria-label="Page navigation">
-						    <ul class="pagination justify-content-center">
-						        <!-- Previous button -->						        
-						        <li class="page-item" 
-						        	th:classappend="${paging.startPage == 1} ? 'disabled'">
-						            <a class="page-link" 
-						               th:href="@{/materials(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}" 
-						               aria-disabled="true">&lt;</a>
-						        </li>
-						        <!-- Page numbers -->
-						        <li class="page-item" 
-						            th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}" 
-						            th:classappend="${p == paging.nowPage} ? 'active'">
-						            <span th:if="${p == paging.nowPage}">
-						                <a class="page-link" th:text="${p}"></a>
-						            </span>
-						            <span th:if="${p != paging.nowPage}">
-						                <a class="page-link" th:href="@{/materials(nowPage=${p}, cntPerPage=${paging.cntPerPage})}" th:text="${p}"></a>
-						            </span>
-						        </li>
-						        <!-- Next button -->
-						        <li class="page-item" th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
-						            <a class="page-link" th:href="@{/materials(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
-						        </li>
-						    </ul>
-						</nav>
-					</div>
               </div>
             </div>
+         					<div style="display: block; text-align: center;">
+					   <nav aria-label="Page navigation">
+					       <ul class="pagination justify-content-center">
+ 							<!-- 이전 -->
+					           <li class="page-item" th:classappend="${paging.startPage == 1} ? 'disabled'">
+					               <a class="page-link" th:href="@{/materials(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}">&lt;</a>
+					           </li>
+					
+								 <!-- 현재 -->
+					           <li class="page-item" th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}" th:classappend="${p == paging.nowPage} ? 'active'">
+					               <span th:if="${p == paging.nowPage}">
+					                   <a class="page-link" th:text="${p}"></a>
+					               </span>
+					               <span th:if="${p != paging.nowPage}">
+					                   <a class="page-link" th:href="@{/materials(nowPage=${p}, cntPerPage=${paging.cntPerPage})}" th:text="${p}"></a>
+					               </span>
+					           </li>
+									 <!-- 다음 -->
+					            <li class="page-item" th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+					                <a class="page-link" th:href="@{/materials(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+					            </li>
+					        </ul>
+					    </nav>
+					</div> 
           </div>
         </div>
       </section>

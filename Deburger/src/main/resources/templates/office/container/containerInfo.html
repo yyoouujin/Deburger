@@ -12,12 +12,15 @@
   </head>
   <body>
     <main id="main" class="main">
+     <div class="pagetitle">
+			<h1 class="card-title">물류 창고 상세 리스트</h1>
+		</div>
       <section class="section">
         <div class="row">
           <div class="col-lg-10">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">물류 창고 상세 리스트</h5>
+                <h5 class="card-title"></h5>
                 <!-- 여기 검색 등록 -->
 				 <div class="row mb-3">
                     <div class="col-sm-4">
@@ -50,7 +53,7 @@
                       	<td th:text="${#dates.format(info.inDay,'yyyy/MM/dd')}"></td>
                       	<td th:text="${info.inCount} - ${info.outCount}"></td>
                       	<td th:text="${#dates.format(info.expirationLimit,'yyyy/MM/dd')}"></td>
-                      	<td><button>폐기</button></td>
+                      	<td><button class="btn btn-primary">폐기</button></td>
                       </tr>
                     </tbody>
                   </th:block>
@@ -58,7 +61,7 @@
 
                 <div class="card">
                   <div class="card-body">
-                    <a href="/deburger/container"><button>목록</button></a>
+                    <a href="/deburger/container"><button class="btn btn-primary">목록</button></a>
                   </div>
                 </div>
               </div>

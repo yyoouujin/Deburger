@@ -19,7 +19,7 @@ public class MaterialVO {
 	
 	
 
-	//
+	// 현재페이지, 시작페이지, 끝페이지, 게시글 총 갯수, 페이지당 글 갯수, 마지막페이지, SQL쿼리에 쓸 start, end
 	private int nowPage;
 	private int startPage;
 	private int endPage;
@@ -55,7 +55,11 @@ public class MaterialVO {
 		if (getLastPage() < getEndPage()) {
 			setEndPage(getLastPage());
 		}
-		setStartPage(getEndPage() - cntPage + 1);
+		
+		if(getEndPage() % getCntPage() != 0) {
+			setStartPage((getEndPage()/getCntPage())*getCntPage() + 1);
+		}
+		
 		if (getStartPage() < 1) {
 			setStartPage(1);
 		}
