@@ -19,6 +19,8 @@ public class NoticeVO {
 	private String 	content;     //내용
 	private String title;        //제목
 	
+	//vbb
+	
 	//
 	private int nowPage; 
 	private int startPage; 
