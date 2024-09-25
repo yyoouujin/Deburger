@@ -90,11 +90,18 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.containerOutInsert(containerVO);
 	}
 
-	// 물류창고 전체 조회
+	// 물류창고 출고 조회
 	@Override
 	public List<ContainerVO> containerOutAll(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.containerOuts(containerVO);
+	}
+	
+	// 물류창고 출고 count
+	@Override
+	public int containerOutAllCount(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.containerOutsCount(containerVO);
 	}
 
 	// 물류 창고 처리 조회 list
@@ -129,5 +136,7 @@ public class ContainerServiceImpl implements ContainerService {
 		// TODO Auto-generated method stub
 		return containerMapper.loginSession(containerVO);
 	}
+
+
 
 }

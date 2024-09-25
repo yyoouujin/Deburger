@@ -34,14 +34,17 @@
 							]]>	
 	</select>
 	
-	<select id="selectAllListcount">			
-			select NVL(count(a.stock_count), 0)
-			from logistics_stock a
-			    join logistics b
-			     on a.logistics_id = b.logistics_id			       		
-			        where stock_count <![CDATA[>=]]>  0
-			        and b.person_id = #{personId}
-			     group by b.person_id
+	<select id="selectAllListcount">	
+			     SELECT NVL(SUM(cnt), 0) AS cnt
+					FROM (
+					    SELECT COUNT(a.stock_count) AS cnt
+					    FROM logistics_stock a
+					    JOIN logistics b
+					      ON a.logistics_id = b.logistics_id
+					      where stock_count <![CDATA[>=]]>  0
+					    and b.person_id =  #{personId}
+					    GROUP BY b.person_id
+					)
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
@@ -255,34 +258,49 @@
 	
 	<!-- 물류창고 출고 리스트 -->
 	<select id="containerOuts">
-		select a.order_number,
-		        sum(b.count) as count,
-		        a.oder_app,
-		        c.logistics_id,
-		        c.store_name,
-		        d.out_operation,
-                e.person_id
-		from store_order a
-		join order_details b
-		    on a.order_number = b.order_number
-		join store c
-		    on a.store_number = c.store_number
-		join logistics_out d
-		    on b.order_details_number = d.order_details_number
-        join logistics_in e
-            on d.lot = e.lot
-		where d.out_operation = 'g2'
-        and e.person_id = #{personId}
-		group by a.order_number,
-		        a.oder_app,
-		        c.logistics_id,
-		        c.store_name,
-		        d.out_operation,
-                e.person_id
-		order by a.order_number desc
+	
+			<![CDATA[
+			      SELECT  b.* 
+			      FROM
+			          (    
+			            SELECT ROWNUM R, a.*    
+			            FROM (
+							select a.order_number,
+							        sum(b.count) as count,
+							        a.oder_app,
+							        c.logistics_id,
+							        c.store_name,
+							        d.out_operation,
+					                e.person_id
+							from store_order a
+							join order_details b
+							    on a.order_number = b.order_number
+							join store c
+							    on a.store_number = c.store_number
+							join logistics_out d
+							    on b.order_details_number = d.order_details_number
+					        join logistics_in e
+					            on d.lot = e.lot
+							where d.out_operation = 'g2'
+					        and e.person_id = #{personId}
+							group by a.order_number,
+							        a.oder_app,
+							        c.logistics_id,
+							        c.store_name,
+							        d.out_operation,
+					                e.person_id
+							order by a.order_number desc
+			                  ) a
+			        WHERE ROWNUM <= (#{pageNum} * #{amount})            
+			      ) b
+			      WHERE R > (#{pageNum}-1) * #{amount}
+			]]>	
 	</select>
 	
-	
+	<!-- count -->
+	<select id ="containerOutsCount">
+		  select count(*) from order_details
+	</select>
 	
 	
 	<!-- 물류창고 출고 처리 리스트 -->
@@ -307,6 +325,7 @@
 	
 	<!-- 출고 상세 조회-->
 	<select id="containerOutListInfo">
+	
 		select distinct
                 a.order_details_number,
 		        a.material_number,

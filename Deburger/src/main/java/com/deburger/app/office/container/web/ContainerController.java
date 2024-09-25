@@ -16,6 +16,8 @@ import com.deburger.app.office.container.service.ContainerVO;
 import com.deburger.app.office.logistic.service.Criteria;
 import com.deburger.app.office.logistic.service.PageDTO;
 
+import javassist.expr.NewArray;
+
 @Controller
 public class ContainerController {
 
@@ -107,18 +109,21 @@ public class ContainerController {
 		containerService.disposeItem(containerVO);
 		return "redirect:container";
 	}
-
+	//-------------------------------
 	// 출고 리스트
 	@GetMapping("containerOuts")
-	public String containerOutAll(Model model) {
+	public String containerOutAll(Criteria criteria, Model model) {
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
+		mid.setPageNum(criteria.getPageNum());
+		mid.setAmount(criteria.getAmount());
 		ContainerVO pid = containerService.loginService(mid);
 
 		List<ContainerVO> list = containerService.containerOutAll(pid);
 		model.addAttribute("outs", list);
 		model.addAttribute("persons", pid);
+		model.addAttribute("pageMaker", new PageDTO(containerService.containerOutAllCount(mid), 5, criteria));
 		return "office/container/containerOutList";
 
 	}

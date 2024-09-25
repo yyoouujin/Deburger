@@ -125,11 +125,10 @@
 	<!-- 전체조회 메인페이지 -->
 	<select id="noticeListShopList">
 		SELECT notice_number
-		,division
-		,writer_date
-		,writer
-		,title
-		,content
+			,division
+			,writer_date
+			,writer
+			,title
 		FROM notice
 		ORDER BY notice_number desc
 	</select>

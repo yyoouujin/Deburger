@@ -75,7 +75,7 @@
 				    #{saleUnitprice},
 				    #{materialItem},
 				    #{buyUnitprice},
-				    #{materialImageFile},
+				    #{image},
 				    #{materialClassification},
 				    #{logisticsSafetyStock},
 				    #{cost}

@@ -32,19 +32,19 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		}
 		
 		if(roleNames.contains("ROLE_3")) {
-			response.sendRedirect("");
+			response.sendRedirect(con+"/");
 			return;
 		}
 		
 		if(roleNames.contains("ROLE_2")) {
-			response.sendRedirect("");
+			response.sendRedirect(con+"/");
 			return;
 		}
 		
 		if(roleNames.contains("ROLE_1")) {
-			response.sendRedirect("");
+			response.sendRedirect(con+"/");
 			return;
 		}
-		response.sendRedirect("");
+		response.sendRedirect(con+"/");
 	}
 }

@@ -11,7 +11,6 @@
     <title>Insert title here</title>
   </head>
   <body>	
-  	<div th:if="${not #containers.isEmpty()}">
     <main id="main" class="main">
       <section class="section">
         <div class="row">
@@ -105,10 +104,6 @@
         </div>
       </section>
     </main>
-    </div>
-    <div th:if="${#containers.isEmpty()}">
-    	<h3>해당 물류 창고에 data가 없습니다</h3>
-    </div>
   </body>
   <script>
   	const clc = $('meta[name="contextPath"]').attr('value');
