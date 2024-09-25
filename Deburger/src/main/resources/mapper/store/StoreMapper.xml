@@ -74,15 +74,7 @@
 	</select>
 	
 	<!-- 월별 가맹점 매출 -->
-	<select id="selectStoreSalesMonth" >
-	SELECT notice_number
-			,division
-			,writer_date
-			,writer
-			,title
-		FROM notice
-		ORDER BY notice_number desc; 
-        
+	<select id="selectStoreSalesMonth" >        
         SELECT
                      SUBSTR(b.dt,1,7) AS
                      date_list,
