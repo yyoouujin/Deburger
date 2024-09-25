@@ -104,6 +104,7 @@
 			        b.in_operation,
 			        c.logistics_id,
 			        d.client_name
+			order by a.order_number desc
 	</select>
 	
 	<!-- 입고 처리 조회 -->
@@ -282,6 +283,7 @@
 					        join logistics_in e
 					            on d.lot = e.lot
 							where d.out_operation = 'g2'
+							and a.oder_app = 'L3'
 					        and e.person_id = #{personId}
 							group by a.order_number,
 							        a.oder_app,
@@ -292,14 +294,28 @@
 							order by a.order_number desc
 			                  ) a
 			        WHERE ROWNUM <= (#{pageNum} * #{amount})            
-			      ) b
-			      WHERE R > (#{pageNum}-1) * #{amount}
+						      ) b
+					WHERE R > (#{pageNum}-1) * #{amount}
 			]]>	
 	</select>
 	
 	<!-- count -->
 	<select id ="containerOutsCount">
-		  select count(*) from order_details
+		  select DISTINCT
+			    count(a.order_number)
+			from store_order a
+			join order_details b
+			    on a.order_number = b.order_number
+			join store c
+			    on a.store_number = c.store_number
+			join logistics_out d
+			    on b.order_details_number = d.order_details_number
+			join logistics_in e
+			    on d.lot = e.lot
+			where d.out_operation = 'g2'
+			and a.oder_app = 'L3'
+			and e.person_id = #{personId}
+			order by a.order_number desc
 	</select>
 	
 	
@@ -344,7 +360,7 @@
 		    on  a.order_number = c.order_number
 		join store d
 		    on c.store_number = d.store_number
-        join logistics_out e
+        left outer join logistics_out e
             on a.order_details_number = e.order_details_number
 		where a.order_number = #{orderNumber}
 	
