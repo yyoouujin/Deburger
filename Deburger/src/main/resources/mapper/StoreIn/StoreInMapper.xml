@@ -9,19 +9,16 @@
 		SELECT ROWNUM RN, A.*
 		FROM (
 
-			select
+       select
 			    o.order_day
-			    ,d.in_Day
 			    ,o.order_Number
-			    ,d.disposal_Operation
 			    ,o.order_Name
-			    ,d.note
 			    ,o.oder_App
-			    ,d.in_operation
+			    ,d.in_operation 
 			From (SELECT *
 			      FROM store_order
 			      where oder_app='L3'
-			      and store_number = #{storeNumber}) o       
+			      and store_number =  #{storeNumber}) o       
 			JOIN (SELECT in_Day
 			           , disposal_Operation
 			           , note
@@ -32,7 +29,10 @@
 			      on a.order_details_number = b.order_details_number) d
 			on o.order_number = d.order_number
 			WHERE d.rn = '1' 
-			ORDER by ORDER_NUMBER DESC
+            AND in_operation is null
+			ORDER by ORDER_NUMBER DESC 
+			
+			
 
 		
 		) A
@@ -44,6 +44,7 @@
 		select count(*) from
 		store_order
         where oder_app = 'L2'
+        and store_number =  #{storeNumber}
 	</select>
 
 	<select id="StoreIninfoList" resultType="StoreInVO">
@@ -133,4 +134,78 @@
 		WHEN MATCHED THEN
 		update set stock_count = stock_count + #{stockCount}
 	</insert>
+	
+	<select id="stockfound" resultType="StoreInVO">
+	select
+			    o.order_day
+                ,d.in_day
+			    ,o.order_Number
+			    ,o.order_Name
+			    ,o.oder_App
+			    ,d.in_operation 
+			From (SELECT *
+			      FROM store_order
+			      where oder_app='L3'
+			      and store_number = #{storeNumber}) o       
+			JOIN (SELECT in_Day
+			           , disposal_Operation
+			           , note
+			           , in_operation
+			           , order_number
+			           , ROW_NUMBER() OVER(PARTITION BY order_number ORDER BY a.order_number DESC) AS rn
+			      FROM order_details a LEFT OUTER JOIN store_in b
+			      on a.order_details_number = b.order_details_number) d
+			on o.order_number = d.order_number
+			WHERE d.rn = '1' 
+			AND order_day BETWEEN #{startDate} AND #{endDate}
+			ORDER by ORDER_NUMBER DESC 
+	</select>
+	
+		<select id="stockInList" resultType="StoreInVO">
+	select
+			    o.order_day
+                ,d.in_day
+			    ,o.order_Number
+			    ,o.order_Name
+			    ,o.oder_App
+			    ,d.in_operation 
+			From (SELECT *
+			      FROM store_order
+			      where oder_app='L3'
+			      and store_number = #{storeNumber}) o       
+			JOIN (SELECT in_Day
+			           , disposal_Operation
+			           , note
+			           , in_operation
+			           , order_number
+			           , ROW_NUMBER() OVER(PARTITION BY order_number ORDER BY a.order_number DESC) AS rn
+			      FROM order_details a LEFT OUTER JOIN store_in b
+			      on a.order_details_number = b.order_details_number) d
+			on o.order_number = d.order_number
+			WHERE d.rn = '1' 
+			ORDER by ORDER_NUMBER DESC 
+	</select>
+	
+	<select id="stockInListInfo"  resultType="StoreInVO">
+		 select si.order_details_number
+                   ,m.material_name
+                   ,si.count
+                   ,si.remain_stock_count
+                   ,si.expiration_limit
+                   ,si.consumption_limit
+                   ,si.manufacture_day
+                   ,si.disposal_operation
+                   ,si.note
+                   ,so.order_number
+                   ,so.order_Day
+            from store_order so join order_details od
+                 on so.order_number = od.order_number
+                 join store_in si
+                 on si.order_details_number = od.order_details_number
+                 join material m
+                 on m.material_number = si.material_number
+            where si.store_number = #{storeNumber}
+            AND so.order_number = #{orderNumber}
+	</select>
+	
 </mapper>

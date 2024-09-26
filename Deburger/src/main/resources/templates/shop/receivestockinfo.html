@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>입고 상세 관리</title>
+</head>
+
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>입고 상세 관리</h1>
+		</div>
+		<!-- End Page Title -->
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div class="card-body">
+							<!-- Table with stripped rows -->
+							<table class="table">
+								<thead>
+									<div style="text-align: left; margin-left: 90%;">
+										<button type="button" class="btn btn-primary"
+											onclick="makeData()">저장</button>
+										<button type="button" class="btn btn-primary"
+											onclick="location.href='storeInList'">취소</button>
+									</div>
+								</thead>
+								<tbody>
+									<tr>
+										<th>주문 번호</th>
+										<th>주문 일자</th>
+									<tr>
+										<th th:text="${stockInListInfo[0].orderNumber}"
+											id="orderNumber"></th>
+										<th>[[${#dates.format(stockInListInfo[0].orderDay,'yyyy/MM/dd')}]]</th>
+									</tr>
+								</tbody>
+							</table>
+							<!-- <table class="table datatable"> -->
+							<table class="table ">
+								<thead>
+									<tr>
+										<th>상세 주문 번호</th>
+										<th>재료 이름</th>
+										<th>수량</th>
+										<th>입고 수량</th>
+										<th>제조 일자</th>
+										<th>유통 기한</th>
+										<th>소비 기한</th>
+										<th>비고</th>
+									</tr>
+								</thead>
+								<tbody id="GetList">
+									<th:block th:each="list:${stockInListInfo}">
+										<tr>
+											<td th:text="${list.orderDetailsNumber}" />
+											<td th:text="${list.materialName}" />
+											<td th:text="${list.count}" />
+											<td th:text="${list.remainStockCount}" />
+											<td>[[${#dates.format(list.manufactureDay,'yyyy/MM/dd')}]]</td>
+											<td>[[${#dates.format(list.expirationLimit,'yyyy/MM/dd')}]]</td>
+											<td>[[${#dates.format(list.consumptionLimit,'yyyy/MM/dd')}]]</td>
+											<td th:text="${list.note}" />
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+	</main>
+	<script th:inline="javascript">
+		
+	</script>
+</body>
+
+</html>

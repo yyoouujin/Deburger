@@ -1,12 +1,12 @@
-
 <div class="card">
 	<div class="card-body">
 		<h5 class="card-title">월간 수익</h5>
 
-		<!-- Line Chart -->
-		<div id="lineChart"></div>
+		<!-- Area Chart -->
+		<div id="areaChart1" style="min-height: 400px;" class="echart"></div>
 
 		<script th:inline="javascript">
+              
 		 var datas = [[${shopSellG}]];
          var list =[];
          var datelist = [];
@@ -15,42 +15,28 @@
        	  list.push(datas[i].profits);
        	  datelist.push(i+1);
          }
-         
-         
-         
-                  new ApexCharts(document.querySelector("#lineChart"), {
-                	  
+      		
+      		
+      		
+                  echarts.init(document.querySelector("#areaChart1")).setOption({
+                    xAxis: {
+                      type: 'category',
+                      boundaryGap: false,
+                      data: datelist
+                    },
+                    yAxis: {
+                      type: 'value'
+                    },
                     series: [{
-                      name: "수익",
-                      data: list
-                    }],
-                    chart: {
-                      height: 350,
+                      data: list,
                       type: 'line',
-                      zoom: {
-                        enabled: false
-                      }
-                    },
-                    dataLabels: {
-                      enabled: false
-                    },
-                    stroke: {
-                      curve: 'straight'
-                    },
-                    grid: {
-                      row: {
-                        colors: ['#ffffff'], // takes an array which will be repeated on columns
-                        opacity: 0.5
-                      },
-                    },
-                    xaxis: {
-                      categories: datelist,
-                    }
-                  }).render();
-         
-         
+                      smooth: true,
+                      areaStyle: {}
+                    }]
+                  });
               </script>
-		<!-- End Line Chart -->
+		<!-- End Area Chart -->
 
 	</div>
 </div>
+

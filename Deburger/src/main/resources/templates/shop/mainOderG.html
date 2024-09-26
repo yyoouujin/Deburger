@@ -1,15 +1,10 @@
-
-
-
-              
-
-
+  
 <div class="card">
 	<div class="card-body">
 		<h5 class="card-title">월간 주문</h5>
 
 		<!-- Area Chart -->
-		<div id="areaChart" style="min-height: 400px;" class="echart"></div>
+		<div id="areaChart2" style="min-height: 400px;" class="echart"></div>
 
 		<script th:inline="javascript">
               
@@ -17,6 +12,8 @@
       		var list = [];
       		var datelist = [];
       		var sum = 0;
+      		
+
       		
       		for(let i = 0; i<datas.length; i++){		
       			
@@ -44,10 +41,12 @@
       			datelist.push(i);
       		}
       		
-                  echarts.init(document.querySelector("#areaChart")).setOption({
+      		
+      		
+                  echarts.init(document.querySelector("#areaChart2")).setOption({
                     xAxis: {
                       type: 'category',
-                      //boundaryGap: false,
+                      boundaryGap: false,
                       data: datelist
                     },
                     yAxis: {
@@ -57,7 +56,7 @@
                       data: list,
                       type: 'line',
                       smooth: true,
-                      //areaStyle: {}
+                      areaStyle: {}
                     }]
                   });
               </script>
@@ -65,3 +64,4 @@
 
 	</div>
 </div>
+
