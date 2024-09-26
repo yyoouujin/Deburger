@@ -9,6 +9,11 @@ import lombok.Data;
 
 @Data
 public class StoreInVO {
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
 
 	//발주
 	private String orderNumber; 
@@ -84,7 +89,9 @@ public class StoreInVO {
 		if (getLastPage() < getEndPage()) {
 			setEndPage(getLastPage());
 		}
-		setStartPage(getEndPage() - cntPage + 1);
+		if(getEndPage() % getCntPage() != 0) {
+			setStartPage((getEndPage()/getCntPage())*getCntPage() + 1);
+		}
 		if (getStartPage() < 1) {
 			setStartPage(1);
 		}

@@ -103,7 +103,6 @@ public class ShopOderController {
 		}
 		
 		shopOrderVO = new ShopOrderVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		System.out.println(shopOrderVO);
 		model.addAttribute("paging", shopOrderVO);
 		model.addAttribute("viewAll", shopOrderService.autoOrderInfo(shopOrderVO));
 		
