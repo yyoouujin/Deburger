@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org/"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{common/layouts/layout}"
+  layout:fragment="Content"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>가맹점 메인페이지</title>
+  </head>
+  <body>
+    <main id="main" class="main">
+      
+      <!-- End Page Title -->
+      <br><br>
+
+      <section class="section dashboard">
+        <div class="row">
+          <!-- Left side columns -->
+          <div class="col-lg-11">
+            <div class="row">
+              <!-- Sales Card -->
+              <div class="col-xxl-4 col-md-6">
+                <div class="card info-card sales-card">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>선택</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">오늘</a></li>
+                      <li><a class="dropdown-item" href="#">이번달</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title">전체 판매량 <span>| 이번달</span></h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="salesCnt">145</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Sales Card -->
+
+              <!-- Revenue Card -->
+              <div class="col-xxl-4 col-md-6">
+                <div class="card info-card revenue-card">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>선택</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">오늘</a></li>
+                      <li><a class="dropdown-item" href="#">이번달</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title">가맹점 전체 매출 <span>| 이번달</span></h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-currency-dollar"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="salesPri">$3,264</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Revenue Card -->
+
+              <!-- Customers Card -->
+              <div class="col-xxl-4 col-xl-12">
+                <div class="card info-card customers-card">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>선택</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">오늘</a></li>
+                      <li><a class="dropdown-item" href="#">이번달</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title">제료 발주 원가 <span>| 이번달</span></h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-currency-dollar"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="salesPro">1244</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Customers Card -->
+              <!-- Chart -->
+              <br>
+              
+              <div class="row">
+              <div class="col-12">
+              <h3>월별 통계</h3>
+                <div id="chart-area"></div>
+            </div>
+            </div>
+              <!-- End Chart -->
+			<div class="pagetitle col-lg-13">
+			
+			<div class="row">
+				<div class="col-6">
+					<h1>제품별 판매량</h1>
+			        <br />
+					<div id="chart-area2"></div>
+				</div>	
+				<div class="col-6">
+			        <h1>공지사항</h1>
+			        <br />
+			         
+			        <div id="grid" ></div>
+			        <br />
+		        </div>	
+	        </div>
+	        
+      	</div>
+              
+          </div>
+          <!-- End Left side columns -->
+        </div>
+      </section>      
+    </main>
+    <script th:inline="javascript">
+
+        let salesCnt = document.getElementById('salesCnt');
+        let salesPri = document.getElementById('salesPri');
+        let salesPro = document.getElementById('salesPro');
+
+        const today = new Date();
+        const DayOfMonth = today.getFullYear() + '-'+ String(today.getMonth()+1).padStart(2, "0");
+        console.log(DayOfMonth);
+
+        let StoreSales = [[${StoreSales}]];
+        
+        let StoreProduct = [[${StoreProduct}]];
+        
+        let StoreOrder = [[${StoreOrder}]];
+		
+        /* 월별 가맹점 매출 */
+        let salesData = [];
+        /* 전체메뉴 월별 판매량 */
+        let productsData = [];
+        /* 월별 발주 원가 */
+        let ordersData = [];
+        /* 월표시 */
+        let dateData = [];
+
+        StoreSales.forEach(element => {
+        	if(element.sumCnt != 0){
+          salesData.push(element.sumCnt / 1000);
+        	}
+          if(element.dateList == DayOfMonth){
+            salesPri.innerHTML = element.sumCnt.toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+            
+          }
+        });
+
+        StoreProduct.forEach(element => {
+        	if(element.sumCnt != 0){
+          productsData.push(element.sumCnt);
+        	}
+          if(element.dateList == DayOfMonth){            
+            salesCnt.innerHTML = element.sumCnt + ' 개';
+          }
+        })
+
+        StoreOrder.forEach(element => {
+        	if(element.sumCnt != 0){
+          ordersData.push(element.sumCnt /1000);
+        		
+        	}
+          if(element.dateList == DayOfMonth){
+            salesPro.innerHTML = element.sumCnt.toString()
+            .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+          }
+        })
+
+        StoreOrder.forEach(element => {
+          dateData.push(element.dateList);
+        })
+
+
+
+        const el = document.getElementById('chart-area');
+        const data = {
+          categories: dateData,
+          series: [
+            {
+              name: '가맹점 매출',
+              data: salesData,
+            },
+            {
+              name: '전체메뉴 판매량',
+              data: productsData,
+            },
+            {
+              name: '발주 원가',
+              data: ordersData,
+            },            
+          ],
+        };
+        const options = {
+          chart: { title: '', width: 1410, height: 500 },
+          xAxis: {
+            title: '(년/월)',
+          },
+          yAxis: {
+            title: '(원/개)',
+          },
+          tooltip: {
+            formatter: (value) => `${value}`,
+          },
+          legend: {
+            align: 'bottom',
+          },
+        };
+
+        const chart = toastui.Chart.lineChart({ el, data, options });
+
+
+      
+      chartDrow();
+   /*    const chart2 = toastui.Chart.pieChart({ el2, data2, options2 }); */
+
+        
+                let grid;
+
+                var detaList = [[${notices}]];
+
+                $(document).ready(async () => {
+                  // 2. HTML이 수행된 뒤 함수를 호출한다.
+                  grid = await gridLoad();
+
+
+                });
+
+                /**
+                 *
+                 * @return void
+                 */
+                const gridLoad = () => {
+                  // 3. 그리드 생성
+                  const Grid = tui.Grid;
+
+                  /**
+                   * [선택] 그리드 테마 적용하기 (clean, stripe, default)
+                   *
+                   * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
+                   * @reference https://seokbong.tistory.com/14
+                   */
+                  Grid.applyTheme('clean');
+
+                  /**
+                   * [선택] Grid Confirm 메시지
+                   */
+
+
+                  Grid.setLanguage('en'); // set Korean
+                  const grid = new Grid({
+                    // ================================== 공통 옵션 적용 ==============================
+                    el: document.getElementById('grid'), // [필수] Container element
+                    data: detaList, // [선택] 그리드 데이터 조회
+
+                    /**
+                     * [선택] 순번 기능
+                     * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
+                     */
+                    rowHeaders: ['rowNum'],
+
+            	// 패이징
+                    pageOptions: {
+                  	  useClient: true,
+                      perPage: 9,
+                    },
+
+                    // ================================== 컬럼 옵션 적용 ==============================
+
+                    columns: [
+                  	  // [Column-2] 일련번호
+                        {
+                          header: '일련번호', // [필수] 컬럼 이름
+                          name: 'noticeNumber', // [필수] 컬럼 매핑 이름 값
+                          sortable: true, // [선택] 컬럼의 정렬 여부
+                          resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                          align: 'center', // [선택] 텍스트 정렬 옵션
+                          hidden: true,
+
+                        },
+                      // [Column-2] 검수일자
+                      {
+                        header: '구분', // [필수] 컬럼 이름
+                        name: 'division', // [필수] 컬럼 매핑 이름 값
+                        sortable: true, // [선택] 컬럼의 정렬 여부
+                        resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                        align: 'center', // [선택] 텍스트 정렬 옵션
+                        hidden: true,
+
+                      },
+                      // [Column-2] 처리상태
+                      {
+                        header: '공지사항', // [필수] 컬럼 이름
+                        name: 'title', // [필수] 컬럼 매핑 이름 값
+                        sortable: true, // [선택] 컬럼의 정렬 여부
+                        resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                        align: 'left', // [선택] 텍스트 정렬 옵션
+                        width: 600,
+                      },
+                      // [Column-2] 품질
+                      {
+                        header: '공고일', // [필수] 컬럼 이름
+                        name: 'writerDate', // [필수] 컬럼 매핑 이름 값
+                        sortable: true, // [선택] 컬럼의 정렬 여부
+                        resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
+                        align: 'center', // [선택] 텍스트 정렬 옵션
+                        hidden: true,
+                      },
+
+                    ],
+                  });
+
+                  //  그리드 추가
+        grid.on('dblclick', (ev) => {
+               	let url ='noticeListInfoOffice?noticeNumber=' + grid.getData()[ev.rowKey].noticeNumber;
+          		location.href = url;
+               	})
+                  return grid;
+                };
+                
+                
+    function chartDrow(){
+    	
+  
+      const data = {
+        categories: ['Browser'],
+        series: [
+          {
+            name: '건강버거세트',
+            data: 46.02,
+          },
+          {
+            name: '치즈버거세트',
+            data: 20.47,
+          },
+          {
+            name: '불고기버거세트',
+            data: 17.71,
+          },
+        ],
+      };
+
+        const el = document.getElementById('chart-area2');
+        
+        const options = {
+          chart: { title: 'Usage share of web browsers', width: 700, height: 400 },
+        };
+
+        const chart = toastui.Chart.pieChart({ el, data, options });
+    }          
+                
+      </script>
+  </body>
+</html>

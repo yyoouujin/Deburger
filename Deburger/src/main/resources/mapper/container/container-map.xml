@@ -114,11 +114,11 @@
 		        a.count,
 		        a.unit,
 		        a.order_cost,
-		        a.person_id,
 		        b.order_number,
 		        c.logistics_id,
 		        c.logistics_name,
 		        c.phone as logisticsPhone,
+		        c.person_id,
 		        d.material_name,
         		e.material_number
 		from  logistics_order_details a
