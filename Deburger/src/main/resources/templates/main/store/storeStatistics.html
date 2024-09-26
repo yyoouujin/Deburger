@@ -119,8 +119,10 @@
             </div>
               <!-- End Chart -->
 			<div class="pagetitle col-lg-11">
+			<div id="chart-area2"></div>
         <h1>공지사항</h1>
         <br />
+         
         <div id="grid"></div>
         <br />
       </div>
@@ -227,6 +229,43 @@
         };
 
         const chart = toastui.Chart.lineChart({ el, data, options });
+
+        const el2 = document.getElementById('chart-area');
+      const data2 = {
+        categories: ['Browser'],
+        series: [
+          {
+            name: 'Chrome',
+            data: 46.02,
+          },
+          {
+            name: 'IE',
+            data: 20.47,
+          },
+          {
+            name: 'Firefox',
+            data: 17.71,
+          },
+          {
+            name: 'Safari',
+            data: 5.45,
+          },
+          {
+            name: 'Opera',
+            data: 3.1,
+          },
+          {
+            name: 'Etc',
+            data: 7.25,
+          },
+        ],
+      };
+      const options2 = {
+        chart: { title: 'Usage share of web browsers', width: 600, height: 400 },
+      };
+
+      const chart2 = toastui.Chart.pieChart({ el2, data2, options2 });
+
         
                 let grid;
 
@@ -327,6 +366,10 @@
                	})
                   return grid;
                 };
+                
+                
+               
+                
       </script>
   </body>
 </html>
