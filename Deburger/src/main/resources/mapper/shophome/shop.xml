@@ -31,12 +31,12 @@ where ss.store_number=#{storeNumber}
 
 	<select id="shopSellG" parameterType="ShopMainVO">
 		with b as (
-		SELECT TO_CHAR(TRUNC(to_DATE(#{productDate}), 'MM') + LEVEL
+		SELECT TO_CHAR(TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') + LEVEL
 		- 1,'yy-MM-dd')
 		AS dt
 		FROM dual
 		CONNECT BY LEVEL  <![CDATA[<=]]>
-		LAST_DAY(to_DATE(#{productDate}))- TRUNC(to_DATE(#{productDate}), 'MM') + 1
+		LAST_DAY(to_DATE(#{productDate},'yyyy-MM-dd'))- TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') + 1
 		)
 		, a
 		as (
@@ -45,8 +45,8 @@ where ss.store_number=#{storeNumber}
 		FROM
 		store_sales_statistics
 		WHERE product_date BETWEEN
-		TRUNC(to_DATE(#{productDate}), 'MM') AND
-		LAST_DAY(to_DATE(#{productDate}))
+		TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') AND
+		LAST_DAY(to_DATE(#{productDate},'yyyy-MM-dd'))
 		AND
 		store_NUMBEr = #{storeNumber}
 		 GROUP BY TO_CHAR(product_date, 'yy-MM-dd')
@@ -61,12 +61,12 @@ where ss.store_number=#{storeNumber}
 
 	<select id="shopOrderG" parameterType="ShopMainVO">
 		with b as (
-		SELECT TO_CHAR(TRUNC(to_DATE(#{productDate}), 'MM') + LEVEL
+		SELECT TO_CHAR(TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') + LEVEL
 		- 1,'yy-MM-dd')
 		AS dt
 		FROM dual
 		CONNECT BY LEVEL  <![CDATA[<=]]>
-		LAST_DAY(to_DATE(#{productDate}))- TRUNC(to_DATE(#{productDate}), 'MM') + 1
+		LAST_DAY(to_DATE(#{productDate},'yyyy-MM-dd'))- TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') + 1
 		)
 		, a
 		as (
@@ -74,8 +74,8 @@ where ss.store_number=#{storeNumber}
 		,sum(count) count
 		FROM
 		store_product_sale
-		WHERE product_date BETWEEN TRUNC(to_DATE(#{productDate}), 'MM') AND
-		LAST_DAY(to_DATE(#{productDate}))
+		WHERE product_date BETWEEN TRUNC(to_DATE(#{productDate},'yyyy-MM-dd'), 'MM') AND
+		LAST_DAY(to_DATE(#{productDate},'yyyy-MM-dd'))
 		AND store_Number = #{storeNumber}
 		 GROUP BY TO_CHAR(product_date, 'yy-MM-dd')
 		)
