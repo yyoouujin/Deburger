@@ -28,8 +28,7 @@ th, td {
 								<thead>
 									<tr>
 										<th>발주번호</th>
-											<td colspan='8'><input type="text" id="orderName"
-												name="orderName" style="border: none; width: 100%;" th:text="${list[0].orderNumber}" readonly></td>
+											<td colspan='8' th:text="${list[0].orderNumber}"></td>
 									</tr>
 									<tr>
 										<th>등록일자</th>
@@ -156,9 +155,11 @@ th, td {
   			error : function(){
   				alert('실패 하였습니다.');
   			}
-
   		})
-  		.then()
+  		.done((ele)=>{
+				let url1 = '/deburger/containerIn';
+				location.href = url1;
+  		})
   	}
 </script>
 </html>
