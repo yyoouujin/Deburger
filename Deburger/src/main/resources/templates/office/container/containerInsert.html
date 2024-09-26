@@ -144,7 +144,7 @@ th, td {
   		})
 		console.log(list);
   		console.log(JSON.stringify(list));
-		 $.ajax({
+	 $.ajax({
   			url: '/deburger/containerInsert',
   			method:'post',
   			contentType: 'application/json',
@@ -159,7 +159,7 @@ th, td {
   		.done((ele)=>{
 				let url1 = '/deburger/containerIn';
 				location.href = url1;
-  		})
+  		}) 
   	}
 </script>
 </html>
