@@ -13,6 +13,8 @@ public interface LogisticMapper {
 		public int getTotal();
 		//물류창고 상세조회
 		public List<LogisticVO> selectLogisticInfo(LogisticVO logisticVO);
+		//물류창고 상세데이터 (페이징)
+		public int getMatTotal();
 		//물류창고 물품조회
 		public List<LogisticVO> selectLogisticMaterialInfo(LogisticVO logisticVO);
 		//물류창고 등록

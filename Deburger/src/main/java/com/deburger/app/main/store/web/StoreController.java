@@ -162,8 +162,6 @@ public class StoreController {
 		return "main/store/officeStoreInfo";
 	}
 	
-	
-	
 	// 가맹점 현황
 	@GetMapping("storeStatistics")
 	public String StoreStatistics(Model model) {

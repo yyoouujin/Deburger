@@ -74,11 +74,49 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# ShopMain
+--------------------------------------------------------------*/
+
+.shopMainNoticeCard {
+  padding: 0;
+  padding-left: 20px;
+}
+
+.mainHomeNotice {
+    padding: 20px 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #666666;
+    font-family: "Nanum Gothic", sans-serif;
+}
+
+.mainHomeAlert {
+	text-align:center;
+}
+
+.shopMainMaterialCard{
+  padding: 0 20px 10px 20px;
+}
+
+.mainHomeNotice h5 {
+	margin-top : 5px;
+}
+
+.mainHomeNotice > .notice {
+	padding-left: 0;
+	font-size: 18px;
+    font-weight: 600;
+    color: #666666;
+    font-family: "Nanum Gothic", sans-serif;
+}
+
+
+
+/*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
 .pagetitle {
   margin-bottom: 10px;
-  
 }
 
 .pagetitle h1 {
@@ -258,12 +296,12 @@ h6 {
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 600;
-  color: #012970;
+  color: #666666;
   font-family: "Nanum Gothic", sans-serif;
 }
 
 .card-title span {
-  color: #899bbd;
+  color: #b6b6b6;
   font-size: 14px;
   font-weight: 600;
   font-family: "Nanum Gothic", sans-serif;
@@ -831,7 +869,7 @@ h6 {
 
 .dashboard .info-card h6 {
   font-size: 28px;
-  color: #012970;
+  color: #363636;
   font-weight: 700;
   margin: 0;
   padding: 0;
@@ -847,18 +885,18 @@ h6 {
 }
 
 .dashboard .sales-card .card-icon {
-  color: #4154f1;
-  background: #f6f6fe;
+  color: #1c0d55;
+  background: #eaeeff;
 }
 
 .dashboard .revenue-card .card-icon {
-  color: #2eca6a;
-  background: #e0f8e9;
+  color:#1c0d55;
+  background: #eaeeff;
 }
 
 .dashboard .customers-card .card-icon {
-  color: #ff771d;
-  background: #ffecdf;
+  color: #1c0d55;
+  background: #eaeeff;
 }
 
 /* Activity */

@@ -38,7 +38,7 @@ public class ShopMainController {
 		
 		
 		
-		return "shop/main";
+		return "shop/main2";
 	}
 	
 	//매출액 그래프

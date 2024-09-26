@@ -21,6 +21,7 @@ public class PageDTO {
 	public PageDTO(int total, int pageCount, Criteria criteria) {
 		this.total = total;
 		this.criteria = criteria;
+		
 		this.pageCount = pageCount;
 		
 		this.endPage = (int)(Math.ceil(criteria.getPageNum()*1.0/pageCount))*pageCount;
@@ -35,5 +36,6 @@ public class PageDTO {
 		prev = startPage > 1;
 		next = endPage < realEnd;
 	}
-
+	
+	
 }
