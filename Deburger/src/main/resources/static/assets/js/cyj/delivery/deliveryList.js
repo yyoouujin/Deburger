@@ -1,3 +1,5 @@
+
+
 //발주상세 조회
 	$('tbody > tr').on('click', makeTag);
 	
@@ -104,30 +106,54 @@
 					}
 					
 					else { //'Y' 일 시 발주승인 버튼이 나올 수 있도록
-						let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal">발주승인</button>`
+						let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="dBtn">발주승인</button>`
 						$('#deliveryRecognizeBtn').append(dbtn);
 						
 						//발주승인버튼 클릭 시 승인상태 변경
 						const deliveryRecognizeBtn = document.querySelector('#deliveryRecognizeBtn');
+						
 						deliveryRecognizeBtn.addEventListener("click", (event) => {
 							
 							const findOdn = $('#findOdn').html();//주문번호
 							const findLogi = $('#shop_logi').html();//창고번호
 							const dataObj = {"orderNumber":findOdn, "logisticsId":findLogi};
 							
-							if(!confirm('발주 승인 하시겠습니까?')) {
-								return;
-							}
-							//발주상태 변경
+							//if(!confirm('발주 승인 하시겠습니까?')) {
+								//return;
+							//}
+							
+							Swal.fire({
+				                    title: '정말로 그렇게 하시겠습니까?',
+				                    text: "다시 되돌릴 수 없습니다. 신중하세요.",
+				                    icon: 'warning',
+				                    showCancelButton: true,
+				                    confirmButtonColor: '#3085d6',
+				                    cancelButtonColor: '#d33',
+				                    confirmButtonText: '승인',
+				                    cancelButtonText: '취소'
+				                    
+				                })
+				                
+				                .then((result) => {
+				                    if (result.isConfirmed) {
+										//발주상태 변경
 							$.ajax( 'oderappUpdate' ,{
 								type:'post',
 								data: dataObj
 							})
 							.done( result => {
-								alert('승인완료');
+								Swal.fire(
+				                            '승인이 완료되었습니다.',
+				                            '화끈하시네요~!',
+				                            'success'
+				                        )
 								document.location.href = document.location.href;
 							})
 							.fail(err => console.log(err));
+				                        
+				                    }
+				                })
+							
 						});
 					}
 		    	})

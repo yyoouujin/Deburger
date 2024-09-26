@@ -1,165 +1,151 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/shop_layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>가맹점 메인페이지</title>
-  </head>
-  <body>
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h5>
-          <span>공지사항 : </span
-          ><span th:if="${notice[0].datem < 3}" style="color: red">(New)</span
-          ><span th:text="${notice[0].writerDate}"></span
-          ><a href="noticeListShop" th:text="${notice[0].title}"></a>
-        </h5>
-      </div>
-      <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="col-xxl-4 col-md-6">
-                <div class="card info-card sales-card">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a class="dropdown-item" href="shopStock"
-                        >재고 부족 현황</a
-                      >
-                    </h5>
-                    <div
-                      class="d-flex align-items-center"
-                      style="text-align: center"
-                    >
-                      <div class="col-md-7">
-                        <h5>원재료</h5>
-                        <h4>
-                          <span th:text="${shop[0].mainMaterial}"></span>
-                        </h4>
-                      </div>
-                      <div>
-                        <h5>부재료</h5>
-                        <h4>
-                          <span th:text="${shop[0].subMaterial}"></span>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-4 col-md-6">
-                <div class="card info-card sales-card">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a class="dropdown-item" href="limitList"
-                        >원재료 유통 기한</a
-                      >
-                    </h5>
-                    <div
-                      class="d-flex align-items-center"
-                      style="text-align: center"
-                    >
-                      <div class="col-md-7">
-                        <h5>원재료</h5>
-                        <h4>
-                          <span th:text="${shop[0].limitMaterial}"></span>
-                        </h4>
-                      </div>
-                      <div>
-                        <h5>부재료</h5>
-                        <h4>
-                          <span th:text="${shop[0].limitsubMaterial}"></span>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-4 col-md-6">
-                <div class="card info-card sales-card">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a class="dropdown-item" href="ShopOrderList"
-                        >발주 알림</a
-                      >
-                    </h5>
-                    <div
-                      class="d-flex align-items-center"
-                      style="text-align: center"
-                    >
-                      <div class="col-md-7">
-                        <h5>신청</h5>
-                        <h4>
-                          <span th:text="${shop[0].oneMaterial}"></span>
-                        </h4>
-                      </div>
-                      <div>
-                        <h5>진행</h5>
-                        <h4>
-                          <span th:text="${shop[0].twoMaterial}"></span>
-                        </h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="card-body col-lg-6">
-            <input type="date" id="currentDate1" />
-            <div id="graphSell"></div>
-          </div>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>가맹점 메인페이지</title>
+</head>
+<body>
+	<main id="main" class="main">
 
-          <div class="card-body col-lg-6">
-            <input type="date" id="currentDate2" />
-            <div id="graphOrder"></div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <script th:inline="javascript">
-      document.getElementById("currentDate1").value = new Date()
-        .toISOString()
-        .substring(0, 10);
+		<div class="pagetitle">
+			<h5>
+				<span>공지사항 : </span>
+				<span th:if="${notice[0].datem < 3}" style="color: red">(New)</span>
+				<span th:text="${notice[0].writerDate}"></span>
+				<a href="noticeListShop" th:text="${notice[0].title}"></a>
+			</h5>
+		</div>
 
-      graphSell();
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-xxl-4 col-md-6">
+							<div class="card info-card sales-card">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a class="dropdown-item" href="shopStock">재고 부족 현황</a>
+									</h5>
+									<div class="d-flex align-items-center"
+										style="text-align: center">
+										<div class="col-md-7">
+											<h5>원재료</h5>
+											<h4>
+												<span th:text="${shop[0].mainMaterial}"></span>
+											</h4>
+										</div>
+										<div>
+											<h5>부재료</h5>
+											<h4>
+												<span th:text="${shop[0].subMaterial}"></span>
+											</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xxl-4 col-md-6">
+							<div class="card info-card sales-card">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a class="dropdown-item" href="limitList">원재료 유통 기한</a>
+									</h5>
+									<div class="d-flex align-items-center"
+										style="text-align: center">
+										<div class="col-md-7">
+											<h5>원재료</h5>
+											<h4>
+												<span th:text="${shop[0].limitMaterial}"></span>
+											</h4>
+										</div>
+										<div>
+											<h5>부재료</h5>
+											<h4>
+												<span th:text="${shop[0].limitsubMaterial}"></span>
+											</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xxl-4 col-md-6">
+							<div class="card info-card sales-card">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a class="dropdown-item" href="ShopOrderList">발주 알림</a>
+									</h5>
+									<div class="d-flex align-items-center"
+										style="text-align: center">
+										<div class="col-md-7">
+											<h5>신청</h5>
+											<h4>
+												<span th:text="${shop[0].oneMaterial}"></span>
+											</h4>
+										</div>
+										<div>
+											<h5>진행</h5>
+											<h4>
+												<span th:text="${shop[0].twoMaterial}"></span>
+											</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card-body col-lg-6">
+					<input type="date" id="currentDate1" />
+					<div id="graphSell"></div>
+				</div>
 
-      $("#currentDate1").on("change", function (event) {
-        graphSell();
-      });
+				<div class="card-body col-lg-6">
+					<input type="date" id="currentDate2" />
+					<div id="graphOrder"></div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<script th:inline="javascript">
+		document.getElementById("currentDate1").value = new Date()
+				.toISOString().substring(0, 10);
 
-      function graphSell() {
-        let productdate = $("#currentDate1").val();
+		graphSell();
 
-        let url = `shopSell?productDate=${productdate}`;
+		$("#currentDate1").on("change", function(event) {
+			graphSell();
+		});
 
-        $("#graphSell").load(url);
-      }
+		function graphSell() {
+			let productdate = $("#currentDate1").val();
 
-      //
-      document.getElementById("currentDate2").value = new Date()
-        .toISOString()
-        .substring(0, 10);
+			let url = `shopSell?productDate=${productdate}`;
 
-      graphOrder();
+			$("#graphSell").load(url);
+		}
 
-      $("#currentDate2").on("change", function (event) {
-        graphOrder();
-      });
+		//
+		document.getElementById("currentDate2").value = new Date()
+				.toISOString().substring(0, 10);
 
-      function graphOrder() {
-        let productdate = $("#currentDate2").val();
+		graphOrder();
 
-        let url = `shopOrder?productDate=${productdate}`;
+		$("#currentDate2").on("change", function(event) {
+			graphOrder();
+		});
 
-        $("#graphOrder").load(url);
-      }
-    </script>
-  </body>
+		function graphOrder() {
+			let productdate = $("#currentDate2").val();
+
+			let url = `shopOrder?productDate=${productdate}`;
+
+			$("#graphOrder").load(url);
+		}
+	</script>
+</body>
 </html>

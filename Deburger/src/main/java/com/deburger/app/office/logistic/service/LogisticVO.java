@@ -3,11 +3,12 @@ package com.deburger.app.office.logistic.service;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
+import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
+@Component
 @Data
 public class LogisticVO {
 		
@@ -62,7 +63,6 @@ public class LogisticVO {
 		private String aggclientId;
 		private String clientName;
 		private String aggclientName;
-		
 		
 
 }

@@ -35,7 +35,12 @@ public class LogisticServiceImpl implements LogisticService {
 
 	@Override
 	public List<LogisticVO> logisticInfo(LogisticVO logisticVO) {
-			return logisticMapper.selectLogisticInfo(logisticVO);
+		return logisticMapper.selectLogisticInfo(logisticVO);
+	}
+	
+	@Override
+	public int getMatTotal() {
+		return logisticMapper.getMatTotal();
 	}
 	
 	@Override

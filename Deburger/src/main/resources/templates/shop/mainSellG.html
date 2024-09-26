@@ -6,7 +6,7 @@
 		<!-- Line Chart -->
 		<div id="lineChart"></div>
 
-		<script  th:inline="javascript">
+		<script th:inline="javascript">
 		 var datas = [[${shopSellG}]];
          var list =[];
          var datelist = [];
@@ -17,7 +17,9 @@
          }
          
          
+         
                   new ApexCharts(document.querySelector("#lineChart"), {
+                	  
                     series: [{
                       name: "수익",
                       data: list
@@ -37,7 +39,7 @@
                     },
                     grid: {
                       row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        colors: ['#ffffff'], // takes an array which will be repeated on columns
                         opacity: 0.5
                       },
                     },
@@ -45,7 +47,8 @@
                       categories: datelist,
                     }
                   }).render();
-
+         
+         
               </script>
 		<!-- End Line Chart -->
 

@@ -42,6 +42,22 @@ public class LogisticController {
 				return "office/logistic/logisticList";
 		}
 		
+		/*
+		//창고 단건조회(페이징)
+		@GetMapping("logisticInfo")
+		public String logisticInfo(LogisticVO logisticVO, Model model) {
+				List<LogisticVO> list = logisticService.logisticInfo(logisticVO);
+				Criteria c = new Criteria();
+				
+				//LogisticVO findVO = logisticService.logisticInfo(logisticVO);
+				model.addAttribute("logistic", list);
+				model.addAttribute("pageMaker", new LogisticVO(logisticService.getMatTotal(), 5, c));
+				model.addAttribute("localDateTime", LocalDateTime.now());
+				return "office/logistic/logisticInfo";
+		}
+		*/
+		
+		
 		//창고 단건조회
 		@GetMapping("logisticInfo")
 		public String logisticInfo(LogisticVO logisticVO, Model model) {
@@ -51,6 +67,8 @@ public class LogisticController {
 				model.addAttribute("localDateTime", LocalDateTime.now());
 				return "office/logistic/logisticInfo";
 		}
+		
+		
 
 		//창고 내 물품 단건조회
 		@GetMapping("stockInfoAjax")

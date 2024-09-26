@@ -1,102 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
 
 <style>
-
 #postnum {
 	margin-top: 31.994px;
 }
-
 </style>
 
 </head>
 <body>
 
 
-  <main id="main" class="main">
+	<main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>업체 상세조회</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">공급업체 관리</li>
-          <li class="breadcrumb-item active">업체 조회</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-    
-    
+		<div class="pagetitle">
+			<h1>업체 상세조회</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">공급업체 관리</li>
+					<li class="breadcrumb-item active">업체 조회</li>
+				</ol>
+			</nav>
+		</div>
+		<!-- End Page Title -->
 
-    <section class="section dashboard">
 
-    <div class="row">
-    <div class="col-lg-4">
-    
-    <div class="card">
-            <div class="card-body">
-              <h5 class="card-title" id="logiIdAjax">창고ID : </h5>
 
-              <!-- Multi Columns Form -->
-              <form class="row g-3" name="updateForm" method="post">
-              
-              <input type="hidden" class="form-control" id="lId" name="logisticsId">
-              
-                <div class="col-md-12">
-                  	<label for="inputName5" class="form-label">창고명</label>
-                  	<input type="text" class="form-control" id="lname" name="logisticsName">
-                </div>
-                
-                <div class="col-md-12">
-                  <label for="tel" class="form-label">전화번호 (하이픈 - 포함)</label>
-                  <input type="text" class="form-control" id="tel" name="phone">
-                </div>
-                
-                <div class="col-md-5">
-                	<label for="postal" class="form-label">주소</label>
-                	<input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호" name="postal">
-                </div>
-                
-                <div class="col-md-3">
-                	<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postnum">
-                </div>
-                
-				<div class="col-md-12">
-                	<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="basicsAddress">
-                </div>
-                
-                <div class="col-md-6">
-                	<input type="text" class="form-control" id="sample6_extraAddress" placeholder="상세주소" name="detailsAddress">
-                </div>
-                
-                <div class="col-md-6">
-                	<input type="text" class="form-control" id="sample6_detailAddress" placeholder="참고항목" name="note">
-                </div>
-                
-                                
-                <div class="col-md-12">
-                  <label for="pName" class="form-label">담당자 ID</label>
-                  <select class="form-control" name="personId" id="pId">
-                  </select>
-                </div>
+		<section class="section dashboard">
 
-                <div class="text-center">
-                  <button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
-                  <button type="button" class="btn btn-success" id="updateBtn">수정</button>
-                  <button type="button" class="btn btn-danger" id="deleteBtn">삭제</button>
-                </div>
-              </form><!-- End Multi Columns Form -->
+			<div class="row">
+				<div class="col-lg-4">
 
-            </div>
-          </div>
-  
-          <!--/* 유통기한 임박 
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title" id="logiIdAjax">창고ID :</h5>
+
+							<!-- Multi Columns Form -->
+							<form class="row g-3" name="updateForm" method="post">
+
+								<input type="hidden" class="form-control" id="lId"
+									name="logisticsId">
+
+								<div class="col-md-12">
+									<label for="inputName5" class="form-label">창고명</label> <input
+										type="text" class="form-control" id="lname"
+										name="logisticsName">
+								</div>
+
+								<div class="col-md-12">
+									<label for="tel" class="form-label">전화번호 (하이픈 - 포함)</label> <input
+										type="text" class="form-control" id="tel" name="phone">
+								</div>
+
+								<div class="col-md-5">
+									<label for="postal" class="form-label">주소</label> <input
+										type="text" class="form-control" id="sample6_postcode"
+										placeholder="우편번호" name="postal">
+								</div>
+
+								<div class="col-md-3">
+									<input type="button" class="btn btn-secondary"
+										onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
+										id="postnum">
+								</div>
+
+								<div class="col-md-12">
+									<input type="text" class="form-control" id="sample6_address"
+										placeholder="주소" name="basicsAddress">
+								</div>
+
+								<div class="col-md-6">
+									<input type="text" class="form-control"
+										id="sample6_extraAddress" placeholder="상세주소"
+										name="detailsAddress">
+								</div>
+
+								<div class="col-md-6">
+									<input type="text" class="form-control"
+										id="sample6_detailAddress" placeholder="참고항목" name="note">
+								</div>
+
+
+								<div class="col-md-12">
+									<label for="pName" class="form-label">담당자 ID</label> <select
+										class="form-control" name="personId" id="pId">
+									</select>
+								</div>
+
+								<div class="text-center">
+									<button type="button" class="btn btn-secondary" id="resetBtn">초기화</button>
+									<button type="button" class="btn btn-success" id="updateBtn">수정</button>
+									<button type="button" class="btn btn-danger" id="deleteBtn">삭제</button>
+								</div>
+							</form>
+							<!-- End Multi Columns Form -->
+
+						</div>
+					</div>
+
+					<!--/* 유통기한 임박 
               <div class="card info-card sales-card">
                 <div class="card-body">
                   <h5 class="card-title">유통기한 임박 <span> | 발주 필요 재고</span></h5>
@@ -109,105 +117,121 @@
                 </div>
               </div>
           */-->
-            
-          </div>
 
-        <div class="col-lg-8">
+				</div>
 
-          <div class="card">
-            <div class="card-body">
-         
-              <h5 class="card-title">전체재고 : 
-              	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic)} > 0  and ${logistic[0].allStock} > 0  ?  ${logistic[0].allStock} : '0'"></span>개
-              </h5>
-              
-              <!-- Table with hoverable rows -->
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                  	<th scope="col">NO</th>
-                    <th scope="col">재료코드</th>
-                    <th scope="col">재료명</th>
-                    <th scope="col">수량</th>
-                    <th scope="col">용량</th>
-                    <th scope="col">재고상태</th>
-                  </tr>
-                </thead>
-                <tbody>
-	            <th:block th:each="info, stats : ${logistic}">
-	            	<tr th:data-mid=${info.materialNumber} data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-	            		<td>[[ ${stats.count} ]]</td>
-	            		<td>[[ ${info.materialNumber} ]]</td>
-	            		<td>[[ ${info.materialName} ]]</td>
-	            		<td>[[ ${info.stockCount} ]]개</td>
-	            		<td>[[ ${info.unit} ]]</td>
-	            		<td th:text="${info.requireStock} < 0 ? '충분' : '부족' "></td>
-	                </tr>
-	            </th:block>
-                </tbody>
-              </table>
-              <!-- End Table with hoverable rows -->
-              
-              
-              
-              <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
-                <div class="modal-dialog modal-dialog-scrollable">
-                  <div class="modal-content">
-                  
-                    <div class="modal-header">
-                      <h3 class="modal-title"></h3>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+				<div class="col-lg-8">
 
-                    <div class="modal-body">
-                    
-                    <div id="top-tag">
-                    	<h5><b>분류 : </b><span id="mate_class"></span></h5>
-                    	<h5><b>용량 : </b><span id="mate_unit"></span></h5>
-                    	<h5><b>안전수량 : </b><span id="mate_safetyStock"></span></h5>
-                    	<h5><b>거래처 : </b><span id="mate_supplier"></span></h5>
-                    </div>
-					
-		              <!-- Small tables -->
-		              <table class="table table-sm">
-		                <thead>
-		                  <tr>
-		                    <th scope="col">입고일</th>
-		                    <th scope="col">유통기한</th>
-		                    <th scope="col">입고수량</th>
-		                  </tr>
-		                </thead>
-		                <tbody class="mat_detail">
-		                </tbody>
-		              </table>
-		              <!-- End small tables -->
-                    </div>
-                    
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" id="orderBtn" th:onClick="|location.href='@{/materialOrder}'|">발주요청</button>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Modal Dialog Scrollable-->
+					<div class="card">
+						<div class="card-body">
+
+							<h5 class="card-title"></h5>
+
+							<!-- Table with hoverable rows -->
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">NO</th>
+										<th scope="col">재료코드</th>
+										<th scope="col">재료명</th>
+										<th scope="col">용량</th>
+										<th scope="col">현재재고</th>
+										<th scope="col">안전재고</th>
+										<th scope="col">재고상태</th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="info, stats : ${logistic}">
+										<tr th:data-mid=${info.materialNumber} data-bs-toggle="modal"
+											data-bs-target="#modalDialogScrollable">
+											<td>[[ ${stats.count} ]]</td>
+											<td>[[ ${info.materialNumber} ]]</td>
+											<td>[[ ${info.materialName} ]]</td>
+											<td>[[ ${info.unit} ]]</td>
+											<td>[[ ${info.stockCount} ]] 개</td>
+											<td>[[ ${info.logisticsSafetyStock} ]] 개</td>
+											<td
+												th:text="${info.stockCount} < ${info.logisticsSafetyStock} ? '부족' : '충분' "></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+							<!-- End Table with hoverable rows -->
 
 
+							<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
 
-            </div>
-          </div>
-          
-        </div>
-    </div>
+										<div class="modal-header">
+											<h3 class="modal-title"></h3>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
 
-    </section>
-	
-  </main><!-- End #main -->
-  
+										<div class="modal-body">
+
+											<div id="top-tag">
+												<h5>
+													<b>분류 : </b><span id="mate_class"></span>
+												</h5>
+												<h5>
+													<b>용량 : </b><span id="mate_unit"></span>
+												</h5>
+												<h5>
+													<b>안전수량 : </b><span id="mate_safetyStock"></span>
+												</h5>
+												<h5>
+													<b>거래처 : </b><span id="mate_supplier"></span>
+												</h5>
+											</div>
+
+											<!-- Small tables -->
+											<table class="table table-sm">
+												<thead>
+													<tr>
+														<th scope="col">입고일</th>
+														<th scope="col">유통기한</th>
+														<th scope="col">입고수량</th>
+													</tr>
+												</thead>
+												<tbody class="mat_detail">
+												</tbody>
+											</table>
+											<!-- End small tables -->
+										</div>
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">닫기</button>
+											<button type="button" class="btn btn-primary" id="orderBtn"
+												th:onClick="|location.href='@{/materialOrder}'|">발주요청</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Modal Dialog Scrollable-->
+
+
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</section>
+
+	</main>
+	<!-- End #main -->
+
 </body>
 </html>
 
-<script type="text/javascript" src="assets/js/cyj/logistic/logisticInfo.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="assets/js/cyj/logistic/logisticInfo.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 모달창 만들고, 모양 잡고, 모달창 위에 있는 데이터를 (document.get attr 해서 innerHTML) -->
 
@@ -234,9 +258,9 @@
 	});
 	
  */-->
- 
- 
- 
+
+
+
 <!--/*  
 	            		
 	<td>[[ ${#dates.format(info.minExpirationLimit, 'yyyy-MM-dd')} ]]</td>
@@ -249,7 +273,12 @@
 	            		
 	<td th:if="${#dates.day(info.minExpirationLimit)} < ${#temporals.day(localDateTime)}">만료</td>
 	<td th:unless="${#dates.day(info.minExpirationLimit)} < ${#temporals.day(localDateTime)}">유효</td>
-	            		
+	
+	
+	              <h5 class="card-title">전체재고 : 
+              	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic)} > 0  and ${logistic[0].allStock} > 0  ?  ${logistic[0].allStock} : '0'"></span>개
+              </h5>
+
+
 */-->
-	            		
-	            		
+

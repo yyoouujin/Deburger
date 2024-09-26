@@ -1,4 +1,9 @@
 
+
+
+              
+
+
 <div class="card">
 	<div class="card-body">
 		<h5 class="card-title">월간 주문</h5>
@@ -12,8 +17,6 @@
       		var list = [];
       		var datelist = [];
       		var sum = 0;
-      		
-
       		
       		for(let i = 0; i<datas.length; i++){		
       			
@@ -41,12 +44,10 @@
       			datelist.push(i);
       		}
       		
-      		
-      		
                   echarts.init(document.querySelector("#areaChart")).setOption({
                     xAxis: {
                       type: 'category',
-                      boundaryGap: false,
+                      //boundaryGap: false,
                       data: datelist
                     },
                     yAxis: {
@@ -56,7 +57,7 @@
                       data: list,
                       type: 'line',
                       smooth: true,
-                      areaStyle: {}
+                      //areaStyle: {}
                     }]
                   });
               </script>
