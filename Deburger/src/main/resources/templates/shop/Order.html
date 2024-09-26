@@ -6,6 +6,29 @@
 <head>
 <meta charset="UTF-8" />
 <title>발주 관리</title>
+<style>
+.getDateControl {
+	display: inline-block;
+	width: 46%;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--bs-body-color);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: var(--bs-body-bg);
+	background-clip: padding-box;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: var(--bs-border-radius);
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	text-align: left;
+}
+
+
+</style>
+
 </head>
 
 <body>
@@ -14,20 +37,34 @@
 
 			<h1>발주 리스트</h1>
 
-			<h6 style="display: inline-block;">
-				<a href="ShopOrderList" class="badge border-dark border-1 text-dark">수동
-					발주</a><span> | </span><a href="ShopAutoOrderList"
-					class="badge border-dark border-1 text-dark">자동 발주</a>
-			</h6>
+
+			<nav class="navbar navbar-expand-lg bg-body-t00ertiary">
+				<div class="container-fluid">
+					<!-- class="collapse navbar-collapse" -->
+					<div id="navbarSupportedContent" style="width:69%">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item" ><a class="nav-link active"
+								aria-current="page" href="ShopOrderList" style="font-weight: bold;">수동발주</a></li>
+							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="ShopAutoOrderList" style="color: grey;">자동발주</a></li>
+						</ul>
+					</div>
+                    
+					<div id="getdate" style="float:left" >
+						<input type="date" id="startDate" class="getDateControl">
+						~ <input type="date" id="endDate" class="getDateControl">
+					</div>
+					<form style="margin: 5px; display: inline-block; value: right">
+						<button type="button" id="qnaInsert" class="btn btn-primary"
+							onClick="location.href='selectOrderCart'">발주신청</button>
+					</form>
+					
+				</div>
+			</nav>
 
 
 
 
-
-
-			<button type="button" class="btn btn-primary btn-sm"
-				style="padding: 5px 20px 5px 20px; margin-left: 80%;"
-				onClick="location.href='selectOrderCart'">발주 신청</button>
 
 		</div>
 		<!-- End Page Title -->
@@ -39,10 +76,7 @@
 						<div class="card-body">
 							<!-- Table with stripped rows -->
 							<!-- <table class="table datatable"> -->
-							<div id="getdate">
-								<span><input type="date" id="startDate"> ~ <input
-									type="date" id="endDate"></span>
-							</div>
+
 							<table class="table ">
 								<thead>
 									<tr>
@@ -257,7 +291,7 @@
 		location.href = url;
 	}
 
-	
+
 
 	</script>
 </body>
