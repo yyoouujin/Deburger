@@ -83,7 +83,9 @@ public class StockVO {
 		if (getLastPage() < getEndPage()) {
 			setEndPage(getLastPage());
 		}
-		setStartPage(getEndPage() - cntPage + 1);
+		if(getEndPage() % getCntPage() != 0) {
+			setStartPage((getEndPage()/getCntPage())*getCntPage() + 1);
+		}
 		if (getStartPage() < 1) {
 			setStartPage(1);
 		}

@@ -111,8 +111,8 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	public int AutoOrdercountMaterial() {
 		// TODO Auto-generated method stub
-		shopOrderMapper.AutoOrdercountMaterial();
-		return shopOrderMapper.Alldel();
+		shopOrderMapper.Alldel();
+		return shopOrderMapper.AutoOrdercountMaterial();
 	}
 	
 	@Override

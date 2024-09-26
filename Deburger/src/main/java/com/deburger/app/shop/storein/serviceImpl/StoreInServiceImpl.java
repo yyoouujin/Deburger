@@ -35,7 +35,10 @@ public class StoreInServiceImpl implements StoreInService {
 	@Override
 	public int shopincoun() {
 		// TODO Auto-generated method stub
-		return storeInMapper.shopincoun();
+		StoreInVO storeInVO = new StoreInVO();
+		String mcode = SecurityUtil.memberCode();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.shopincoun(storeInVO);
 	}
 	
 	//입고 재고 상세 조회
@@ -61,6 +64,44 @@ public class StoreInServiceImpl implements StoreInService {
 		}
 		
 		return 1;
+	}
+	
+	@Override
+	public List<StoreInVO> stockInList() {
+		// TODO Auto-generated method stub
+		StoreInVO storeInVO = new StoreInVO();
+		String mcode = SecurityUtil.memberCode();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.stockInList(storeInVO);
+	}
+	
+	@Override
+	
+	public List<StoreInVO> stockfound(StoreInVO storeInVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.stockfound(storeInVO);
+	}
+	
+	@Override
+	public int stockInListCon() {
+		// TODO Auto-generated method stub
+		return storeInMapper.shopincoun();
+	}
+	
+	@Override
+	public List<StoreInVO> stockInListInfo(StoreInVO storeInVO) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.stockInListInfo(storeInVO);
+	}
+	
+	@Override
+	public int stockInListInfoCon() {
+		// TODO Auto-generated method stub
+		return storeInMapper.stockInListInfoCon();
 	}
 	
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +45,7 @@ public class StoreInController {
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		
+		
 		int total = storeInService.shopincoun();
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -54,7 +56,7 @@ public class StoreInController {
 			cntPerPage = "10";
 		}
 		storeInVO = new StoreInVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		
+		System.err.println(storeInVO);
 		//List<StockVO> list = stockService.selectStock(stockVO);
 
 		//model.addAttribute("stockList", list);
@@ -139,4 +141,32 @@ public class StoreInController {
 	private String setImagePath(String uploadFileName) {
 		return uploadFileName.replace(File.separator, "/");
 	}
+	
+	
+	@GetMapping("stockInList")
+	public String stockInList(Model model) {
+		
+		List<StoreInVO> list = storeInService.stockInList();
+		model.addAttribute("stockInList", list);
+		
+		return "shop/receive";	
+	}
+	
+	@PostMapping("stockfound")
+	@ResponseBody
+	public List<StoreInVO> stockfound(@RequestBody StoreInVO storeInVO , Model model) {
+		List<StoreInVO> list = storeInService.stockfound(storeInVO);
+		
+		return list;	
+	}
+	
+	@GetMapping("stockInListInfo")
+	public String stockInListInfo(StoreInVO storeInVO ,Model model) {
+		
+		List<StoreInVO> list = storeInService.stockInListInfo(storeInVO);
+		model.addAttribute("stockInListInfo", list);
+		return "shop/receivestockinfo";	
+	}
+	
+	
 }

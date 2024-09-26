@@ -20,5 +20,22 @@ public interface StoreInMapper {
 	public int storeStock(StoreInVO storeInVO);
 	
 	// store in 
-	public int shopincoun();
+	public int shopincoun(StoreInVO storeInVO);
+	
+	//입고 전체 조회
+	public List<StoreInVO> stockInList(StoreInVO storeInVO);
+	
+	//입고 검색
+	public List<StoreInVO> stockfound(StoreInVO storeInVO);
+	
+	// 페이징
+	public int stockInListCon();
+	
+	//입고 상세 조회
+	public List<StoreInVO> stockInListInfo(StoreInVO storeInVO);
+	
+	//페이징
+	public int stockInListInfoCon();
+	
+	
 }

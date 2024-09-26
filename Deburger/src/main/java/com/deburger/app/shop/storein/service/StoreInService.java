@@ -15,4 +15,20 @@ public interface StoreInService {
 	
 	// store in 
 	public int shopincoun();
+	
+	//입고 전체 조회
+	public List<StoreInVO> stockInList();
+	
+	//입고 검색
+	public List<StoreInVO> stockfound(StoreInVO storeInVO);
+	
+	// 페이징
+	public int stockInListCon();
+	
+	//입고 상세 조회
+	public List<StoreInVO> stockInListInfo(StoreInVO storeInVO);
+	
+	//페이징
+	public int stockInListInfoCon();
+	
 }
