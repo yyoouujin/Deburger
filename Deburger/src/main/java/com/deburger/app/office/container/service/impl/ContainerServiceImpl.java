@@ -96,7 +96,7 @@ public class ContainerServiceImpl implements ContainerService {
 		// TODO Auto-generated method stub
 		return containerMapper.containerOuts(containerVO);
 	}
-	
+
 	// 물류창고 출고 count
 	@Override
 	public int containerOutAllCount(ContainerVO containerVO) {
@@ -128,6 +128,7 @@ public class ContainerServiceImpl implements ContainerService {
 	public void containerOutpD(List<ContainerVO> list) {
 		for (ContainerVO vo : list) {
 			containerMapper.containerOutprocedure(vo);
+			return;
 		}
 	}
 
@@ -136,7 +137,5 @@ public class ContainerServiceImpl implements ContainerService {
 		// TODO Auto-generated method stub
 		return containerMapper.loginSession(containerVO);
 	}
-
-
 
 }

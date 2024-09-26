@@ -21,9 +21,21 @@
       <ul class="d-flex align-items-center">
 
         <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="fa-solid fa-user"></i>마이페이지</a><!-- End Messages Icon -->
+        
+		  <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authentication="name">
+            <i class="fa-solid fa-user"></i></a><!-- End Messages Icon -->
+            
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_1')">
+            <i class="fa-solid fa-user"></i>관리자</a><!-- End Messages Icon -->
+            
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_2')">
+            <i class="fa-solid fa-user"></i>지점담당자</a><!-- End Messages Icon -->
+            
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_3')">
+            <i class="fa-solid fa-user"></i>물류담당자</a><!-- End Messages Icon -->
+            
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_4')">
+            <i class="fa-solid fa-user"></i>가맹점</a><!-- End Messages Icon -->    
 
         </li><!-- End Messages Nav -->
 

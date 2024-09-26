@@ -2,10 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
+	<style>
+.nav-link active {
+    color: black; /* 기본 글씨 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
 
+.nav-link active.selected {
+    font-weight: bold; /* 선택된 카테고리 글씨 굵게 */
+
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+
 </head>
 
 <body>
@@ -19,7 +30,7 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShop">전체</a></li>
+								aria-current="page" href="noticeListShop" ><span onclick=style.fontWeight='bold'>전체</span></a></li>
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="noticeListShopUpdate">업데이트</a></li>
 							<li class="nav-item"><a class="nav-link active"
@@ -119,6 +130,8 @@
 			let url = 'noticeListInfoShop?noticeNumber=' + num;
 			location.href = url;
 		});
+		
+
 	</script>
 </body>
 </html>
