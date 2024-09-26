@@ -87,7 +87,10 @@ public class StoreInServiceImpl implements StoreInService {
 	@Override
 	public int stockInListCon() {
 		// TODO Auto-generated method stub
-		return storeInMapper.shopincoun();
+		StoreInVO storeInVO = new StoreInVO();
+		String mcode = SecurityUtil.memberCode();
+		storeInVO.setStoreNumber(mcode);
+		return storeInMapper.shopincoun(storeInVO);
 	}
 	
 	@Override
