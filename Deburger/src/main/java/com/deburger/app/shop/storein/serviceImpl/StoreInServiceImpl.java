@@ -67,9 +67,8 @@ public class StoreInServiceImpl implements StoreInService {
 	}
 	
 	@Override
-	public List<StoreInVO> stockInList() {
+	public List<StoreInVO> stockInList(StoreInVO storeInVO) {
 		// TODO Auto-generated method stub
-		StoreInVO storeInVO = new StoreInVO();
 		String mcode = SecurityUtil.memberCode();
 		storeInVO.setStoreNumber(mcode);
 		return storeInMapper.stockInList(storeInVO);
@@ -90,7 +89,7 @@ public class StoreInServiceImpl implements StoreInService {
 		StoreInVO storeInVO = new StoreInVO();
 		String mcode = SecurityUtil.memberCode();
 		storeInVO.setStoreNumber(mcode);
-		return storeInMapper.shopincoun(storeInVO);
+		return storeInMapper.stockInListCon(storeInVO);
 	}
 	
 	@Override
@@ -101,10 +100,6 @@ public class StoreInServiceImpl implements StoreInService {
 		return storeInMapper.stockInListInfo(storeInVO);
 	}
 	
-	@Override
-	public int stockInListInfoCon() {
-		// TODO Auto-generated method stub
-		return storeInMapper.stockInListInfoCon();
-	}
+
 	
 }

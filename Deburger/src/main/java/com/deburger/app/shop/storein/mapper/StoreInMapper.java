@@ -29,13 +29,12 @@ public interface StoreInMapper {
 	public List<StoreInVO> stockfound(StoreInVO storeInVO);
 	
 	// 페이징
-	public int stockInListCon();
+	public int stockInListCon(StoreInVO storeInVO);
 	
 	//입고 상세 조회
 	public List<StoreInVO> stockInListInfo(StoreInVO storeInVO);
 	
-	//페이징
-	public int stockInListInfoCon();
+
 	
 	
 }

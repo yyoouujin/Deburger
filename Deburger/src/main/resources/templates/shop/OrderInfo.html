@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>구매 발주서</title>
-<style>
+<style  >
 th, td {
 	border: solid 1px black;
 }
@@ -35,18 +35,18 @@ th, td {
 									</tr>
 									<tr>
 										<th>발주일자</th>
-										<td colspan='9'>[[${#dates.format(ShopOrderInfo[0].orderDay,'yyyy/MM/dd')}]]</td>
+										<td colspan='9' id='date'>[[${#dates.format(ShopOrderInfo[0].orderDay,'yyyy/MM/dd')}]]</td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
-										<td colspan='4' th:text="${ShopOrderInfo[0].storeNumber}"></td>
+										<td colspan='4' th:text="${ShopOrderInfo[0].storeName}"></td>
 										<th>수신 업체 이름</th>
 										<td colspan='4'>디버거</td>
 									</tr>
 									<tr>
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
-										<td colspan='3' th:text="${ShopOrderInfo[0].email}"></td>
+										<td colspan='3' th:text="${ShopOrderInfo[0].ssph}"></td>
 
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
@@ -55,7 +55,7 @@ th, td {
 									</tr>
 									<tr>
 										<th>이메일</th>
-										<td colspan='3' th:text="${ShopOrderInfo[0].phone}"></td>
+										<td colspan='3' th:text="${ShopOrderInfo[0].ssemail}"></td>
 										<th>이메일</th>
 										<td colspan='3'>info@deburger.com</td>
 									</tr>
@@ -111,7 +111,11 @@ th, td {
 			
 		Calculator();
 		
+		let today  = new Date().toISOString().substring(0, 10);
+		
+		
 		function Calculator(){
+			
 			let sum = 0;
 			  $('.allprice').each(function(index,item){
 				  sum += Number(item.innerHTML);

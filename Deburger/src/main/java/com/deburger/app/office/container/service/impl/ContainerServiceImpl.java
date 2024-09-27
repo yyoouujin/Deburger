@@ -105,7 +105,7 @@ public class ContainerServiceImpl implements ContainerService {
 		return containerMapper.containerOutsCount(containerVO);
 	}
 
-	// 물류 창고 처리 조회 list
+	// 물류 창고 처리 조회 list (메인페이지 같이씀)
 	@Override
 	public List<ContainerVO> containerOutAllList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
@@ -137,6 +137,14 @@ public class ContainerServiceImpl implements ContainerService {
 	public ContainerVO loginService(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
 		return containerMapper.loginSession(containerVO);
+	}
+	
+	
+	// 메인페이지 입고 알람개수
+	@Override
+	public List<ContainerVO> countInsertList(ContainerVO containerVO) {
+		// TODO Auto-generated method stub
+		return containerMapper.countInsertList(containerVO);
 	}
 
 }

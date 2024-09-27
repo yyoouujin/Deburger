@@ -50,5 +50,8 @@ public interface ContainerService {
 	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
 
 	public ContainerVO loginService(ContainerVO containerVO);
+	
+	// 물류 창고 입고 카운트(희창)
+	public List<ContainerVO> countInsertList(ContainerVO containerVO);
 
 }

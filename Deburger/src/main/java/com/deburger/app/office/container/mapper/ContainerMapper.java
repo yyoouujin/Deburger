@@ -24,6 +24,11 @@ public interface ContainerMapper {
 	// 물류 창고 입고 조회 list
 	public List<ContainerVO> selectInInfoList(ContainerVO containerVO);
 
+	
+	// 물류 창고 입고 카운트(희창)
+	public List<ContainerVO> countInsertList(ContainerVO containerVO);
+
+
 	// 물류 창고 입고 조회 처리
 	public int containerInInsert(ContainerVO vo);
 

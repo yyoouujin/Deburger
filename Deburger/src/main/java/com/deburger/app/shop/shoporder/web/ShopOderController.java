@@ -83,7 +83,7 @@ public class ShopOderController {
 	public String ShopOrderInfo(ShopOrderVO shopOrderVO,Model model) {
 		List<ShopOrderVO> list = shopOrderService.orderInfo(shopOrderVO);
 		model.addAttribute("ShopOrderInfo", list);
-		return "shop/Orderinfo";
+		return "shop/OrderInfo";
 	}
 	
 	//자동 발주 리스트
