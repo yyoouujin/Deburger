@@ -3,6 +3,7 @@ package com.deburger.app.shop.stock.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 import com.deburger.app.shop.stock.service.StockVO;
 
 public interface StockMapper {
@@ -38,4 +39,7 @@ public interface StockMapper {
 	
 	// 상세조회 총 갯수
 	public int shopinfo(StockVO stockVO);
+	
+	//장바구니 중복확인
+	public int countCart(StockVO stockVO);
 }

@@ -41,21 +41,24 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 	@Override
 	@Transactional
 	public int insertShopOrder(ShopOrderVO shopOrderVO) {
-
+		
 		String mcode = SecurityUtil.memberCode();
 		shopOrderVO.setStoreNumber(mcode);
 		
-		String imlog = shopOrderMapper.storelog(shopOrderVO);
-		shopOrderVO.setLogisticsId(imlog);
-		shopOrderMapper.insertShopOrder(shopOrderVO);
+		
+		
+			String imlog = shopOrderMapper.storelog(shopOrderVO);
+			shopOrderVO.setLogisticsId(imlog);
+			shopOrderMapper.insertShopOrder(shopOrderVO);
 
-		for (ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
-			devo.setOrderNumber(shopOrderVO.getOrderNumber());
-			shopOrderMapper.dinsertShopOrder(devo);
-		}
-		for (ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
-			shopOrderMapper.deleteOrderCart(shvo);
-		}
+			for (ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
+				devo.setOrderNumber(shopOrderVO.getOrderNumber());
+				shopOrderMapper.dinsertShopOrder(devo);
+			}
+			for (ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
+				shopOrderMapper.deleteOrderCart(shvo);
+			}
+		
 		
 		return 1;
 
@@ -123,5 +126,18 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		
 		return shopOrderMapper.selectdate(shopOrderVO);
 
+	}
+	
+	@Override
+	public int delMater(List<ShopOrderVO> list) {
+		// TODO Auto-generated method stub
+		String mcode = SecurityUtil.memberCode();
+		
+		for(ShopOrderVO soVO : list) {			
+			soVO.setStoreNumber(mcode);
+			shopOrderMapper.delMater(soVO);
+		}		
+		
+		return 1;
 	}
 }

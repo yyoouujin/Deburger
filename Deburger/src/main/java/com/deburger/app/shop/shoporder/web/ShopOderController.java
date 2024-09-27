@@ -16,6 +16,7 @@ import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.shop.shoporder.service.ShopOrderService;
 import com.deburger.app.shop.shoporder.service.ShopOrderVO;
 import com.deburger.app.shop.stock.service.StockVO;
+import com.deburger.app.shop.storein.service.ListVO;
 
 @Controller
 public class ShopOderController {
@@ -32,8 +33,8 @@ public class ShopOderController {
 	public String selectShopOrder(Model model) {
 		
 		List<ShopOrderVO> list = shopOrderService.selectShopOrder();
-		
-		model.addAttribute("selectOrderCart", list);
+			model.addAttribute("selectOrderCart", list);			
+
 		
 		return "shop/purchaseorder";
 	}
@@ -124,4 +125,15 @@ public class ShopOderController {
 		 List<ShopOrderVO> list = shopOrderService.selectdate(shopOrderVO);
 		return list;
 	}
+	
+	//재료 삭제
+	@PostMapping("delMater")
+	@ResponseBody
+	public String delMater(@RequestBody List<ShopOrderVO> shopOrderVO) {
+		System.err.println(shopOrderVO);
+		shopOrderService.delMater(shopOrderVO);
+		
+		return "true";
+	}
+	
 }
