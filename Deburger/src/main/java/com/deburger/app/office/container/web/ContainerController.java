@@ -143,10 +143,15 @@ public class ContainerController {
 		ContainerVO pid = containerService.loginService(mid);
 		List<ContainerVO> list = containerService.containerOutAllList(pid);
 
-		list.size();
+		int lcnt = list.size();
+		if (lcnt > 0) {
+			model.addAttribute("lcnts", true);
+		} else {
+			model.addAttribute("lcnts", false);
+		}
 		model.addAttribute("out", list);
-		System.err.println(list);
 		model.addAttribute("persons", pid);
+		System.err.println(lcnt);
 		return "office/container/containerOut";
 	}
 
