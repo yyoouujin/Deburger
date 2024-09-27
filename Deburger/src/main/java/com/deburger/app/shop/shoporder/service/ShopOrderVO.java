@@ -14,7 +14,13 @@ public class ShopOrderVO {
 	private Date startDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date today;
 	
+	private String ssemail;
+	private int ssph;
+	
+	private String storeName;
 	
 	//장바구니
 	private String storeNumber;
