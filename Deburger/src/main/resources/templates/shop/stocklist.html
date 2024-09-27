@@ -14,8 +14,8 @@
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>재고 관리</h1>
-			<div style="padding-left: 85%;">
-			<select id="stockC">
+			<div class="d-flex flex-row bd-highlight mb-3" style="padding-left: 75%;">
+			<select id="stockC" class="form-select" style="width: 200px; margin-right: 5px;">
 				<option value="main">품목 구분</option>
 				<option th:each="stockCList : ${stockC}"
 					th:value="${stockCList.materialClassification}"

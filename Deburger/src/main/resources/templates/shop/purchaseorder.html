@@ -41,7 +41,7 @@ th, td {
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel"
 						aria-labelledby="profile-tab">
 
-						<h9> <input type="radio" name="option" value="counts" /> <span>
+						<h9> <input type="radio" class="form-check-input" name="option" value="counts" /> <span>
 							<span style="color: red;">[동의]</span> 자동 발주 설정을 하면, 재고가 적정 재고 이하로
 							감소할 때 자동으로 발주가 신청됩니다. <br> &nbsp &nbsp &nbsp &nbsp &nbsp
 							&nbsp &nbsp 동의하신다면, 동의 버튼을 눌러주세요.
@@ -64,6 +64,8 @@ th, td {
 								<button type="submit" class="btn btn-primary" id="orderbtn">발주
 									신청</button>
 								<button type="button" class="btn btn-primary" id="cancel"
+									onclick="delMater()">선택 재료 삭제</button>
+								<button type="button" class="btn btn-primary" id="cancel"
 									onclick="location.href='shopStock'">발주 취소</button>
 							</div>
 							<table class="col-lg-12" style="text-align: center">
@@ -76,17 +78,21 @@ th, td {
 									</tr>
 									<tr>
 										<th>발주일자</th>
-										<td colspan='8'><input type="text" class="form-control"
-											th:value="
-											
+										<td colspan='8'>
+										
+										<input type="text" class="form-control"
+											th:value="					
 											${#dates.format(selectOrderCart[0].today,'yyyy/MM/dd')}"
-											disabled="" style="width: 99.2%; margin: 3px"></td>
+											disabled="" style="width: 99.2%; margin: 3px"
+											th:if="${selectOrderCart.size()!= 0}"></td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
 										<td colspan='3'><input type="text" th:value="${selectOrderCart[0].storeName}"
 											id="storeNumber" class="form-control" disabled=""
-											style="width: 98.7%; margin: 3px"></td>
+											style="width: 98.7%; margin: 3px"
+											th:if="${selectOrderCart.size()!= 0}"
+											></td>
 
 										<th>수신 업체 이름</th>
 										<td colspan='4'><input type="text" class="form-control"
@@ -96,8 +102,10 @@ th, td {
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
 										<td colspan='2'><input type="text" class="form-control"
-											th:value="${selectOrderCart[0].phone}" disabled=""
-											style="width: 98%; margin: 3px"></td>
+											th:value="${selectOrderCart[0].phone}" 
+											disabled=""
+											style="width: 98%; margin: 3px"
+											th:if="${selectOrderCart.size()!= 0}"></td>
 
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
@@ -110,7 +118,8 @@ th, td {
 										<th>이메일</th>
 										<td colspan='2'><input type="text" class="form-control"
 											th:value="${selectOrderCart[0].email}" disabled=""
-											style="width: 98%; margin: 3px"></td>
+											style="width: 98%; margin: 3px"
+											th:if="${selectOrderCart.size()!= 0}"></td>
 										<th>이메일</th>
 										<td colspan='3'><input type="text" class="form-control"
 											value="info@deburger.com" disabled=""
@@ -173,6 +182,7 @@ th, td {
 	let num = 0;
 	
 	
+	
 	$('#orderbtn').on('click',function(){
 		num = 1;
 		makeData()
@@ -199,7 +209,44 @@ th, td {
 			makeData();
 		}
 	})
-
+//----------------------------------------------------------
+	function delMater(){
+		if($("[name='checkOrder']:checked").length == 0){
+			Swal.fire({
+                title: '삭재 예정 재료를 선택해주세요. ',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소'
+                })
+			return;
+		}
+		
+		let list = [];
+				
+		$("[name='checkOrder']:checked").each(function(i,checkbox){
+			let tr = $(checkbox).closest('tr').children();	
+			let materialNumber = tr.eq(0).find('input').val();
+			list.push({materialNumber})
+		})		
+		
+		
+		
+		$.ajax({
+			url : "delMater",
+			method : "POST",
+			contentType:"application/json",
+			data : JSON.stringify(list),
+			
+		}).then((end) => {
+			location.href="ShopOrderList"
+		})
+		
+	}
+	//-------------------
 	allOrder.addEventListener('click', function(){
 			const isChecked = allOrder.checked;
 			
@@ -267,7 +314,6 @@ th, td {
 			
 			let orderName = '';
 			if( $('#orderName').get(0).value == ''){
-				console.log($("[name='checkOrder']:checked").length);
 				if($("[name='checkOrder']:checked").length == 1){
 					orderName = $('#matname').html();
 				}else{
@@ -298,7 +344,7 @@ th, td {
 			})
 			
 			list= {note,oderApp,allprice,orderName,storeNumber,autoOrderOperation,cancelOperation,detList,cartList};
-			console.log(list);
+
 			
 			Swal.fire({
                 title: '발주 신청하시겠습니까?',
