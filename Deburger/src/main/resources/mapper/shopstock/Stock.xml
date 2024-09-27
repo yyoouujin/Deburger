@@ -144,4 +144,11 @@
 		order by
 		STOCK_COUNT DESC
 	</select>
+	
+	<select id="countCart" parameterType="ShopOrderVO">
+	select count(*)
+	from order_cart
+	where Material_number = #{materialNumber}
+	And store_number = #{storeNumber}
+	</select>
 </mapper>

@@ -45,8 +45,11 @@ public class StockServiceImpl implements StockService {
 
 		String mcode = SecurityUtil.memberCode();
 		stockVO.setStoreNumber(mcode);
-
-		int result = stockMapper.insertCart(stockVO);
+		int result = 0;
+		if(stockMapper.countCart(stockVO) == 0) {
+			result = stockMapper.insertCart(stockVO);
+		}
+		
 
 		return result == 1 ? 1 : -1;
 	}
