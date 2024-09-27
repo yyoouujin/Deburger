@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import javax.print.attribute.Size2DSyntax;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.deburger.app.main.login.config.SecurityUtil;
 import com.deburger.app.main.login.service.UserVO;
 import com.deburger.app.main.store.service.StoreSalesVO;
 import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
+import com.deburger.app.office.container.service.ContainerService;
+import com.deburger.app.office.container.service.ContainerVO;
 import com.deburger.app.shop.notice.service.NoticeService;
 import com.deburger.app.shop.notice.service.NoticeVO;
 import com.deburger.app.shop.productSale.service.StoreSaleVO;
@@ -33,12 +38,14 @@ public class StoreController {
 
 	private StoreService storeService;
 	private NoticeService noticeService;
+	private ContainerService containerService;
 	
 
 	@Autowired
-	public StoreController(StoreService storeService, NoticeService noticeService) {
+	public StoreController(StoreService storeService, NoticeService noticeService, ContainerService containerService) {
 		this.storeService = storeService;
 		this.noticeService = noticeService;
+		this.containerService = containerService;
 	}
 
 	// application.properties 에서 불러와 필드에 담음
@@ -166,10 +173,18 @@ public class StoreController {
 	@GetMapping("storeStatistics")
 	public String StoreStatistics(Model model) {
 		
+		String mcode = SecurityUtil.memberCode();
+		ContainerVO cvo = new ContainerVO();
+		cvo.setPersonId(mcode);
+		
 		List<NoticeVO> list = noticeService.noticeListShopList();
 		List<StoreSalesVO>  StoreSales = storeService.selectStoreSalesMonth();
 		List<StoreSalesVO>  StoreProduct = storeService.selectStoreProductMonth();
 		List<StoreSalesVO>  StoreOrder = storeService.selectStoreOrderMonth();
+		List<ContainerVO> In = containerService.countInsertList(cvo);
+		int countIn = In.size();
+		List<ContainerVO> out = containerService.containerOutAllList();
+		int countOut = out.size();
 		
     	model.addAttribute("notices", list);
     	//월별 가맹점 매출
@@ -178,6 +193,10 @@ public class StoreController {
     	model.addAttribute("StoreProduct", StoreProduct);
     	//월별 발주 원가
     	model.addAttribute("StoreOrder", StoreOrder);
+    	//입고대기 건수
+    	model.addAttribute("countIn", countIn);
+    	//출고대기 건수
+    	model.addAttribute("countOut", countOut);
     	
 		return "main/store/storeStatistics";
 	}
