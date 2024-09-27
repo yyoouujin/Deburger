@@ -18,4 +18,5 @@ public interface StoreMapper {
 	
 	public List<StoreSalesVO> selectStoreOrderMonth();
 	
+	public StoreVO selectLogisticsId(String personId);
 }
