@@ -41,10 +41,10 @@ th, td {
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel"
 						aria-labelledby="profile-tab">
 
-						<h9> <input type="radio" name="option" value="counts" />
-						<span> <span style="color: red;">[동의]</span> 자동 발주 설정을 하면,
-							재고가 적정 재고 이하로 감소할 때 자동으로 발주가 신청됩니다. <br> &nbsp &nbsp &nbsp
-							&nbsp &nbsp &nbsp &nbsp 동의하신다면, 동의 버튼을 눌러주세요.
+						<h9> <input type="radio" name="option" value="counts" /> <span>
+							<span style="color: red;">[동의]</span> 자동 발주 설정을 하면, 재고가 적정 재고 이하로
+							감소할 때 자동으로 발주가 신청됩니다. <br> &nbsp &nbsp &nbsp &nbsp &nbsp
+							&nbsp &nbsp 동의하신다면, 동의 버튼을 눌러주세요.
 						</span>
 					</div>
 					</h9>
@@ -77,14 +77,14 @@ th, td {
 									<tr>
 										<th>발주일자</th>
 										<td colspan='8'><input type="text" class="form-control"
-											value="2024-09-27" disabled=""
-											style="width: 99.2%; margin: 3px">
-										</td>
+											th:value="
+											
+											${#dates.format(selectOrderCart[0].today,'yyyy/MM/dd')}"
+											disabled="" style="width: 99.2%; margin: 3px"></td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
-										<td colspan='3'>
-										<input type="text" value="디버거 감삼점"
+										<td colspan='3'><input type="text" th:value="${selectOrderCart[0].storeName}"
 											id="storeNumber" class="form-control" disabled=""
 											style="width: 98.7%; margin: 3px"></td>
 
@@ -96,7 +96,7 @@ th, td {
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
 										<td colspan='2'><input type="text" class="form-control"
-											value="053-0000-0000" disabled=""
+											th:value="${selectOrderCart[0].phone}" disabled=""
 											style="width: 98%; margin: 3px"></td>
 
 										<th rowspan="2">연락처</th>
@@ -109,7 +109,7 @@ th, td {
 									<tr>
 										<th>이메일</th>
 										<td colspan='2'><input type="text" class="form-control"
-											value="info@deburger.com" disabled=""
+											th:value="${selectOrderCart[0].email}" disabled=""
 											style="width: 98%; margin: 3px"></td>
 										<th>이메일</th>
 										<td colspan='3'><input type="text" class="form-control"

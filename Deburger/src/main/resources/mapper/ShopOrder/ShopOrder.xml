@@ -13,15 +13,21 @@
 	<!-- 발주 전체 조회 -->
 	<select id="selectShopOrder" parameterType="ShopOrderVO">
 
-		select
+				select
 		m.material_number
 		,m.material_name
 		,m.unit
 		,o.count
 		,m.sale_Unitprice
+        ,s.phone
+        ,s.store_name
+        ,sysdate AS today
+        ,s.email
 		from
 		order_cart o join material m
 		on m.material_number = o.material_number
+        join store s
+        on o.store_number = s.store_number
 		where o.store_number = #{storeNumber}
 		ORDER by m.material_number
 	</select>
@@ -128,7 +134,7 @@
 
 	<!-- 발주 상세 내역 -->
 	<select id="orderInfo" parameterType="ShopOrderVO">
-		select o.count
+	select o.count
 		,s.order_day
 		,s.store_number
 		,s.order_name
@@ -137,13 +143,18 @@
 		,m.sale_unitprice
 		,m.material_item
 		,m.material_classification
-		,p.person_id
+		,p.person_id 
 		,p.email
 		,p.phone
+        ,ss.store_name 
+        ,ss.phone AS ssph
+        ,ss.email AS ssemail
 		from order_details o join store_order s
 		on o.order_number = s.order_number
 		join material m
 		on o.material_number = m.material_number
+        join store ss
+        on s.store_number = ss.store_number
 		LEFT OUTER JOIN person p
 		on p.person_id = s.person_id
 		where o.order_number = #{orderNumber}
