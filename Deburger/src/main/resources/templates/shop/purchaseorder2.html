@@ -40,12 +40,12 @@ th, td {
 						role="tabpanel" aria-labelledby="home-tab"></div>
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel"
 						aria-labelledby="profile-tab">
+						<h5><span style="color:  red;">* 확인 *</span>
 						<div>
 							<div>
-								<input type="radio" name="option" value="counts" /><span> <span style="color:  red;">[동의]</span>  자동 발주 설정을 하면, 재고가 적정 재고 이하로 감소할 때 자동으로 발주가 신청됩니다. <br>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 동의하신다면, 동의 버튼을 눌러주세요.</span>
+								<input type="radio" name="option" value="counts" />적정 재고 기준으로 주문이 자동으로 됩니다.
 							</div>
-						</h9>
-
+						</h5>
 						</div>
 					</div>
 				</div>
@@ -56,7 +56,7 @@ th, td {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
-						<div class="card-body" style="margin-top:10px">
+						<div class="card-body">
 							<div style="text-align: right; margin: 0 0 10px 0;">
 								<button type="button" class="btn btn-primary" id="save">자동 발주
 									저장</button>
@@ -69,43 +69,43 @@ th, td {
 								<thead>
 									<tr>
 										<th>발주건명</th>
-										<td colspan='8'><input type="text" id="orderName" name="orderName" style="width: 99.2%; margin:3px" class="form-control"></td>
+										<td colspan='8'><input type="text" id="orderName"
+											name="orderName" style="border: none; width: 100%;"></td>
 									</tr>
 									<tr>
 										<th>발주일자</th>
-										<td colspan='8'><input type="text" class="form-control" value="2024-09-27" disabled=""  style="width: 99.2%; margin:3px"></td>
+										<td colspan='8'></td>
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
-										<td colspan='3' ><input type="text" value="디버거 감삼점" id="storeNumber" class="form-control"  disabled=""  style="width: 98.7%; margin:3px"></td>
-										
+										<td colspan='3' sec:authentication="name" id="storeNumber"></td>
 										<th>수신 업체 이름</th>
-										<td colspan='4'><input type="text" class="form-control" value="디버거" disabled=""  style="width: 98%; margin:3px"></td>
+										<td colspan='4'>디버거</td>
 									</tr>
 									<tr>
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
-										<td colspan='2'><input type="text" class="form-control" value="053-0000-0000" disabled=""  style="width: 98%; margin:3px"></td>
+										<td colspan='2'></td>
 
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
-										<td colspan='3'><input type="text" class="form-control" value="053-0000-0000" disabled=""  style="width: 98%; margin:3px"></td>
+										<td colspan='3'>053-0000-0000</td>
 
 									</tr>
 									<tr>
 										<th>이메일</th>
-										<td colspan='2'><input type="text" class="form-control" value="info@deburger.com" disabled=""  style="width: 98%; margin:3px"></td>
+										<td colspan='2'></td>
 										<th>이메일</th>
-										<td colspan='3'><input type="text" class="form-control" value="info@deburger.com" disabled=""  style="width: 98%; margin:3px"></td>
+										<td colspan='3'>info@deburger.com</td>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<th>합계금액</th>
-										<td style="text-align: center" colspan='8'>일금 
-										    <input type="text" style="width: 200px; margin:3px; padding:5.6px; border-radius:7px; border-width:1px" disabled="" id="korSum"
-	                                         readonly /> 원정( 
-											<input type="text" style="width: 200px; margin:3px; padding:5.6px; border-radius:7px; border-width:1px" disabled="" id="allSum" readonly />
+										<td style="text-align: center" colspan='8'>일금 <input
+											type="text" style="border: none; width: 200px;" id="korSum"
+											readonly /> 원정( <input type="text"
+											style="border: none; width: 200px;" id="allSum" readonly />
 											)세액포함
 										</td>
 									</tr>
@@ -132,7 +132,7 @@ th, td {
 											<td th:text="${list.unit}" />
 											<td><input type="number" min="1"
 												th:value="${list.count}" id="count" name="count"
-												style="width: 200px; margin:3px; padding:5px; border-radius:7px; border-width:1px; border-color:gray"></td>
+												style="border: none;"></td>
 											<td th:text="${list.saleUnitprice}" id="oprice" />
 											<td th:text="${list.saleUnitprice*list.count}" id="price"></td>
 											<td th:text="${list.saleUnitprice*list.count/10}"
