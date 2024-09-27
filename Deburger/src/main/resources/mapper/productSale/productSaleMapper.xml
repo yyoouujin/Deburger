@@ -65,6 +65,12 @@
 			)	   
    </insert>
    
+   <select id="countStoreSale">   
+   	SELECT count(*)
+	FROM store_product_sale
+	WHERE store_number = #{storeNumber}
+	AND TO_CHAR(product_date, 'yyyy-mm-dd') = TO_CHAR(sysdate, 'yyyy-mm-dd')
+   </select>
 	
 	
 </mapper>
