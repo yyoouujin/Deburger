@@ -26,6 +26,8 @@ import com.deburger.app.main.store.service.StoreService;
 import com.deburger.app.main.store.service.StoreVO;
 import com.deburger.app.office.container.service.ContainerService;
 import com.deburger.app.office.container.service.ContainerVO;
+import com.deburger.app.office.logistic.service.LogisticService;
+import com.deburger.app.office.logistic.service.LogisticVO;
 import com.deburger.app.shop.notice.service.NoticeService;
 import com.deburger.app.shop.notice.service.NoticeVO;
 import com.deburger.app.shop.productSale.service.StoreSaleVO;
@@ -39,13 +41,15 @@ public class StoreController {
 	private StoreService storeService;
 	private NoticeService noticeService;
 	private ContainerService containerService;
+	private LogisticService logisticService;
 	
 
 	@Autowired
-	public StoreController(StoreService storeService, NoticeService noticeService, ContainerService containerService) {
+	public StoreController(StoreService storeService, NoticeService noticeService, ContainerService containerService, LogisticService logisticService) {
 		this.storeService = storeService;
 		this.noticeService = noticeService;
 		this.containerService = containerService;
+		this.logisticService = logisticService;
 	}
 
 	// application.properties 에서 불러와 필드에 담음
@@ -185,6 +189,14 @@ public class StoreController {
 		int countIn = In.size();
 		List<ContainerVO> out = containerService.containerOutAllList(cvo);
 		int countOut = out.size();
+		LogisticVO lvo = new LogisticVO();
+		lvo.setPersonId(mcode);
+		
+		StoreVO svo = storeService.selectLogisticsId(mcode);
+		lvo.setLogisticsId(svo.getLogisticsId());
+		
+		List<LogisticVO> order = logisticService.selectRequireStock(lvo);
+		int countorder = order.size();
 		
     	model.addAttribute("notices", list);
     	//월별 가맹점 매출
@@ -197,6 +209,10 @@ public class StoreController {
     	model.addAttribute("countIn", countIn);
     	//출고대기 건수
     	model.addAttribute("countOut", countOut);
+    	//발주대기 건수
+    	model.addAttribute("countOrder", countorder);
+    	//발주대기 건수
+    	model.addAttribute("logisticsId", svo.getLogisticsId());
     	
 		return "main/store/storeStatistics";
 	}

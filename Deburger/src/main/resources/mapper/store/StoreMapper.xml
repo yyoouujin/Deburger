@@ -169,5 +169,10 @@
 	ORDER BY SUBSTR(b.dt,1,7)
 	</select>
 	
+	<select id="selectLogisticsId">
+		SELECT area logisticsId
+		FROM person
+		WHERE person_id = #{personId}
+	</select>
 	
 </mapper>

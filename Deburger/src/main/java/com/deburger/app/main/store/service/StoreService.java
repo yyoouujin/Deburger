@@ -15,4 +15,6 @@ public interface StoreService {
 	public List<StoreSalesVO> selectStoreProductMonth();
 	
 	public List<StoreSalesVO> selectStoreOrderMonth();
+	
+	public StoreVO selectLogisticsId(String personId);
 }
