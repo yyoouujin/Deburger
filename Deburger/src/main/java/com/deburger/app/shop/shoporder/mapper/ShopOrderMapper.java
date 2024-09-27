@@ -52,4 +52,9 @@ public interface ShopOrderMapper {
 	//조건 조회
 	public List<ShopOrderVO> selectdate(ShopOrderVO shopOrderVO);
 	
+	//장바구니 삭제
+	public int delMater(ShopOrderVO shopOrderVO);	
+	
+
+	
 }

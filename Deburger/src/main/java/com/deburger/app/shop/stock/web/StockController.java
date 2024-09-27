@@ -64,7 +64,7 @@ public class StockController {
 		if (id > -1) {
 			url = "redirect:shopStock";
 		} else {
-			url = "redirect:shop";
+			url = "redirect:shopStock";
 		}
 
 		return url;

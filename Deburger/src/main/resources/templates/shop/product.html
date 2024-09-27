@@ -19,11 +19,12 @@
 				<div class="col-lg-6">
 					<div class="card">
 						<div class="card-body">
+						<input type='date' id='currentDate' class="form-control" style="margin-top: 10px"/>
 							<table class="table ">
 								<thead>
 									<tr>
 										<th>제품 이름</th>
-										<th><select id="stockC">
+										<th><select id="stockC" class="form-select">
 												<option value="main">품목 구분</option>
 												<option th:each="stockCList : ${stockC}"
 													th:value="${stockCList.category}"
@@ -47,7 +48,7 @@
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<input type='date' id='currentDate' />
+					
 					<div id="graph"></div>
 
 				</div>

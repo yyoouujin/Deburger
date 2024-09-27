@@ -248,5 +248,11 @@
 		s.order_number DESC
 		</select>
 		
+	<delete id="delMater" >
+	DELETE FROM order_cart 
+    WHERE material_number = #{materialNumber}
+    and store_number = #{storeNumber}
+	</delete>
+	
 
 </mapper>
