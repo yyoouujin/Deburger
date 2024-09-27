@@ -86,6 +86,7 @@ public class ContainerServiceImpl implements ContainerService {
 	@Override
 	@Transactional
 	public int disposeItem(ContainerVO containerVO) {
+		containerMapper.stockDelete(containerVO);
 		containerMapper.containerInupdate(containerVO);
 		return containerMapper.containerOutInsert(containerVO);
 	}
@@ -106,9 +107,9 @@ public class ContainerServiceImpl implements ContainerService {
 
 	// 물류 창고 처리 조회 list (메인페이지 같이씀)
 	@Override
-	public List<ContainerVO> containerOutAllList() {
+	public List<ContainerVO> containerOutAllList(ContainerVO containerVO) {
 		// TODO Auto-generated method stub
-		return containerMapper.containerOutList();
+		return containerMapper.containerOutList(containerVO);
 	}
 
 	@Override

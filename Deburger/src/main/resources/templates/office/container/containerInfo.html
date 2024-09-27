@@ -50,9 +50,9 @@
                       	<td th:text="${info.count}"></td>
                       	<td th:text="${info.orderCondition} ? '완료' : '진행'"></td>
                       	<td th:text="${info.inOperation} ? '입고 완료' : '미입고'"></td>
-                      	<td th:text="${#dates.format(info.expirationLimit,'yyyy/MM/dd')}"></td>
-                      	<td th:text="${info.inCount} - ${info.outCount}"></td>
                       	<td th:text="${#dates.format(info.inDay,'yyyy/MM/dd')}"></td>
+                      	<td th:text="${info.inCount} - ${info.outCount}"></td>
+                      	<td th:text="${#dates.format(info.expirationLimit,'yyyy/MM/dd')}"></td>
                       	<td><button class="btn btn-primary">폐기</button></td>
                       </tr>
                     </tbody>
