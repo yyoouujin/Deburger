@@ -42,7 +42,6 @@
 										<th>가맹점번호</th>
 										<th>취소진행상태</th>
 										<th>재고가능여부</th>
-										<th>물류창고</th>
 										<th>발주상태</th>
 									</tr>
 								</thead>
@@ -60,8 +59,7 @@
 											<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
 											<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
 											
-											<td>재고조회</td>
-											<td class="selectLogistics">[[ ${info.logisticsName} ]]</td>
+											<td>[[ ${info.deliveryConfirm} ]]</td>
 											<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
 										</tr>
 									</th:block>
@@ -119,7 +117,7 @@
 				                  
 				                    <div class="modal-header">
 				                    
-				                      <h3 class="modal-title">주문번호 : <span id="findOdn"></span></h3>
+				                      <h3 class="modal-title" id="findOdn"></h3>
 				                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				                    </div>
 				
@@ -132,7 +130,7 @@
 				                    	<h6><b>전화번호 : </b><span id=store_tel></span></h6>
 				                    	<h6><b>점주 : </b><span id=shop_keeper></span></h6>
 				                    	<h6><b>이메일 : </b><span id=shop_email></span></h6>
-				                    	<h6><b>담당창고 : </b><span id=shop_logi></span></h6>
+				                    	<h6><b>담당창고 : </b><select  id="shop_logi"></select></h6>
 				                    </div>
 									
 						              <!-- Small tables -->
