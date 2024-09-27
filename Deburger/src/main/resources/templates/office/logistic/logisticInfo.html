@@ -2,16 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<link rel="stylesheet" href="assets/css/logisticInfo.css" />
 <head>
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
 
-<style>
-#postnum {
-	margin-top: 31.994px;
-}
-</style>
 
 </head>
 <body>
@@ -20,22 +16,35 @@
 	<main id="main" class="main">
 
 		<div class="pagetitle">
-			<h1>업체 상세조회</h1>
+			<h1>물류창고 조회</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item">공급업체 관리</li>
-					<li class="breadcrumb-item active">업체 조회</li>
+					<li class="breadcrumb-item">물류 관리</li>
+					<li class="breadcrumb-item active">물류창고 조회</li>
 				</ol>
 			</nav>
 		</div>
 		<!-- End Page Title -->
 
-
-
 		<section class="section dashboard">
 
 			<div class="row">
 				<div class="col-lg-4">
+					<div class="card info-card logisticStockCard">
+						<div class="LogiInfoStockCard">
+							<div
+								class="d-flex align-items-center d-flex justify-content-around">
+								<div class="mainHomeAlert">
+									<h6>부족</h6>
+									<h4 class="pt-2" id="requireStock"></h4>
+								</div>
+								<div class="mainHomeAlert">
+									<h6>충분</h6>
+									<h4 class="pt-2" id="enoughStock"></h4>
+								</div>
+							</div>
+						</div>
+					</div>
 
 					<div class="card">
 						<div class="card-body">
@@ -100,30 +109,14 @@
 								</div>
 							</form>
 							<!-- End Multi Columns Form -->
-
 						</div>
 					</div>
-
-					<!--/* 유통기한 임박 
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">유통기한 임박 <span> | 발주 필요 재고</span></h5>
-                  <div class="d-flex align-items-center">
-                    <div class="ps-0">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          */-->
-
 				</div>
 
 				<div class="col-lg-8">
 
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body" style="min-height: 700px;">
 
 							<h5 class="card-title"></h5>
 
@@ -138,6 +131,7 @@
 										<th scope="col">현재재고</th>
 										<th scope="col">안전재고</th>
 										<th scope="col">재고상태</th>
+										<th scope="col">필요재고</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -150,13 +144,55 @@
 											<td>[[ ${info.unit} ]]</td>
 											<td>[[ ${info.stockCount} ]] 개</td>
 											<td>[[ ${info.logisticsSafetyStock} ]] 개</td>
+
+
+											<td th:if="${info.stockCount} < ${info.logisticsSafetyStock}"><span
+												style="color: red; font-weight: bold;">부족</span></td>
 											<td
-												th:text="${info.stockCount} < ${info.logisticsSafetyStock} ? '부족' : '충분' "></td>
+												th:unless="${info.stockCount} < ${info.logisticsSafetyStock}">충분</td>
+											
+								
+											<td th:if="${info.requireStock} <= 0">-</td>
+											<td th:unless="${info.requireStock} <= 0"><span
+												style="color: orange; font-weight: bold;">[[ ${info.requireStock} ]] 개</span></td>
+											
 										</tr>
 									</th:block>
 								</tbody>
 							</table>
 							<!-- End Table with hoverable rows -->
+
+
+							<div style="display: block; text-align: center;" class="logisticStockPage">
+								<nav aria-label="Page navigation">
+									<ul class="pagination justify-content-center">
+										<!-- 이전 -->
+										<li class="page-item"
+											th:classappend="${paging.startPage == 1} ? 'disabled'">
+											<a class="page-link"
+											th:href="@{/logisticInfo(logisticsId=${logi.logisticsId}, nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}">&lt;</a>
+										</li>
+
+										<!-- 현재 -->
+										<li class="page-item"
+											th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+											th:classappend="${p == paging.nowPage} ? 'active'"><span
+											th:if="${p == paging.nowPage}"> <a class="page-link"
+												th:text="${p}"></a>
+										</span> <span th:if="${p != paging.nowPage}"> <a
+												class="page-link"
+												th:href="@{/logisticInfo(logisticsId=${logi.logisticsId}, nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+												th:text="${p}"></a>
+										</span></li>
+										<!-- 다음 -->
+										<li class="page-item"
+											th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+											<a class="page-link"
+											th:href="@{/logisticInfo(logisticsId=${logi.logisticsId}, nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
 
 
 							<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
@@ -278,7 +314,8 @@
 	              <h5 class="card-title">전체재고 : 
               	<span th:if="${#lists.size(logistic) > 0}" th:text="${#lists.size(logistic)} > 0  and ${logistic[0].allStock} > 0  ?  ${logistic[0].allStock} : '0'"></span>개
               </h5>
-
+<td
+												th:text="${info.stockCount} < ${info.logisticsSafetyStock} ? '부족' : '충분' "></td>
 
 */-->
 

@@ -35,16 +35,13 @@
 	</select>
 	
 	<select id="selectAllListcount">	
-			     SELECT NVL(SUM(cnt), 0) AS cnt
-					FROM (
-					    SELECT COUNT(a.stock_count) AS cnt
-					    FROM logistics_stock a
-					    JOIN logistics b
-					      ON a.logistics_id = b.logistics_id
-					      where stock_count <![CDATA[>=]]>  0
-					    and b.person_id =  #{personId}
-					    GROUP BY b.person_id
-					)
+		    SELECT COUNT(a.stock_count) AS cnt
+		    FROM logistics_stock a
+		    JOIN logistics b
+		      ON a.logistics_id = b.logistics_id
+		      where stock_count <![CDATA[>=]]>  0
+		    and b.person_id =  #{personId}
+
 	</select>
 	
 	<!-- 상세 조회  			and b.disposal_operation = 'N' -->
@@ -107,6 +104,39 @@
 			order by a.order_number desc
 	</select>
 	
+	
+	<select id="countInsertList">
+		select a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        c.logistics_id,
+			        d.client_name,
+			        sum(b.count) as sum
+			from logistics_order a
+			join logistics_order_details b
+			        on a.order_number = b.order_number
+			join logistics c
+			        on a.logistics_id  = c.logistics_id
+			join supplier d
+			        on a.client_id = d.client_id
+			where  c.logistics_id = (select area
+                                      from person
+                                      where person_id = #{personId})
+			and b.in_operation = 'f1'        
+			group by a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        c.logistics_id,
+			        d.client_name
+			order by a.order_number desc	
+	</select>
+	
 	<!-- 입고 처리 조회 -->
 	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
 		select  distinct
@@ -115,12 +145,16 @@
 		        a.unit,
 		        a.order_cost,
 		        b.order_number,
+                b.client_id,
 		        c.logistics_id,
 		        c.logistics_name,
 		        c.phone as logisticsPhone,
 		        c.person_id,
 		        d.material_name,
-        		e.material_number
+        		e.material_number,
+                f.client_name,
+                f.phone,
+                f.email
 		from  logistics_order_details a
 		join logistics_order b
 		        on a.order_number = b.order_number
@@ -130,6 +164,8 @@
 		        on a.material_number = d.material_number
 		join company_material e
          		on d.material_number = e.material_number
+        join supplier f
+                on b.client_id = f.client_id
 		where b.order_number = #{orderNumber}
 	</select>
 	
@@ -245,7 +281,7 @@
 	
 	<update id="containerInupdate">
 		update logistics_in
-		set out_count = #{outCount},
+		set out_count = out_count - #{outCount},
 			disposal_operation = #{disposalOperation}
 		where lot = #{lot}
 	</update>
@@ -301,21 +337,13 @@
 	
 	<!-- count -->
 	<select id ="containerOutsCount">
-		  select DISTINCT
-			    count(a.order_number)
-			from store_order a
-			join order_details b
-			    on a.order_number = b.order_number
-			join store c
-			    on a.store_number = c.store_number
-			join logistics_out d
-			    on b.order_details_number = d.order_details_number
-			join logistics_in e
-			    on d.lot = e.lot
-			where d.out_operation = 'g2'
-			and a.oder_app = 'L3'
-			and e.person_id = #{personId}
-			order by a.order_number desc
+		 select distinct
+	    count(*) 
+	    from store_order a
+	        join logistics b
+            on a.logistics_id = b.logistics_id
+        where a.oder_app = 'L3'
+        and b.person_id = #{personId}
 	</select>
 	
 	
@@ -331,7 +359,12 @@
 		    on a.order_number = b.order_number
 		join store c
 		    on a.store_number = c.store_number
-		where a.oder_app = 'L2'       
+        join logistics_out d
+            on b.order_details_number = d.order_details_number
+        join logistics_in e
+            on d.lot = e.lot
+		where a.oder_app = 'L2'
+        and e.person_id = #{personId}
 		group by a.order_number,
 		        a.oder_app,
 		        c.logistics_id,
@@ -352,7 +385,9 @@
 		        c.store_number,
 		        d.store_name,
 		        d.phone,
-                e.inspection
+		        d.email,
+                e.inspection,
+                f.logistics_name
 		from order_details a
 		join material b
 		    on a.material_number = b.material_number
@@ -362,6 +397,8 @@
 		    on c.store_number = d.store_number
         left outer join logistics_out e
             on a.order_details_number = e.order_details_number
+        left outer join logistics f
+            on e.logistics_id = f.logistics_id
 		where a.order_number = #{orderNumber}
 	
 	</select>

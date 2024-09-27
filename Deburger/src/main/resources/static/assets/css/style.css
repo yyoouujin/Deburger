@@ -415,6 +415,7 @@ h6 {
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
 .logo {
   line-height: 1;
 }
@@ -516,12 +517,18 @@ h6 {
   color: #012970;
 }
 
+.header .logoutBtn {
+  background-color: transparent;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
 .header-nav ul {
   list-style: none;
-  
 }
 
 .header-nav>ul {
@@ -531,14 +538,13 @@ h6 {
 
 .header-nav .nav-icon {
   font-size: 22px;
-  
-  color: #012970;
+  color: #000000;
   margin-right: 25px;
   position: relative;
 }
 
 .header-nav .nav-profile {
-  color: #012970;
+  color: #000000;
 }
 
 .header-nav .nav-profile img {
@@ -546,7 +552,7 @@ h6 {
 }
 
 .header-nav .nav-profile span {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -1280,7 +1286,7 @@ h6 {
 .footer {
   font-family: "Do Hyeon", sans-serif, Open Sans;
   padding: 20px 0;
-  font-size: 16px;
+  font-size: 12px;
   transition: all 0.3s;
   border-top: 1px solid #cddfff;
   background-color: white;
@@ -1312,8 +1318,8 @@ h6 {
 
 .footer p {
   text-align: left;
-  color : black;
-  font-size: 20px;
+  color : rgb(85, 85, 85);
+  font-size: 18px;
   margin-top: 0;
   margin-bottom: 0;
 }

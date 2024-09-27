@@ -33,12 +33,12 @@ public interface ContainerService {
 
 	// 물류 창고 출고 조회
 	public List<ContainerVO> containerOutAll(ContainerVO containerVO);
-	
+
 	// 물류 창고 출고 count
 	public int containerOutAllCount(ContainerVO containerVO);
 
 	// 물류 창고 출고 처리 조회
-	public List<ContainerVO> containerOutAllList();
+	public List<ContainerVO> containerOutAllList(ContainerVO containerVO);
 
 	// 물류 창고 출고 처리 상세 조회
 	public List<ContainerVO> containerOutInfo(ContainerVO containerVO);
@@ -50,5 +50,8 @@ public interface ContainerService {
 	public List<ContainerVO> containerOutModalInfo(ContainerVO containerVO);
 
 	public ContainerVO loginService(ContainerVO containerVO);
+	
+	// 물류 창고 입고 카운트(희창)
+	public List<ContainerVO> countInsertList(ContainerVO containerVO);
 
 }

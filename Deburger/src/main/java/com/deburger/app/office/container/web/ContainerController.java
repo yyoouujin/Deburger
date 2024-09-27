@@ -136,13 +136,16 @@ public class ContainerController {
 
 	// 출고 처리 리스트
 	@GetMapping("containerOut")
-	public String containerOutListAll(Model model) {
-		List<ContainerVO> list = containerService.containerOutAllList();
+	public String containerOutListAll(ContainerVO containerVO, Model model) {
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
 		ContainerVO pid = containerService.loginService(mid);
+		List<ContainerVO> list = containerService.containerOutAllList(pid);
+
+		list.size();
 		model.addAttribute("out", list);
+		System.err.println(list);
 		model.addAttribute("persons", pid);
 		return "office/container/containerOut";
 	}

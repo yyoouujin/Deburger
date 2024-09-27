@@ -44,6 +44,16 @@ public class LogisticServiceImpl implements LogisticService {
 	}
 	
 	@Override
+	public List<LogisticVO> selectRequireStock(LogisticVO logisticVO) {
+		return logisticMapper.requireStock(logisticVO);
+	}
+	
+	@Override
+	public List<LogisticVO> selectEnoughStock(LogisticVO logisticVO) {
+		return logisticMapper.enoughStock(logisticVO);
+	}
+	
+	@Override
 	public List<LogisticVO> logisticMaterialInfo(LogisticVO logisticVO) {
 		return logisticMapper.selectLogisticMaterialInfo(logisticVO);
 	}
