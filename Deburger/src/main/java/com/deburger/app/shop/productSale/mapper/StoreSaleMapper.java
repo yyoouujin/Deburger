@@ -16,4 +16,7 @@ public interface StoreSaleMapper {
 	public StoreSaleVO selectStoreSaleDate();
 	// 가맹점 등록시 매출통계 등록
 	public int insertStoreSaleStatistics(StoreSaleVO saleVO);
+	// 가맹점 등록시 매출통계 등록
+	public int countStoreSale(StoreSaleVO saleVO);
+	
 }

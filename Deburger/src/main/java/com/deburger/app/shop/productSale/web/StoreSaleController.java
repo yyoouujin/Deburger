@@ -36,11 +36,23 @@ public class StoreSaleController {
 		
 		List<StoreSaleVO> list = storeSaleService.selectStoreSaleList();
 		String mcode = SecurityUtil.memberCode();
+		
 		String id = storeService.selectStoreInfoNumber(mcode);
 		
+		StoreSaleVO svo = new StoreSaleVO();
+		svo.setStoreNumber(mcode);
+		int countSale = storeSaleService.countStoreSale(svo);
+		
+				
 		for(StoreSaleVO storeSaleVO : list) {
 			storeSaleVO.setStoreNumber(mcode);
 		}
+		
+		if(countSale > 0) {
+			model.addAttribute("count", false);
+		}else {
+			model.addAttribute("count", true);
+		}		
 		
 		model.addAttribute("storeNumber", id);
 		model.addAttribute("List", list);
