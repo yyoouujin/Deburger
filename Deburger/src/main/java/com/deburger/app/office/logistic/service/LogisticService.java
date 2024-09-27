@@ -17,6 +17,11 @@ public interface LogisticService {
 		//재료 전체데이터캣수(페이징)
 		public int getMatTotal();
 		
+		//물류창고 필요재고
+		public List<LogisticVO> selectRequireStock(LogisticVO logisticVO);
+		//물류창고 충분재고
+		public List<LogisticVO> selectEnoughStock(LogisticVO logisticVO);
+		
 		//물류창고 물품조회
 		public List<LogisticVO> logisticMaterialInfo(LogisticVO logisticVO);
 		//물류창고 등록
