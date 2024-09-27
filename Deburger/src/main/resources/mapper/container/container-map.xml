@@ -107,6 +107,39 @@
 			order by a.order_number desc
 	</select>
 	
+	
+	<select id="countInsertList">
+		select a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        c.logistics_id,
+			        d.client_name,
+			        sum(b.count) as sum
+			from logistics_order a
+			join logistics_order_details b
+			        on a.order_number = b.order_number
+			join logistics c
+			        on a.logistics_id  = c.logistics_id
+			join supplier d
+			        on a.client_id = d.client_id
+			where  c.logistics_id = (select area
+                                      from person
+                                      where person_id = #{personId})
+			and b.in_operation = 'f1'        
+			group by a.order_number,
+			        a.note,
+			        a.client_id,
+			        b.order_condition,
+			        b.person_id,
+			        b.in_operation,
+			        c.logistics_id,
+			        d.client_name
+			order by a.order_number desc	
+	</select>
+	
 	<!-- 입고 처리 조회 -->
 	<select id="selectInInfoList" resultType="ContainerVO" parameterType="list">
 		select  distinct
