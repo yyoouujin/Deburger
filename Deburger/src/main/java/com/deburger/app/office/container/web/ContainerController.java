@@ -136,8 +136,8 @@ public class ContainerController {
 
 	// 출고 처리 리스트
 	@GetMapping("containerOut")
-	public String containerOutListAll(Model model) {
-		List<ContainerVO> list = containerService.containerOutAllList();
+	public String containerOutListAll(ContainerVO containerVO, Model model) {
+		List<ContainerVO> list = containerService.containerOutAllList(containerVO);
 		ContainerVO mid = new ContainerVO();
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);

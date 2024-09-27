@@ -23,8 +23,6 @@ public interface ContainerMapper {
 
 	// 물류 창고 입고 조회 list
 	public List<ContainerVO> selectInInfoList(ContainerVO containerVO);
-	
-
 
 	// 물류 창고 입고 조회 처리
 	public int containerInInsert(ContainerVO vo);
@@ -41,14 +39,16 @@ public interface ContainerMapper {
 
 	public int containerInupdate(ContainerVO containerVO);
 
+	public int stockDelete(ContainerVO containerVO);
+
 	// 물류 창고 출고 리스트
 	public List<ContainerVO> containerOuts(ContainerVO containerVO);
-	
+
 	// 물류 창고 출고 조회 count
 	public int containerOutsCount(ContainerVO containerVO);
 
 	// 물류 창고 출고 처리 리스트
-	public List<ContainerVO> containerOutList();
+	public List<ContainerVO> containerOutList(ContainerVO containerVO);
 
 	// 물류 창고 출고 처리 상세 조회
 	public List<ContainerVO> containerOutListInfo(ContainerVO containerVO);
