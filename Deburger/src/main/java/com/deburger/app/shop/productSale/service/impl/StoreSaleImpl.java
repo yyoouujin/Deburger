@@ -46,6 +46,12 @@ public class StoreSaleImpl implements StoreSaleService{
 		// TODO Auto-generated method stub
 		return storeSaleMapper.insertStoreSaleStatistics(saleVO);
 	}
+
+	@Override
+	public int countStoreSale(StoreSaleVO saleVO) {
+		// TODO Auto-generated method stub
+		return storeSaleMapper.countStoreSale(saleVO);
+	}
 	
 	
 		
