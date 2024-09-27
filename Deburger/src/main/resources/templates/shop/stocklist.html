@@ -14,7 +14,7 @@
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>재고 관리</h1>
-			<div>
+			<div style="padding-left: 85%;">
 			<select id="stockC">
 				<option value="main">품목 구분</option>
 				<option th:each="stockCList : ${stockC}"
@@ -119,9 +119,27 @@
 	</main>
 	<script>
 		$("td > button").on("click", function(event) {
-			alert("발주 목록에 저장되었습니다.");
-			let url = 'shopCartInsert?materialNumber=' + event.target.id;
-			location.href = url;
+			Swal.fire({
+                title: '발주 장바구니에 넣으시겠습니까?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소'
+                })
+                .then((result)=>{
+                	if(result.isConfirmed){
+                		Swal.fire({
+                            title: '승인이 완료되었습니다.',
+                            icon: 'success',
+                          })
+            			let url = 'shopCartInsert?materialNumber=' + event.target.id;
+            			location.href = url;
+                	}
+                })
+
 		});
 
 		$('tbody > tr').on("click", function(event) {
@@ -173,9 +191,26 @@
 					})
 					
 					$("td > button").on("click", function(event) {
-						alert("발주 목록에 저장되었습니다.");
-						let url = 'shopCartInsert?materialNumber=' + event.target.id;
-						location.href = url;
+						Swal.fire({
+			                title: '발주 장바구니에 넣으시겠습니까?',
+			                text: "",
+			                icon: 'warning',
+			                showCancelButton: true,
+			                confirmButtonColor: '#3085d6',
+			                cancelButtonColor: '#d33',
+			                confirmButtonText: '승인',
+			                cancelButtonText: '취소'
+			                })
+			                .then((result)=>{
+			                	if(result.isConfirmed){
+			                		Swal.fire({
+			                            title: '승인이 완료되었습니다.',
+			                            icon: 'success',
+			                          })
+			            			let url = 'shopCartInsert?materialNumber=' + event.target.id;
+			            			location.href = url;
+			                	}
+			                })
 					});
 					
 					$('tbody > tr').on("click", function(event) {
