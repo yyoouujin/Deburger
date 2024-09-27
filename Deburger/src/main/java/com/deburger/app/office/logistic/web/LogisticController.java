@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.deburger.app.office.logistic.service.Criteria;
 import com.deburger.app.office.logistic.service.LogisticService;
@@ -42,33 +43,56 @@ public class LogisticController {
 				return "office/logistic/logisticList";
 		}
 		
-		/*
+		
 		//창고 단건조회(페이징)
 		@GetMapping("logisticInfo")
-		public String logisticInfo(LogisticVO logisticVO, Model model) {
-				List<LogisticVO> list = logisticService.logisticInfo(logisticVO);
-				Criteria c = new Criteria();
+		public String logisticInfo(LogisticVO logisticVO, Model model,
+									@RequestParam(value = "nowPage", required=false) String nowPage,
+									@RequestParam(value = "cntPerPage", required=false) String cntPerPage) {
 				
-				//LogisticVO findVO = logisticService.logisticInfo(logisticVO);
-				model.addAttribute("logistic", list);
-				model.addAttribute("pageMaker", new LogisticVO(logisticService.getMatTotal(), 5, c));
-				model.addAttribute("localDateTime", LocalDateTime.now());
-				return "office/logistic/logisticInfo";
-		}
-		*/
-		
-		
-		//창고 단건조회
-		@GetMapping("logisticInfo")
-		public String logisticInfo(LogisticVO logisticVO, Model model) {
+				int total = logisticService.getMatTotal();
+				if(nowPage == null && cntPerPage == null) {
+					nowPage = "1";
+					cntPerPage = "10";
+				} else if (nowPage == null) {
+					nowPage = "1";
+				} else if (cntPerPage == null) {
+					cntPerPage = "10";
+				}
+				
+				model.addAttribute("logi", logisticVO);
+				String logiId = logisticVO.getLogisticsId();
+				
+				logisticVO = new LogisticVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+				System.err.println(logisticVO);
+				
+				logisticVO.setLogisticsId(logiId);
+				
 				List<LogisticVO> list = logisticService.logisticInfo(logisticVO);
-				//LogisticVO findVO = logisticService.logisticInfo(logisticVO);
 				model.addAttribute("logistic", list);
+				model.addAttribute("paging", logisticVO);
+				model.addAttribute("viewAll", logisticService.logisticInfo(logisticVO));
 				model.addAttribute("localDateTime", LocalDateTime.now());
 				return "office/logistic/logisticInfo";
 		}
 		
 		
+		//창고 필요재고
+		@GetMapping("requireStock")
+		@ResponseBody
+		public List<LogisticVO> getRequireStock(LogisticVO logisticVO) {
+			List<LogisticVO> requireVO = logisticService.selectRequireStock(logisticVO);
+			return requireVO;
+		}
+		
+		
+		//창고 충분재고
+		@GetMapping("enoughStock")
+		@ResponseBody
+		public List<LogisticVO> getEnoughStock(LogisticVO logisticVO) {
+			List<LogisticVO> enoughVO = logisticService.selectEnoughStock(logisticVO);
+			return enoughVO;
+		}
 
 		//창고 내 물품 단건조회
 		@GetMapping("stockInfoAjax")

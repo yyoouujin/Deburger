@@ -2,11 +2,36 @@
 	const urlParams = new URL(location.href).searchParams;
 	const lid = urlParams.get('logisticsId');
 	
+	
+	//물류창고 필요재고
+	$.ajax({
+		url:"requireStock?logisticsId=" + lid,
+		method:"GET"
+	})
+	.done(data => {
+		let tag = `<span class="text-danger pt-3 fw-bold">${data.length}</span>`
+		$('#requireStock').append(tag);
+	})
+	.fail(err => console.log(err))
+	
+	
+	//물류창고 충분재고
+	$.ajax({
+		url:"enoughStock?logisticsId=" + lid,
+		method:"GET"
+	})
+	.done(data => {
+		let tag = `<span class="text-primary pt-3 fw-bold">${data.length}</span>`
+		$('#enoughStock').append(tag);
+	})
+	.fail(err => console.log(err))
+	
+	
 	//물류창고 정보
 	logisticDetail();
 	
 	function logisticDetail(){
-		
+				
 		$.ajax({
 			url:"logisticDetailInfoAjax?logisticsId=" + lid,
 			method:"GET"

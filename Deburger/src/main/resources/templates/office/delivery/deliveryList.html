@@ -48,11 +48,11 @@
 								</thead>
 								<tbody>
 									<th:block th:each="info, stats : ${deliveries}">
-										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId}>
+										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId}  data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
 											<td>[[ ${stats.count} ]]</td>
 											<td>[[ ${#dates.format(info.orderDay, 'yyyy-MM-dd')} ]] <br>
 												[[ ${#dates.format(info.orderDay, 'HH:mm:ss')} ]] </td>
-											<td data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">[[ ${info.orderNumber} ]]</td>
+											<td style="cursor: pointer;" class="fw-bold">[[ ${info.orderNumber} ]]</td>
 											<td>[[ ${info.storeName} ]]</td>
 											<td>[[ ${info.storeNumber} ]]</td>
 											
@@ -111,27 +111,28 @@
 							</nav>
 							<!-- End Pagination with icons -->
 							
-					
-
+				
 							
 							<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
 				                <div class="modal-dialog modal-dialog-scrollable">
 				                  <div class="modal-content">
 				                  
 				                    <div class="modal-header">
-				                      <h3 class="modal-title" id="findOdn"></h3>
+				                    
+				                      <h3 class="modal-title">주문번호 : <span id="findOdn"></span></h3>
 				                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				                    </div>
 				
 				                    <div class="modal-body">
 				                    
 				                    <div id="top-tag">
-				                    	<h5><b>가맹점번호 : </b><span id=store_id></span></h5>
-				                    	<h5><b>가맹점명 : </b><span id=store_name></span></h5>
-				                    	<h5><b>전화번호 : </b><span id=store_tel></span></h5>
-				                    	<h5><b>점주 : </b><span id=shop_keeper></span></h5>
-				                    	<h5><b>이메일 : </b><span id=shop_email></span></h5>
-				                    	<h5><b>담당창고 : </b><span id=shop_logi></span></h5>
+				                    	<h6><b>주문번호 : </b><span id="order_num"></span></h6>
+				                    	<h6><b>가맹점번호 : </b><span id=store_id></span></h6>
+				                    	<h6><b>가맹점명 : </b><span id=store_name></span></h6>
+				                    	<h6><b>전화번호 : </b><span id=store_tel></span></h6>
+				                    	<h6><b>점주 : </b><span id=shop_keeper></span></h6>
+				                    	<h6><b>이메일 : </b><span id=shop_email></span></h6>
+				                    	<h6><b>담당창고 : </b><span id=shop_logi></span></h6>
 				                    </div>
 									
 						              <!-- Small tables -->
