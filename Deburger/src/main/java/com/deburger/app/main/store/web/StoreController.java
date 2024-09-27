@@ -183,7 +183,7 @@ public class StoreController {
 		List<StoreSalesVO>  StoreOrder = storeService.selectStoreOrderMonth();
 		List<ContainerVO> In = containerService.countInsertList(cvo);
 		int countIn = In.size();
-		List<ContainerVO> out = containerService.containerOutAllList();
+		List<ContainerVO> out = containerService.containerOutAllList(cvo);
 		int countOut = out.size();
 		
     	model.addAttribute("notices", list);
