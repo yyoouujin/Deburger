@@ -1,52 +1,46 @@
 <!DOCTYPE html>
-<th:block xmlns:th="http://www.thymeleaf.org/"
-		  th:fragment="HeaderFrag">
+<th:block xmlns:th="http://www.thymeleaf.org/" th:fragment="HeaderFrag">
 
 
-<!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+	<!-- ======= Header ======= -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a th:href="@{/}" class="logo d-flex align-items-center">
-        <img src="assets/img/메인로고_디버거.jpg" alt="">
-        <span class="d-none d-lg-block">DEBURGER</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+		<div class="d-flex align-items-center justify-content-between">
+			<a th:href="@{/}" class="logo d-flex align-items-center"> <img
+				src="assets/img/메인로고_디버거.jpg" alt=""> <span
+				class="d-none d-lg-block">DEBURGER</span>
+			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
+		</div>
+		<!-- End Logo -->
 
 
+		<nav class="header-nav ms-auto">
+			<ul class="d-flex align-items-center">
 
-    <nav class="header-nav ms-auto">
-    
-      <ul class="d-flex align-items-center">
+				<li class="nav-item pe-3">
+					<a class="nav-link nav-profile d-flex align-items-center pe-0">
+						<span class="d-none d-md-block ps-2"><i class="fa-solid fa-user"></i></span>
+						<span class="d-none d-md-block ps-2" sec:authorize="hasAnyRole('ROLE_1')">관리자</span>
+						<span class="d-none d-md-block ps-2" sec:authorize="hasAnyRole('ROLE_2')">지점담당자</span>
+						<span class="d-none d-md-block ps-2" sec:authorize="hasAnyRole('ROLE_3')">물류담당자</span>
+						<span class="d-none d-md-block ps-2" sec:authorize="hasAnyRole('ROLE_4')">가맹점</span>
+						<span class="d-none d-md-block ps-2" sec:authentication="name"></span>
+					</a>
+				</li>
+				
+				<li class="nav-item pe-5">
+					<form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+						<a class="dropdown-item d-flex align-items-center">
+							<i class="fa-solid fa-right-from-bracket"></i>
+							<button type="submit" class="logoutBtn">Log out</button>
+						</a>
+					</form>
+				</li>
+				
+				
+			</ul>
+		</nav>
+		<!-- End Icons Navigation -->
 
-        <li class="nav-item dropdown">
-        
-		  <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authentication="name">
-            <i class="fa-solid fa-user"></i></a><!-- End Messages Icon -->
-            
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_1')">
-            <i class="fa-solid fa-user"></i>관리자</a><!-- End Messages Icon -->
-            
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_2')">
-            <i class="fa-solid fa-user"></i>지점담당자</a><!-- End Messages Icon -->
-            
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_3')">
-            <i class="fa-solid fa-user"></i>물류담당자</a><!-- End Messages Icon -->
-            
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" sec:authorize="hasAnyRole('ROLE_4')">
-            <i class="fa-solid fa-user"></i>가맹점</a><!-- End Messages Icon -->    
-
-        </li><!-- End Messages Nav -->
-
-        <li class="nav-item dropdown pe-3">
-
-          <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-					<i class="fa-solid fa-arrow-right-from-bracket"></i><button type="submit" class="btn btn-light btn-lg">로그아웃</button>
-				</form>
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
+	</header>
+	<!-- End Header -->

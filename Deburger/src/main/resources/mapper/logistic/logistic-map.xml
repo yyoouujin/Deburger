@@ -3,18 +3,6 @@
 <mapper namespace="com.deburger.app.office.logistic.mapper.LogisticMapper">
 
 
-<!-- 물류창고 전체 조회
-	<select id="selectLogisticAll" resultType="LogisticVO">
-		SELECT logistics_id
-		      , logistics_name
-		      , basics_address || ' ' || details_address || ' ' || note as address
-		      , permission_day
-		FROM logistics
-		ORDER BY logistics_id
-	</select>
- -->
-
-
 <!-- 물류창고 전체 조회 페이징 -->
 	<select id="selectLogisticAll" resultType="LogisticVO">
 	    <![CDATA[
@@ -42,49 +30,67 @@
 		SELECT COUNT(*) FROM logistics
 	</select>
 
-<!-- 물류창고 상세 조회 -->
+<!-- 물류창고 상세 조회 페이징 -->
 	<select id="selectLogisticInfo" resultType="LogisticVO">
-				            SELECT DISTINCT m.material_number
+		SELECT * 
+				FROM (
+				    SELECT ROWNUM RN, A.* 
+				    FROM (
+			            SELECT DISTINCT m.material_number
 						      , m.material_name
 						      , m.unit
 						      , m.logistics_safety_stock
 						      , s.stock_count
+						      , (NVL(m.logistics_safety_stock, 0) - NVL(s.stock_count, 0)) AS require_stock
 						      , (SELECT SUM(stock_count) 
 						         FROM logistics_stock
 						         WHERE logistics_id=#{logisticsId}) AS allstock
 						FROM material m LEFT OUTER JOIN logistics_stock s ON (m.material_number = s.material_number) AND s.logistics_id= #{logisticsId} 
 						                LEFT OUTER JOIN logistics_in i ON (i.logistics_id = s.logistics_id) AND i.disposal_operation = 'd1'
 						ORDER BY m.material_number
+			        ) A
+			)
+		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 
-<!-- 전체 재료 카운트 -->
+<!-- 전체 재료 카운트(페이징) -->
 	<select id="getMatTotal" resultType="int">
 		SELECT COUNT(*) FROM material
 	</select>
+	
+	
+<!-- 필요 재고 -->
+<select id="requireStock" resultType="LogisticVO">
+	<![CDATA[
+		SELECT DISTINCT m.material_number
+		                , m.material_name
+		                , m.unit
+		                , m.logistics_safety_stock
+		                , s.stock_count
+		                , (NVL(m.logistics_safety_stock, 0) - NVL(s.stock_count, 0)) as require_stock
+		FROM material m LEFT OUTER JOIN logistics_stock s ON (m.material_number = s.material_number) AND s.logistics_id= #{logisticsId} 
+								    LEFT OUTER JOIN logistics_in i ON (i.logistics_id = s.logistics_id) AND i.disposal_operation = 'd1'
+		 WHERE (NVL(m.logistics_safety_stock, 0) - NVL(s.stock_count, 0)) > 0
+		ORDER BY m.material_number
+	]]>
+</select>
 
-<!--/*
-[물류창고 상세 조회]
-	<select id="selectLogisticInfo" resultType="LogisticVO">
-		SELECT distinct l.logistics_id
-		      , l.logistics_name
-		      , s.material_number
-		      , m.material_name
-		      , m.unit
-		      , s.stock_count
-		      , (select min(expiration_limit)
-		          from logistics_in) as min_expiration_limit
-		      , (m.logistics_safety_stock - s.stock_count) as require_stock
-		      , (SELECT SUM(stock_count)
-		         FROM logistics_stock) AS allstock
-		FROM logistics l JOIN logistics_stock s
-		                 ON (l.logistics_id = s.logistics_id)
-		                JOIN material m 
-		                ON (m.material_number = s.material_number)
-		                LEFT OUTER JOIN logistics_in i
-		                ON (i.material_number = m.material_number)
-		WHERE l.logistics_id = #{logisticsId} AND (i.in_count - i.out_count) > 0 AND  disposal_operation = 'd1'
-	</select>	
-*/-->
+
+<!-- 충분 재고 -->
+<select id="enoughStock">
+	<![CDATA[
+		SELECT DISTINCT m.material_number
+		                , m.material_name
+		                , m.unit
+		                , m.logistics_safety_stock
+		                , s.stock_count
+		                , (NVL(m.logistics_safety_stock, 0) - NVL(s.stock_count, 0)) as require_stock
+		FROM material m LEFT OUTER JOIN logistics_stock s ON (m.material_number = s.material_number) AND s.logistics_id= #{logisticsId}
+								    LEFT OUTER JOIN logistics_in i ON (i.logistics_id = s.logistics_id) AND i.disposal_operation = 'd1'
+		 WHERE (NVL(m.logistics_safety_stock, 0) - NVL(s.stock_count, 0)) < 0
+		ORDER BY m.material_number
+	]]>
+</select>
 
 <!-- 물류창고 물품 상세 조회 -->
 	<select id="selectLogisticMaterialInfo" resultType="LogisticVO">
@@ -110,34 +116,6 @@
 		GROUP BY m.material_number, m.material_name, m.material_classification, m.unit, m.logistics_safety_stock, i.expiration_limit, i.in_day, i.in_count, i.details_order_number, d.order_number, l.logistics_id
 		ORDER BY l.logistics_id
 	</select>
-	
-<!-- 
-[물류창고 물품 상세 조회]
-	<select id="selectLogisticMaterialInfo" resultType="LogisticVO">
-		SELECT i.material_number 
-		      , m.material_name
-		      , m.material_classification
-		      , m.unit
-		      , m.logistics_safety_stock
-		      , i.expiration_limit
-		      , i.in_day
-		      , i.in_count
-		      , LISTAGG(c.client_id, ', ') WITHIN GROUP(ORDER BY c.client_id) AS aggclient_id
-		      , LISTAGG(s.client_name, ', ') WITHIN GROUP(ORDER BY s.client_name) AS aggclient_name
-		FROM logistics_in i LEFT OUTER JOIN material m 
-		                    ON i.material_number = m.material_number
-		                    JOIN logistics_order_details d
-		                    ON d.details_order_number = i.details_order_number
-		                    JOIN logistics_order l
-		                    ON l.order_number = d.order_number
-		                    JOIN company_material c
-		                    ON c.material_number = m.material_number
-		                    JOIN supplier s
-		                    ON c.client_id = s.client_id
-		WHERE l.logistics_id = #{logisticsId} and i.material_number=#{materialNumber}
-		GROUP BY i.material_number, m.material_name, m.material_classification, m.unit, m.logistics_safety_stock, i.expiration_limit, i.in_day, i.in_count
-	</select>
--->
 
 
 <!-- 물류창고 등록시 담당자 ID 정보 -->
