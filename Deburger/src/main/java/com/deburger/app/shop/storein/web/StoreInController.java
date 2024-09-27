@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.deburger.app.main.login.service.UserVO;
-import com.deburger.app.shop.stock.service.StockVO;
+
 import com.deburger.app.shop.storein.service.ListVO;
 import com.deburger.app.shop.storein.service.StoreInService;
 import com.deburger.app.shop.storein.service.StoreInVO;
@@ -144,10 +143,25 @@ public class StoreInController {
 	
 	
 	@GetMapping("stockInList")
-	public String stockInList(Model model) {
+	public String stockInList(StoreInVO storeInVO, Model model,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 		
-		List<StoreInVO> list = storeInService.stockInList();
-		model.addAttribute("stockInList", list);
+		int total = storeInService.stockInListCon();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		
+		storeInVO = new StoreInVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		model.addAttribute("paging", storeInVO);
+		model.addAttribute("viewAll", storeInService.stockInList(storeInVO));
+		
 		
 		return "shop/receive";	
 	}

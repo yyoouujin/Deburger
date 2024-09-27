@@ -274,7 +274,7 @@
 	})
 	
 	
-	$("#canclebtn").on("click",function(event){		
+	$("#canclebtn").on("click",function(event){	
 		$.ajax({
 			url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
 			method : "POST",
