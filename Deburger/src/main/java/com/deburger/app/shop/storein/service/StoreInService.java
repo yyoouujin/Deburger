@@ -17,7 +17,7 @@ public interface StoreInService {
 	public int shopincoun();
 	
 	//입고 전체 조회
-	public List<StoreInVO> stockInList();
+	public List<StoreInVO> stockInList(StoreInVO storeInVO);
 	
 	//입고 검색
 	public List<StoreInVO> stockfound(StoreInVO storeInVO);
@@ -27,8 +27,6 @@ public interface StoreInService {
 	
 	//입고 상세 조회
 	public List<StoreInVO> stockInListInfo(StoreInVO storeInVO);
-	
-	//페이징
-	public int stockInListInfoCon();
+
 	
 }

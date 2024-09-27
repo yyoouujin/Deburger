@@ -208,4 +208,11 @@
             AND so.order_number = #{orderNumber}
 	</select>
 	
+			<select id="stockInListCon" resultType="int">
+		        select count(*)
+        from store_order
+        where oder_app = 'L3'
+        AND store_number = #{storeNumber}
+		</select>
+	
 </mapper>

@@ -14,9 +14,19 @@
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>재고 관리</h1>
-			<button type="button" class="btn btn-primary btn-sm"
-				style="padding: 5px 20px 5px 20px; margin-left: 80%;"
+			<div>
+			<select id="stockC">
+				<option value="main">품목 구분</option>
+				<option th:each="stockCList : ${stockC}"
+					th:value="${stockCList.materialClassification}"
+					th:text="${stockCList.materialClassification}"></option>
+			</select>
+			
+			
+			<button type="button" class="btn btn-primary btn-sm "
+				style="padding: 5px 10px 5px 10px;"
 				onClick="location.href='selectOrderCart'">발주 신청</button>
+			</div>
 		</div>
 		<!-- End Page Title -->
 		<section class="section">
@@ -33,12 +43,7 @@
 										<tr>
 											<th>품목 코드</th>
 											<th>품목 이름</th>
-											<th><select id="stockC">
-													<option value="main">품목 구분</option>
-													<option th:each="stockCList : ${stockC}"
-														th:value="${stockCList.materialClassification}"
-														th:text="${stockCList.materialClassification}"></option>
-											</select></th>
+											<th>품목 구분</th>
 											<th>규격</th>
 											<th>단가</th>
 											<th>현재 재고</th>
@@ -59,7 +64,9 @@
 													th:text="${list.stockCount}" />
 												<td th:if="${list.stockCount < 0} ">0</td>
 												<td th:text="${list.safetyStock}" />
-												<td><span th:if="${list.stockCount - list.safetyStock < 0} ">재고 부족</span></span></td>
+												<td><span
+													th:if="${list.stockCount - list.safetyStock < 0} ">재고
+														부족</span></span></td>
 												<td><button type="button"
 														class="btn btn-primary btn-sm btnOrder"
 														th:id="${list.materialNumber}"
