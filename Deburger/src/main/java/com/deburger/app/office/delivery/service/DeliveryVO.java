@@ -49,7 +49,10 @@ public class DeliveryVO {
 	//전체 발주수량 (주문번호별)
 	private int allStockOrder;
 	
-	private String deliveryConfirm;
+	
+	private int logisticAllStock;
+	private int orderAllStock;
+	
 	
 
 }
