@@ -1,32 +1,125 @@
 
-
 //발주상세 조회
 $('tbody > tr').on('click', makeTag);
 
 function makeTag(event) {
 
 	let checkText = $(event.currentTarget).children().eq(6);
-	console.log('체크텍스트',checkText.text());
-	let selectLogistic = $(event.currentTarget).children().eq(7);
+	console.log(checkText.text());
 	let tr = event.currentTarget;
 	let odn = $(tr).data('odn');
 	let lid = $(tr).data('lid');
-	//checkStock();
-	
-	
-	/*
-	//발주상태가 승인 완료이면 Y로
-	let deliveryCondition = $(event.currentTarget).children().eq(7);
-	console.log('발주상태',deliveryCondition.text());
+	checkStock();
 
-	if (deliveryCondition.text() == '승인 완료') {
-		console.log(checkText);
-		checkText.text('Y');
+
+	//'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
+	if (checkText.text() == 'N') {
+
+		$.ajax({
+			url: "selectLogistics?orderNumber=" + odn,
+			method: "GET"
+		})
+			.done(data => {
+
+				document.querySelector('#shop_logi').innerText = "";
+				let selectTag = `<select class="selectBox"><select>`
+				$('#shop_logi').append(selectTag);
+
+				data.forEach(element => {
+					let tag = `<option id="selectLogi" value="${element.logisticsId}">${element.logisticsId}</option>`
+					$('.selectBox').append(tag);
+				});
+			})
+			.fail(err => console.log(err));
 	}
-	*/
-	
-	
+
+
 	function checkStock() {
+
+		let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="dBtn">발주승인</button>`
+		$('#deliveryRecognizeBtn').append(dbtn);
+
+		//발주승인버튼 클릭 시 승인상태 변경
+		const deliveryRecognizeBtn = document.querySelector('#deliveryRecognizeBtn');
+		deliveryRecognizeBtn.addEventListener("click", (event) => {
+
+			const findLogi = $('#shop_logi').html();//창고번호
+			const findOdn = $('#findOdn').html();//주문번호
+			const findSelectLogi = $('#selectLogi').html();
+
+			if (findLogi.length == 10) { //창고번호 길이가 10이면 = select 박스로 선택이 안된거
+
+				const dataObj = { "orderNumber": findOdn, "logisticsId": findLogi };
+
+				//발주 승인 Sweet Alert
+				Swal.fire({
+					title: '발주 승인하시겠습니까?',
+					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '승인',
+					cancelButtonText: '취소'
+				})
+					.then((result) => {
+						if (result.isConfirmed) {
+							//발주상태 변경
+							$.ajax('oderappUpdate', {
+								type: 'post',
+								data: dataObj
+							})
+								.done(result => {
+									Swal.fire(
+										'발주 승인 완료',
+										'',
+										'success'
+									)
+									document.location.href = document.location.href;
+								})
+								.fail(err => console.log(err));
+						}
+					})
+
+			} else { //셀렉트박스로 선택된 물류창고로 변경
+
+				const dataObj = { "orderNumber": findOdn, "logisticsId": findSelectLogi };
+
+				Swal.fire({
+					title: '해당 물류창고로 발주 승인하시겠습니까?',
+					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '승인',
+					cancelButtonText: '취소'
+				})
+					.then((result) => {
+						if (result.isConfirmed) {
+							//발주상태 변경
+							$.ajax('oderappUpdate', {
+								type: 'post',
+								data: dataObj
+							})
+								.done(result => {
+									Swal.fire(
+										'발주 승인 완료',
+										'',
+										'success'
+									)
+									document.location.href = document.location.href;
+								})
+								.fail(err => console.log(err));
+						}
+					});
+			}
+		}); //승인버튼 클릭이벤트 끗
+
+
+
+
+		/*
 		//해당 주문번호의 담당물류창고 재고 전체조회
 		$.ajax({
 			url: "logisticAllStock?orderNumber=" + odn,
@@ -41,7 +134,7 @@ function makeTag(event) {
 				})
 					.done(data => {
 						let orderStock = data;
-						
+
 						//1) 재고확인 N 또는 Y 출력
 						if (logisticStock != -1) { //창고에 재고가 하나도 없는게 아니면~ 비교시작
 							if (orderStock >= logisticStock) {
@@ -52,108 +145,18 @@ function makeTag(event) {
 						} else { //창고에 재고가 하나도 없다면 N 출력
 							checkText.text("N");
 						}
-						//2) 'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
-						if (checkText.text() == 'N') {
-							$.ajax({
-								url: "selectLogistics?orderNumber=" + odn,
-								method: "GET"
-							})
-								.done(data => {
 
-									data.forEach(element => {
-										document.querySelector('#shop_logi').innerHTML = "";
-										let tag = `<select class="selectBox"><option id="selectLogi" value="${element.logisticsId}">${element.logisticsId}</option><select>`
-										//$(selecttag).append(tag);
-										$('#shop_logi').append(tag);
-									});
-								})
-								.fail(err => console.log(err));
-						}
 
-						let dbtn = `<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="dBtn">발주승인</button>`
-						$('#deliveryRecognizeBtn').append(dbtn);
-
-						//발주승인버튼 클릭 시 승인상태 변경
-						const deliveryRecognizeBtn = document.querySelector('#deliveryRecognizeBtn');
-						deliveryRecognizeBtn.addEventListener("click", (event) => {
-
-							const findLogi = $('#shop_logi').html();//창고번호
-							const findOdn = $('#findOdn').html();//주문번호
-							const findSelectLogi = $('#selectLogi').html();
-
-							if (findLogi.length == 10) { //창고번호 길이가 10이면 = select 박스로 선택이 안된거
-
-								const dataObj = { "orderNumber": findOdn, "logisticsId": findLogi };
-
-								//발주 승인 Sweet Alert
-								Swal.fire({
-									title: '발주 승인하시겠습니까?',
-									//text: "다시 되돌릴 수 없습니다. 신중하세요.",
-									icon: 'question',
-									showCancelButton: true,
-									confirmButtonColor: '#3085d6',
-									cancelButtonColor: '#d33',
-									confirmButtonText: '승인',
-									cancelButtonText: '취소'
-								})
-									.then((result) => {
-										if (result.isConfirmed) {
-											//발주상태 변경
-											$.ajax('oderappUpdate', {
-												type: 'post',
-												data: dataObj
-											})
-												.done(result => {
-													Swal.fire(
-														'발주 승인 완료',
-														'',
-														'success'
-													)
-													document.location.href = document.location.href;
-												})
-												.fail(err => console.log(err));
-										}
-									})
-
-							} else { //셀렉트박스로 선택된 물류창고로 변경
-
-								const dataObj = { "orderNumber": findOdn, "logisticsId": findSelectLogi };
-
-								Swal.fire({
-									title: '해당 물류창고록 발주 승인하시겠습니까?',
-									//text: "다시 되돌릴 수 없습니다. 신중하세요.",
-									icon: 'question',
-									showCancelButton: true,
-									confirmButtonColor: '#3085d6',
-									cancelButtonColor: '#d33',
-									confirmButtonText: '승인',
-									cancelButtonText: '취소'
-								})
-									.then((result) => {
-										if (result.isConfirmed) {
-											//발주상태 변경
-											$.ajax('oderappUpdate', {
-												type: 'post',
-												data: dataObj
-											})
-												.done(result => {
-													Swal.fire(
-														'발주 승인 완료',
-														'',
-														'success'
-													)
-													document.location.href = document.location.href;
-												})
-												.fail(err => console.log(err));
-										}
-									});
-							}
-						}); //승인버튼 클릭이벤트 끗
 					})
 					.fail(err => console.log(err));
 			})
 			.fail(err => console.log(err));
+			*/
+
+
 	} //checkStock 끝
+
+
 
 	//모달창 띄우기
 	$.ajax({
@@ -217,8 +220,6 @@ function makeTag(event) {
 		.fail(err => console.log(err))
 
 } //maketag 끝
-
-
 
 
 

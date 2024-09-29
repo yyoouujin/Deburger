@@ -18,10 +18,10 @@
 		                            , o.cancel_operation
 		                            , l.logistics_name
 		                            , o.logistics_id
-									,(SELECT NVL(SUM(stock_count), -1)
+									,(SELECT NVL(SUM(stock_count), 0)
 										FROM logistics_stock ls
 					                   WHERE ls.logistics_id=o.logistics_id) as logistic_all_stock
-					                ,(SELECT NVL(SUM(count), -1)
+					                ,(SELECT NVL(SUM(count), 0)
 										FROM order_details ds
 										WHERE ds.order_number=o.order_number) as order_all_stock
 		              FROM store_order o LEFT OUTER JOIN order_details d ON (o.order_number = d.order_number)
@@ -78,9 +78,25 @@
 		FROM order_details
 		WHERE order_number=#{orderNumber}
 	</select>
-	
 
-<!-- 발주수량 이상의 창고 조회 -->
+
+<!-- 발주수량 이상의 창고 조회 (수정) -->
+	<select id="selectLogistics" resultType="DeliveryVO">
+		<![CDATA[
+		SELECT SUM(s.stock_count) as "all_stock_order"
+		        , s.logistics_id
+		        , l.logistics_name
+		        , l.basics_address
+		FROM logistics_stock s join logistics l on (s.logistics_id = l.logistics_id)
+		GROUP BY s.logistics_id, l.logistics_name, l.basics_address
+		HAVING SUM(stock_count) >= (SELECT NVL(SUM(COUNT), 0)
+		                            FROM order_details
+		                            WHERE order_number=#{orderNumber})
+		]]>
+	</select>
+	
+	
+<!-- 발주수량 이상의 창고 조회 (기존)
 	<select id="selectLogistics" resultType="DeliveryVO">
 		SELECT SUM(s.stock_count) as "all_stock_order"
 		      , s.logistics_id
@@ -94,6 +110,8 @@
 		]]>
 		GROUP BY s.logistics_id, l.logistics_name, l.basics_address
 	</select>
+ -->
+
 
 <!-- 주문번호 발주 상태 업데이트 -->
 <update id="updateOderapp" parameterType="DeliveryVO">

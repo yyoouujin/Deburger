@@ -59,7 +59,9 @@
 											<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
 											<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
 											
-											<td>[[ ${info.deliveryConfirm} ]]</td>
+											<td th:if="${info.logisticAllStock} >= ${info.orderAllStock}">Y</td>
+											<td th:unless="${info.logisticAllStock} >= ${info.orderAllStock}"><span class="fw-bold text-danger">N</span></td>
+											
 											<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
 										</tr>
 									</th:block>
