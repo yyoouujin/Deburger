@@ -69,8 +69,16 @@ public class ContainerController {
 		String mcode = SecurityUtil.memberCode(); // id
 		mid.setPersonId(mcode);
 		ContainerVO pid = containerService.loginService(mid);
-
 		List<ContainerVO> list = containerService.containerAllInList(pid);
+		
+		int lcnt = list.size();
+		if (lcnt > 0) {
+			model.addAttribute("lcnts", true);
+		} else {
+			model.addAttribute("lcnts", false);
+		}
+
+
 		model.addAttribute("containersIn", list);
 		model.addAttribute("persons", pid);
 		return "office/container/containersIn";

@@ -19,14 +19,14 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
-              <div class="card-body">
+              <div class="card-body" style="min-height: 500px;">
                 <h5 class="card-title"></h5>        
                 <!-- 여기 검색 등록 -->
 				 <div class="row mb-3">
                     <div class="col-sm-4">
                   </div>
                 </div>
-                <table class="table">
+                <table class="table" th:if="${lcnts}">
                   <thead>
                     <tr>
                       <th>발주 번호</th>
@@ -38,7 +38,7 @@
                       <th></th>      
                     </tr>
                   </thead>
-                  <th:block th:each="lists:${containersIn}">
+                  <th:block th:each="lists:${containersIn}" >
                     <tbody>
                       <tr >
                       	<td th:text="${lists.orderNumber}"></td>
@@ -50,6 +50,24 @@
                       </tr>
                     </tbody>
                   </th:block>
+                </table>
+                <table class="table" th:unless="${lcnts}">
+                  <thead>
+                    <tr>
+                      <th>발주 번호</th>
+                      <th>발주 수량</th>
+                      <th>입고 여부</th>
+                      <th>담당자 ID</th>	
+                      <th>거래처 이름</th>	
+                      <th>비고</th>
+                      <th></th>      
+                    </tr>
+                  </thead>
+                    <tbody>
+                      <tr >
+							<td colspan='7' style="text-align: center;">현재 입고 요청 항목이 없습니다.</td>
+                      </tr>
+                    </tbody>
                 </table>
               </div>
             </div>
