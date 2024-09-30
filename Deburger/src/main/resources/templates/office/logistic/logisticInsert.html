@@ -1,109 +1,123 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
-#postnum {
+#postnum2 {
 	margin-top: 31.994px;
 }
-
 </style>
-
 </head>
 
 <body>
 
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>물류창고 등록</h1>
+		</div>
 
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>물류창고 등록</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">물류 관리</li>
-          <li class="breadcrumb-item active">물류창고 등록</li>
-        </ol>
-      </nav>
-    </div>
-
- 
-    <section class="section">
-      <div class="row">
-      
 		<div class="card">
-            <div class="card-body">
-             <h5 class="card-title"></h5>
-             
-              <!-- Multi Columns Form -->
-              <form class="row g-3" th:action="@{logisticInsert}" method="post" name="insertForm">
-                
-                <div class="col-md-12">
-                  <label for="cname" class="form-label">창고명</label>
-                  <input type="text" class="form-control" id="lname" name="logisticsName">
-                </div>
+			<div class="card-body">
+				<h5 class="card-title"></h5>
 
-                
-                <div class="col-md-12">
-                  <label for="tel" class="form-label">전화번호</label>
-                  <input type="text" class="form-control" id="tel" name="phone" placeholder="하이픈(-)을 포함해주세요">
-                </div>
+				<!-- Multi Columns Form -->
+				<form class="row g-3" th:action="@{logisticInsert}" method="post"
+					name="insertForm">
 
-                <div class="col-md-5">
-                	<label for="postal" class="form-label">주소</label>
-                	<input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호" name="postal">
-                </div>
-                
-                <div class="col-md-3">
-                	<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postnum">
-                </div>
-                
-				<div class="col-md-6">
-                	<input type="text" class="form-control" id="sample6_address" placeholder="주소" name="basicsAddress">
-                </div>
-                
-                <div class="col-md-6">
-                	<input type="text" class="form-control" id="sample6_extraAddress" placeholder="상세주소" name="detailsAddress">
-                </div>
-                
-                <div class="col-md-12">
-                	<input type="text" class="form-control" id="sample6_detailAddress" placeholder="참고항목" name="note">
-                </div>
-                
-                <div class="col-md-12">
-                  <label for="contDay" class="form-label">허가일</label>
-                  <input type="date" class="form-control" id="perDay" name="permissionDay">
-                </div>
-                
-                <div class="col-md-12">
-                  <label for="pName" class="form-label">담당자 ID</label>
-                  <select class="form-control" name="personId" id="pId">
-                  	<option>---담당자 ID를 선택해주세요---</option>
-                  </select>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">등록</button>
-                  <button type="reset" class="btn btn-secondary">초기화</button>
-                </div>
-              </form><!-- End Multi Columns Form -->
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="cname" class="form-label">창고명</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="lname" name="logisticsName">
+						</div>
+					</div>
+					
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="tel" class="form-label">전화번호</label>
+						</div>
+						<div class="col-sm-10">
+							<input
+							type="text" class="form-control" id="tel" name="phone"
+							placeholder="하이픈(-)을 포함해주세요">
+						</div>
+					</div>
 
-            </div>
-          </div>
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="postal" class="form-label">주소</label>
+						</div>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="sample6_postcode"
+							placeholder="우편번호" name="postal">
+						</div>
+						<div class="col-sm">
+							<input type="button" class="btn btn-secondary"
+							onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postnum">
+						</div>
+						
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="sample6_address"
+							placeholder="주소" name="basicsAddress">
+						</div>
+						
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="sample6_extraAddress"
+							placeholder="상세주소" name="detailsAddress">
+						</div>
+						
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="sample6_detailAddress"
+							placeholder="참고항목" name="note">
+						</div>
+					</div>
+					
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="contDay" class="form-label">허가일</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="date" class="form-control" id="perDay" name="permissionDay">
+						</div>
+					</div>
+					
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="pName" class="form-label">담당자 ID</label>
+						</div>
+						<div class="col-sm-10">
+							<select class="form-control" name="personId" id="pId">
+								<option>---담당자 ID를 선택해주세요---</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary">등록</button>
+						<button type="reset" class="btn btn-secondary">초기화</button>
+					</div>
+				</form>
+				<!-- End Multi Columns Form -->
+
+			</div>
+		</div>
 
 
-        </div>
-        
-    </section>
-
-  </main>
+	</main>
 
 </body>
 </html>
 
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="assets/js/cyj/logistic/logisticInsert.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="assets/js/cyj/logistic/logisticInsert.js"></script>
