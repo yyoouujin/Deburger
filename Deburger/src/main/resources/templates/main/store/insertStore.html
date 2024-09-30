@@ -21,55 +21,54 @@
             <input type="hidden" class="form-control" th:field="${storeNumber.storeNumber}" />
             <div class="row mb-3">
               <label for="storeName" class="col-sm-2 col-form-label">가맹점명 </label>
-              <div class="col-sm-5 col-md-3">
-                <input type="text" class="form-control" name="storeName" id="storeName" />
+              <div class="col-sm-5 col-md-4">
+                <input type="text" class="form-control" name="storeName" id="storeName"/>
               </div>
-              <label for="shopkeeper" class="col-sm-2 col-form-label">점주명 </label>
-              <div class="col-sm-5 col-md-3">
+              <label for="shopkeeper" class="col-sm-1 col-form-label">점주명 </label>
+              <div class="col-sm-5 col-md-4">
                 <input type="text" class="form-control" name="shopkeeper" id="shopkeeper" />
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="businessRegistrationNumber" class="col-sm-2 col-form-label">사업자등록번호</label>
-              <div class="col-sm-10">
-                <input
-                  type="inputText"
-                  class="form-control"
-                  name="businessRegistrationNumber"
-                  id="businessRegistrationNumber"
-                />
+              <div class="col-sm-9">
+                <input type="inputText" class="form-control" name="businessRegistrationNumber" id="businessRegistrationNumber" />
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="postalBtn" class="col-sm-2 col-form-label">주소</label>
               <div class="col-sm-10">
-                <input type="text" id="sample6_postcode" placeholder="우편번호" name="postal" class="col-md-5" />
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postalBtn" /><br />
-                <input type="text" id="sample6_address" placeholder="주소" name="address" class="col-md-5" /><br />
+                 <div>
+                <input type="text" id="sample6_postcode" placeholder="우편번호" name="postal" class="col-md-5" style="width: 62%;  margin-bottom: 8px; padding: 5.6px; border-radius: 7px; border-width: 1px; border-color:#dee2e6;"/>
+                <!--  -->
+                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postalBtn" style="width: 27%; border-color:#dee2e6;  margin-bottom: 8px; padding: 5.6px; border-radius: 7px; border-width: 1px"/><br />
+                </div>
+                <input type="text" id="sample6_address" placeholder="주소" name="address" class="col-md-5" style="width: 89.6%; border-color:#dee2e6;  margin-bottom: 8px; padding: 5.6px; border-radius: 7px; border-width: 1px" /><br />
                 <input
                   type="text"
                   id="sample6_detailAddress"
                   placeholder="상세주소"
                   name="addressses"
                   class="col-md-5"
+                  style="width: 44.5%; border-color:#dee2e6;  padding: 5.6px; border-radius: 7px; border-width: 1px"
                 />
-                <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="note" class="col-md-5" />
+                <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="note" class="col-md-5" style="width: 44.5%;border-color:#dee2e6;   padding: 5.6px; border-radius: 7px; border-width: 1px"/>
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="phone" class="col-sm-2 col-form-label">전화번호</label>
-              <div class="col-sm-10">
-                <input type="inputText" class="form-control" name="phone" id="phone" />
+              <div class="col-sm-9">
+                <input type="inputText" class="form-control" name="phone" id="phone"/>
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="email" class="col-sm-2 col-form-label">이메일</label>
-              <div class="col-sm-10">
-                <input type="inputText" class="form-control" name="email" id="email" />
+              <div class="col-sm-9">
+                <input type="inputText" class="form-control" name="email" id="email"/>
               </div>
             </div>
 
@@ -86,21 +85,21 @@
 
             <div class="row mb-3">
               <label for="logisticsId" class="col-sm-2 col-form-label">지정물류창고</label>
-              <div class="col-sm-10 col-md-3">
-                <input type="inputText" class="form-control" name="logisticsId" id="logisticsId" />
+              <div class="col-sm-10 col-md-9">
+                <input type="inputText" class="form-control" name="logisticsId" id="logisticsId"/>
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="contractImage" class="col-sm-2 col-form-label">계약서</label>
-              <div class="col-sm-10">
+              <div class="col-sm-9">
                 <input class="form-control" type="file" id="contractImageFile" name="contractImageFile" />
               </div>
             </div>
 
             <div class="row mb-3">
               <label for="businessLicenseImage" class="col-sm-2 col-form-label">사업자 등록증</label>
-              <div class="col-sm-10">
+              <div class="col-sm-9">
                 <input class="form-control" type="file" id="businessLicenseImageFile" name="businessLicenseImageFile" />
               </div>
             </div>

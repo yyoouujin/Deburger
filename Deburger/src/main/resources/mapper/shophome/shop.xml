@@ -3,29 +3,37 @@
 <mapper
 	namespace="com.deburger.app.shop.shopmain.mapper.ShopMainMapper">
 
-	<select id="listCount" parameterType="ShopMainVO">
-select count(case when (ss.stock_count-ss.safety_stock) <![CDATA[<]]>0
+	<select id="listCount1" parameterType="ShopMainVO">
+select count(case when (ss.stock_count-ss.safety_stock)  <![CDATA[<]]>0
 		AND m.material_item = '원재료' then 1 end) AS mainMaterial
-		,count(case when (ss.stock_count-ss.safety_stock)<![CDATA[<]]>0
+		,count(case when (ss.stock_count-ss.safety_stock)  <![CDATA[<]]> 0
 		AND m.material_item = '부재료' then 1 end) AS subMaterial
-		,count(case when (to_date(expiration_limit)-to_date(sysdate))<![CDATA[<]]>0
-		AND	m.material_item = '원재료' AND s.remain_stock_count <![CDATA[>]]> 0 
-        AND s.disposal_operation = 'k1' then 1 end) AS limitMaterial
-		,count(case	when (to_date(expiration_limit)-to_date(sysdate))<![CDATA[<]]>0
-		AND	m.material_item = '부재료' AND s.remain_stock_count <![CDATA[>]]> 0 
-        AND s.disposal_operation = 'k1' then 1 end) AS limitsubMaterial
-		,count(case	when so.oder_app = 'L1' then 1 end) AS oneMaterial
-		,count(case when so.oder_app = 'L2' then 1 end) AS twoMaterial
-        
 from store_stock ss join material m
 on ss.material_number = m.material_number
-join store_in s 
-on s.material_number = m.material_number
-join order_details od
-on od.order_details_number = s.order_details_number
-join store_order so
-on so.order_number = od.order_number
-where ss.store_number=#{storeNumber}
+where store_number=#{storeNumber}	
+		
+	</select>
+	
+		<select id="listCount2" parameterType="ShopMainVO">
+select count(case when (to_date(expiration_limit)-to_date(sysdate)) <![CDATA[<]]>0
+       AND	m.material_item = '원재료' AND s.remain_stock_count > 0 
+       AND s.disposal_operation = 'k1' then 1 end) AS limitMaterial
+       ,count(case	when (to_date(expiration_limit)-to_date(sysdate)) <![CDATA[<]]>0
+       AND	m.material_item = '부재료' AND s.remain_stock_count > 0 
+       AND s.disposal_operation = 'k1' then 1 end) AS limitsubMaterial
+from store_in s join material m
+   on s.material_number = m.material_number
+where store_number=#{storeNumber}	
+        AND sysdate - s.expiration_limit<![CDATA[<]]>7
+        AND  sysdate - s.expiration_limit<![CDATA[>]]>0
+		
+	</select>
+	
+		<select id="listCount3" parameterType="ShopMainVO">
+select count(case when oder_app = 'L1' And  cancel_operation = 'J1' AND auto_order_operation = 'i1' then 1 end) AS oneMaterial
+	   ,count(case when oder_app = 'L2' And  cancel_operation = 'J1' AND auto_order_operation = 'i1' then 1 end) AS twoMaterial
+from store_order
+where store_number=#{storeNumber}	
 		
 	</select>
 
@@ -87,7 +95,7 @@ where ss.store_number=#{storeNumber}
 	</select>
 
 	<select id="limitList" parameterType="ShopMainVO">
-  select so.order_Day
+ select so.order_Day
                ,m.material_name
                ,od.count
                ,si.remain_stock_count
@@ -103,6 +111,8 @@ where ss.store_number=#{storeNumber}
         where si.store_number = #{storeNumber}
         AND si.remain_stock_count > 0
         AND si.disposal_operation = 'k1'
+        AND sysdate - si.expiration_limit <![CDATA[<]]>7
+        AND  sysdate - si.expiration_limit <![CDATA[>]]>0
         order by order_day
 	</select>
 
