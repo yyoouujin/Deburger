@@ -35,8 +35,9 @@
 										<th>주문 일자</th>
 									<tr>
 										<th th:text="${stockInListInfo[0].orderNumber}"
-											id="orderNumber"></th>
-										<th>[[${#dates.format(stockInListInfo[0].orderDay,'yyyy/MM/dd')}]]</th>
+											id="orderNumber"
+											th:if="${stockInListInfo.size()!= 0}"></th>
+										<th th:if="${stockInListInfo.size()!= 0}" >[[${#dates.format(stockInListInfo[0].orderDay,'yyyy/MM/dd')}]]</th>
 									</tr>
 								</tbody>
 							</table>
