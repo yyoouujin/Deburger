@@ -264,6 +264,7 @@
 		    logistics_out_number,
 		    out_date,
 		    logistics_id,
+		    inspection,
 		    out_count,
 		    note,
 		    out_operation,
@@ -272,6 +273,7 @@
 		        'DV' || LPAD(DV_SEQ.nextval, '7', '0'),    
 		        #{outDate},  
 		        #{logisticsId},
+		        'h2',
 		        #{outCount},
 		        #{note},
 		        #{outOperation},
@@ -281,7 +283,7 @@
 	
 	<update id="containerInupdate">
 		update logistics_in
-		set out_count = out_count - #{outCount},
+		set out_count = out_count + #{outCount},
 			disposal_operation = #{disposalOperation}
 		where lot = #{lot}
 	</update>
@@ -387,7 +389,8 @@
 		        d.phone,
 		        d.email,
                 e.inspection,
-                f.logistics_name
+                f.logistics_name,
+                f.phone as logisticsPhone
 		from order_details a
 		join material b
 		    on a.material_number = b.material_number
@@ -398,7 +401,7 @@
         left outer join logistics_out e
             on a.order_details_number = e.order_details_number
         left outer join logistics f
-            on e.logistics_id = f.logistics_id
+            on d.logistics_id = f.logistics_id
 		where a.order_number = #{orderNumber}
 	
 	</select>

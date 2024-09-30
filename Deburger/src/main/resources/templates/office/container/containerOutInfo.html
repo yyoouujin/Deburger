@@ -23,7 +23,7 @@ th, td {
 			<div class="row">
 			   <div class="col-lg-12">
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body" style="padding:10px;">
 							<table class="col-lg-12" style="text-align: center">
 								<thead>
 									<tr>
@@ -79,7 +79,7 @@ th, td {
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td ><input type="text" th:value="${lists.count}"></td>
 								            <td style="text-align: center;">
-											    <div class="row mb-3 justify-content-center align-items-center" style="height: 100%;">
+											    <div style="height: 100%; ">
 											        <div class="col-sm-10">
 											            <select class="form-select" aria-label="Default select example" name="pInspection">
 											                <option value="h1">정상</option>
@@ -94,10 +94,10 @@ th, td {
 								</tbody>
 							</table>
 						
-						</div>
-							<div style="text-align: right; margin: 0 0 10px 0;">
+						</div >
+							<div style="text-align: right; margin: 0 0 10px 0; padding:10px;" >
 								<a href="containerOut"><button type="button" class="btn btn-primary">목록</button></a>
-								<button type="button" class="btn btn-primary" onclick="saveBtn()">승인</button>
+								<button type="button" class="btn btn-primary" onclick="saveBtn()" >승인</button>
 							</div>
 					</div>	
 				</div>
