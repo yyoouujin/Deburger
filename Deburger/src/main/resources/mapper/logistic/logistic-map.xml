@@ -105,6 +105,7 @@
 		      , i.details_order_number
 		      , d.order_number
 		      , l.logistics_id
+		      , max(s.client_id) client_id
 		      , LISTAGG(s.client_name, ', ') WITHIN GROUP(ORDER BY s.client_name) AS aggclient_name
 		FROM material m JOIN logistics_in i ON m.material_number = i.material_number
 		                JOIN logistics_order_details d ON i.details_order_number = d.details_order_number
