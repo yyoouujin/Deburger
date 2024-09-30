@@ -67,11 +67,34 @@
 }
 
 /*--------------------------------------------------------------
+# OfficepMain
+--------------------------------------------------------------*/
+.officeMainHref {
+	font-family: "Do Hyeon", sans-serif, Open Sans;
+	color: #353535;
+	font-size:22px;
+	font-weight:bold;
+}
+
+#chart-area2 {
+	font-family: "Do Hyeon", sans-serif, Open Sans;
+}
+
+#chartJs {
+	font-size:22px;
+	font-weight:bold;
+}
+
+.graph-card {
+	padding : 10px;
+}
+
+/*--------------------------------------------------------------
 # ShopMainGeneral
 --------------------------------------------------------------*/
 .shopMainHref {
 	text-decoration: none;
-	color: #666666;
+	color: #353535;
 }
 
 /*--------------------------------------------------------------
@@ -181,7 +204,7 @@ h1, h2, h3, h4, h5, h6 {
 .pagetitle h1 {
 	font-size: 26px;
 	margin-bottom: 0;
-	color: #666666;
+	color: #353535;
 	font-family: "Do Hyeon";
 	font-weight: bold;
 }
@@ -352,7 +375,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-title {
 	padding: 20px 0 15px 0;
 	font-size: 22px;
-	color: #666666;
+	color: #353535;
 	font-family: "Do Hyeon", sans-serif;
 	font-weight: bold;
 }
