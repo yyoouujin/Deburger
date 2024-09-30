@@ -28,13 +28,21 @@ public class ShopMainController {
 	public String shop(Model model) {
 		
 		//작업 현황 갯수 표시
-		List<ShopMainVO> list = shopMainService.listCount();
+		List<ShopMainVO> list1 = shopMainService.listCount1();
+		
+		//작업 현황 갯수 표시
+		List<ShopMainVO> list2 = shopMainService.listCount2();
+		
+		//작업 현황 갯수 표시
+		List<ShopMainVO> list3 = shopMainService.listCount3();
+		
 		//최근 공지 목록
-		List<ShopMainVO> list2 = shopMainService.noticeList();
+		List<ShopMainVO> list0 = shopMainService.noticeList();
 		
-		
-		model.addAttribute("shop", list);
-		model.addAttribute("notice", list2);
+		model.addAttribute("shop3", list3);
+		model.addAttribute("shop2", list2);
+		model.addAttribute("shop1", list1);
+		model.addAttribute("notice", list0);
 		
 		
 		

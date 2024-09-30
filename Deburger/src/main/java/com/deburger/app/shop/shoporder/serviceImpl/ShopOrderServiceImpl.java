@@ -45,17 +45,20 @@ public class ShopOrderServiceImpl implements ShopOrderService {
 		String mcode = SecurityUtil.memberCode();
 		shopOrderVO.setStoreNumber(mcode);
 		
-		
-		
+
 			String imlog = shopOrderMapper.storelog(shopOrderVO);
 			shopOrderVO.setLogisticsId(imlog);
+			
 			shopOrderMapper.insertShopOrder(shopOrderVO);
 
 			for (ShopOrderDetailsVO devo : shopOrderVO.getDetList()) {
 				devo.setOrderNumber(shopOrderVO.getOrderNumber());
 				shopOrderMapper.dinsertShopOrder(devo);
 			}
+			
+			
 			for (ShopOrderCartVO shvo : shopOrderVO.getCartList()) {
+				shvo.setStoreNumber(mcode);
 				shopOrderMapper.deleteOrderCart(shvo);
 			}
 		
