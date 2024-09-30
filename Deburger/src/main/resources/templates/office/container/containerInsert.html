@@ -23,7 +23,7 @@ th, td {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body" style="padding:10px;">
 							<table class="col-lg-12" style="text-align: center">
 								<thead>
 									<tr>
@@ -40,7 +40,7 @@ th, td {
 											name="storeNumber" th:value="${list[0].clientName}" style="border: none;"
 											 readonly></td>
 										<th>수신 업체 이름</th>
-										<td colspan='4'>디버거</td>
+										<td colspan='4' th:text="${list[0].logisticsName}"></td>
 									</tr>
 									<tr>
 										<th rowspan="2" >연락처</th>
@@ -49,7 +49,7 @@ th, td {
 
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
-										<td colspan='3'>053-0000-0000</td>
+										<td colspan='3'th:text="${list[0].logisticsPhone}"></td>
 
 									</tr>
 									<tr>
@@ -108,7 +108,7 @@ th, td {
 								</tbody>
 							</table>
 						</div>
-							<div style="text-align: right; margin: 0 0 10px 0;">
+							<div style="text-align: right; margin: 0 0 10px 0; padding:10px;">
 								<a href="containerIn"><button type="button" class="btn btn-primary">목록</button></a>
 								<button type="button" class="btn btn-primary" onclick="mkrData()"  id="save">저장</button>
 							</div>

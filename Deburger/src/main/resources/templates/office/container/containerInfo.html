@@ -13,7 +13,7 @@
   <body>
     <main id="main" class="main">
      <div class="pagetitle">
-			<h1 class="card-title">물류 창고 상세 리스트</h1>
+			<h1 class="card-title">창고 상세 목록</h1>
 		</div>
       <section class="section">
         <div class="row">
@@ -34,8 +34,6 @@
                       <th>LOT 번호</th>
                       <th>재료 이름</th>
                       <th>주문 수량</th>
-                      <th>발주 상태</th>
-                      <th>입고 여부</th>
                       <th>입고 일자</th>
                       <th>현재 수량</th>
                       <th>유통 기한</th> 
@@ -48,8 +46,6 @@
                       	<td th:text="${info.lot}"></td>
                       	<td th:text="${info.materialName}"></td>
                       	<td th:text="${info.count}"></td>
-                      	<td th:text="${info.orderCondition} ? '완료' : '진행'"></td>
-                      	<td th:text="${info.inOperation} ? '입고 완료' : '미입고'"></td>
                       	<td th:text="${#dates.format(info.inDay,'yyyy/MM/dd')}"></td>
                       	<td th:text="${info.inCount} - ${info.outCount}"></td>
                       	<td th:text="${#dates.format(info.expirationLimit,'yyyy/MM/dd')}"></td>
@@ -58,8 +54,7 @@
                     </tbody>
                   </th:block>
                 </table>
-
-                <div class="card">
+                <div class="card" style="float:right;">
                   <div class="card-body">
                     <a href="/deburger/container"><button class="btn btn-primary">목록</button></a>
                   </div>
