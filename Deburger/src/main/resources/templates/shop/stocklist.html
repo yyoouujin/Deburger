@@ -172,6 +172,11 @@
 					
 					$(result).each(function(index, item){
 
+						let countout = ''
+						if(item.stockCount - item.safetyStock < 0){
+							countout = '재고 부족';
+						}
+						
 						let tr = `<tr>
 						<td>${item.materialNumber}</td>
 						<td>${item.materialName}</td>
@@ -180,6 +185,7 @@
 						<td>${item.saleUnitprice}</td>
 						<td>${item.stockCount}</td>
 						<td>${item.safetyStock}</td>
+						<td>${countout}</td>
 						<td><button type="button"
 							class="btn btn-primary btn-sm"
 							id="${item.materialNumber}"
