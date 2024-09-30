@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class ShopOrderVO {
 	//조건조회
-	@DateTimeFormat(pattern = "yyyy-MM-dd ")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;

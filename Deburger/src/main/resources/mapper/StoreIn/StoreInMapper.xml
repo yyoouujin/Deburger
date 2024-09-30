@@ -157,7 +157,7 @@
 			      on a.order_details_number = b.order_details_number) d
 			on o.order_number = d.order_number
 			WHERE d.rn = '1' 
-			AND order_day BETWEEN #{startDate} AND #{endDate}
+			AND order_day BETWEEN #{startDate} - 09/24 AND #{endDate} + 15/24 
 			ORDER by ORDER_NUMBER DESC 
 	</select>
 	

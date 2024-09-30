@@ -242,8 +242,8 @@
 		where
 		auto_order_operation = 'i1'
 		AND store_number= #{storeNumber}
-        AND order_day BETWEEN #{startDate, jdbcType = DATE}
-                   AND #{endDate, jdbcType = DATE}
+        AND order_day BETWEEN trunc(#{startDate} - 09/24)
+                   AND trunc(#{endDate} + 15/24 )
 		ORDER by
 		s.order_number DESC
 		</select>
