@@ -7,8 +7,14 @@ import com.deburger.app.shop.stock.service.StockVO;
 
 public interface ShopMainMapper {
 
-	//조회
-	public List<ShopMainVO> listCount(ShopMainVO shopMainVO);
+	//조회1
+	public List<ShopMainVO> listCount1(ShopMainVO shopMainVO);
+	
+	//조회2
+	public List<ShopMainVO> listCount2(ShopMainVO shopMainVO);
+	
+	//조회3
+	public List<ShopMainVO> listCount3(ShopMainVO shopMainVO);
 	
 	//판매 그래프
 	public List<ShopMainVO> shopSellG(ShopMainVO shopMainVO);

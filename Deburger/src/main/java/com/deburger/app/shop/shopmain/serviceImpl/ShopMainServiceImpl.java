@@ -24,16 +24,41 @@ public class ShopMainServiceImpl implements ShopMainService {
 	
 	//메인페이지 숫자 카운트
 	@Override
-	public List<ShopMainVO> listCount() {
+	public List<ShopMainVO> listCount1() {
 		// TODO Auto-generated method stub
 		
 		String mcode = SecurityUtil.memberCode();
 		ShopMainVO shopMainVO = new ShopMainVO();
 		shopMainVO.setStoreNumber(mcode);
-		shopMainMapper.noticeList();
+
 		
-		return shopMainMapper.listCount(shopMainVO);
+		return shopMainMapper.listCount1(shopMainVO);
 	}
+	
+	@Override
+	public List<ShopMainVO> listCount2() {
+		// TODO Auto-generated method stub
+		
+		String mcode = SecurityUtil.memberCode();
+		ShopMainVO shopMainVO = new ShopMainVO();
+		shopMainVO.setStoreNumber(mcode);
+
+		
+		return shopMainMapper.listCount2(shopMainVO);
+	}
+	
+	@Override
+	public List<ShopMainVO> listCount3() {
+		// TODO Auto-generated method stub
+		
+		String mcode = SecurityUtil.memberCode();
+		ShopMainVO shopMainVO = new ShopMainVO();
+		shopMainVO.setStoreNumber(mcode);
+
+		
+		return shopMainMapper.listCount3(shopMainVO);
+	}
+		
 	
 	//매출액 그래프
 	@Override

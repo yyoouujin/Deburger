@@ -50,8 +50,13 @@
 												th:if="${list.oderApp == 'L3' and list.inOperation == 'F2'}">입고
 													완료</span></td>
 											<td><button type="button" class="btn btn-primary btn-sm"
-													th:id="${list.orderNumber}" onclick="orderInfo()">상세
-													내역</button></td>
+													th:id="${list.orderNumber}" onclick="orderInfo()"
+													th:if="${list.inDay != null}">상세 내역</button>
+												<button type="button" class="btn btn-secondary btn-sm"
+													th:id="${list.orderNumber}"
+													th:if="${list.inDay == null}">상세 내역</button>	
+													
+													</td>
 										</tr>
 									</th:block>
 								</tbody>
