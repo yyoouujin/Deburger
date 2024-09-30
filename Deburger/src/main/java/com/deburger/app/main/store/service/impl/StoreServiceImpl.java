@@ -67,4 +67,10 @@ public class StoreServiceImpl implements StoreService{
 		return storeMapper.selectLogisticsId(personId);
 	}
 
+	@Override
+	public StoreVO selectStoreNumber() {
+		// TODO Auto-generated method stub
+		return storeMapper.selectStoreNumber();
+	}
+
 }

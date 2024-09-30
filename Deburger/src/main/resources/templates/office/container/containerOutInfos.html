@@ -23,7 +23,7 @@ th, td {
 			<div class="row">
 			   <div class="col-lg-12">
 					<div class="card">
-						<div class="card-body">
+						<div class="card-body" >
 							<table class="col-lg-12" style="text-align: center">
 								<thead>
 									<tr>
@@ -78,7 +78,10 @@ th, td {
 											<td th:text="${lists.unit}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}" data-bs-toggle="modal" data-bs-target="#ExtralargeModal" onclick="onModal()"></td>
 								            <td th:text="${lists.count}"></td>
-								            <td th:text="${lists.inspection} == 'h1' ?  '정상' : '폐기'" ></td>
+								            <td th:if="${lists.inspection} == 'h1'" th:text='정상' ></td>
+								            <td th:if="${lists.inspection} == 'h2'" th:text='폐기' ></td>
+								            <td th:if="${#strings.isEmpty(lists.inspection)} " th:text='미출고' ></td>
+								            <!-- <td th:text="${lists.inspection} == 'h1' ?  '정상' : '폐기'" ></td> -->
 								            <td colspan='3'></td>
 										</tr>
 									</th:block>
