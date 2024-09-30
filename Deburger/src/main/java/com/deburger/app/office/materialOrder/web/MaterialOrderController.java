@@ -35,11 +35,12 @@ public class MaterialOrderController {
 	
 	//물류창고 발주 등록 페이지
 	@GetMapping("materialOrder")
-	public String materialOrderForm(Model model) {
+	public String materialOrderForm(LogisticVO logisticVO,Model model) {
 		
 		List<SupplierVO> supplierList = materialOrderService.selectSupplierList();
 		List<LogisticVO> logisticList = materialOrderService.selectLogisticsList();
 		
+		model.addAttribute("logisticVO", logisticVO);
 		model.addAttribute("supplierList", supplierList);
 		model.addAttribute("logisticList", logisticList);		
 		
