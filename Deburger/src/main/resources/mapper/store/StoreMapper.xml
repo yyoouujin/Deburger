@@ -26,11 +26,13 @@
 	
 	</select>
 	
-	<insert id="insertStore" parameterType="com.deburger.app.main.store.service.StoreVO">
-	<selectKey keyProperty="storeNumber" resultType="com.deburger.app.main.store.service.StoreVO" order="BEFORE">
+	<select id="selectStoreNumber">
 		SELECT 'FRC' || LPAD(FRC_SEQ.nextval, '10', '0') STORE_NUMBER
 		from dual
-	</selectKey>
+	</select>
+	
+	
+	<insert id="insertStore" parameterType="com.deburger.app.main.store.service.StoreVO">
 	INSERT INTO store(
 	                  STORE_NUMBER
 	                 ,SHOPKEEPER
