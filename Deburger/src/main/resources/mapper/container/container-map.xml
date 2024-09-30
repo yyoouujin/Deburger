@@ -353,22 +353,22 @@
 		        sum(b.count) as count,
 		        a.oder_app,
 		        c.logistics_id,
-		        c.store_name	      
+		        c.store_name,
+                d.person_id
 		from store_order a
 		join order_details b
 		    on a.order_number = b.order_number
 		join store c
 		    on a.store_number = c.store_number
-        join logistics_out d
-            on b.order_details_number = d.order_details_number
-        join logistics_in e
-            on d.lot = e.lot
+        join logistics d
+            on c.logistics_id = d.logistics_id
 		where a.oder_app = 'L2'
-        and e.person_id = #{personId}
+        and d.person_id = #{personId}
 		group by a.order_number,
 		        a.oder_app,
 		        c.logistics_id,
-		        c.store_name
+		        c.store_name,
+                d.person_id
 		order by a.order_number desc
 	</select>
 	
