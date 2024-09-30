@@ -6,34 +6,28 @@
 <meta charset="UTF-8" />
 <title>Insert title here</title>
 
-<style>
-	.tui-grid-cell-content {
-		font-family: "Do Hyeon", sans-serif;
-	}
-</style>
+
 </head>
 
 <body>
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>QSC 항목 관리</h1>
-			<br />
-			<p>*가맹점에서 사용하는 체크리스트의 상세 항목을 작성할 수 있습니다.</p>
+
 		</div>
 
 		<!-- End Page Title -->
 		<section class="section">
 			<div class="row">
-				<div class="col-lg-12" style="text-align: center">
-					<div class="row mb-3">
-						<div class="col-sm-10 col-md-3">
-							<button type="button" class="btn btn-primary col-md-12"
-								id="insertBtn">저장하기</button>
-						</div>
+				<div class="col-lg-12">
+					<div>
+						<p>*가맹점에서 사용하는 체크리스트의 상세 항목을 작성할 수 있습니다.</p>
+						<button type="button" class="mb-3 btn btn-primary col-md-4"
+							id="insertBtn">저장하기</button>
 					</div>
-
+					
 					<div class="card">
-						<div class="card-body">
+						<div class="qsc-card-body">
 							<!-- Default Tabs -->
 							<ul class="nav nav-tabs d-flex" id="myTabjustified"
 								role="tablist">
@@ -63,58 +57,54 @@
 							<div class="tab-content pt-2" id="myTabjustifiedContent">
 								<div class="tab-pane fade show active" id="home-justified"
 									role="tabpanel" aria-labelledby="home-tab">
-									<div>
-										<!-- 추가 삭제 버튼 -->
-										<br />
 
-										<div class="row position-absolute">
-											<div class="col-sm-10 col-md-6">
-												<button type="button" class="btn btn-info col-md-12"
-													id="appendBtn">추가</button>
-											</div>
-											<div class="col-sm-10 col-md-6">
-												<button type="button" class="btn btn-info col-md-12"
-													id="deleteBtn">삭제</button>
-											</div>
+									<!-- 추가 삭제 버튼(품질) -->
+									<div class="toastBtn">
+										<div class="row d-flex justify-content-around">
+											<button type="button" class="btn btn-info col-md-3"
+												id="appendBtn">추가</button>
+											<button type="button" class="btn btn-info col-md-3"
+												id="deleteBtn">삭제</button>
 										</div>
-										<br /> <br />
 									</div>
+									<!-- 추가 삭제 버튼(품질) 끝 -->
 									<!-- grid1 -->
 									<div id="grid1"></div>
 								</div>
 
+
 								<div class="tab-pane fade" id="profile-justified"
 									role="tabpanel" aria-labelledby="profile-tab">
-									<!-- 추가 삭제 버튼 -->
-									<br />
-									<div class="row position-absolute">
-										<div class="col-sm-10 col-md-6">
-											<button type="button" class="btn btn-info col-md-12"
+									<!-- 추가 삭제 버튼(서비스) -->
+									<div class="toastBtn">
+										<div class="row d-flex justify-content-around">
+
+											<button type="button" class="btn btn-info col-md-3"
 												id="appendBtn2">추가</button>
-										</div>
-										<div class="col-sm-10 col-md-6">
-											<button type="button" class="btn btn-info col-md-12"
+
+											<button type="button" class="btn btn-info col-md-3"
 												id="deleteBtn2">삭제</button>
+
 										</div>
 									</div>
-									<br /> <br />
+									<!-- 추가 삭제 버튼(서비스) -->
 									<!-- grid2 -->
 									<div id="grid2"></div>
 								</div>
+								
 
-								<div class="tab-pane fade" id="contact-justified"
-									role="tabpanel" aria-labelledby="contact-tab">
-									<br />
-									<div class="row position-absolute">
-										<div class="col-sm-10 col-md-6">
-											<button type="button" class="btn btn-info col-md-12"
+								<div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
+									<!-- 추가 삭제 버튼(청결) -->
+									<div class="toastBtn">
+										<div class="row d-flex justify-content-around">
+											<button type="button" class="btn btn-info col-md-3"
 												id="appendBtn3">추가</button>
-										</div>
-										<div class="col-sm-10 col-md-6">
-											<button type="button" class="btn btn-info col-md-12"
+											<button type="button" class="btn btn-info col-md-3"
 												id="deleteBtn3">삭제</button>
 										</div>
 									</div>
+									<!-- 추가 삭제 버튼(청결) 끝 -->
+
 									<br /> <br />
 									<!-- grid3 -->
 									<div id="grid3"></div>
@@ -195,7 +185,7 @@
          * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
          * @reference https://seokbong.tistory.com/14
          */
-        Grid.applyTheme('stripe');
+        Grid.applyTheme('clean');
 
         /**
          * [선택] Grid Confirm 메시지
@@ -249,7 +239,7 @@
               resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
               editor: 'text', // [선택] 수정 옵션
               align: 'left', // [선택] 텍스트 정렬 옵션
-              width: 800,
+              width: 600,
               validation: {
                 regExp: /^(.){1,100}$/,
               },

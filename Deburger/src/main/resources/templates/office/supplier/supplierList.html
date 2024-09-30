@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 
@@ -10,86 +9,70 @@
 </head>
 <body>
 
-  <main id="main" class="main">
+	<main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>업체 목록</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">공급업체 관리</li>
-          <li class="breadcrumb-item active">업체 조회</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+		<div class="pagetitle">
+			<h1>업체 조회</h1>
+		</div>
+		<!-- End Page Title -->
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
+					<div id="gridDiv"></div>
+					<!-- Default Table -->
+					<table class="table datatable">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
+						<!-- Table with stripped rows -->
+						<thead>
+							<tr>
+								<th>NO</th>
+								<th>거래처명</th>
+								<th>주소</th>
+								<th>전화번호</th>
+								<th>사업자번호</th>
+								<th></th>
+							</tr>
+						</thead>
 
-				<div id="gridDiv"></div>
-				
-				
-              <!-- Default Table -->
-              <table class="table datatable">
-
-                <!-- Table with stripped rows -->
-                <thead>
-                  <tr>
-                    <th>NO</th>
-                    <th>거래처명</th>
-                    <th>주소</th>
-                    <th>전화번호</th>
-                    <th>사업자번호</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                
-                <tbody>
-                  <th:block th:each="info, stats : ${suppliers}">
-                  	<tr th:data-cid=${info.clientId}>
-                  		<td>[[ ${stats.count} ]]</td>
-                  		<td>[[ ${info.clientName} ]]</td>
-                  		<td>[[ ${info.address} ]]</td>
-                  		<td>[[ ${info.phone} ]]</td>
-                  		<td>[[ ${info.businessnum} ]]</td>
-                  		<td><button type="button" class="btn btn-secondary" id="infoBtn">상세</button></td>
-                  	</tr>
-                  </th:block>
-                </tbody>
-              </table>
-              <!-- End Default Table Example -->
-            </div>
-          </div>
-          
-          
-        </div>
-      </div>
-    </section>
-
-  </main><!-- End #main -->
+						<tbody>
+							<th:block th:each="info, stats : ${suppliers}">
+								<tr th:data-cid=${info.clientId}>
+									<td>[[ ${stats.count} ]]</td>
+									<td>[[ ${info.clientName} ]]</td>
+									<td>[[ ${info.address} ]]</td>
+									<td>[[ ${info.phone} ]]</td>
+									<td>[[ ${info.businessnum} ]]</td>
+									<td><button type="button" class="btn btn-secondary"
+											id="infoBtn">상세</button></td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					<!-- End Default Table Example -->
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- End #main -->
 </body>
 </html>
 
 <script>
-	
 	//<meta name="contextPath" th:content="${contextPath}">
 	const ctPath = $('meta[name="contextPath"]').attr('content');
-	
+
 	$('button').on('click', function(event) {
-		
+
 		let btn = event.currentTarget;
 		let cid = $(btn).closest('tr').data('cid');
-		
-		//let url = ctPath + '/supplierInfo?clientId=' + cid;
-		
-		let url = '/deburger/supplierInfo?clientId=' + cid;
-		location.href=url;
-		
-	});
 
+		//let url = ctPath + '/supplierInfo?clientId=' + cid;
+
+		let url = '/deburger/supplierInfo?clientId=' + cid;
+		location.href = url;
+
+	});
 </script>
 
