@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{common/layouts/layout}"
-	  layout:fragment="Content">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
 <head>
 <meta charset="UTF-8">
 
@@ -10,102 +9,92 @@
 </head>
 <body>
 
-  <main id="main" class="main">
+	<main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>업체 상세조회</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">공급업체 관리</li>
-          <li class="breadcrumb-item active">업체 조회</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+		<div class="pagetitle">
+			<h1>업체 상세조회</h1>
+		</div>
+		<!-- End Page Title -->
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+		<div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
 
-	
-              <!-- Default Table -->
-              <table class="table">
-              
-                <thead>
+					<!-- Default Table -->
+					<table class="table">
+						<thead>
+						</thead>
 
-                </thead>
-                
-                <tbody>
-                <th:block th:each="info : ${supplier}">
-                	<tr>
-                		<th>거래처코드</th>
-                		<td>[[ ${info.clientId} ]]</td>
-                	</tr>
-                	<tr>
-                		<th>상호(이름)</th>
-                		<td>[[ ${info.clientName} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>대표자명</th>
-                		<td>[[ ${info.representativeName} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>사업자 번호</th>
-                		<td>[[ ${info.businessnum} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>업태</th>
-                		<td>[[ ${info.businessType} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>전화번호</th>
-                		<td>[[ ${info.phone} ]]</td>
-                	</tr>
-                		
-                	<tr>
-                		<th>주소</th>
-                		<td>[[ ${info.address} ]],[[ ${ info.addresssec} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>이메일</th>
-                		<td>[[ ${info.email} ]]</td>
-                	</tr>
-                	
-                	<tr>
-                		<th>계약서</th>
-                		<td>[[ ${info.contractPdf} ]]</td>
-                		
-                	</tr>
-                	
-                	
-                </th:block>
-                </tbody>
-                
-              </table>
-              <!-- End Default Table Example -->
-              <div class="text-center">
-              	<button type="reset" class="btn btn-primary" th:onClick="|location.href='@{/supplierList}'|">목록</button>
-                <button type="submit" class="btn btn-success" th:onClick="|location.href='@{/supplierUpdate(clientId=${supplier.clientId})}'|">수정</button>
-                <button type="reset" class="btn btn-danger" th:onClick="|location.href='@{/supplierDelete(clientId=${supplier.clientId})}'|">삭제</button>
-              </div>
-           
-            </div>
-          </div>
-          
-          
-        </div>
-      </div>
-    </section>
+						<tbody>
+							<th:block th:each="info : ${supplier}">
+								<tr>
+									<th>거래처코드</th>
+									<td>[[ ${info.clientId} ]]</td>
+								</tr>
+								<tr>
+									<th>상호(이름)</th>
+									<td>[[ ${info.clientName} ]]</td>
+								</tr>
 
-  </main><!-- End #main -->
+								<tr>
+									<th>대표자명</th>
+									<td>[[ ${info.representativeName} ]]</td>
+								</tr>
+
+								<tr>
+									<th>사업자 번호</th>
+									<td>[[ ${info.businessnum} ]]</td>
+								</tr>
+
+								<tr>
+									<th>업태</th>
+									<td>[[ ${info.businessType} ]]</td>
+								</tr>
+
+								<tr>
+									<th>전화번호</th>
+									<td>[[ ${info.phone} ]]</td>
+								</tr>
+
+								<tr>
+									<th>주소</th>
+									<td>[[ ${info.address} ]],[[ ${ info.addresssec} ]]</td>
+								</tr>
+
+								<tr>
+									<th>이메일</th>
+									<td>[[ ${info.email} ]]</td>
+								</tr>
+
+								<tr>
+									<th>계약서</th>
+									<td>[[ ${info.contractPdf} ]]</td>
+
+								</tr>
+
+
+							</th:block>
+						</tbody>
+
+					</table>
+					<!-- End Default Table Example -->
+					<div class="text-center">
+						<button type="reset" class="btn btn-primary"
+							th:onClick="|location.href='@{/supplierList}'|">목록</button>
+						<button type="submit" class="btn btn-success"
+							th:onClick="|location.href='@{/supplierUpdate(clientId=${supplier.clientId})}'|">수정</button>
+						<button type="reset" class="btn btn-danger"
+							th:onClick="|location.href='@{/supplierDelete(clientId=${supplier.clientId})}'|">삭제</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<!-- End #main -->
 </body>
 </html>
 
@@ -113,8 +102,8 @@
 <!-- 
 <td><img th:src="@{/images/{fileName}/(fileName=${board.image})}" width="100px"></td>
  -->
- 
- <!-- 
+
+<!-- 
  th:onClick="|location.href='@{/boardDelete(bno=${board.bno})}'|" 
  location.href='@{/supplierDelete(clientId=${supplier.clientId})}'
  -->

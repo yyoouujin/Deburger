@@ -10,162 +10,174 @@
 </head>
 <body>
 
-<main id="main" class="main">
+	<main id="main" class="main">
 
 		<div class="pagetitle">
-			<h1>납품 조회</h1>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">물류 관리</li>
-					<li class="breadcrumb-item active">납품 지시</li>
-				</ol>
-			</nav>
+			<h1>납품 관리</h1>
 		</div>
 		<!-- End Page Title -->
 
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-12">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
+					<!-- Default Table -->
+					<table class="table">
+						<!-- Table with stripped rows -->
+						<thead>
+							<tr>
+								<th>NO</th>
+								<th>발주일자</th>
+								<th>발주번호</th>
+								<th>가맹점명</th>
+								<th>가맹점번호</th>
+								<th>취소진행상태</th>
+								<th>재고가능여부</th>
+								<th>발주상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="info, stats : ${deliveries}">
+								<tr th:data-odn=${info.orderNumber}
+									th:data-lid=${info.logisticsId} data-bs-toggle="modal"
+									data-bs-target="#modalDialogScrollable">
+									<td>[[ ${stats.count} ]]</td>
+									<td>[[ ${#dates.format(info.orderDay, 'yyyy-MM-dd')} ]] <br>
+										[[ ${#dates.format(info.orderDay, 'HH:mm:ss')} ]]
+									</td>
+									<td style="cursor: pointer;" class="fw-bold">[[
+										${info.orderNumber} ]]</td>
+									<td>[[ ${info.storeName} ]]</td>
+									<td>[[ ${info.storeNumber} ]]</td>
 
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title"></h5>
-							<!-- Default Table -->
-							<table class="table">
-								<!-- Table with stripped rows -->
-								<thead>
-									<tr>
-										<th>NO</th>
-										<th>발주일자</th>
-										<th>발주번호</th>
-										<th>가맹점명</th>
-										<th>가맹점번호</th>
-										<th>취소진행상태</th>
-										<th>재고가능여부</th>
-										<th>발주상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<th:block th:each="info, stats : ${deliveries}">
-										<tr th:data-odn=${info.orderNumber} th:data-lid=${info.logisticsId}  data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-											<td>[[ ${stats.count} ]]</td>
-											<td>[[ ${#dates.format(info.orderDay, 'yyyy-MM-dd')} ]] <br>
-												[[ ${#dates.format(info.orderDay, 'HH:mm:ss')} ]] </td>
-											<td style="cursor: pointer;" class="fw-bold">[[ ${info.orderNumber} ]]</td>
-											<td>[[ ${info.storeName} ]]</td>
-											<td>[[ ${info.storeNumber} ]]</td>
-											
-											<td th:if="${info.cancelOperation == 'J1'}">-</td>
-											<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
-											<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
-											
-											<td th:if="${info.logisticAllStock} >= ${info.orderAllStock}">Y</td>
-											<td th:unless="${info.logisticAllStock} >= ${info.orderAllStock}"><span class="fw-bold text-danger">N</span></td>
-											
-											<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
-										</tr>
-									</th:block>
-								</tbody>
-							</table>
-							<!-- End Default Table Example -->
-							
-							
-							
-							<!-- 페이징 -->
-							<!-- Pagination with icons -->
-							<nav aria-label="Page navigation example"
-								th:object="${pageMaker}">
-								<ul class="pagination justify-content-center">
+									<td th:if="${info.cancelOperation == 'J1'}">-</td>
+									<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
+									<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
 
-									<!-- 이전 페이지 시작 -->
-									<li class="page-item"><a class="page-link"
-										aria-label="Previous" th:if="*{prev}"
-										th:onClick="|location.href='@{/deliveryList(pageNum=*{startPage - 1})}'|">
-											<span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<!-- 이전 페이지 끝 -->
+									<td th:if="${info.logisticAllStock} >= ${info.orderAllStock}">Y</td>
+									<td
+										th:unless="${info.logisticAllStock} >= ${info.orderAllStock}"><span
+										class="fw-bold text-danger">N</span></td>
+
+									<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					<!-- End Default Table Example -->
 
 
-									<!-- 1~5 페이징 시작 -->
-									<th:block
-										th:each="num : ${#numbers.sequence(pageMaker.getStartPage(), pageMaker.getEndPage())}">
-										<li class="page-item"><a class="page-link"
-											th:if="${pageMaker.criteria.getPageNum() == num}"
-											th:text="${num}"></a> <span class="changePage"
-											th:unless="${pageMaker.criteria.getPageNum() == num}"
-											th:onClick="|location.href='@{/deliveryList(pageNum=${num})}'|">
-												<a th:text="${num}" class="page-link"></a>
-										</span></li>
-									</th:block>
-									<!-- 1~5 페이징 끝 -->
 
-									<!-- 다음 페이지 시작 -->
-									<li class="page-item"><a class="page-link"
-										aria-label="Next" th:if="*{next}"
-										th:onClick="|location.href='@{/deliveryList(pageNum=*{endPage + 1})}'|">
-											<span aria-hidden="true">&raquo;</span>
-									</a></li>
-									<!-- 다음 페이지 끝 -->
+					<!-- 페이징 -->
+					<!-- Pagination with icons -->
+					<nav aria-label="Page navigation example" th:object="${pageMaker}">
+						<ul class="pagination justify-content-center">
 
-								</ul>
-							</nav>
-							<!-- End Pagination with icons -->
-							
-				
-							
-							<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
-				                <div class="modal-dialog modal-dialog-scrollable">
-				                  <div class="modal-content">
-				                  
-				                    <div class="modal-header">
-				                    
-				                      <h3 class="modal-title" id="findOdn"></h3>
-				                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				                    </div>
-				
-				                    <div class="modal-body">
-				                    
-				                    <div id="top-tag">
-				                    	<h6><b>주문번호 : </b><span id="order_num"></span></h6>
-				                    	<h6><b>가맹점번호 : </b><span id=store_id></span></h6>
-				                    	<h6><b>가맹점명 : </b><span id=store_name></span></h6>
-				                    	<h6><b>전화번호 : </b><span id=store_tel></span></h6>
-				                    	<h6><b>점주 : </b><span id=shop_keeper></span></h6>
-				                    	<h6><b>이메일 : </b><span id=shop_email></span></h6>
-				                    	<h6><b>담당창고 : </b><span id="shop_logi"></span></h6>
-				                    </div>
-									
-						              <!-- Small tables -->
-						              <table class="table table-sm">
-						                <thead>
-						                  <tr>
-						                    <th scope="col">재료번호</th>
-						                    <th scope="col">재료명</th>
-						                    <th scope="col">발주수량</th>
-						                    <th scope="col">용량</th>
-						                  </tr>
-						                </thead>
-						                <tbody class="order_detail">
-						                </tbody>
-						              </table>
-						              <!-- End small tables -->
-				                    </div>
-				                    
-				                    <div class="modal-footer">
-				                      <div id="cancleBtn"></div>
-				                      <div id="deliveryRecognizeBtn"></div>
-				                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				                    </div>
-				                  </div>
-				                </div>
-				              </div><!-- End Modal Dialog Scrollable-->
-							
-							
+							<!-- 이전 페이지 시작 -->
+							<li class="page-item"><a class="page-link"
+								aria-label="Previous" th:if="*{prev}"
+								th:onClick="|location.href='@{/deliveryList(pageNum=*{startPage - 1})}'|">
+									<span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<!-- 이전 페이지 끝 -->
+
+
+							<!-- 1~5 페이징 시작 -->
+							<th:block
+								th:each="num : ${#numbers.sequence(pageMaker.getStartPage(), pageMaker.getEndPage())}">
+								<li class="page-item"><a class="page-link"
+									th:if="${pageMaker.criteria.getPageNum() == num}"
+									th:text="${num}"></a> <span class="changePage"
+									th:unless="${pageMaker.criteria.getPageNum() == num}"
+									th:onClick="|location.href='@{/deliveryList(pageNum=${num})}'|">
+										<a th:text="${num}" class="page-link"></a>
+								</span></li>
+							</th:block>
+							<!-- 1~5 페이징 끝 -->
+
+							<!-- 다음 페이지 시작 -->
+							<li class="page-item"><a class="page-link" aria-label="Next"
+								th:if="*{next}"
+								th:onClick="|location.href='@{/deliveryList(pageNum=*{endPage + 1})}'|">
+									<span aria-hidden="true">&raquo;</span>
+							</a></li>
+							<!-- 다음 페이지 끝 -->
+
+						</ul>
+					</nav>
+					<!-- End Pagination with icons -->
+
+
+
+					<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+						<div class="modal-dialog modal-dialog-scrollable">
+							<div class="modal-content">
+
+								<div class="modal-header">
+
+									<h3 class="modal-title" id="findOdn"></h3>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+
+								<div class="modal-body">
+
+									<div id="top-tag">
+										<h6>
+											<b>주문번호 : </b><span id="order_num"></span>
+										</h6>
+										<h6>
+											<b>가맹점번호 : </b><span id=store_id></span>
+										</h6>
+										<h6>
+											<b>가맹점명 : </b><span id=store_name></span>
+										</h6>
+										<h6>
+											<b>전화번호 : </b><span id=store_tel></span>
+										</h6>
+										<h6>
+											<b>점주 : </b><span id=shop_keeper></span>
+										</h6>
+										<h6>
+											<b>이메일 : </b><span id=shop_email></span>
+										</h6>
+										<h6>
+											<b>담당창고 : </b><span id="shop_logi"></span>
+										</h6>
+									</div>
+
+									<!-- Small tables -->
+									<table class="table table-sm">
+										<thead>
+											<tr>
+												<th scope="col">재료번호</th>
+												<th scope="col">재료명</th>
+												<th scope="col">발주수량</th>
+												<th scope="col">용량</th>
+											</tr>
+										</thead>
+										<tbody class="order_detail">
+										</tbody>
+									</table>
+									<!-- End small tables -->
+								</div>
+
+								<div class="modal-footer">
+									<div id="cancleBtn"></div>
+									<div id="deliveryRecognizeBtn"></div>
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">닫기</button>
+								</div>
+							</div>
 						</div>
 					</div>
+					<!-- End Modal Dialog Scrollable-->
+
+
 				</div>
 			</div>
-		</section>
+		</div>
+
 
 	</main>
 	<!-- End #main -->
@@ -173,7 +185,8 @@
 </html>
 
 
-<script type="text/javascript" src="assets/js/cyj/delivery/deliveryList.js"></script>
+<script type="text/javascript"
+	src="assets/js/cyj/delivery/deliveryList.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!--/*

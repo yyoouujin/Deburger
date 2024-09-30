@@ -11,98 +11,82 @@
 <body>
 
 	<main id="main" class="main">
-
 		<div class="pagetitle">
 			<h1>물류창고 조회</h1>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">물류 관리</li>
-					<li class="breadcrumb-item active">물류창고 조회</li>
-				</ol>
-			</nav>
 		</div>
 		<!-- End Page Title -->
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title"></h5>
+				<!-- Default Table -->
+				<table class="table">
+					<!-- Table with stripped rows -->
+					<thead>
+						<tr>
+							<th>NO</th>
+							<th>창고ID</th>
+							<th>창고이름</th>
+							<th>주소</th>
+							<th>허가일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="info, stats : ${logistics}">
+							<tr th:data-lid=${info.logisticsId}>
+								<td>[[ ${stats.count} ]]</td>
+								<td>[[ ${info.logisticsId} ]]</td>
+								<td>[[ ${info.logisticsName} ]]</td>
+								<td>[[ ${info.basicsAddress} ]] [[ ${info.note} ]] [[
+									${info.detailsAddress} ]]</td>
+								<td>[[ ${#dates.format(info.permissionDay, 'yyyy-MM-dd')}
+									]]</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+				<!-- End Default Table Example -->
 
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-12">
+				<!-- Pagination with icons -->
+				<nav aria-label="Page navigation example" th:object="${pageMaker}">
+					<ul class="pagination justify-content-center">
 
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title"></h5>
-							<!-- Default Table -->
-							<table class="table">
-								<!-- Table with stripped rows -->
-								<thead>
-									<tr>
-										<th>NO</th>
-										<th>창고ID</th>
-										<th>창고이름</th>
-										<th>주소</th>
-										<th>허가일</th>
-									</tr>
-								</thead>
-								<tbody>
-									<th:block th:each="info, stats : ${logistics}">
-										<tr th:data-lid=${info.logisticsId}>
-											<td>[[ ${stats.count} ]]</td>
-											<td>[[ ${info.logisticsId} ]]</td>
-											<td>[[ ${info.logisticsName} ]]</td>
-											<td>[[ ${info.basicsAddress} ]] [[ ${info.note} ]] [[ ${info.detailsAddress} ]]</td>
-											<td>[[ ${#dates.format(info.permissionDay,
-												'yyyy-MM-dd')} ]]</td>
-										</tr>
-									</th:block>
-								</tbody>
-							</table>
-							<!-- End Default Table Example -->
-
-							<!-- Pagination with icons -->
-							<nav aria-label="Page navigation example"
-								th:object="${pageMaker}">
-								<ul class="pagination justify-content-center">
-
-									<!-- 이전 페이지 시작 -->
-									<li class="page-item"><a class="page-link"
-										aria-label="Previous" th:if="*{prev}"
-										th:onClick="|location.href='@{/logisticList(pageNum=*{startPage - 1})}'|">
-											<span aria-hidden="true">&laquo;</span>
-									</a></li>
-									<!-- 이전 페이지 끝 -->
+						<!-- 이전 페이지 시작 -->
+						<li class="page-item"><a class="page-link"
+							aria-label="Previous" th:if="*{prev}"
+							th:onClick="|location.href='@{/logisticList(pageNum=*{startPage - 1})}'|">
+								<span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<!-- 이전 페이지 끝 -->
 
 
-									<!-- 1~5 페이징 시작 -->
-									<th:block
-										th:each="num : ${#numbers.sequence(pageMaker.getStartPage(), pageMaker.getEndPage())}">
-										<li class="page-item"><a class="page-link"
-											th:if="${pageMaker.criteria.getPageNum() == num}"
-											th:text="${num}"></a> <span class="changePage"
-											th:unless="${pageMaker.criteria.getPageNum() == num}"
-											th:onClick="|location.href='@{/logisticList(pageNum=${num})}'|">
-												<a th:text="${num}" class="page-link"></a>
-										</span></li>
-									</th:block>
-									<!-- 1~5 페이징 끝 -->
+						<!-- 1~5 페이징 시작 -->
+						<th:block
+							th:each="num : ${#numbers.sequence(pageMaker.getStartPage(), pageMaker.getEndPage())}">
+							<li class="page-item"><a class="page-link"
+								th:if="${pageMaker.criteria.getPageNum() == num}"
+								th:text="${num}"></a> <span class="changePage"
+								th:unless="${pageMaker.criteria.getPageNum() == num}"
+								th:onClick="|location.href='@{/logisticList(pageNum=${num})}'|">
+									<a th:text="${num}" class="page-link"></a>
+							</span></li>
+						</th:block>
+						<!-- 1~5 페이징 끝 -->
 
-									<!-- 다음 페이지 시작 -->
-									<li class="page-item"><a class="page-link"
-										aria-label="Next" th:if="*{next}"
-										th:onClick="|location.href='@{/logisticList(pageNum=*{endPage + 1})}'|">
-											<span aria-hidden="true">&raquo;</span>
-									</a></li>
-									<!-- 다음 페이지 끝 -->
+						<!-- 다음 페이지 시작 -->
+						<li class="page-item"><a class="page-link" aria-label="Next"
+							th:if="*{next}"
+							th:onClick="|location.href='@{/logisticList(pageNum=*{endPage + 1})}'|">
+								<span aria-hidden="true">&raquo;</span>
+						</a></li>
+						<!-- 다음 페이지 끝 -->
 
-								</ul>
-							</nav>
-							<!-- End Pagination with icons -->
+					</ul>
+				</nav>
+				<!-- End Pagination with icons -->
 
-							
-						</div>
-					</div>
-				</div>
+
 			</div>
-		</section>
-
+		</div>
 	</main>
 	<!-- End #main -->
 </body>
