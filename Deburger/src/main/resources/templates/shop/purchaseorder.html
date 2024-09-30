@@ -41,10 +41,11 @@ th, td {
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel"
 						aria-labelledby="profile-tab">
 
-						<h9> <input type="radio" class="form-check-input" name="option" value="counts" /> <span>
-							<span style="color: red;">[동의]</span> 자동 발주 설정을 하면, 재고가 적정 재고 이하로
-							감소할 때 자동으로 발주가 신청됩니다. <br> &nbsp &nbsp &nbsp &nbsp &nbsp
-							&nbsp &nbsp 동의하신다면, 동의 버튼을 눌러주세요.
+						<h9> <input type="radio" class="form-check-input"
+							name="option" value="counts" /> <span> <span
+							style="color: red;">[동의]</span> 자동 발주 설정을 하면, 재고가 적정 재고 이하로 감소할 때
+							자동으로 발주가 신청됩니다. <br> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+							&nbsp 동의하신다면, 동의 버튼을 눌러주세요.
 						</span>
 					</div>
 					</h9>
@@ -78,9 +79,7 @@ th, td {
 									</tr>
 									<tr>
 										<th>발주일자</th>
-										<td colspan='8'>
-										
-										<input type="text" class="form-control"
+										<td colspan='8'><input type="text" class="form-control"
 											th:value="					
 											${#dates.format(selectOrderCart[0].today,'yyyy/MM/dd')}"
 											disabled="" style="width: 99.2%; margin: 3px"
@@ -88,11 +87,11 @@ th, td {
 									</tr>
 									<tr>
 										<th>발신 업체 이름</th>
-										<td colspan='3'><input type="text" th:value="${selectOrderCart[0].storeName}"
-											id="storeNumber" class="form-control" disabled=""
+										<td colspan='3'><input type="text"
+											th:value="${selectOrderCart[0].storeName}" id="storeNumber"
+											class="form-control" disabled=""
 											style="width: 98.7%; margin: 3px"
-											th:if="${selectOrderCart.size()!= 0}"
-											></td>
+											th:if="${selectOrderCart.size()!= 0}"></td>
 
 										<th>수신 업체 이름</th>
 										<td colspan='4'><input type="text" class="form-control"
@@ -102,8 +101,7 @@ th, td {
 										<th rowspan="2">연락처</th>
 										<th>전화번호</th>
 										<td colspan='2'><input type="text" class="form-control"
-											th:value="${selectOrderCart[0].phone}" 
-											disabled=""
+											th:value="${selectOrderCart[0].phone}" disabled=""
 											style="width: 98%; margin: 3px"
 											th:if="${selectOrderCart.size()!= 0}"></td>
 
@@ -191,16 +189,15 @@ th, td {
 	$('#save').on('click',function(){
 		num = 2;
 		if($("[name='option']:checked").length == 0){
+
 			
 			Swal.fire({
                 title: '자동주문을 선택해주세요.',
                 text: "",
                 icon: 'warning',
-                showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '승인',
-                cancelButtonText: '취소'
+                confirmButtonText: '확인'
                 })
 			
 			return;
@@ -213,14 +210,12 @@ th, td {
 	function delMater(){
 		if($("[name='checkOrder']:checked").length == 0){
 			Swal.fire({
-                title: '삭재 예정 재료를 선택해주세요. ',
+                title: '삭제 예정 재료를 선택해주세요. ',
                 text: "",
                 icon: 'warning',
-                showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '승인',
-                cancelButtonText: '취소'
+                confirmButtonText: '확인'
                 })
 			return;
 		}
@@ -274,11 +269,9 @@ th, td {
                 title: '주문재료를 선택해주세요. ',
                 text: "",
                 icon: 'warning',
-                showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '승인',
-                cancelButtonText: '취소'
+                confirmButtonText: '승인'
                 })
 			return;
 		}
@@ -363,14 +356,14 @@ th, td {
                             icon: 'success',
                           })
             						$.ajax({
-				url : "insertShopOrder",
-				method : "POST",
-				contentType:"application/JSON",
-				data : JSON.stringify(list),
-				
-			}).then((end) => {
-				location.href="ShopOrderList"
-			})
+							url : "insertShopOrder",
+							method : "POST",
+							contentType:"application/JSON",
+							data : JSON.stringify(list),
+							
+						}).then((end) => {
+							location.href="ShopOrderList"
+						})
                 	}
                 })
 			
