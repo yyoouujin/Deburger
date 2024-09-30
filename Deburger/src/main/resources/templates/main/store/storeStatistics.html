@@ -7,7 +7,6 @@
 <title>가맹점 메인페이지</title>
 
 <style>
-
 </style>
 
 </head>
@@ -21,15 +20,19 @@
 				<!-- Left side columns -->
 				<div class="col-lg-12">
 					<div class="row">
-					
-					<!-- 공지사항 시작 -->
+
+						<!-- 공지사항 시작 -->
 						<div class="col-md-12">
 							<div class="card info-card sales-card">
 								<div class="shopMainNoticeCard">
 									<div class="d-flex bd-highlight mainHomeNotice">
-										<h5 class="p-2 flex-fill bd-highlight notice"><a href="noticeListShop" class="shopMainHref">공지사항</a></h5>
-										<h6 class="p-2 flex-fill bd-highlight">[[ ${notices[0].title} ]]</h6>
-										<h5 class="p-2 flex-fill bd-highlight text-secondary">[[${#dates.format(notices[0].writerDate, 'yyyy-MM-dd')}]]</h5>
+										<h5 class="p-2 flex-fill bd-highlight notice">
+											<a href="noticeListShop" class="officeMainHref">공지사항</a>
+										</h5>
+										<h6 class="p-2 flex-fill bd-highlight">[[
+											${notices[0].title} ]]</h6>
+										<h5 class="p-2 flex-fill bd-highlight text-secondary">[[${#dates.format(notices[0].writerDate,
+											'yyyy-MM-dd')}]]</h5>
 									</div>
 								</div>
 							</div>
@@ -108,10 +111,10 @@
 							</div>
 						</div>
 						<!-- 가맹점 전체 매출 시작 끝 -->
-						
-						
 
-						<!-- Customers Card -->
+
+
+						<!-- 재료 발주 원가 시작 -->
 						<div class="col-md-4">
 							<div class="card info-card customers-card">
 								<div class="filter">
@@ -144,153 +147,170 @@
 								</div>
 							</div>
 						</div>
-						<!-- End Customers Card -->
-						
-						
-						<!-- 입고 대기 건수 시작 (권한3) -->
-						<div class="col-md-4" th:onclick="|location.href='@{containerIn}'|" sec:authorize="hasAnyRole('ROLE_3')">
-							<div class="card info-card sales-card">
+						<!-- 재료 발주 원가 끝 -->
+
+
+
+
+						<!-- 월별 통계 시작 (선형차트) -->
+						<div class="col-12">
+							<div class="card graph-card">
 								<div class="card-body">
-									<h5 class="card-title">입고 대기 건수</h5>
-									<div class="d-flex align-items-center">
-										<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-right-to-bracket"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesCnt2">[[${countIn}]] 건</h6>
-										</div>
+									<h5 class="card-title">월별 통계</h5>
+									<div class="chart-container" style="position: relative; height:40vh;">
+										<canvas id="myChart"></canvas>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 입고 대기 건수 끝 (권한3) -->
+						<!-- 월별 통계 끝 (선형차트) -->
 
 
-						<!-- 입고 대기 건수 시작 (권한 1,2) -->
-						<div class="col-md-4" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
-							<div class="card info-card sales-card">
+
+
+						<!-- 메뉴별 판매현황 시작 (원형차트) -->
+						<div class="col-8">
+							<div class="card graph-card">
 								<div class="card-body">
-									<h5 class="card-title">입고 대기 건수</h5>
-									<div class="d-flex align-items-center">
-										<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-right-to-bracket"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesCnt2">0 건</h6>
-										</div>
+									<h5 class="card-title">메뉴별 판매 현황</h5>
+									<div class="pie-container" style="position: relative; height:46.5vh;">
+										<canvas id="pieExample"></canvas>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 입고 대기 건수 끝 (권한 1,2) -->
+						<!-- 메뉴별 판매현황 끝 (원형차트) -->
 
 
-
-						<!-- 출고 대기 건수 시작 (권한 3) -->
-						<div class="col-md-4" th:onclick="|location.href='@{containerOut}'|" sec:authorize="hasAnyRole('ROLE_3')">
-							<div class="card info-card revenue-card">
-								<div class="card-body">
-									<h5 class="card-title">출고 대기 건수</h5>
-									<div class="d-flex align-items-center">
-										<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-right-from-bracket"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesPri2">[[${countOut}]] 건</h6>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 출고 대기 건수 끝 (권한 3) -->
-
-
-						<!-- 출고 대기 건수 시작 (권한 1,2) -->
-						<div class="col-md-4" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
-							<div class="card info-card revenue-card">
-								<div class="card-body">
-									<h5 class="card-title">출고 대기 건수</h5>
-									<div class="d-flex align-items-center">
-										<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-right-from-bracket"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesPri2">0 건</h6>
+						<div class="col-4">
+							<!-- 입고 대기 건수 시작 (권한3) -->
+							<div th:onclick="|location.href='@{containerIn}'|"
+								sec:authorize="hasAnyRole('ROLE_3')">
+								<div class="card info-card sales-card">
+									<div class="card-body">
+										<h5 class="card-title">입고 대기 건수</h5>
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-right-to-bracket"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesCnt2">[[${countIn}]] 건</h6>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<!-- 출고 대기 건수 끝 (권한 1,2) -->
+							<!-- 입고 대기 건수 끝 (권한3) -->
 
 
-
-						<!-- 발주 대기 건수 시작 (권한 1,2) -->
-						<div class="col-md-4" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')" th:onclick="|location.href='@{logisticInfo(logisticsId=${logisticsId})}'|">
-							<div class="card info-card customers-card">
-								<div class="card-body">
-									<h5 class="card-title">발주 대기 건수</h5>
-									<div class="d-flex align-items-center">
-										<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-truck-fast"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesPro2">[[${countOrder}]] 건</h6>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 발주 대기 건수 끝 (권한 1,2) -->
-
-
-						<!-- 발주 대기 건수 시작 (권한 3) -->
-						<div class="col-md-4" sec:authorize="hasAnyRole('ROLE_3')">
-							<div class="card info-card customers-card">
-								<div class="card-body">
-									<h5 class="card-title">발주 대기 건수</h5>
-
-									<div class="d-flex align-items-center">
-										<div
-											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-truck-fast"></i>
-										</div>
-										<div class="ps-3">
-											<h6 id="salesPro2">0 건</h6>
+							<!-- 입고 대기 건수 시작 (권한 1,2) -->
+							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
+								<div class="card info-card sales-card">
+									<div class="card-body">
+										<h5 class="card-title">입고 대기 건수</h5>
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-right-to-bracket"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesCnt2">0 건</h6>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<!-- 발주 대기 건수 끝 (권한 3) -->
-						
-						
+							<!-- 입고 대기 건수 끝 (권한 1,2) -->
 
-						<!-- Chart -->
-						<div class="row">
-							<div class="col-12">
-								<h3>월별 통계</h3>
-								<div id="chart-area"></div>
-							</div>
-						</div>
-						<!-- End Chart -->
 
-						<div class="pagetitle col-lg-13">
-							<div class="row">
-								<div class="col-6">
-									<h1>제품별 판매량</h1>
-									<br />
-									<div id="chart-area2"></div>
-								</div>
-								<div class="col-6">
-									<h1>공지사항</h1>
-									<br />
 
-									<div id="grid"></div>
-									<br />
+							<!-- 출고 대기 건수 시작 (권한 3) -->
+							<div th:onclick="|location.href='@{containerOut}'|"
+								sec:authorize="hasAnyRole('ROLE_3')">
+								<div class="card info-card revenue-card">
+									<div class="card-body">
+										<h5 class="card-title">출고 대기 건수</h5>
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-right-from-bracket"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesPri2">[[${countOut}]] 건</h6>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
+							<!-- 출고 대기 건수 끝 (권한 3) -->
+
+
+							<!-- 출고 대기 건수 시작 (권한 1,2) -->
+							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
+								<div class="card info-card revenue-card">
+									<div class="card-body">
+										<h5 class="card-title">출고 대기 건수</h5>
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-right-from-bracket"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesPri2">0 건</h6>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 출고 대기 건수 끝 (권한 1,2) -->
+
+
+
+							<!-- 발주 대기 건수 시작 (권한 1,2) -->
+							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')"
+								th:onclick="|location.href='@{logisticInfo(logisticsId=${logisticsId})}'|">
+								<div class="card info-card customers-card">
+									<div class="card-body">
+										<h5 class="card-title">발주 대기 건수</h5>
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-truck-fast"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesPro2">[[${countOrder}]] 건</h6>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 발주 대기 건수 끝 (권한 1,2) -->
+
+
+							<!-- 발주 대기 건수 시작 (권한 3) -->
+							<div sec:authorize="hasAnyRole('ROLE_3')">
+								<div class="card info-card customers-card">
+									<div class="card-body">
+										<h5 class="card-title">발주 대기 건수</h5>
+
+										<div class="d-flex align-items-center">
+											<div
+												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+												<i class="fa-solid fa-truck-fast"></i>
+											</div>
+											<div class="ps-3">
+												<h6 id="salesPro2">0 건</h6>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 발주 대기 건수 끝 (권한 3) -->
 						</div>
+
+
+
 					</div>
 					<!-- End Left side columns -->
 				</div>
@@ -302,239 +322,175 @@
 
 <script th:inline="javascript">
 
-           let salesCnt = document.getElementById('salesCnt');
-           let salesPri = document.getElementById('salesPri');
-           let salesPro = document.getElementById('salesPro');
+	//차트 JS 파이차트(채유진)
+	const pieExample = document.querySelector('#pieExample').getContext('2d');
 
-           const today = new Date();
-           const DayOfMonth = today.getFullYear() + '-'+ String(today.getMonth()+1).padStart(2, "0");
-           console.log(DayOfMonth);
+	const pieExampleChart = new Chart(pieExample, {
+		type : 'pie',
+		data : {
+			labels : [ '건강버거', '불고기버거', '치즈버거', '감자버거', '롱치킨버거' ],
+			datasets : [ {
+				label : '# of Votes',
+				data : [ 12, 19, 3, 5, 2 ],
+				backgroundColor : [ 'rgba(255, 99, 132, 0.2)', 
+									'rgba(54, 162, 235, 0.2)', 
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)', 
+									'rgba(153, 102, 255, 0.2)',
+									'rgba(255, 159, 64, 0.2)' ],
+				borderColor : [ 'rgba(255, 99, 132, 1)', 
+								'rgba(54, 162, 235, 1)', 
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)', 
+								'rgba(153, 102, 255, 1)',
+								'rgba(255, 159, 64, 1)' ],
+				borderWidth : 1
+			} ]
+		},
+		options : {
+			maintainAspectRatio: false,
+			plugins : {
+				legend : {
+					position : 'right',
+					display : true,
+					labels : {
+						font : {
+							size : 14,
+							family: "'Helvetica'"
+						}
+					}
+				},
+				title : {
+					display : false,
+					text : '제품별 판매 현황',
+					fontSize : 22
+				}
+			}
+		}
+	})
 
-           let StoreSales = [[${StoreSales}]];
-
-           let StoreProduct = [[${StoreProduct}]];
-
-           let StoreOrder = [[${StoreOrder}]];
-
-           /* 월별 가맹점 매출 */
-           let salesData = [];
-           /* 전체메뉴 월별 판매량 */
-           let productsData = [];
-           /* 월별 발주 원가 */
-           let ordersData = [];
-           /* 월표시 */
-           let dateData = [];
-
-           StoreSales.forEach(element => {
-           	if(element.sumCnt != 0){
-             salesData.push(element.sumCnt / 1000);
-           	}
-             if(element.dateList == DayOfMonth){
-               salesPri.innerHTML = element.sumCnt.toString()
-               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
-
-             }
-           });
-
-           StoreProduct.forEach(element => {
-           	if(element.sumCnt != 0){
-             productsData.push(element.sumCnt);
-           	}
-             if(element.dateList == DayOfMonth){
-               salesCnt.innerHTML = element.sumCnt + ' 개';
-             }
-           })
-
-           StoreOrder.forEach(element => {
-           	if(element.sumCnt != 0){
-             ordersData.push(element.sumCnt /1000);
-
-           	}
-             if(element.dateList == DayOfMonth){
-               salesPro.innerHTML = element.sumCnt.toString()
-               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
-             }
-           })
-
-           StoreOrder.forEach(element => {
-             dateData.push(element.dateList);
-           })
-
-
-
-           const el = document.getElementById('chart-area');
-           const data = {
-             categories: dateData,
-             series: [
-               {
-                 name: '가맹점 매출',
-                 data: salesData,
-               },
-               {
-                 name: '전체메뉴 판매량',
-                 data: productsData,
-               },
-               {
-                 name: '발주 원가',
-                 data: ordersData,
-               },
-             ],
-           };
-           const options = {
-             chart: { title: '', width:1550, height:400 },
-             xAxis: {
-               title: '(년/월)',
-             },
-             yAxis: {
-               title: '(원/개)',
-             },
-             tooltip: {
-               formatter: (value) => `${value}`,
-             },
-             legend: {
-               align: 'bottom',
-             },
-           };
-
-           const chart = toastui.Chart.lineChart({ el, data, options });
-
-
-
-         chartDrow();
-      /*    const chart2 = toastui.Chart.pieChart({ el2, data2, options2 }); */
-
-
-                   let grid;
-
-                   var detaList = [[${notices}]];
-
-                   $(document).ready(async () => {
-                     // 2. HTML이 수행된 뒤 함수를 호출한다.
-                     grid = await gridLoad();
-
-
-                   });
-
-                   /**
-                    *
-                    * @return void
-                    */
-                   const gridLoad = () => {
-                     // 3. 그리드 생성
-                     const Grid = tui.Grid;
-
-                     /**
-                      * [선택] 그리드 테마 적용하기 (clean, stripe, default)
-                      *
-                      * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
-                      * @reference https://seokbong.tistory.com/14
-                      */
-                     Grid.applyTheme('clean');
-
-                     /**
-                      * [선택] Grid Confirm 메시지
-                      */
-
-
-                     Grid.setLanguage('en'); // set Korean
-                     const grid = new Grid({
-                       // ================================== 공통 옵션 적용 ==============================
-                       el: document.getElementById('grid'), // [필수] Container element
-                       data: detaList, // [선택] 그리드 데이터 조회
-
-                       /**
-                        * [선택] 순번 기능
-                        * @reference : http://nhn.github.io/tui.grid/latest/tutorial-example11-row-headers
-                        */
-                       rowHeaders: ['rowNum'],
-
-               	// 패이징
-                       pageOptions: {
-                     	  useClient: true,
-                         perPage: 9,
-                       },
-
-                       // ================================== 컬럼 옵션 적용 ==============================
-
-                       columns: [
-                     	  // [Column-2] 일련번호
-                           {
-                             header: '일련번호', // [필수] 컬럼 이름
-                             name: 'noticeNumber', // [필수] 컬럼 매핑 이름 값
-                             sortable: true, // [선택] 컬럼의 정렬 여부
-                             resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                             align: 'center', // [선택] 텍스트 정렬 옵션
-                             hidden: true,
-
-                           },
-                         // [Column-2] 검수일자
-                         {
-                           header: '구분', // [필수] 컬럼 이름
-                           name: 'division', // [필수] 컬럼 매핑 이름 값
-                           sortable: true, // [선택] 컬럼의 정렬 여부
-                           resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                           align: 'center', // [선택] 텍스트 정렬 옵션
-                           hidden: true,
-
-                         },
-                         // [Column-2] 처리상태
-                         {
-                           header: '공지사항', // [필수] 컬럼 이름
-                           name: 'title', // [필수] 컬럼 매핑 이름 값
-                           sortable: true, // [선택] 컬럼의 정렬 여부
-                           resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                           align: 'left', // [선택] 텍스트 정렬 옵션
-                           width: 600,
-                         },
-                         // [Column-2] 품질
-                         {
-                           header: '공고일', // [필수] 컬럼 이름
-                           name: 'writerDate', // [필수] 컬럼 매핑 이름 값
-                           sortable: true, // [선택] 컬럼의 정렬 여부
-                           resizable: true, // [선택] 컬럼의 리사이즈 여부 옵션
-                           align: 'center', // [선택] 텍스트 정렬 옵션
-                           hidden: true,
-                         },
-
-                       ],
-                     });
-
-                     //  그리드 추가
-           grid.on('dblclick', (ev) => {
-                  	let url ='noticeListInfoOffice?noticeNumber=' + grid.getData()[ev.rowKey].noticeNumber;
-             		location.href = url;
-                  	})
-                     return grid;
-                   };
-
-
-       function chartDrow(){
-
-
-         const data = {
-           categories: ['Browser'],
-           series: [
-             {
-               name: '건강버거세트',
-               data: 46.02,
-             },
-             {
-               name: '치즈버거세트',
-               data: 20.47,
-             },
-             {
-               name: '불고기버거세트',
-               data: 17.71,
-             },
-           ],
-         };
-
-           const el = document.getElementById('chart-area2');
-
-           const options = {
-             chart: { title: 'Usage share of web browsers', width: 700, height: 400 },
-           };
-
-           const chart = toastui.Chart.pieChart({ el, data, options });
-       }
-    </script>
+	
+	
+	//차트 JS 선형차트 (월별통계 데이터)
+	let salesCnt = document.getElementById('salesCnt');
+	let salesPri = document.getElementById('salesPri');
+	let salesPro = document.getElementById('salesPro');
+	
+	const today = new Date();
+	const DayOfMonth = today.getFullYear() + '-'+ String(today.getMonth()+1).padStart(2, "0");
+	console.log(DayOfMonth);
+	
+	let StoreSales = [[${StoreSales}]];
+	let StoreProduct = [[${StoreProduct}]];
+	let StoreOrder = [[${StoreOrder}]];
+	
+	//월별 가맹점 매출
+	let salesData = [];
+	//전체메뉴 월별 판매량
+	let productsData = [];
+	//월별 발주 원가
+	let ordersData = [];
+	//월표시
+	let dateData = [];
+	
+	StoreSales.forEach(element => {
+		if(element.sumCnt != 0) {
+			salesData.push(element.sumCnt / 1000);
+		}
+		if(element.dateList == DayOfMonth) {
+			salesPri.innerHTML = element.sumCnt.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+		}
+	});
+	
+	StoreProduct.forEach(element => {
+		if(element.sumCnt != 0) {
+			productsData.push(element.sumCnt);
+		}
+		if(element.dateList == DayOfMonth) {
+			salesCnt.innerHTML = element.sumCnt + ' 개';
+		}
+	});
+	
+	StoreOrder.forEach(element => {
+		if(element.sumCnt != 0) {
+			ordersData.push(element.sumCnt /1000);
+		}
+		
+		if(element.dateList == DayOfMonth) {
+			salesPro.innerHTML = element.sumCnt.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + ' 원';
+		}
+	});
+	
+	StoreOrder.forEach(element => {
+		dateData.push(element.dateList);
+	})
+	
+       
+	//차트 JS 선형차트 (월별통계 그리기)
+	const ctx = document.getElementById('myChart').getContext('2d');
+	const myChart = new Chart (ctx, {
+		type: 'line',
+		data: {
+			labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			
+			datasets: [
+				{
+		            label: '가맹점 매출',
+		            data: salesData,
+		            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+		            borderColor: ['rgba(255, 99, 132, 1)'],
+		            //borderWidth: 1
+	        	},
+	        	{
+	        		label:'전체메뉴 판매량',
+	        		data: productsData,
+	        		backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+	        		borderColor: ['rgba(54, 162, 235, 1)'],
+	        		//borderWidth: 1
+	        	},
+	        	{
+	        		label:'발주 원가',
+	        		data: ordersData,
+	        		backgroundColor: ['rgba(163, 253, 141, 0.2)'],
+	        		borderColor: ['rgba(163, 253, 141, 1)'],
+	        		//borderWidth: 1
+	        	}
+	        	
+			] //end datasets
+	        
+	    },
+	    options: {
+	    	maintainAspectRatio: false,
+			plugins : {
+				legend : {
+					position : 'top',
+					display : false,
+					labels : {
+						font : {
+							size : 22
+						}
+					}
+				},
+				title : {
+					display : false,
+					text : '제품별 판매 현황',
+					fontSize : 22
+				}
+			},
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+		}
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
