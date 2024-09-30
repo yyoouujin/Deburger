@@ -58,7 +58,9 @@ public class StoreController {
 
 	// 가맹점 등록
 	@GetMapping("insertStore")
-	public String officeMain() {
+	public String officeMain(Model model) {
+		StoreVO storeVO = storeService.selectStoreNumber();
+		model.addAttribute("storeNumber", storeVO);
 		return "main/store/insertStore";
 	}
 
@@ -130,6 +132,7 @@ public class StoreController {
 		// 2) 실제 서버에 업로드할 때 사용한 경로
 		storeVO.setBusinessLicenseImage(setImagePath(uploadFileName2));
 		
+		
 		UserVO userVO = new UserVO();
 		userVO.setPassword(storeVO.getPhone());
 		userVO.setAuthority("4");
@@ -137,7 +140,7 @@ public class StoreController {
 		
 		storeService.insertStore(storeVO, userVO);
 
-		return "main/store/insertStore";
+		return "redirect:officeListStore";
 	}
 
 	private String makeFolder() {
