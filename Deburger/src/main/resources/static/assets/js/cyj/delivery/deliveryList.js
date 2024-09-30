@@ -1,4 +1,3 @@
-
 //발주상세 조회
 $('tbody > tr').on('click', makeTag);
 
@@ -10,29 +9,6 @@ function makeTag(event) {
 	let odn = $(tr).data('odn');
 	let lid = $(tr).data('lid');
 	checkStock();
-
-
-	//'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
-	if (checkText.text() == 'N') {
-
-		$.ajax({
-			url: "selectLogistics?orderNumber=" + odn,
-			method: "GET"
-		})
-			.done(data => {
-
-				document.querySelector('#shop_logi').innerText = "";
-				let selectTag = `<select class="selectBox"><select>`
-				$('#shop_logi').append(selectTag);
-
-				data.forEach(element => {
-					let tag = `<option id="selectLogi" value="${element.logisticsId}">${element.logisticsId}</option>`
-					$('.selectBox').append(tag);
-				});
-			})
-			.fail(err => console.log(err));
-	}
-
 
 	function checkStock() {
 
@@ -80,9 +56,7 @@ function makeTag(event) {
 								.fail(err => console.log(err));
 						}
 					})
-
 			} else { //셀렉트박스로 선택된 물류창고로 변경
-
 				const dataObj = { "orderNumber": findOdn, "logisticsId": findSelectLogi };
 
 				Swal.fire({
@@ -115,45 +89,6 @@ function makeTag(event) {
 					});
 			}
 		}); //승인버튼 클릭이벤트 끗
-
-
-
-
-		/*
-		//해당 주문번호의 담당물류창고 재고 전체조회
-		$.ajax({
-			url: "logisticAllStock?orderNumber=" + odn,
-			method: "GET"
-		})
-			.done(data => {
-				let logisticStock = data;
-				//해당 주문번호의 전체 발주수량 조회
-				$.ajax({
-					url: "orderAllStock?orderNumber=" + odn,
-					method: "GET"
-				})
-					.done(data => {
-						let orderStock = data;
-
-						//1) 재고확인 N 또는 Y 출력
-						if (logisticStock != -1) { //창고에 재고가 하나도 없는게 아니면~ 비교시작
-							if (orderStock >= logisticStock) {
-								checkText.text("N");
-							} else {
-								checkText.text("Y");
-							}
-						} else { //창고에 재고가 하나도 없다면 N 출력
-							checkText.text("N");
-						}
-
-
-					})
-					.fail(err => console.log(err));
-			})
-			.fail(err => console.log(err));
-			*/
-
-
 	} //checkStock 끝
 
 
@@ -175,7 +110,7 @@ function makeTag(event) {
                 	<h6><b>전화번호 : </b><span id="store_tel">${data[0].phone}</span></h6>
                 	<h6><b>점주 : </b><span id="shop_keeper">${data[0].shopkeeper}</span></h6>
                 	<h6><b>이메일 : </b><span id="shop_email">${data[0].email}</span></h6>
-                	<h6><b>담당창고 : </b><span id="shop_logi">${data[0].logisticsId}</span></select></h6>
+                	<h6><b>담당창고 : </b><span id="shop_logi">${data[0].logisticsId}</span></h6>
                 	`
 			$('#top-tag').html(tag);
 
@@ -186,8 +121,8 @@ function makeTag(event) {
 				$(tr).append(`<td>${element.count}</td>`);
 				$(tr).append(`<td>${element.unit}</td>`);
 				$('.order_detail').append(tr);
-
 			});
+			
 			//취소요청일 경우에만 버튼 활성화
 			let cbtn = `<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소승인</button>`
 			if (`${data[0].cancelOperation}` == 'J2') {
@@ -203,7 +138,6 @@ function makeTag(event) {
 					if (!confirm('취소 승인 하시겠습니까?')) {
 						return;
 					}
-
 					//취소상태 변경
 					$.ajax('canceloperationUpdate', {
 						type: 'post',
@@ -214,13 +148,32 @@ function makeTag(event) {
 							document.location.href = document.location.href;
 						})
 						.fail(err => console.log(err));
-				});
+				}); //취소승인 버튼 클릭 시 승인상태 변경 이벤트 끝
+			} //취소요청일 경우에만 버튼 활성화 끝
+			
+			
+			//'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
+			if (checkText.text() == 'N') {
+				$.ajax({
+					url: "selectLogistics?orderNumber=" + odn,
+					method: "GET"
+				})
+					.done(data => {
+						document.querySelector('#shop_logi').innerText = "";
+						let selectTag = `<select class="selectBox"><select>`
+						console.log(selectTag);
+						$('#shop_logi').append(selectTag);
+						data.forEach(element => {
+							let tag = `<option id="selectLogi" value="${element.logisticsId}">${element.logisticsId}</option>`
+							console.log(tag);
+							$('.selectBox').append(tag);
+						});
+					})
+					.fail(err => console.log(err));
 			}
 		})
 		.fail(err => console.log(err))
-
 } //maketag 끝
-
 
 
 //모달 초기화
