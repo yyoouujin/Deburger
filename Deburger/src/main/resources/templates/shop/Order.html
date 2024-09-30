@@ -254,13 +254,25 @@
 			
 			
 			$("#canclebtn").on("click",function(event){		
-				$.ajax({
-					url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
-					method : "POST",
-					
-				}).then((end) => {
-					location.href="ShopOrderList"
-				})
+				Swal.fire({
+		            title: '발주를 취소하시겠습니까?',
+		            text: "",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#3085d6',
+		            cancelButtonColor: '#d33',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		            })
+		            .then((result)=>{
+		            	$.ajax({
+		        			url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
+		        			method : "POST",
+		        			
+		        		}).then((end) => {
+		        			location.href="ShopOrderList"
+		        		})
+		            })
 				
 			})
 			
@@ -275,14 +287,27 @@
 	
 	
 	$("#canclebtn").on("click",function(event){	
-		$.ajax({
-			url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
-			method : "POST",
-			
-		}).then((end) => {
-			location.href="ShopOrderList"
-		})
 		
+		Swal.fire({
+            title: '발주를 취소하시겠습니까?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+            })
+            .then((result)=>{
+            	$.ajax({
+        			url : "updateOrderCancel?orderNumber="+$(event.target).closest('tr').children().eq(1).text(),
+        			method : "POST",
+        			
+        		}).then((end) => {
+        			location.href="ShopOrderList"
+        		})
+            })
+				
 	})
 	
 	function orderInfo(){
