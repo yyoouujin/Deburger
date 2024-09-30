@@ -408,6 +408,7 @@
 		       a.in_count,
 		       a.out_count,
 			   a.in_day,
+			   a.expiration_limit,
 			   b.details_order_number,
 			   c.material_number,
 			   c.material_name
@@ -417,7 +418,8 @@
 			join material c
 			on b.material_number = c.material_number
 		where c.material_number = #{materialNumber}
-		and a.in_count - a.out_count != 0		
+		and a.in_count - a.out_count != 0	
+		order by a.expiration_limit	
 	</select>
 
 	<insert id="containerOutDB">
