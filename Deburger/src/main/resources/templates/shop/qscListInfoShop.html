@@ -283,32 +283,61 @@
       
       insertBtn.addEventListener('click', () => {
     	  
+    	  Swal.fire({
+              title: '정말로 제출 하시겠습니까?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '승인',
+              cancelButtonText: '취소'
+              })
+              .then((result) => {
+                  if (result.isConfirmed) {
+                	  
+                	  let qscDataList = [...grid1.getData(), ...grid2.getData(), ...grid3.getData()]
+                      
+                      
+           		   let scores = {qualityScore: ((grid1.getSummaryValues('score')
+                   		   .sum -1)/((grid1.getSummaryValues('score')
+                   				   .cnt * 3) -1)*100),
+                   				   cleanlScore :((grid2.getSummaryValues('score')
+                   		        		   .sum -1)/((grid2.getSummaryValues('score')
+                   		        				   .cnt * 3) -1)*100),
+                   		        				   serviceScore:  ((grid3.getSummaryValues('score')
+                   		        		        		   .sum -1)/((grid3.getSummaryValues('score')
+                   		        		        				   .cnt * 3) -1)*100)} ;
+                      $.ajax({
+                          url: "/deburger/qscListInfoShop",
+                          method: "post",
+                          contentType:"application/json",
+                          data  : JSON.stringify({"qscDataList" : qscDataList, "scores": scores}),
+                          
+                          
+                       })
+                       .then((result) =>{
+                    	   
+                    	   Swal.fire({
+                               title: `제출 완료되었습니다.`,
+                               icon: 'success',
+                             })
+                    	   
+                         let url = 'qscListShop'
+                          location.replace(url);
+                       }) 
+                	  
+                	  
+                  }else{
+                	  Swal.fire(
+                              {
+                              title: '제출 취소!',
+                              icon: 'error',
+                            })
+                  }
+                  })
+    	  
           
-           let qscDataList = [...grid1.getData(), ...grid2.getData(), ...grid3.getData()]
            
-           
-		   let scores = {qualityScore: ((grid1.getSummaryValues('score')
-        		   .sum -1)/((grid1.getSummaryValues('score')
-        				   .cnt * 3) -1)*100),
-        				   cleanlScore :((grid2.getSummaryValues('score')
-        		        		   .sum -1)/((grid2.getSummaryValues('score')
-        		        				   .cnt * 3) -1)*100),
-        		        				   serviceScore:  ((grid3.getSummaryValues('score')
-        		        		        		   .sum -1)/((grid3.getSummaryValues('score')
-        		        		        				   .cnt * 3) -1)*100)} ;
-          console.log(scores);
-           $.ajax({
-               url: "/deburger/qscListInfoShop",
-               method: "post",
-               contentType:"application/json",
-               data  : JSON.stringify({"qscDataList" : qscDataList, "scores": scores}),
-               
-               
-            })
-            .then((result) =>{
-              let url = 'qscListShop'
-               location.replace(url);
-            })
 
           
       });

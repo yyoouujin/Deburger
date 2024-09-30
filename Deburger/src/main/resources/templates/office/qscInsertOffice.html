@@ -303,19 +303,37 @@
        if(grid1.validate().length == 0 && grid2.validate().length == 0 && grid3.validate().length == 0){
         let qscDataList = [...grid1.getData(), ...grid2.getData(), ...grid3.getData()]
 
-        $.ajax({
-            url: "/deburger/qscInsertOffice",
-            method: "post",
-            contentType:"application/json",
-            data  : JSON.stringify(qscDataList),
-         })
-         .then(result =>{
-          alert(result + "개 항목이 최신버전으로 등록되었습니다")
-         })
-
-
+        
+        Swal.fire({
+            title: `현재 항목들이 최신버전으로 등록됩니다.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '승인',
+            cancelButtonText: '취소'
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+            	  $.ajax({
+                      url: "/deburger/qscInsertOffice",
+                      method: "post",
+                      contentType:"application/json",
+                      data  : JSON.stringify(qscDataList),
+                   })
+                   .then(result =>{   	 
+                	   Swal.fire({
+                           title: `${result}개 항목이 최신버전으로 등록되었습니다.`,
+                           icon: 'success',
+                         });                 	 
+                   })  
+              }})
        }else{
-        alert("붉은색으로 표시된 항목의 글자수가 잘못되었습니다. \n확인후 다시저장해주세요")
+    	   Swal.fire(
+                   {
+                   title: '붉은색으로 표시된 항목의 \n 글자수가 잘못되었습니다. \n확인후 다시저장해주세요',
+                   icon: 'error',
+                 })
        }
 
       });
