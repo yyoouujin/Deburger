@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+=======
 <html
   xmlns:th="http://www.thymeleaf.org/"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -15,7 +23,25 @@
       <div class="card">
         <div class="card-body">
           <h1 class="card-title">가맹점 정보</h1>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+<style>
+#postalBtn2 {
+	margin-top: 24px;
+}
+</style>
+</head>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>가맹점 등록</h1>
+		</div>
+
+		<div class="card">
+			<div class="card-body">
+				<h1 class="card-title"></h1>
+=======
           <!-- General Form Elements -->
           <form class="col-md-8" method="post" th:action="@{insertStore}" enctype="multipart/form-data" id="postForm">
             <input type="hidden" class="form-control" th:field="${storeNumber.storeNumber}" />
@@ -29,14 +55,32 @@
                 <input type="text" class="form-control" name="shopkeeper" id="shopkeeper" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+				<!-- General Form Elements -->
+				<form class="row g-2" method="post" th:action="@{insertStore}"
+					enctype="multipart/form-data">
+=======
             <div class="row mb-3">
               <label for="businessRegistrationNumber" class="col-sm-2 col-form-label">사업자등록번호</label>
               <div class="col-sm-9">
                 <input type="inputText" class="form-control" name="businessRegistrationNumber" id="businessRegistrationNumber" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="storeName">가맹점명</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="storeName"
+								id="storeName" />
+						</div>
+					</div>
+=======
             <div class="row mb-3">
               <label for="postalBtn" class="col-sm-2 col-form-label">주소</label>
               <div class="col-sm-10">
@@ -57,21 +101,49 @@
                 <input type="text" id="sample6_extraAddress" placeholder="참고항목" name="note" class="col-md-5" style="width: 44.5%;border-color:#dee2e6;   padding: 5.6px; border-radius: 7px; border-width: 1px"/>
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="shopkeeper">점주명</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="shopkeeper"
+								id="shopkeeper" />
+						</div>
+					</div>
+=======
             <div class="row mb-3">
               <label for="phone" class="col-sm-2 col-form-label">전화번호</label>
               <div class="col-sm-9">
                 <input type="inputText" class="form-control" name="phone" id="phone"/>
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="businessRegistrationNumber">사업자등록번호</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control"
+								name="businessRegistrationNumber"
+								id="businessRegistrationNumber" />
+						</div>
+					</div>
+=======
             <div class="row mb-3">
               <label for="email" class="col-sm-2 col-form-label">이메일</label>
               <div class="col-sm-9">
                 <input type="inputText" class="form-control" name="email" id="email"/>
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+=======
             <div class="row mb-3">
               <label for="contractStartDay" class="col-sm-2 col-form-label">계약기간</label>
               <div class="col-sm-10 col-md-4">
@@ -82,28 +154,94 @@
                 <input type="date" class="form-control" name="contractFinDay" id="contractFinDay" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="row g-3">
+						<div class="col-sm-2">
+							<label for="postalBtn">주소</label>
+						</div>
+						<div class="col-sm-8">
+							<input type="text"
+							class="form-control" id="sample6_postcode" placeholder="우편번호"
+							name="postal" />
+						</div>
+						<div class="col-sm">
+							<input type="button" class="btn btn-secondary"
+							onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
+							id="postalBtn" />
+						</div>
+						
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="sample6_address"
+							placeholder="주소" name="address" />
+						</div>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="sample6_detailAddress"
+							placeholder="상세주소" name="addressses" />
+						</div>
+						<div class="col-sm-2">
+						</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="sample6_extraAddress"
+							placeholder="참고항목" name="note" />
+						</div>
+						
+					</div>
+					
+=======
             <div class="row mb-3">
               <label for="logisticsId" class="col-sm-2 col-form-label">지정물류창고</label>
               <div class="col-sm-10 col-md-9">
                 <input type="inputText" class="form-control" name="logisticsId" id="logisticsId"/>
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="col-md-12">
+						<label for="phone">전화번호</label> <input type="text"
+							class="form-control" name="phone" id="phone" />
+					</div>
+=======
             <div class="row mb-3">
               <label for="contractImage" class="col-sm-2 col-form-label">계약서</label>
               <div class="col-sm-9">
                 <input class="form-control" type="file" id="contractImageFile" name="contractImageFile" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="col-md-12">
+						<label for="email">이메일</label> <input type="text"
+							class="form-control" name="email" id="email" />
+					</div>
+=======
             <div class="row mb-3">
               <label for="businessLicenseImage" class="col-sm-2 col-form-label">사업자 등록증</label>
               <div class="col-sm-9">
                 <input class="form-control" type="file" id="businessLicenseImageFile" name="businessLicenseImageFile" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+					<div class="col-md-12">
+						<label for="contractStartDay">계약기간</label>
+					</div>
+					<div class="col-md-5">
+						<input type="date" class="form-control" name="contractStartDay"
+							id="contractStartDay" />
+					</div>
+					<div class="col-md-1">~</div>
+					<div class="col-md-5">
+						<input type="date" class="form-control" name="contractFinDay"
+							id="contractFinDay" />
+					</div>
+=======
             <div class="text-center">
               <button type="button" id="insertBtn" class="btn btn-primary">저장</button>
               <button type="reset" class="btn btn-secondary">취소</button>
@@ -113,7 +251,10 @@
         </div>
       </div>
     </main>
+>>>>>>> refs/heads/main
 
+<<<<<<< HEAD
+=======
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:inline="javascript">
 
@@ -154,50 +295,93 @@
         new daum.Postcode({
           oncomplete: function (data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+>>>>>>> refs/heads/main
 
-            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
+					<div class="col-md-12">
+						<label for="logisticsId">지정물류창고</label> <input type="text"
+							class="form-control" name="logisticsId" id="logisticsId" />
+					</div>
 
-            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-            if (data.userSelectedType === 'R') {
-              // 사용자가 도로명 주소를 선택했을 경우
-              addr = data.roadAddress;
-            } else {
-              // 사용자가 지번 주소를 선택했을 경우(J)
-              addr = data.jibunAddress;
-            }
+					<div class="col-md-12">
+						<label for="contractImage" class="col-sm-2 col-form-label">계약서</label>
+						<input class="form-control" type="file" id="contractImageFile"
+							name="contractImageFile" />
+					</div>
 
-            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-            if (data.userSelectedType === 'R') {
-              // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-              // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-              if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                extraAddr += data.bname;
-              }
-              // 건물명이 있고, 공동주택일 경우 추가한다.
-              if (data.buildingName !== '' && data.apartment === 'Y') {
-                extraAddr += extraAddr !== '' ? ', ' + data.buildingName : data.buildingName;
-              }
-              // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-              if (extraAddr !== '') {
-                extraAddr = ' (' + extraAddr + ')';
-              }
-              // 조합된 참고항목을 해당 필드에 넣는다.
-              document.getElementById('sample6_extraAddress').value = extraAddr;
-            } else {
-              document.getElementById('sample6_extraAddress').value = '';
-            }
 
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById('sample6_address').value = addr;
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById('sample6_detailAddress').focus();
-          },
-        }).open();
-      }
-    </script>
-  </body>
+					<div class="col-md-12">
+						<label for="businessLicenseImage">사업자 등록증</label> <input
+							class="form-control" type="file" id="businessLicenseImageFile"
+							name="businessLicenseImageFile" />
+					</div>
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary">저장</button>
+						<button type="reset" class="btn btn-secondary">취소</button>
+					</div>
+				</form>
+				<!-- End General Form Elements -->
+			</div>
+		</div>
+	</main>
+
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		function sample6_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							var extraAddr = ''; // 참고항목 변수
+
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') {
+								// 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else {
+								// 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
+
+							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+							if (data.userSelectedType === 'R') {
+								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+								if (data.bname !== ''
+										&& /[동|로|가]$/g.test(data.bname)) {
+									extraAddr += data.bname;
+								}
+								// 건물명이 있고, 공동주택일 경우 추가한다.
+								if (data.buildingName !== ''
+										&& data.apartment === 'Y') {
+									extraAddr += extraAddr !== '' ? ', '
+											+ data.buildingName
+											: data.buildingName;
+								}
+								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+								if (extraAddr !== '') {
+									extraAddr = ' (' + extraAddr + ')';
+								}
+								// 조합된 참고항목을 해당 필드에 넣는다.
+								document.getElementById('sample6_extraAddress').value = extraAddr;
+							} else {
+								document.getElementById('sample6_extraAddress').value = '';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('sample6_postcode').value = data.zonecode;
+							document.getElementById('sample6_address').value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById('sample6_detailAddress')
+									.focus();
+						},
+					}).open();
+		}
+	</script>
+</body>
 </html>

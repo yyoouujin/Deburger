@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
-  </head>
-  <body>
-    <main id="main" class="main"><br><br>
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title">담당자 등록</h1>
-            
-          
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>담당자 등록</h1>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title"></h5>
 
+<<<<<<< HEAD
+				<!-- General Form Elements -->
+				<form class="row g-3" method="post" th:action="@{insertPerson}">
+
+					<div class="col-md-12">
+						<label for="name" class="col-sm-2 col-form-label">담당자 이름</label> <input
+							type="text" class="form-control" name="name" id="name" />
+					</div>
+
+					<div class="col-md-12">
+						<label for="personId" class="col-sm-2 col-form-label">사원번호</label>
+						<input type="inputText" class="form-control" name="personId"
+							id="personId" />
+					</div>
+=======
           <!-- General Form Elements -->
           <form class="col-md-8" method="post" th:action="@{insertPerson}" >
             <div class="row mb-3">
@@ -25,16 +38,62 @@
                 <input type="text" class="form-control" name="name" id="name" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
 
+<<<<<<< HEAD
+					<div class="col-md-12">
+						<label for="phone" class="col-sm-2 col-form-label">전화번호</label> <input
+							type="inputText" class="form-control" name="phone" id="phone" />
+					</div>
+
+					<div class="col-md-12">
+						<label for="email" class="col-sm-2 col-form-label">이메일</label> <input
+							type="inputText" class="form-control" name="email" id="email" />
+
+					</div>
+
+					<div class="col-md-12">
+						<label for="area" class="col-sm-2 col-form-label">담당물류창고</label> <input
+							type="inputText" class="form-control" name="area" id="area" />
+
+					</div>
+
+					<div class="col-md-12">
+						<label for="department" class="col-sm-2 col-form-label">부서
+						</label> <input type="text" class="form-control" name="department"
+							id="department" />
+					</div>
+
+					<div class="col-md-12">
+						<label for="position" class="col-sm-2 col-form-label">직급 </label>
+
+						<input type="text" class="form-control" name="position"
+							id="position" />
+					</div>
+
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary">저장</button>
+						<button type="reset" class="btn btn-secondary">취소</button>
+					</div>
+				</form>
+				<!-- End General Form Elements -->
+			</div>
+		</div>
+	</main>
+=======
             <div class="row mb-3">
               <label for="personId" class="col-sm-2 col-form-label">사원번호</label>
               <div class="col-sm-9">
                 <input type="inputText" class="form-control" name="personId" id="personId" />
               </div>
             </div>
+>>>>>>> refs/heads/main
 
 
+<<<<<<< HEAD
+</body>
+=======
             <div class="row mb-3">
               <label for="phone" class="col-sm-2 col-form-label">전화번호</label>
               <div class="col-sm-9">
@@ -81,4 +140,5 @@
 
 
   </body>
+>>>>>>> refs/heads/main
 </html>
