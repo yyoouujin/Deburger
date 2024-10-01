@@ -30,7 +30,6 @@ function makeTag(event) {
 				//발주 승인 Sweet Alert
 				Swal.fire({
 					title: '발주 승인하시겠습니까?',
-					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
@@ -50,10 +49,18 @@ function makeTag(event) {
 										'발주 승인 완료',
 										'',
 										'success'
-									)
-									document.location.href = document.location.href;
+									).then(function () {
+										document.location.href = document.location.href;
+									})
+									
 								})
 								.fail(err => console.log(err));
+						} else {
+							Swal.fire(
+								'목록으로 돌아갑니다',
+								'',
+								'error'
+							)
 						}
 					})
 			} else { //셀렉트박스로 선택된 물류창고로 변경
@@ -61,7 +68,6 @@ function makeTag(event) {
 
 				Swal.fire({
 					title: '해당 물류창고로 발주 승인하시겠습니까?',
-					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
@@ -81,10 +87,17 @@ function makeTag(event) {
 										'발주 승인 완료',
 										'',
 										'success'
-									)
-									document.location.href = document.location.href;
+									).then(function() {
+										document.location.href = document.location.href;
+									});
 								})
 								.fail(err => console.log(err));
+						} else {
+							Swal.fire(
+								'목록으로 돌아갑니다',
+								'',
+								'error'
+							)
 						}
 					});
 			}
@@ -157,8 +170,9 @@ function makeTag(event) {
 											'취소 승인 완료',
 											'',
 											'success'
-										)
-										document.location.href = document.location.href;
+										).then(function() {
+											document.location.href = document.location.href;
+										})
 									})
 									.fail(err => console.log(err));
 							}
