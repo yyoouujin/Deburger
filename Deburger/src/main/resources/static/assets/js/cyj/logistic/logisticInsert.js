@@ -52,7 +52,6 @@ function sample6_execDaumPostcode() {
 		method: "GET"
 	})
 	.done(data => {
-		
 		data.forEach( ele => {
 			let tag = `<option value=${ele.personId}>${ele.personId}</option>`
 			$('#pId').append(tag);
