@@ -30,7 +30,6 @@ function makeTag(event) {
 				//발주 승인 Sweet Alert
 				Swal.fire({
 					title: '발주 승인하시겠습니까?',
-					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
@@ -50,10 +49,18 @@ function makeTag(event) {
 										'발주 승인 완료',
 										'',
 										'success'
-									)
-									document.location.href = document.location.href;
+									).then(function () {
+										document.location.href = document.location.href;
+									})
+									
 								})
 								.fail(err => console.log(err));
+						} else {
+							Swal.fire(
+								'목록으로 돌아갑니다',
+								'',
+								'error'
+							)
 						}
 					})
 			} else { //셀렉트박스로 선택된 물류창고로 변경
@@ -61,7 +68,6 @@ function makeTag(event) {
 
 				Swal.fire({
 					title: '해당 물류창고로 발주 승인하시겠습니까?',
-					//text: "다시 되돌릴 수 없습니다. 신중하세요.",
 					icon: 'question',
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
@@ -81,10 +87,17 @@ function makeTag(event) {
 										'발주 승인 완료',
 										'',
 										'success'
-									)
-									document.location.href = document.location.href;
+									).then(function() {
+										document.location.href = document.location.href;
+									});
 								})
 								.fail(err => console.log(err));
+						} else {
+							Swal.fire(
+								'목록으로 돌아갑니다',
+								'',
+								'error'
+							)
 						}
 					});
 			}
@@ -122,7 +135,7 @@ function makeTag(event) {
 				$(tr).append(`<td>${element.unit}</td>`);
 				$('.order_detail').append(tr);
 			});
-			
+
 			//취소요청일 경우에만 버튼 활성화
 			let cbtn = `<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소승인</button>`
 			if (`${data[0].cancelOperation}` == 'J2') {
@@ -135,23 +148,38 @@ function makeTag(event) {
 					const findOdn = $('#findOdn').html();//주문번호
 					const dataObj = { "orderNumber": findOdn };
 
-					if (!confirm('취소 승인 하시겠습니까?')) {
-						return;
-					}
-					//취소상태 변경
-					$.ajax('canceloperationUpdate', {
-						type: 'post',
-						data: dataObj
+					//취소 승인 Sweet Alert
+					Swal.fire({
+						title: '취소 승인하시겠습니까?',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: '승인',
+						cancelButtonText: '취소'
 					})
-						.done(result => {
-							alert('취소승인 완료');
-							document.location.href = document.location.href;
+						.then((result) => {
+							if (result.isConfirmed) {
+								//취소상태 변경
+								$.ajax('canceloperationUpdate', {
+									type: 'post',
+									data: dataObj
+								})
+									.done(result => {
+										Swal.fire(
+											'취소 승인 완료',
+											'',
+											'success'
+										).then(function() {
+											document.location.href = document.location.href;
+										})
+									})
+									.fail(err => console.log(err));
+							}
 						})
-						.fail(err => console.log(err));
 				}); //취소승인 버튼 클릭 시 승인상태 변경 이벤트 끝
 			} //취소요청일 경우에만 버튼 활성화 끝
-			
-			
+
 			//'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
 			if (checkText.text() == 'N') {
 				$.ajax({

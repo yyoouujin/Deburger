@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{common/layouts/shop_layout}" layout:fragment="Content">
-	<style>
-.nav-link active {
-    color: black; /* 기본 글씨 색상 */
-    text-decoration: none; /* 밑줄 제거 */
+	layout:decorate="~{common/layouts/shop_layout}"
+	layout:fragment="Content">
+<style>
+.namev{
+color:grey;
 }
-.nav-link active.selected:focus {
-    font-weight: bold; /* 선택된 카테고리 글씨 굵게 */
 
+.notice .active{
+ color:block
+ 
 }
 </style>
-<head>
-<meta charset="UTF-8">
-<title>공지사항</title>
-
 </head>
 
 <body>
 	<main id="main" class="main">
-		<div class="pagetitle">
+		<div class="pagetitle notice">
 			<h1>공지사항</h1>
 
-			<nav class="navbar navbar-expand-lg bg-body-t00ertiary">
-				<div class="container-fluid">
-
+			<nav class="navbar navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid namev">
+<!-- [[${paging}]] -->
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShop" ><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">전체</span></a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopUpdate"><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">업데이트</span></a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopService"><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">서비스</span></a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopEvent"><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">이벤트</span></a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopWork"><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">작업</span></a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="noticeListShopAnnouncement"><span onclick=style.fontWeight='bold' style="font-size: 19px; font-family: Do Hyeon">공고</span></a></li>
+							<li class="nav-item"><a class="nav-link "  th:classappend ="${paging.division}==null? 'active'" 
+								aria-current="page" href="noticeListShop" ><span   style="font-size: 19px; font-family: Do Hyeon">전체</span></a></li>
+							<li class="nav-item"><a class="nav-link " th:classappend ="${paging.division}=='업데이트'? 'active'" 
+								aria-current="page" href="noticeListShopUpdate"><span  style="font-size: 19px; font-family: Do Hyeon">업데이트</span></a></li>
+							<li class="nav-item"><a class="nav-link " th:classappend ="${paging.division}=='서비스'? 'active'" 
+								aria-current="page" href="noticeListShopService"><span  style=" font-size: 19px; font-family: Do Hyeon">서비스</span></a></li>
+							<li class="nav-item"><a class="nav-link " th:classappend ="${paging.division}=='이벤트'? 'active'" 
+								aria-current="page" href="noticeListShopEvent"><span  style="font-size: 19px; font-family: Do Hyeon">이벤트</span></a></li>
+							<li class="nav-item"><a class="nav-link " th:classappend ="${paging.division}=='작업'? 'active'" 
+								aria-current="page" href="noticeListShopWork"><span  style="font-size: 19px; font-family: Do Hyeon">작업</span></a></li>
+							<li class="nav-item"><a class="nav-link " th:classappend ="${paging.division}=='공고'? 'active'" 
+								aria-current="page" href="noticeListShopAnnouncement"><span style="font-size: 19px; font-family: Do Hyeon">공고</span></a></li>
 						</ul>
 
 
