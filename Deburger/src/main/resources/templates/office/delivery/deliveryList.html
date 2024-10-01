@@ -51,7 +51,8 @@
 									<td>[[ ${info.storeNumber} ]]</td>
 
 									<td th:if="${info.cancelOperation == 'J1'}">-</td>
-									<td th:if="${info.cancelOperation == 'J2'}">취소요청</td>
+									<td th:if="${info.cancelOperation == 'J2'}"><span
+												style="color: red; font-weight: bold;">취소요청</span></td>
 									<td th:if="${info.cancelOperation == 'J3'}">취소완료</td>
 
 									<td th:if="${info.logisticAllStock} >= ${info.orderAllStock}">Y</td>
