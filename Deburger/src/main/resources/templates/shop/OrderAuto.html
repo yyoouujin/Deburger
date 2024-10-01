@@ -42,7 +42,6 @@
 										<th>품목 이름</th>
 										<th>품목 구분</th>
 										<th>단위</th>
-										<th>수량</th>
 										<th>금액</th>
 										<th>현재 재고</th>
 										<th>적정 재고</th>
@@ -56,7 +55,6 @@
 											<td th:text="${list.materialName}" />
 											<td th:text="${list.materialItem}" />
 											<td th:text="${list.unit}" />
-											<td th:text="${list.count}" />
 											<td th:text="${list.saleUnitprice}" />
 											<td th:if="${list.stockCount >= 0} "
 												th:text="${list.stockCount}" />
