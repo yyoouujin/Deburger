@@ -25,6 +25,7 @@
               				<th>발주 번호</th>
               				<th>가맹점 이름</th>
               				<th>진행 상태</th>
+              				<th>출고 날짜</th>
               				<th>요청 수량</th>
               				<th>비고</th>
               			</tr>
@@ -35,6 +36,7 @@
 	              				<td th:text="${lists.orderNumber}"></td>
 	              				<td th:text="${lists.storeName}"></td>
 	              				<td th:text="${lists.outOperation } == 'g2' ? '출고 완료' : '출고 전'"></td>
+	              				<td th:text="${#dates.format(lists.outDate, 'yyyy/MM/dd')}"></td>
 	              				<td th:text="${lists.count}"></td>
 	              				<td ></td>
 	              			</tr>
