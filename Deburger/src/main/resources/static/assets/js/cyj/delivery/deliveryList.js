@@ -180,7 +180,6 @@ function makeTag(event) {
 				}); //취소승인 버튼 클릭 시 승인상태 변경 이벤트 끝
 			} //취소요청일 경우에만 버튼 활성화 끝
 
-
 			//'N'일 시 창고 변경이 가능하도록 (주문발주수량보다 많은 창고 select)
 			if (checkText.text() == 'N') {
 				$.ajax({
