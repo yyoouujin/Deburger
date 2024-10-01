@@ -202,7 +202,10 @@
             </a>
           </li>
           <li>
-            <a th:href="@{qnaListOffice}">
+            <a th:href="@{qnaListOffice}"  sec:authorize="hasAnyRole('ROLE_2')">
+              <span>Q&A</span>
+            </a>
+                        <a th:href="@{qnaListOffice}"  sec:authorize="hasAnyRole('ROLE_1')">
               <span>Q&A</span>
             </a>
           </li>
