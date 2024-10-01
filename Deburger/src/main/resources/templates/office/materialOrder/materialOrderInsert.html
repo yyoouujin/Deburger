@@ -135,7 +135,7 @@
     $(document).ready(async () => {
     	grid = await gridLoad();	
       // 2. HTML이 수행된 뒤 함수를 호출한다.
-	 if(logisticVO.clientId != null || logisticVO.clientId != ''){
+	 if(logisticVO.clientId != null && logisticVO.clientId != ''){
        $("#clientId").val(logisticVO.clientId).change(); 
        $("#logisticsId").val(logisticVO.logisticsId).change();  
       window.setTimeout(function(){
