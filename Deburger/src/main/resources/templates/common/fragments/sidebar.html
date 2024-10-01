@@ -70,11 +70,7 @@
               <span>물류창고 등록</span>
             </a>
           </li>
-          <li>
-            <a th:href="@{deliveryList}">
-              <span>납품 관리</span>
-            </a>
-          </li>
+          
         </ul>
       </li>
     <!-- 유진 물류관리 끝 -->
@@ -83,7 +79,7 @@
 	<!-- 발주입고관리 시작 -->
       <li class="nav-item" sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
         <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
-          <i class="fa-solid fa-truck"></i></i><span>발주/입고 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="fa-solid fa-truck"></i></i><span>발주 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -94,6 +90,11 @@
           <li>
             <a th:href="@{materialOrder}">
               <span>발주 등록</span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{deliveryList}">
+              <span>납품 관리</span>
             </a>
           </li>
           
@@ -131,11 +132,6 @@
           <i class="fa-solid fa-store"></i>가맹점 관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="store" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a th:href="@{storeStatistics}">
-             <span>가맹점 현황</span>
-            </a>
-          </li>
           <li>
             <a th:href="@{officeListStore}">
              <span>가맹점 목록</span>
@@ -207,7 +203,10 @@
             </a>
           </li>
           <li>
-            <a th:href="@{qnaListOffice}">
+            <a th:href="@{qnaListOffice}"  sec:authorize="hasAnyRole('ROLE_2')">
+              <span>Q&A</span>
+            </a>
+                        <a th:href="@{qnaListOffice}"  sec:authorize="hasAnyRole('ROLE_1')">
               <span>Q&A</span>
             </a>
           </li>

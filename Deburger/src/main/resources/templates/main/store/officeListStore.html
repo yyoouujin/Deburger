@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <title>Insert title here</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
 
-  <body>
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>가맹점 목록</h1>
-      </div>
-      <!-- End Page Title -->
-      <section class="section">
-        <div class="row">
-          <div class="col-lg-12">
-            <form>
-              <div class="row mb-3">
-                <div class="col-sm-10 col-md-3">
-                  <input type="text" class="form-control" value="" />
-                </div>
-                <div class="col-sm-10 col-md-3">
-                  <input type="date" class="form-control" />
-                </div>
-                <div class="col-sm-10 col-md-3">
-                  <button type="button" class="btn btn-primary" >
-                    검색
-                  </button>
-                </div>
-              </div>
-            </form>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle">
+			<h1>가맹점 목록</h1>
+		</div>
 
-            <div class="card">
-              <div class="card-body">
-                <div id="grid"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+		<!-- End Page Title -->
 
-    <script th:inline="javascript">
+		<div class="col-lg-12">
+
+			<section class="section">
+				<div class="row">
+					<div class="col-lg-12">
+						<form>
+							<div class="row mb-3">
+								<div class="col-sm-10 col-md-3">
+									<input type="text" class="form-control" value="" />
+								</div>
+								<div class="col-sm-10 col-md-3">
+									<input type="date" class="form-control" />
+								</div>
+								<div class="col-sm-10 col-md-3">
+									<button type="button" class="btn btn-primary">검색</button>
+								</div>
+							</div>
+						</form>
+
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title"></h5>
+								<div id="grid"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<script th:inline="javascript">
 
         	var StoreList = [[${StoreList}]];
 
@@ -67,6 +68,7 @@
           const gridLoad = () => {
             // 3. 그리드 생성
             const Grid = tui.Grid;
+            
 
             /**
              * [선택] 그리드 테마 적용하기 (clean, stripe, default)
@@ -74,7 +76,7 @@
              * @reference https://nhn.github.io/tui.grid/latest/tutorial-example07-themes
              * @reference https://seokbong.tistory.com/14
              */
-
+             //Grid.applyTheme('clean');
 
             /**
              * [선택] Grid Confirm 메시지
@@ -172,5 +174,5 @@
             return grid;
           };
     </script>
-  </body>
+</body>
 </html>

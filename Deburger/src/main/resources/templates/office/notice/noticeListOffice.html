@@ -49,7 +49,8 @@ color:grey;
 							<button class="btn btn-outline-success" id="keywordBtn">Search</button>
 						</form>
 						<form style="margin: 5px">
-							<button type="button" id="btnInsert" class="btn btn-primary">작성하기</button>
+							<button type="button" id="btnInsert" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_2')">작성하기</button>
+							<button type="button" id="btnInsert" class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_1')">작성하기</button>
 						</form>
 
 
