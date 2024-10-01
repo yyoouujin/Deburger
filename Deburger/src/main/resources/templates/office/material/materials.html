@@ -1,126 +1,106 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org/"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{common/layouts/layout}"
-  layout:fragment="Content"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="contextPath" th:value="${contextPath}">
-    <title>Insert title here</title>
-  </head>
-  <body>
-    <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>재료 관리</h1>      
-    </div>
-      <section class="section">
-      	<div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"></h5>
-                <!-- 여기 검색 등록 -->
-                <div class="search-bar ">
-<!--                   <form
-                    class="search-form d-flex align-items-center"
-                    method="POST"
-                    action="#"
-                  >
-                    <input
-                      type="text"
-                      name="query"
-                      placeholder="Search"
-                      title="Enter search keyword"
-                    />
-                    <button type="submit" title="Search">검색</button>
-                  </form> -->
-                </div>
-			    <div id="outter">
-			    <a href="materialInsert"><button style="float: right;" class='btn btn-primary'>재료 등록
-				</button></a> <!-- 옵션선택 끝 -->
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{common/layouts/layout}" layout:fragment="Content">
+<head>
+<meta charset="UTF-8" />
+<meta name="contextPath" th:value="${contextPath}">
+<title>Insert title here</title>
+</head>
+<body>
+	<main id="main" class="main">
+		<div class="pagetitle d-flex justify-content-between">
+			<h1>재료 관리</h1>
+			<a href="materialInsert">
+				<button class='btn btn-primary'>재료 등록</button>
+			</a>
+		</div>
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>재료 코드</th>
+								<th>재료 명</th>
+								<th>재료 구분</th>
+								<th>단위</th>
+								<th>구입 단가</th>
+								<th>거래처</th>
+								<th>안전재고</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+						<th:block th:each="list:${viewAll}">
+							<tbody>
+								<tr>
+									<td th:text="${list.rn}"></td>
+									<td th:text="${list.materialNumber}"></td>
+									<td th:text="${list.materialName}"></td>
+									<td th:text="${list.materialClassification}"></td>
+									<td th:text="${list.unit}"></td>
+									<td
+										th:text="${#numbers.formatInteger(list.buyUnitprice, 3, 'COMMA') + '원'}"></td>
+									<td th:text="${list.clientName}"></td>
+									<td th:text="${list.logisticsSafetyStock}"></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</th:block>
+					</table>
 				</div>
-                <!-- End Search Bar -->
-                <!-- Default Table -->
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>번호</th>
-                      <th>재료 코드</th>
-                      <th>재료 명</th>
-                      <th>재료 구분</th>
-                      <th>단위</th>
-                      <th>구입 단가</th>
-                      <th>거래처</th>
-                      <th>안전재고</th>
-                      <th>비고</th>
-                    </tr>
-                  </thead>
-                  <th:block th:each="list:${viewAll}">
-                    <tbody>
-                      <tr>
-                      	<td th:text="${list.rn}"></td>
-                        <td th:text="${list.materialNumber}"></td>
-                        <td th:text="${list.materialName}"></td>
-                        <td th:text="${list.materialClassification}"></td>
-                        <td th:text="${list.unit}"></td>
-                        <td th:text="${#numbers.formatInteger(list.buyUnitprice, 3, 'COMMA') + '원'}"></td>
-                        <td th:text="${list.clientName}"></td>
-                        <td th:text="${list.logisticsSafetyStock}"></td>
-                        <td ></td>
-                      </tr>
-                    </tbody>
-                  </th:block>
-                </table>
-                <!-- End Default Table Example -->
-              </div>
-            </div>
-         					<div style="display: block; text-align: center;">
-					   <nav aria-label="Page navigation">
-					       <ul class="pagination justify-content-center">
- 							<!-- 이전 -->
-					           <li class="page-item" th:classappend="${paging.startPage == 1} ? 'disabled'">
-					               <a class="page-link" th:href="@{/materials(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}">&lt;</a>
-					           </li>
-					
-								 <!-- 현재 -->
-					           <li class="page-item" th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}" th:classappend="${p == paging.nowPage} ? 'active'">
-					               <span th:if="${p == paging.nowPage}">
-					                   <a class="page-link" th:text="${p}"></a>
-					               </span>
-					               <span th:if="${p != paging.nowPage}">
-					                   <a class="page-link" th:href="@{/materials(nowPage=${p}, cntPerPage=${paging.cntPerPage})}" th:text="${p}"></a>
-					               </span>
-					           </li>
-									 <!-- 다음 -->
-					            <li class="page-item" th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
-					                <a class="page-link" th:href="@{/materials(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
-					            </li>
-					        </ul>
-					    </nav>
-					</div> 
-          </div>
-        </div>
-      </section>
-    </main>
-  </body>
-  <script>
-/* 	const clc = $('meta[name="contextPath"]').attr('value');
-    $("tbody > tr").on("click", function (event) {
-        let tr = event.currentTarget;
-        let did = $(tr).children().eq(1).text();
-        console.log(did);
-        let url = clc + "/materialInfo?materialNumber=" + did;
-        location.href = url;
-    }); */
-    
+				<!-- End Default Table Example -->
+			</div>
+		</div>
+		<div style="display: block; text-align: center;">
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+					<!-- 이전 -->
+					<li class="page-item"
+						th:classappend="${paging.startPage == 1} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/materials(nowPage=${paging.startPage - 1}, cntPerPage=${paging.cntPerPage})}">&lt;</a>
+					</li>
+
+					<!-- 현재 -->
+					<li class="page-item"
+						th:each="p : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+						th:classappend="${p == paging.nowPage} ? 'active'"><span
+						th:if="${p == paging.nowPage}"> <a class="page-link"
+							th:text="${p}"></a>
+					</span> <span th:if="${p != paging.nowPage}"> <a class="page-link"
+							th:href="@{/materials(nowPage=${p}, cntPerPage=${paging.cntPerPage})}"
+							th:text="${p}"></a>
+					</span></li>
+					<!-- 다음 -->
+					<li class="page-item"
+						th:classappend="${paging.endPage == paging.lastPage} ? 'disabled'">
+						<a class="page-link"
+						th:href="@{/materials(nowPage=${paging.endPage + 1}, cntPerPage=${paging.cntPerPage})}">&gt;</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+
+	</main>
+</body>
+<script>
+	/* 	const clc = $('meta[name="contextPath"]').attr('value');
+	 $("tbody > tr").on("click", function (event) {
+	 let tr = event.currentTarget;
+	 let did = $(tr).children().eq(1).text();
+	 console.log(did);
+	 let url = clc + "/materialInfo?materialNumber=" + did;
+	 location.href = url;
+	 }); */
+
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="materials?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	} 
-    
-  </script>
+		location.href = "materials?nowPage=${paging.nowPage}&cntPerPage=" + sel;
+	}
+</script>
 </html>

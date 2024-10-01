@@ -39,116 +39,135 @@
 						</div>
 						<!-- 공지사항 끝 -->
 
-
-						<!-- 전체 판매량 시작 -->
-						<div class="col-md-4">
+						<!-- 입고 대기 건수 시작 (권한3) -->
+						<div class="col-md-4"
+							th:onclick="|location.href='@{containerIn}'|"
+							sec:authorize="hasAnyRole('ROLE_3')">
 							<div class="card info-card sales-card">
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>선택</h6>
-										</li>
-
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번달</a></li>
-									</ul>
-								</div>
-
 								<div class="card-body">
-									<h5 class="card-title">
-										전체 판매량 <span>| 이번달</span>
-									</h5>
-
+									<h5 class="card-title">입고 대기 건수</h5>
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-burger"></i>
+											<i class="fa-solid fa-right-to-bracket"></i>
 										</div>
 										<div class="ps-3">
-											<h6 id="salesCnt">145</h6>
+											<h6 id="salesCnt2">[[${countIn}]] 건</h6>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 전체 판매량 끝 -->
+						<!-- 입고 대기 건수 끝 (권한3) -->
+
+						<!-- 입고 대기 건수 시작 (권한 1,2) -->
+						<div class="col-md-4"
+							sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
+							<div class="card info-card sales-card">
+								<div class="card-body">
+									<h5 class="card-title">입고 대기 건수</h5>
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="fa-solid fa-right-to-bracket"></i>
+										</div>
+										<div class="ps-3">
+											<h6 id="salesCnt2">0 건</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 입고 대기 건수 끝 (권한 1,2) -->
 
 
 
-						<!-- 가맹점 전체 매출 시작 -->
-						<div class="col-md-4">
+
+						<!-- 출고 대기 건수 시작 (권한 3) -->
+						<div class="col-md-4"
+							th:onclick="|location.href='@{containerOut}'|"
+							sec:authorize="hasAnyRole('ROLE_3')">
 							<div class="card info-card revenue-card">
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>선택</h6>
-										</li>
-
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번달</a></li>
-									</ul>
-								</div>
-
 								<div class="card-body">
-									<h5 class="card-title">
-										가맹점 전체 매출 <span>| 이번달</span>
-									</h5>
-
+									<h5 class="card-title">출고 대기 건수</h5>
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-store"></i>
+											<i class="fa-solid fa-right-from-bracket"></i>
 										</div>
 										<div class="ps-3">
-											<h6 id="salesPri">$3,264</h6>
+											<h6 id="salesPri2">[[${countOut}]] 건</h6>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 가맹점 전체 매출 시작 끝 -->
+						<!-- 출고 대기 건수 끝 (권한 3) -->
+
+
+						<!-- 출고 대기 건수 시작 (권한 1,2) -->
+						<div class="col-md-4"
+							sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
+							<div class="card info-card revenue-card">
+								<div class="card-body">
+									<h5 class="card-title">출고 대기 건수</h5>
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="fa-solid fa-right-from-bracket"></i>
+										</div>
+										<div class="ps-3">
+											<h6 id="salesPri2">0 건</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 출고 대기 건수 끝 (권한 1,2) -->
 
 
 
-						<!-- 재료 발주 원가 시작 -->
-						<div class="col-md-4">
+						<!-- 발주 대기 건수 시작 (권한 1,2) -->
+						<div class="col-md-4"
+							sec:authorize="hasAnyRole('ROLE_1','ROLE_2')"
+							th:onclick="|location.href='@{logisticInfo(logisticsId=${logisticsId})}'|">
 							<div class="card info-card customers-card">
-								<div class="filter">
-									<a class="icon" href="#" data-bs-toggle="dropdown"><i
-										class="bi bi-three-dots"></i></a>
-									<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-										<li class="dropdown-header text-start">
-											<h6>선택</h6>
-										</li>
-
-										<li><a class="dropdown-item" href="#">오늘</a></li>
-										<li><a class="dropdown-item" href="#">이번달</a></li>
-									</ul>
-								</div>
-
 								<div class="card-body">
-									<h5 class="card-title">
-										재료 발주 원가 <span>| 이번달</span>
-									</h5>
-
+									<h5 class="card-title">발주 대기 건수</h5>
 									<div class="d-flex align-items-center">
 										<div
 											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-											<i class="fa-solid fa-sack-dollar"></i>
+											<i class="fa-solid fa-truck-fast"></i>
 										</div>
 										<div class="ps-3">
-											<h6 id="salesPro">1244</h6>
+											<h6 id="salesPro2">[[${countOrder}]] 건</h6>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 재료 발주 원가 끝 -->
+						<!-- 발주 대기 건수 끝 (권한 1,2) -->
 
+
+						<!-- 발주 대기 건수 시작 (권한 3) -->
+						<div class="col-md-4" sec:authorize="hasAnyRole('ROLE_3')">
+							<div class="card info-card customers-card">
+								<div class="card-body">
+									<h5 class="card-title">발주 대기 건수</h5>
+
+									<div class="d-flex align-items-center">
+										<div
+											class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+											<i class="fa-solid fa-truck-fast"></i>
+										</div>
+										<div class="ps-3">
+											<h6 id="salesPro2">0 건</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 발주 대기 건수 끝 (권한 3) -->
 
 
 
@@ -157,7 +176,8 @@
 							<div class="card graph-card">
 								<div class="card-body">
 									<h5 class="card-title">월별 통계</h5>
-									<div class="chart-container" style="position: relative; height:40vh;">
+									<div class="chart-container"
+										style="position: relative; height: 40vh;">
 										<canvas id="myChart"></canvas>
 									</div>
 								</div>
@@ -167,13 +187,13 @@
 
 
 
-
 						<!-- 메뉴별 판매현황 시작 (원형차트) -->
 						<div class="col-8">
 							<div class="card graph-card">
 								<div class="card-body">
 									<h5 class="card-title">메뉴별 판매 현황</h5>
-									<div class="pie-container" style="position: relative; height:46.5vh;">
+									<div class="pie-container"
+										style="position: relative; height: 46.5vh;">
 										<canvas id="pieExample"></canvas>
 									</div>
 								</div>
@@ -183,130 +203,120 @@
 
 
 						<div class="col-4">
-							<!-- 입고 대기 건수 시작 (권한3) -->
-							<div th:onclick="|location.href='@{containerIn}'|"
-								sec:authorize="hasAnyRole('ROLE_3')">
+
+							<!-- 전체 판매량 시작 -->
+							<div>
 								<div class="card info-card sales-card">
+									<div class="filter">
+										<a class="icon" href="#" data-bs-toggle="dropdown"><i
+											class="bi bi-three-dots"></i></a>
+										<ul
+											class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+											<li class="dropdown-header text-start">
+												<h6>선택</h6>
+											</li>
+
+											<li><a class="dropdown-item" href="#">오늘</a></li>
+											<li><a class="dropdown-item" href="#">이번달</a></li>
+										</ul>
+									</div>
+
 									<div class="card-body">
-										<h5 class="card-title">입고 대기 건수</h5>
+										<h5 class="card-title">
+											전체 판매량 <span>| 이번달</span>
+										</h5>
+
 										<div class="d-flex align-items-center">
 											<div
 												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-right-to-bracket"></i>
+												<i class="fa-solid fa-burger"></i>
 											</div>
 											<div class="ps-3">
-												<h6 id="salesCnt2">[[${countIn}]] 건</h6>
+												<h6 id="salesCnt">145</h6>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- 입고 대기 건수 끝 (권한3) -->
+							<!-- 전체 판매량 끝 -->
 
-
-							<!-- 입고 대기 건수 시작 (권한 1,2) -->
-							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
-								<div class="card info-card sales-card">
-									<div class="card-body">
-										<h5 class="card-title">입고 대기 건수</h5>
-										<div class="d-flex align-items-center">
-											<div
-												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-right-to-bracket"></i>
-											</div>
-											<div class="ps-3">
-												<h6 id="salesCnt2">0 건</h6>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 입고 대기 건수 끝 (권한 1,2) -->
-
-
-
-							<!-- 출고 대기 건수 시작 (권한 3) -->
-							<div th:onclick="|location.href='@{containerOut}'|"
-								sec:authorize="hasAnyRole('ROLE_3')">
+							<!-- 가맹점 전체 매출 시작 -->
+							<div>
 								<div class="card info-card revenue-card">
+									<div class="filter">
+										<a class="icon" href="#" data-bs-toggle="dropdown"><i
+											class="bi bi-three-dots"></i></a>
+										<ul
+											class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+											<li class="dropdown-header text-start">
+												<h6>선택</h6>
+											</li>
+
+											<li><a class="dropdown-item" href="#">오늘</a></li>
+											<li><a class="dropdown-item" href="#">이번달</a></li>
+										</ul>
+									</div>
+
 									<div class="card-body">
-										<h5 class="card-title">출고 대기 건수</h5>
+										<h5 class="card-title">
+											가맹점 전체 매출 <span>| 이번달</span>
+										</h5>
+
 										<div class="d-flex align-items-center">
 											<div
 												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-right-from-bracket"></i>
+												<i class="fa-solid fa-store"></i>
 											</div>
 											<div class="ps-3">
-												<h6 id="salesPri2">[[${countOut}]] 건</h6>
+												<h6 id="salesPri">$3,264</h6>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- 출고 대기 건수 끝 (권한 3) -->
-
-
-							<!-- 출고 대기 건수 시작 (권한 1,2) -->
-							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')">
-								<div class="card info-card revenue-card">
-									<div class="card-body">
-										<h5 class="card-title">출고 대기 건수</h5>
-										<div class="d-flex align-items-center">
-											<div
-												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-right-from-bracket"></i>
-											</div>
-											<div class="ps-3">
-												<h6 id="salesPri2">0 건</h6>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 출고 대기 건수 끝 (권한 1,2) -->
+							<!-- 가맹점 전체 매출 시작 끝 -->
 
 
 
-							<!-- 발주 대기 건수 시작 (권한 1,2) -->
-							<div sec:authorize="hasAnyRole('ROLE_1','ROLE_2')"
-								th:onclick="|location.href='@{logisticInfo(logisticsId=${logisticsId})}'|">
+							<!-- 재료 발주 원가 시작 -->
+							<div>
 								<div class="card info-card customers-card">
+									<div class="filter">
+										<a class="icon" href="#" data-bs-toggle="dropdown"><i
+											class="bi bi-three-dots"></i></a>
+										<ul
+											class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+											<li class="dropdown-header text-start">
+												<h6>선택</h6>
+											</li>
+
+											<li><a class="dropdown-item" href="#">오늘</a></li>
+											<li><a class="dropdown-item" href="#">이번달</a></li>
+										</ul>
+									</div>
+
 									<div class="card-body">
-										<h5 class="card-title">발주 대기 건수</h5>
+										<h5 class="card-title">
+											재료 발주 원가 <span>| 이번달</span>
+										</h5>
+
 										<div class="d-flex align-items-center">
 											<div
 												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-truck-fast"></i>
+												<i class="fa-solid fa-sack-dollar"></i>
 											</div>
 											<div class="ps-3">
-												<h6 id="salesPro2">[[${countOrder}]] 건</h6>
+												<h6 id="salesPro">1244</h6>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- 발주 대기 건수 끝 (권한 1,2) -->
+							<!-- 재료 발주 원가 끝 -->
 
 
-							<!-- 발주 대기 건수 시작 (권한 3) -->
-							<div sec:authorize="hasAnyRole('ROLE_3')">
-								<div class="card info-card customers-card">
-									<div class="card-body">
-										<h5 class="card-title">발주 대기 건수</h5>
 
-										<div class="d-flex align-items-center">
-											<div
-												class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-												<i class="fa-solid fa-truck-fast"></i>
-											</div>
-											<div class="ps-3">
-												<h6 id="salesPro2">0 건</h6>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 발주 대기 건수 끝 (권한 3) -->
+
 						</div>
 
 
