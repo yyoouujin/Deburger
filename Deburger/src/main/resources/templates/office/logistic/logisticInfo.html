@@ -5,29 +5,15 @@
 <link rel="stylesheet" href="assets/css/logisticInfo.css" />
 <head>
 <meta charset="UTF-8">
-
 <title>Insert title here</title>
-
-
 </head>
 <body>
-
-
 	<main id="main" class="main">
-
 		<div class="pagetitle">
-			<h1>물류창고 조회</h1>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">물류 관리</li>
-					<li class="breadcrumb-item active">물류창고 조회</li>
-				</ol>
-			</nav>
+			<h1>물류창고 상세 조회</h1>
 		</div>
 		<!-- End Page Title -->
-
 		<section class="section dashboard">
-
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="card info-card logisticStockCard">
@@ -137,26 +123,29 @@
 								<tbody>
 									<th:block th:each="info, stats : ${logistic}">
 										<tr th:data-mid=${info.materialNumber} data-bs-toggle="modal"
-											data-bs-target="#modalDialogScrollable" >
+											data-bs-target="#modalDialogScrollable">
 											<td>[[ ${stats.count} ]]</td>
 											<td>[[ ${info.materialNumber} ]]</td>
 											<td>[[ ${info.materialName} ]]</td>
 											<td>[[ ${info.unit} ]]</td>
 											<td>[[ ${info.stockCount} ]] 개</td>
-											<td >[[ ${info.logisticsSafetyStock} ]] 개</td>
+											<td>[[ ${info.logisticsSafetyStock} ]] 개</td>
 
 
 											<td th:if="${info.stockCount} < ${info.logisticsSafetyStock}"><span
 												style="color: red; font-weight: bold;">부족</span></td>
 											<td
 												th:unless="${info.stockCount} < ${info.logisticsSafetyStock}">충분</td>
-											
-								
-											<td th:if="${info.requireStock} <= 0" th:id="${info.materialNumber}" data-stock="0">-</td>
+
+
+											<td th:if="${info.requireStock} <= 0"
+												th:id="${info.materialNumber}" data-stock="0">-</td>
 											<td th:unless="${info.requireStock} <= 0"><span
-												style="color: orange; font-weight: bold;" th:id="${info.materialNumber}"
-												th:data-stock="${info.requireStock}">[[ ${info.requireStock} ]] 개</span></td>
-											
+												style="color: orange; font-weight: bold;"
+												th:id="${info.materialNumber}"
+												th:data-stock="${info.requireStock}">[[
+													${info.requireStock} ]] 개</span></td>
+
 										</tr>
 									</th:block>
 								</tbody>
@@ -164,7 +153,8 @@
 							<!-- End Table with hoverable rows -->
 
 
-							<div style="display: block; text-align: center;" class="logisticStockPage">
+							<div style="display: block; text-align: center;"
+								class="logisticStockPage">
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-center">
 										<!-- 이전 -->
