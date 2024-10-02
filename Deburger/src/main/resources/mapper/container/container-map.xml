@@ -309,29 +309,25 @@
 							        a.oder_app,
 							        c.logistics_id,
 							        c.store_name,
-							        d.out_operation,
-							        d.out_date,
-					                e.person_id
+                                    e.out_operation
 							from store_order a
 							join order_details b
 							    on a.order_number = b.order_number
 							join store c
 							    on a.store_number = c.store_number
-							join logistics_out d
-							    on b.order_details_number = d.order_details_number
-					        join logistics_in e
-					            on d.lot = e.lot
-							where d.out_operation = 'g2'
-							and a.oder_app = 'L3'
-					        and e.person_id = #{personId}
+                            join logistics d
+                                on c.logistics_id = d.logistics_id
+                            join logistics_out e
+                                on b.order_details_number = e.order_details_number
+							where a.oder_app = 'L3'
+                            and d.person_id = #{personId}
+                            and e.out_operation = 'g2'
 							group by a.order_number,
 							        a.oder_app,
 							        c.logistics_id,
 							        c.store_name,
-							        d.out_operation,
-							        d.out_date,
-					                e.person_id
-							order by a.order_number desc
+                                    e.out_operation
+                            order by a.order_number desc
 			                  ) a
 			        WHERE ROWNUM <= (#{pageNum} * #{amount})            
 						      ) b
