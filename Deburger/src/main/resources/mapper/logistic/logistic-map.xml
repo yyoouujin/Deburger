@@ -121,7 +121,7 @@
 
 <!-- 물류창고 등록시 담당자 ID 정보 -->
 	<select id="selectLogisticPersonId" resultType="LogisticVO">
-		SELECT person_id
+		SELECT person_id, name
 		FROM person
 		WHERE department = '물류담당자'
 	</select>
