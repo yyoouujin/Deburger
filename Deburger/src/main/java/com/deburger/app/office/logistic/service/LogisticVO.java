@@ -24,6 +24,7 @@ public class LogisticVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date permissionDay;
 	private String personId;
+	private String name;
 
 	// 재료 테이블
 	private String materialNumber;

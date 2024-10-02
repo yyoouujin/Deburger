@@ -52,7 +52,7 @@ function logisticDetail() {
 	})
 		.done((data) => {
 			data.forEach((ele) => {
-				let tag = `<option value=${ele.personId}>${ele.personId}</option>`;
+				let tag = `<option value=${ele.personId}>${ele.name} (${ele.personId})</option>`;
 				$('#pId').append(tag);
 			});
 		})
