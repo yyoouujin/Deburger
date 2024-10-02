@@ -113,6 +113,7 @@
 	        , (QUALITY_SCORE + SERVICE_SCORE + CLEANL_SCORE) / 3 SCORE
 	FROM qsc_result q JOIN store s
 	on q.store_number = s.store_number
+	ORDER BY q.qsc_date desc
 	</select>
 	
 	
