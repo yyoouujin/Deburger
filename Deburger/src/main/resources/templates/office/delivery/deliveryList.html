@@ -60,7 +60,10 @@
 										th:unless="${info.logisticAllStock} >= ${info.orderAllStock}"><span
 										class="fw-bold text-danger">N</span></td>
 
-									<td th:text=" ${info.oderApp} == 'L2' ? '승인 완료' : '승인 전' "></td>
+
+									<td th:if="${info.oderApp} == 'L1'"><span style="color: blue; font-weight: bold;">승인 전</span></td>
+									<td th:if="${info.oderApp} == 'L2'">승인 완료</td>
+									<td th:if="${info.oderApp} == 'L3'">출고 완료</td>
 								</tr>
 							</th:block>
 						</tbody>
