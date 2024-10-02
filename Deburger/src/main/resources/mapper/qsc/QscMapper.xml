@@ -14,6 +14,7 @@
 	FROM qsc_list
 	WHERE version_information = (SELECT MAX(VERSION_INFORMATION)
 	                             FROM qsc_list)	
+    ORDER BY category
 	</select>
 	
 	<select id="cntQscListRecent" >
